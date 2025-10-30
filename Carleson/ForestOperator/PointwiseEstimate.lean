@@ -1,3 +1,4 @@
+import BlueprintGen
 import Carleson.Forest
 import Carleson.Operators
 import Carleson.ToMathlib.HardyLittlewood
@@ -281,7 +282,29 @@ lemma laverage_le_biInf_MB {r₀ : ℝ} (hr : 4 * D ^ s J ≤ r₀)
   refine laverage_le_biInf_MB' ?_ h; rwa [dist_self, add_zero]
 
 
-/-- Lemma 7.1.1, freely translated. -/
+/--
+For each $\fu \in \fU$, we have
+$$\sigma(\fu, x) = \mathbb{Z} \cap [\underline{\sigma} (\fu, x), \overline{\sigma} (\fu, x)]\,.$$
+
+Lemma 7.1.1, freely translated.
+-/
+@[blueprint
+  "convex scales"
+  (proof := /--
+  Let $s \in \mathbb{Z}$ with $\underline{\sigma} (\fu, x) \le s \le \overline{\sigma} (\fu, x)$. By
+  definition of $\sigma$, there exists $\fp \in \fT(\fu)$ with
+  $\ps(\fp) = \underline{\sigma} (\fu, x)$ and $x \in E(\fp)$, and there exists $\fp'' \in \fT(\fu)$
+  with $\ps(\fp'') = \overline{\sigma} (\fu, x)$ and $x \in E(\fp'') \subset \scI(\fp'')$. By property
+  \ref{coverdyadic} of the dyadic grid, there exists a cube $I \in \mathcal{D}$ of scale
+  $s$ with $x \in I$. By property \ref{eq-dis-freq-cover}, there exists a tile
+  $\fp' \in \fP(I)$ with $\tQ(x) \in \fc(\fp')$. By the dyadic property
+  \ref{dyadicproperty} we have $\scI(\fp) \subset \scI(\fp') \subset \scI(\fp'')$,
+  and by \ref{eq-freq-dyadic}, we have
+  $\fc(\fp'') \subset \fc(\fp') \subset \fc(\fp)$. Thus $\fp \le \fp' \le\fp''$, which gives with the
+  convexity property \ref{forest2} of $\fT(\fu)$ that $\fp' \in \fT(\fu)$, so
+  $s \in \sigma(\fu, x)$.
+  -/)
+  (latexEnv := "lemma")]
 lemma convex_scales (hu : u ∈ t) : OrdConnected (t.σ u x : Set ℤ) := by
   rw [ordConnected_def]; intro i mi j mj k mk
   simp_rw [Finset.mem_coe, σ, Finset.mem_image, Finset.mem_filter, Finset.mem_univ,
@@ -300,8 +323,34 @@ lemma convex_scales (hu : u ∈ t) : OrdConnected (t.σ u x : Set ℤ) := by
   refine ⟨(t.ordConnected hu).out mp mp'' ⟨l₁, l₂⟩, ⟨(Grid.le_def.mp lK).1 xp, Qxp', ?_⟩⟩
   exact Icc_subset_Icc sxp.1 sxp''.2 ⟨(Grid.le_def.mp lK).2, (Grid.le_def.mp Kl).2⟩
 
-/-- Part of Lemma 7.1.2 -/
-@[simp]
+/--
+For each $\mathfrak{S} \subset \fP$, we have $$\begin{equation}
+        \label{eq-J-partition}
+        \bigcup_{I \in \mathcal{D}} I = \dot{\bigcup_{J \in \mathcal{J}(\mathfrak{S})}} J
+\end{equation}$$ and $$\begin{equation}
+        \label{eq-L-partition}
+        \bigcup_{I \in \mathcal{D}} I = \dot{\bigcup_{L \in \mathcal{L}(\mathfrak{S})}} L\,.
+\end{equation}$$
+
+Part of Lemma 7.1.2
+-/
+@[simp, blueprint
+  "dyadic partitions"
+  (proof := /--
+  Since $\mathcal{J}(\mathfrak{S})$ is the set of inclusion maximal cubes in
+  $\mathcal{J}_0(\mathfrak{S})$, cubes in $\mathcal{J}(\mathfrak{S})$ are pairwise disjoint by
+  \ref{dyadicproperty}. The same applies to $\mathcal{L}(\mathfrak{S})$.
+  
+  If $x \in \bigcup_{I \in \mathcal{D}} I$, then there exists by \ref{coverdyadic} a
+  cube $I \in \mathcal{D}$ with $x \in I$ and $s(I) = -S$. Then $I \in \mathcal{J}_0(\mathfrak{S})$.
+  There exists an inclusion maximal cube in $\mathcal{J}_0(\mathfrak{S})$ containing $I$. This cube
+  contains $x$ and is contained in $\mathcal{J}(\mathfrak{S})$. This shows one inclusion in
+  \ref{eq-J-partition}, the other one follows from
+  $\mathcal{J}(\mathfrak{S}) \subset \mathcal{D}$.
+  
+  The proof of the two inclusions in \ref{eq-L-partition} is similar.
+  -/)
+  (latexEnv := "lemma")]
 lemma biUnion_𝓙 : ⋃ J ∈ 𝓙 𝔖, J = ⋃ I : Grid X, (I : Set X) := by
   classical
   refine subset_antisymm (iUnion₂_subset_iUnion ..) fun x mx ↦ ?_
@@ -578,7 +627,62 @@ private lemma L7_1_4_laverage_le_MB (hL : L ∈ 𝓛 (t u)) (hx : x ∈ L) (hx' 
     simp [-defaultD, laverage, x'_in_ball, ENNReal.div_eq_inv_mul, hc𝓑, hr𝓑]
   · simp only [MB, maximalFunction, ENNReal.rpow_one, inv_one]
 
-/-- Lemma 7.1.4 -/
+/--
+For all $\fu \in \fU$, all $L \in \mathcal{L}(\fT(\fu))$, all $x, x' \in L$ and all bounded $f$ with
+bounded support, we have
+$$\ref{eq-term-A} \le 10 \cdot 2^{104a^3} M_{\mathcal{B}, 1}P_{\mathcal{J}(\fT(\fu))}|f|(x')\,.$$
+
+Lemma 7.1.4
+-/
+@[blueprint
+  "first tree pointwise"
+  (proof := /--
+  Let $s \in \sigma(\fu,x)$. If $x, y \in X$ are such that $K_s(x,y)\neq 0$, then, by
+  \ref{supp-Ks}, we have $\rho(x,y)\leq 1/2 D^s$. By $1$-Lipschitz continuity of the
+  function $t \mapsto \exp(it) = e(t)$ and the property \ref{osccontrol} of the metrics
+  $d_B$, it follows that $$\begin{multline*}
+          |e(-\fcc(\fu)(y)+\tQ(x)(y)+\fcc(\fu)(x)-\tQ(x)(x))-1|\\
+          \leq d_{B(x, 1/2 D^{s})}(\fcc(\fu), \tQ(x))\,.
+  \end{multline*}$$ Let $\fp_s \in \fT(\fu)$ be a tile with $\ps(\fp_s) = s$ and $x \in E(\fp_s)$, and
+  let $\fp'$ be a tile with $\ps(\fp') = \overline{\sigma}(\fu, x)$ and $x \in E(\fp')$. Using the
+  monotonicity property \ref{monotonedb}, the doubling property \ref{firstdb}
+  repeatedly, the definition of $d_{\fp}$ and `Grid.dist_mono`, we can bound the previous display by
+  $$d_{B(x, 4 D^{s})}(\fcc(\fu), \tQ(x)) \leq 2^{4a} d_{\fp_s}(\fcc(\fu), \tQ(x)) \le 2^{4a} 2^{s - \overline{\sigma}(\fu, x)} d_{\fp'}(\fcc(\fu), \tQ(x))\,.$$
+  Since $\fcc(\fu) \in B_{\fp'}(\fcc(\fp'), 4)$ by \ref{forest1} and
+  $\tQ(x) \in \Omega(\fp') \subset B_{\fp'}(\fcc(\fp'), 1)$ by
+  \ref{eq-freq-comp-ball}, this is estimated by
+  $$\le 5 \cdot 2^{4a} 2^{s - \overline{\sigma}(\fu, x)} \,.$$ Using \ref{eq-Ks-size}, it
+  follows that
+  $$\ref{eq-term-A} \le 5\cdot 2^{103a^3} \sum_{s\in\sigma(x)}2^{s - \overline{\sigma}(\fu, x)} \frac{1}{\mu(B(x,D^s))}\int_{B(x,0.5D^{s})}|f(y)|\,\mathrm{d}\mu(y)\,.$$
+  By \ref{eq-J-partition}, the collection $\mathcal{J}$ is a partition of
+  $\bigcup_{I \in \mathcal{D}} I$, so this is estimated by
+  $$5\cdot 2^{103a^3} \sum_{s\in\sigma(x)}2^{s - \overline{\sigma}(\fu, x)} \frac{1}{\mu(B(x,D^s))}\sum_{\substack{J \in \mathcal{J}(\fT(\fu))\\J \cap B(x, 0.5D^s) \ne \emptyset} }\int_{J}|f(y)|\,\mathrm{d}\mu(y)\,.$$
+  This expression does not change if we replace $|f|$ by $P_{\mathcal{J}(\fT(\fu))}|f|$.
+  
+  Let $J \in \mathcal{J}(\fT(\fu))$ with $B(x, 0.5 D^s) \cap J \ne \emptyset$. By the triangle
+  inequality and since $x \in E(\fp_s) \subset B(\pc(\fp_s), 4D^{s})$, it follows that
+  $B(\pc(\fp_s), 4.5D^s) \cap J \ne \emptyset$. If $s(J) \ge s$ and $s(J) > -S$, then it follows from
+  the triangle inequality, \ref{eq-vol-sp-cube} and \ref{defineD} that
+  $\scI(\fp_s) \subset B(c(J), 100 D^{s(J)+1})$, contradicting $J \in \mathcal{J}(\mathfrak{T}(\fu))$.
+  Thus $s(J) \le s - 1$ or $s(J) = -S$. If $s(J) = -S$ and $s(J) > s - 1$, then $s = -S$. Thus we
+  always have $s(J) \le s$. It then follows from the triangle inequality and
+  \ref{eq-vol-sp-cube} that $J \subset B(\pc(\fp_s), 16 D^s)$.
+  
+  Thus we can continue our chain of estimates with
+  $$5\cdot 2^{103a^3} \sum_{s\in\sigma(x)}2^{s - \overline{\sigma}(\fu, x)} \frac{1}{\mu(B(x,D^s))}\int_{B(\pc(\fp_s),16 D^s)}P_{\mathcal{J}(\fT(\fu))}|f(y)|\,\mathrm{d}\mu(y)\,.$$
+  We have $B(\pc(\fp_s), 16D^s)) \subset B(x, 32D^s)$, by \ref{eq-vol-sp-cube} and
+  the triangle inequality, since $x \in \scI(\fp_s)$. Combining this with the doubling property
+  \ref{doublingx}, we obtain $$\mu(B(\pc(\fp_s), 16D^s)) \le 2^{5a} \mu(B(x, D^s))\,.$$
+  Since $a \ge 4$, it follows that \ref{eq-term-A} is bounded by
+  $$5\cdot 2^{103a^3} \sum_{s\in\sigma(x)}2^{s - \overline{\sigma}(\fu, x)} \frac{1}{\mu(B(\pc(\fp_s),16D^s))}\int_{B(\pc(\fp_s),16D^s)}P_{\mathcal{J}(\fT(\fu))}|f(y)|\,\mathrm{d}\mu(y)\,.$$
+  Since $L \in \mathcal{L}(\fT(\fu))$ and $x\in L \cap \scI(\fp_s)$, we have $s(L) \le \ps(\fp_s)$. It
+  follows by \ref{dyadicproperty} that $L \subset \scI(\fp_s)$, in particular
+  $x' \in \scI(\fp_s) \subset B(\pc(\fp_s), 16D^s)$. Thus
+  $$\le 5\cdot 2^{104a^3} \sum_{s\in\sigma(x)}2^{s - \overline{\sigma}(\fu, x)} M_{\mathcal{B}, 1}P_{\mathcal{J}(\fT(\fu))}|f|(x')$$
+  $$\le 10\cdot 2^{104a^3} M_{\mathcal{B}, 1}P_{\mathcal{J}(\fT(\fu))}|f|(x')\,.$$ This completes the
+  estimate for term \ref{eq-term-A}.
+  -/)
+  (latexEnv := "lemma")]
 lemma first_tree_pointwise (hu : u ∈ t) (hL : L ∈ 𝓛 (t u)) (hx : x ∈ L) (hx' : x' ∈ L)
     (hf : BoundedCompactSupport f) :
     ‖∑ i ∈ t.σ u x, ∫ y, (exp (.I * (-𝒬 u y + Q x y + 𝒬 u x - Q x x)) - 1) * Ks i x y * f y‖ₑ ≤
@@ -645,7 +749,32 @@ lemma first_tree_pointwise (hu : u ∈ t) (hL : L ∈ 𝓛 (t u)) (hx : x ∈ L)
       rw [hpₛ]; gcongr ?_ / _
       rw [← hpₛ]; exact L7_1_4_integral_le_integral hu hf pₛu xpₛ
 
-/-- Lemma 7.1.5 -/
+/--
+For all $\fu \in \fU$, all $L \in \mathcal{L}(\fT(\fu))$, all $x, x' \in L$ and all bounded $f$ with
+bounded support, we have
+$$\Bigg| \sum_{s \in \sigma(\fu, x)} \int K_s(x,y) P_{\mathcal{J}(\fT(\fu))} f(y) \, \mathrm{d}\mu(y) \Bigg| \le T_{\mathcal{N}}^{\fcc(\fu)} P_{\mathcal{J}(\fT(\fu))} f(x')\,.$$
+
+Lemma 7.1.5
+-/
+@[blueprint
+  "second tree pointwise"
+  (proof := /--
+  Let $s_1 = \underline{\sigma}(\fu, x)$. By definition, there exists a tile $\fp \in \fT(\fu)$ with
+  $\ps(\fp) = s_1$ and $x \in E(\fp)$. Then $x \in \scI(\fp) \cap L$. By
+  \ref{dyadicproperty} and the definition of $\mathcal{L}(\fT(\fu))$, it follows that
+  $L \subset \scI(\fp)$, in particular $x' \in \scI(\fp)$, so $x \in I_{s_1}(x')$. Next, let
+  $s_2 = \overline{\sigma}(\fu, x)$ and let $\fp' \in \fT(\fu)$ with $\ps(\fp') = s_2$ and
+  $x \in E(\fp')$. Since $\fp' \in \fT(\fu)$, we have $4\fp' \lesssim \fu$. Since
+  $\tQ(x) \in \fc(\fp')$, it follows that $$d_{\fp}(\fcc(\fu), \tQ(x)) \le 5\,.$$ Applying the
+  doubling property \ref{firstdb} five times, we obtain
+  $$d_{B(c(\fp), 8D^{s_2})}(\fcc(\fu), \tQ(x)) \le 5 \cdot 2^{5a}\,.$$ By the triangle inequality, we
+  have $B(x, D^{s_2}) \subset B(c(\fp), 8 D^{s_2})$, so by \ref{monotonedb}
+  $$d_{B(x, D^{s_2})}(\fcc(\fu), \tQ(x)) \le 5 \cdot 2^{5a}\,.$$ Finally, by applying
+  \ref{seconddb} $100a$ times, we obtain
+  $$d_{B(x, D^{s_2-1})}(\fcc(\fu), \tQ(x)) \le 5 \cdot 2^{-95a} < 1\,.$$ Consequently,
+  $D^{s_2 - 1} < R_Q(\fcc(\fu), x)$. The lemma now follows from the definition of $T_{\mathcal{N}}$.
+  -/)
+  (latexEnv := "lemma")]
 lemma second_tree_pointwise (hu : u ∈ t) (hL : L ∈ 𝓛 (t u)) (hx : x ∈ L) (hx' : x' ∈ L) :
     ‖∑ i ∈ t.σ u x, ∫ y, Ks i x y * approxOnCube (𝓙 (t u)) f y‖ₑ ≤
     nontangentialMaximalFunction (𝒬 u) (approxOnCube (𝓙 (t u)) f) x' := by
@@ -925,7 +1054,52 @@ lemma le_C7_1_6 (a4 : 4 ≤ a) :
         _ ≤ a * a * a := by gcongr
         _ = _ := by ring
 
-/-- Lemma 7.1.6 -/
+/--
+For all $\fu \in \fU$, all $L \in \mathcal{L}(\fT(\fu))$, all $x, x' \in L$ and all bounded $f$ with
+bounded support, we have $$\begin{equation*}
+        \Bigg| \sum_{s \in \sigma(\fu, x)} \int K_s(x,y) (f(y) - P_{\mathcal{J}(\fT(\fu))} f(y)) \, \mathrm{d}\mu(y) \Bigg|
+\end{equation*}$$ $$\begin{equation*}
+          \le 2^{128a^3} S_{1,\fu} P_{\mathcal{J}(\fT(\fu))}|f|(x')\,.
+\end{equation*}$$
+
+Lemma 7.1.6
+-/
+@[blueprint
+  "third tree pointwise"
+  (proof := /--
+  We have for $J \in \mathcal{J}(\fT(\fu))$:
+  $$\int_J K_{s}(x,y)(1 - P_{\mathcal{J}(\fT(\fu))})f(y) \, \mathrm{d}\mu(y)$$ $$\begin{equation}
+      \label{eq-canc-comp}
+          = \int_J \frac{1}{\mu(J)} \int_J K_s(x,y) - K_s(x,z) \, \mathrm{d}\mu(z) \,f(y) \, \mathrm{d}\mu(y)\,.
+  \end{equation}$$ By \ref{eq-Ks-smooth} and \ref{eq-vol-sp-cube}, we
+  have for $y, z \in J$
+  $$|K_s(x,y) - K_s(x,z)| \le \frac{2^{127a^3}}{\mu(B(x, D^s))} \left(\frac{8 D^{s(J)}}{D^s}\right)^{1/a}\,.$$
+  Suppose that $s \in \sigma(\fu, x)$. If $K_s(x,y) \ne 0$ for some
+  $y \in J \in \mathcal{J}(\fT(\fu))$ then, by \ref{supp-Ks},
+  $y \in B(x, 0.5 D^s) \cap J \ne \emptyset$. Let $\fp \in \fT(\fu)$ with $\ps(\fp) = s$ and
+  $x \in E(\fp)$. Then $B(\pc(\fp_s), 4.5D^s) \cap J \ne \emptyset$ by the triangle inequality. If
+  $s(J) \ge s$ and $s(J) > -S$, then it follows from the triangle inequality,
+  \ref{eq-vol-sp-cube} and \ref{defineD} that
+  $\scI(\fp) \subset B(c(J), 100 D^{s(J)+1})$, contradicting $J \in \mathcal{J}(\mathfrak{T}(\fu))$.
+  Thus $s(J) \le s - 1$ or $s(J) = -S$. If $s(J) = -S$ and $s(J) > s - 1$, then $s = -S$. So in both
+  cases, $s(J) \le s$. It then follows from the triangle inequality and
+  \ref{eq-vol-sp-cube} that $J \subset B(x, 16 D^s)$.
+  
+  Thus, we can estimate \ref{eq-term-C} by
+  $$2^{127a^3 + 3/a}\sum_{\fp\in \mathfrak{T}}\frac{\mathbf{1}_{E(\fp)}(x)}{\mu(B(x,D^{\ps(\fp)}))}\sum_{\substack{J\in \mathcal{J}(\fT(\fu))\\J\subset B(x, 16D^{\ps(\fp)})\\ s(J) \le \ps(\fp)}} D^{(s(J) - \ps(\fp))/a} \int_J |f|\,.$$
+  $$= 2^{127a^3 + 3/a}\sum_{I \in \mathcal{D}} \sum_{\substack{\fp\in \mathfrak{T}\\ \scI(\fp) = I}}\frac{\mathbf{1}_{E(\fp)}(x)}{\mu(B(x, D^{s(I)}))}\sum_{\substack{J\in \mathcal{J}(\fT(\fu))\\J\subset B(x, 16 D^{s(I)})\\ s(J) \le s(I)}} D^{(s(J) - s(I))/a} \int_J |f|\,.$$
+  By \ref{eq-dis-freq-cover} and \ref{defineep}, the sets $E(\fp)$ for
+  tiles $\fp$ with $\scI(\fp) = I$ are pairwise disjoint. It follows from the definition of
+  $\mathcal{L}(\fT(\fu))$ that $x \in \scI(\fp)$ if and only if $x' \in \scI(\fp)$, thus we can
+  estimate the sum over $\mathbf{1}_{E(\fp)}(x)$ by $\mathbf{1}_{I}(x')$. If $x \in E(\fp)$ then in
+  particular $x \in \scI(\fp)$, so by \ref{eq-vol-sp-cube}
+  $B(c(I),16D^{s(I)}) \subset B(x, 32D^{s(I)})$. By the doubling property \ref{doublingx}
+  $$\mu(B(c(I), 16D^{s(I)})) \le 2^{5a} \mu(B(x, D^{s(I)}))\,.$$ Since $a \ge 4$ we can continue our
+  estimate with
+  $$\le 2^{128a^3}\sum_{I \in \mathcal{D}} \frac{\mathbf{1}_{I}(x')}{\mu(B(c(I), 16D^{s(I)}))}\sum_{\substack{J\in \mathcal{J}(\fT(\fu))\\J\subset B(x, 16 D^{s(I)})\\ s(J) \le s(I)}} D^{(s(J) - s(I))/a} \int_J |f|$$
+  $$= 2^{128a^3} S_{1,\fu} P_{\mathcal{J}(\fT(\fu))}|f|(x')\,.$$ This completes the proof.
+  -/)
+  (latexEnv := "lemma")]
 lemma third_tree_pointwise (hu : u ∈ t) (hL : L ∈ 𝓛 (t u)) (hx : x ∈ L) (hx' : x' ∈ L)
     (hf : BoundedCompactSupport f) :
     ‖∑ i ∈ t.σ u x, ∫ y, Ks i x y * (f y - approxOnCube (𝓙 (t u)) f y)‖ₑ ≤
@@ -1044,7 +1218,40 @@ lemma C7_1_4_le_C7_1_3 {a : ℕ} (ha : 4 ≤ a) : C7_1_4 a ≤ C7_1_3 a := by
   gcongr
   linarith [seven_le_c]
 
-/-- Lemma 7.1.3. -/
+/--
+Let $\fu \in \fU$ and $L \in \mathcal{L}(\fT(\fu))$. Let $x, x' \in L$. Then for all bounded
+functions $f$ with bounded support
+$$\left|\sum_{\fp \in \fT(\fu)} T_{\fp}[ e(-\fcc(\fu))f](x)\right|$$ $$\begin{equation}
+        \label{eq-LJ-ptwise}
+        \leq 2^{129a^3}(M_{\mathcal{B},1}+S_{1,\fu})P_{\mathcal{J}(\fT(\fu))}|f|(x')+|T_{\mathcal{N}}^{\fcc(\fu)} P_{\mathcal{J}(\fT(\fu))}f(x')|,
+\end{equation}$$
+
+Lemma 7.1.3.
+-/
+@[blueprint
+  "pointwise tree estimate"
+  (proof := /--
+  By \ref{definetp}, if $T_{\fp}[ e(-\fcc(\fu))f](x) \ne 0$, then $x \in E(\fp)$. Combining
+  this with $|e(\fcc(\fu)(x))| = 1$, we obtain
+  $$|\sum_{\fp \in \fT(\fu)} T_{\fp}[ e(-\fcc(\fu))f](x)|$$ $$\begin{multline*}
+          = \Bigg| \sum_{s \in \sigma(\fu, x)} \int e(-\fcc(\fu)(y) + \tQ(x)(y) + \fcc(\fu)(x) -\tQ(x)(x))\times\\
+          K_s(x,y)f(y) \, \mathrm{d}\mu(y) \Bigg|\,.
+  \end{multline*}$$ Using the triangle inequality, we bound this by the sum of three terms:
+  $$\begin{multline}
+          \label{eq-term-A}
+          \le \Bigg| \sum_{s \in \sigma(\fu, x)} \int (e(-\fcc(\fu)(y) + \tQ(x)(y) + \fcc(\fu)(x) -\tQ(x)(x))-1)\times\\
+          K_s(x,y)f(y) \, \mathrm{d}\mu(y) \Bigg|
+  \end{multline}$$ $$\begin{equation}
+          \label{eq-term-B}
+          + \Bigg| \sum_{s \in \sigma(\fu, x)} \int K_s(x,y) P_{\mathcal{J}(\fT(\fu))} f(y) \, \mathrm{d}\mu(y) \Bigg|
+  \end{equation}$$ $$\begin{equation}
+          \label{eq-term-C}
+          + \Bigg| \sum_{s \in \sigma(\fu, x)} \int K_s(x,y) (f(y) - P_{\mathcal{J}(\fT(\fu))} f(y)) \, \mathrm{d}\mu(y) \Bigg|\,.
+  \end{equation}$$ The proof is completed using the bounds for these three terms proven respectively
+  in `TileStructure.Forest.first_tree_pointwise`, `TileStructure.Forest.second_tree_pointwise` and
+  `TileStructure.Forest.third_tree_pointwise`.
+  -/)
+  (latexEnv := "lemma")]
 lemma pointwise_tree_estimate (hu : u ∈ t) (hL : L ∈ 𝓛 (t u)) (hx : x ∈ L) (hx' : x' ∈ L)
     (hf : BoundedCompactSupport f) :
     ‖carlesonSum (t u) (fun y ↦ exp (.I * - 𝒬 u y) * f y) x‖ₑ ≤

@@ -1,3 +1,4 @@
+import BlueprintGen
 import Carleson.ToMathlib.Misc
 import Carleson.ToMathlib.CoveredByBalls
 import Mathlib.Data.Real.StarOrdered
@@ -426,6 +427,34 @@ lemma Subsingleton.ball_eq {α} [PseudoMetricSpace α] [Subsingleton α] {x : α
     ball x r = if r > 0 then {x} else ∅ := by
   ext y; cases Subsingleton.elim x y; simp
 
+attribute [blueprint
+  "real line ball measure"
+  (statement := /--
+  We have for every $x\in \R$ and $R>0$ $$\begin{equation}
+          \mu(B(x,R))=2R\, .
+  \end{equation}$$
+  -/)
+  (uses := [Real.ball_eq_Ioo])
+  (proof := /--
+  We have with `Real.ball_eq_Ioo` $$\begin{equation}
+      \mu(B(x,R))=\mu((x-R,x+R))=2R\, .
+  \end{equation}$$
+  -/)
+  (latexEnv := "lemma")] Real.volume_ball
+
+/--
+We have for every $x\in \R$ and $R>0$ $$\begin{equation}
+        \mu(B(x,2R))=2\mu(B(x,R))\, .
+\end{equation}$$
+-/
+@[blueprint
+  "real line doubling"
+  (proof := /--
+  We have with `Real.volume_ball` $$\begin{equation}
+      \mu(B(x,2R)=4R=2\mu(B(x,R))\, .
+  \end{equation}$$ This proves the lemma.
+  -/)
+  (latexEnv := "lemma")]
 instance InnerProductSpace.IsDoubling {E : Type*} [NormedAddCommGroup E]
     [InnerProductSpace ℝ E] [MeasurableSpace E] [BorelSpace E] [FiniteDimensional ℝ E] :
     IsDoubling (volume : Measure E) (2 ^ finrank ℝ E) where

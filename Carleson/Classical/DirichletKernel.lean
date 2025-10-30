@@ -1,5 +1,6 @@
 /- This file contains definitions and lemmas regarding the Dirichlet kernel. -/
 
+import BlueprintGen
 import Carleson.Classical.Basic
 import Mathlib.Algebra.Order.BigOperators.Group.LocallyFinite
 
@@ -63,7 +64,45 @@ lemma dirichletKernel'_periodic : Function.Periodic (dirichletKernel' N) (2 * π
 lemma dirichletKernel'_measurable : Measurable (dirichletKernel' N) := by
   apply Measurable.add <;> fun_prop
 
-/-- Second part of Lemma 11.1.8 (Dirichlet kernel) from the paper. -/
+/--
+We have for every $2\pi$-periodic bounded measurable $f$ and every $N\ge 0$ $$\begin{equation}
+    S_Nf(x)=\frac 1{2\pi}\int_{0}^{2\pi}f(y) K_N(x-y)\, dy
+\end{equation}$$ where $K_N$ is the $2\pi$-periodic continuous function of $\R$ given by
+$$\begin{equation}
+\label{eqksumexp}
+\sum_{n=-N}^N e^{in x'}\, .
+\end{equation}$$ We have for $e^{ix'}\neq 1$ that $$\begin{equation}
+\label{eqksumhil}
+    K_N(x')=\frac{e^{iNx'}}{1-e^{-ix'}}
+      +\frac {e^{-iNx'}}{1-e^{ix'}} \, .
+\end{equation}$$
+
+Second part of Lemma 11.1.8 (Dirichlet kernel) from the paper.
+-/
+@[blueprint
+  "Dirichlet kernel"
+  (proof := /--
+  We have by definitions and interchanging sum and integral $$\begin{equation*}
+          S_Nf(x)=\sum_{n=-N}^N \widehat{f}_n e^{inx}
+  \end{equation*}$$ $$\begin{equation*}
+      =\sum_{n=-N}^N \frac 1{2\pi}\int_{0}^{2\pi}
+      f(x) e^{in(x-y)}\, dy
+  \end{equation*}$$ $$\begin{equation}
+  \label{eq-expsum}
+       =\frac 1{2\pi}\int_{0}^{2\pi}
+      f(y) \sum_{n=-N}^N e^{in(x-y)}\, dy\, .
+  \end{equation}$$ This proves the first statement of the lemma. By a telescoping sum, we have for
+  every $x'\in \R$ $$\begin{equation}
+      \left( e^{\frac 12 ix'}-e^{-\frac 12 ix'}\right) \sum_{n=-N}^N e^{inx'}= e^{(N+\frac 12) ix'}-e^{-(N+\frac 12) ix'}\, .
+  \end{equation}$$ If $e^{ix'}\neq 1$, the first factor on the left-hand side is not $0$ and we may
+  divide by this factor to obtain $$\begin{equation}
+        \sum_{n=-N}^N e^{inx'}= \frac{e^{i(N+\frac 1 2)x'}}{e^{\frac 12 ix'}-e^{-\frac 12ix'}}
+        -\frac{e^{-i(N+\frac 1 2)x'}}{e^{\frac 12 ix'}-e^{-\frac 12ix'}}
+         =\frac{e^{iNx'}}{1-e^{-ix'}}
+        +\frac {e^{-iNx'}}{1-e^{ix'}}\, .
+  \end{equation}$$ This proves the second part of the lemma.
+  -/)
+  (latexEnv := "lemma")]
 lemma dirichletKernel_eq {x : ℝ} (h : cexp (I * x) ≠ 1) :
     dirichletKernel N x = dirichletKernel' N x := by
   have : (cexp (1 / 2 * I * x) - cexp (-1 / 2 * I * x)) * dirichletKernel N x

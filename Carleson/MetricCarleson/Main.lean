@@ -1,3 +1,4 @@
+import BlueprintGen
 import Carleson.MetricCarleson.Linearized
 
 open scoped NNReal
@@ -194,7 +195,57 @@ lemma BST_LNT_of_BST_NT {Q : SimpleFunc X (Θ X)}
         apply le_iSup₂ _ this
       apply le_iSup₂ _ mx'
 
-/-- Theorem 1.1.1 -/
+/--
+For all integers $a \ge 4$ and real numbers $1<q\le 2$ the following holds. Let $(X,\rho,\mu,a)$ be
+a doubling metric measure space. Let $\Mf$ be a cancellative compatible collection of functions and
+let $K$ be a one-sided Calderón--Zygmund kernel on $(X,\rho,\mu,a)$. Assume that for every bounded
+measurable function $g$ on $X$ supported on a set of finite measure we have $$\begin{equation}
+\label{nontanbound}
+        \|T_{*}g\|_{2} \leq 2^{a^3} \|g\|_2\,,
+\end{equation}$$ where $T_{*}$ is defined in \ref{def-tang-unm-op}. Then for all
+Borel sets $F$ and $G$ in $X$ and all Borel functions $f:X\to \C$ with $|f|\le \mathbf{1}_F$, we
+have, with $T$ defined in \ref{def-main-op}, $$\begin{equation}
+        \label{resweak}
+        \left|\int_{G} T f \, \mathrm{d}\mu\right| \leq \frac{2^{443a^3}}{(q-1)^6} \mu(G)^{1-\frac{1}{q}} \mu(F)^{\frac{1}{q}}\, .
+\end{equation}$$
+
+Theorem 1.1.1
+-/
+@[blueprint
+  "metric space Carleson"
+  (proof := /--
+  Let Borel sets $F$, $G$ in $X$ be given. Let a Borel function $f: X \to \mathbb{C}$ with
+  $f \le \mathbf{1}_F$ be given.
+  
+  Let $\Mf' \subset \Mf$ be a countable dense set. By Lemma `continuous_carlesonOperatorIntegrand` we
+  have
+  $$\sup_{\mfa\in\Mf} \sup_{0 < R_1 < R_2}\left| \int_{R_1 < \rho(x,y) < R_2} K(x,y) f(y) e(\mfa(y)) \, \mathrm{d}\mu(y) \right|$$
+  $$= \sup_{\mfa\in\Mf'} \sup_{0 < R_1 < R_2, R_i \in \mathbb{Q}}\left| \int_{R_1 < \rho(x,y) < R_2} K(x,y) f(y) e(\mfa(y)) \, \mathrm{d}\mu(y) \right|.$$
+  Consider an enumeration of $\Mf'$ and let $\Mf_n$ be the finite set consisting of the first $n+1$
+  functions in the enumeration. Then by the monotone convergence theorem
+  $$\Big| \int_G Tf \, \mathrm{d}\mu\Big|$$
+  $$= \int_G \sup_{\mfa\in\Mf'} \sup_{0 < R_1 < R_2, R_i \in \mathbb{Q}}\left| \int_{R_1 < \rho(x,y) < R_2} K(x,y) f(y) e(\mfa(y)) \, \mathrm{d}\mu(y) \right| \, \mathrm{d}\mu(x)$$
+  $$= \lim_{n \to \infty} \int_G \sup_{\mfa\in\Mf_n} \sup_{0 < R_1 < R_2, R_i \in \mathbb{Q}}\left| \int_{R_1 < \rho(x,y) < R_2} K(x,y) f(y) e(\mfa(y)) \, \mathrm{d}\mu(y) \right| \, \mathrm{d}\mu(x).$$
+  For each $n$, let $Q_n(x)$ be the measurable function specifying the maximizer in the supremum in
+  $\mfa$ in the previous line. It is possible to construct such a measurable function of $x$, because
+  the function inside the supremum is measurable in $x$, being a countable supremum of measurable
+  functions, and because $\Mf_n$ is finite. (For example one may fix some order on the finite set
+  $\Mf_n$ and pick the smallest maximizer with respect to that order. This is a measurable choice
+  function.) Then the previous display becomes
+  $$\le \lim_{n \to \infty} \int_G \sup_{0 < R_1 < R_2} \left| \int_{R_1 < \rho(x,y) < R_2} K(x,y) f(y) e(Q_n(x)(y)) \, \mathrm{d}\mu(y) \right| \, \mathrm{d}\mu(x).$$
+  $$= \lim_{n \to \infty} \int_G T_{Q_n} f \, \mathrm{d}\mu.$$ It remains to verify the assumptions of
+  Theorem `linearized_metric_carleson`, which when applied here completes the proof.
+  
+  The assumptions of Theorem `metric_carleson` and Theorem `linearized_metric_carleson` are the same,
+  with the exception of the assumption \ref{linnontanbound}. The assumption
+  \ref{linnontanbound} however is weaker than the assumption
+  \ref{nontanbound} of Theorem `metric_carleson`. Indeed, setting for fixed $x, \mfa$
+  the outer radius $R_2$ in \ref{def-tang-unm-op} to $\min\{R_2', R_Q(\mfa, x')\}$,
+  where $R_2'$ is the outer radius in \ref{def-lin-star-op}, shows that
+  \ref{def-lin-star-op} is smaller than or equal to
+  \ref{def-tang-unm-op}. Thus we can apply Theorem `linearized_metric_carleson`,
+  which completes the proof.
+  -/)]
 theorem metric_carleson [IsCancellative X (defaultτ a)]
     (hq : q ∈ Ioc 1 2) (hqq' : q.HolderConjugate q') (mF : MeasurableSet F) (mG : MeasurableSet G)
     (mf : Measurable f) (nf : (‖f ·‖) ≤ F.indicator 1)

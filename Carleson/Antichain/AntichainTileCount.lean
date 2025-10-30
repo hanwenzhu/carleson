@@ -1,3 +1,4 @@
+import BlueprintGen
 import Carleson.Antichain.Basic
 
 /-!
@@ -26,7 +27,59 @@ namespace Antichain
 variable {X : Type*} {a : ℕ} {q : ℝ} {K : X → X → ℂ} {σ₁ σ₂ : X → ℤ} {F G : Set X}
   [MetricSpace X] [ProofData a q K σ₁ σ₂ F G] [TileStructure Q D κ S o]
 
-/-- Lemma 6.3.1. -/
+/--
+Let $\mfa\in \Mf$ and $N\ge0$ be an integer. Let $\fp, \fp'\in \fP$ with $$\begin{equation}
+\label{eqassumedismfa}
+    d_{\fp}(\fcc(\fp), \mfa))\le 2^N\,
+\end{equation}$$ $$\begin{equation}
+\label{eqassumedismfap}
+    d_{\fp'}(\fcc(\fp'), \mfa))\le 2^N\, .
+\end{equation}$$ Assume $\scI(\fp)\subset \scI(\fp')$ and $\ps(\fp)<\ps(\fp')$. Then
+$$\begin{equation}
+\label{lp'lp''}2^{N+2}\fp\lesssim 2^{N+2} \fp'\, .
+\end{equation}$$
+
+Lemma 6.3.1.
+-/
+@[blueprint
+  "tile reach"
+  (proof := /--
+  By `Grid.dist_mono`, we have $$\begin{equation}
+       d_{\fp}(\fcc(\fp'),\mfa)
+       \le d_{\fp'}(\fcc(\fp'),\mfa)
+       \le 2^{N} \, .
+  \end{equation}$$ Together with \ref{eqassumedismfa} and the triangle inequality, we
+  obtain $$\begin{equation}
+  \label{eqdistqpqp}
+      d_{\fp}(\fcc(\fp'),\fcc(\fp))\le 2^{N+1} \, .
+  \end{equation}$$ Now assume $$\begin{equation}
+      \mfa'\in B_{\fp'}(\fcc(\fp'),2^{N+2}).
+  \end{equation}$$ By the doubling property \ref{firstdb}, applied five times, we have
+  $$\begin{equation}
+  \label{ageo1} d_{B(\pc(\fp'),8D^{\ps(\fp')})}(\fcc(\fp'),\mfa') < 2^{5a+N+2}\, .
+  \end{equation}$$ We have by the squeezing property \ref{eq-vol-sp-cube}
+  $$\begin{equation}
+   \pc(\fp)\in
+  B(\pc(\fp'),4D^{\ps(\fp')})\, .
+  \end{equation}$$ Hence by the triangle inequality $$\begin{equation}
+   B(\pc(\fp), 4D^{\ps(\fp')})
+   \subseteq
+  B(\pc(\fp'),8D^{\ps(\fp')})\, .
+  \end{equation}$$ Together with \ref{ageo1} and monotonicity \ref{monotonedb} of
+  $d$ $$\begin{equation}
+      d_{B(\pc(\fp),4D^{\ps(\fp')})}(\fcc(\fp'),\mfa') < 2^{5a+N+2}\, .
+  \end{equation}$$ Using the doubling property \ref{seconddb} $5a+2$ times gives
+  $$\begin{equation}
+      d_{B(\pc(\fp),2^{2-5a^2-2a}D^{\ps(\fp')})}(\fcc(\fp'),\mfa') < 2^{N}\, .
+  \end{equation}$$ Using $\ps(\fp)<\ps(\fp')$ and $D=2^{100a^2}$ and $a\ge 4$ gives $$\begin{equation}
+      d_{\fp}(\fcc(\fp'),\mfa') < 2^{N}\, .
+  \end{equation}$$ With the triangle inequality and \ref{eqdistqpqp}, $$\begin{equation}
+      d_{\fp}(\fcc(\fp),\mfa') < 2^{N+2}\, .
+  \end{equation}$$ This shows $$\begin{equation}
+  B_{\fp'}(\fcc(\fp'),2^{N+2})\subset B_{\fp}(\fcc(\fp),2^{N+2})\, .
+  \end{equation}$$ This implies [\[lp\'lp\'\'\]](#lp'lp'') and completes the proof of the lemma.
+  -/)
+  (latexEnv := "lemma")]
 -- hp is eq. 6.3.1, hp' is eq. 6.3.2.
 lemma tile_reach {ϑ : Θ X} {N : ℕ} {p p' : 𝔓 X} (hp : dist_(p) (𝒬 p) ϑ ≤ 2 ^ N)
     (hp' : dist_(p') (𝒬 p') ϑ ≤ 2 ^ N) (hI : 𝓘 p ≤ 𝓘 p') (hs : 𝔰 p < 𝔰 p') :
@@ -162,7 +215,44 @@ lemma biUnion_𝔄_aux {𝔄 : Set (𝔓 X)} {ϑ : Θ X} :
 open Metric
 
 open scoped Classical in
-/-- Lemma 6.3.2. -/
+/--
+Let $\mfa \in \Mf$, $N\ge 0$ and $L\in \mathcal{D}$. Then $$\begin{equation}
+\label{eqanti-1}
+    \sum_{\fp\in\mathfrak{A}_{\mfa,N}:\scI(\fp)=L}\mu(E(\fp)\cap G)\le 2^{a(N+5)}\dens_1(\mathfrak{A})\mu(L)\, .
+\end{equation}$$
+
+Lemma 6.3.2.
+-/
+@[blueprint
+  "stack density"
+  (proof := /--
+  Let $\mfa,N,L$ be given and set $$\begin{equation}
+  \mathfrak{A}':=\{\fp\in\mathfrak{A}_{\mfa,N}:\scI(\fp)=L\}\, .
+  \end{equation}$$ Let $\fp\in\mathfrak{A}'$. We have by Definition \ref{definedens1}
+  using $\lambda=2$ and the squeezing property \ref{eq-freq-comp-ball}
+  $$\begin{equation}
+  \label{eqanti-3}
+  \mu(E(\fp)\cap G)\le \mu(E_2(2, \fp))\le 2^{a}\dens_1(\mathfrak{A}')\mu(L)\, .
+  \end{equation}$$ By the covering property \ref{thirddb}, applied $N+4$ times, there is a
+  collection $\Mf'$ of at most $2^{a(N+4)}$ elements such that $$\begin{equation}
+  \label{eqanti-4}
+      B_{\fp}(\mfa, 2^{N+1})\subset \bigcup_{\mfa'\in \Mf'}
+      B_{\fp}(\mfa', 0.2)\, .
+  \end{equation}$$ As each $\fcc(\fp')$ with $\fp'\in \mathfrak{A}'$ is contained in the
+  left-hand-side of \ref{eqanti-4} by definition (because $\scI(\fp') = \scI(\fp))$, it is
+  in at least one $B_{\fp}(\mfa', 0.2)$ with $\mfa'\in \Mf'$.
+  
+  For two different $\fp',\fp''\in \mathfrak{A}'$, we have by
+  \ref{eq-dis-freq-cover} that $\fc(\fp')$ and $\fc(\fp'')$ are disjoint and thus
+  by the squeezing property \ref{eq-freq-comp-ball} we have for every
+  $\mfa'\in \Mf'$ $$\begin{equation}
+      \mfa'\not\in B_{\fp}(\fcc(\fp'), 0.2)\cap
+  B_{\fp}(\fcc(\fp''), 0.2)\, .
+  \end{equation}$$ Hence at most one of $\fcc(\fp')$ and $\fcc(\fp'')$ is in $B_{\fp}(\mfa', 0.2)$. It
+  follows that there are at most $2^{a(N+4)}$ elements in $\mathfrak{A}'$. Adding
+  \ref{eqanti-3} over $\mathfrak{A}'$ proves \ref{eqanti-1}.
+  -/)
+  (latexEnv := "lemma")]
 lemma stack_density (𝔄 : Set (𝔓 X)) (ϑ : Θ X) (N : ℕ) (L : Grid X) :
     ∑ p ∈ 𝔄_aux 𝔄 ϑ N with 𝓘 p = L, volume (E p ∩ G) ≤
       2^(a * (N + 5)) * dens₁ (𝔄 : Set (𝔓 X)) * volume (L : Set X) := by
@@ -322,7 +412,36 @@ lemma Ep_inter_G_inter_Ip'_subset_E2 {𝔄 : Set (𝔓 X)} (ϑ : Θ X) (N : ℕ)
 
 -- p' is 𝔭_ϑ in the blueprint
 open Classical in
-/-- Lemma 6.3.3. -/
+/--
+Let $\mfa\in\Mf$ and $N$ be an integer. Let $\fp_{\mfa}$ be a tile with
+$\mfa\in B_{\fp_{\mfa}}(\fcc(\fp_{\mfa}), 2^{N+1})$. Then we have $$\begin{equation}
+\label{eqanti-0.5}
+    \sum_{\fp\in\mathfrak{A}_{\mfa,N}: \ps(\fp_{\mfa})<\ps(\fp)}\mu(E(\fp)\cap G \cap \scI(\fp_{\mfa}))
+    \le \mu (E_2(2^{N+3},\fp_{\mfa}))
+ \, .
+\end{equation}$$
+
+Lemma 6.3.3.
+-/
+@[blueprint
+  "local antichain density"
+  (proof := /--
+  Let $\fp$ be any tile in $\mathfrak{A}_{\mfa,N}$ with $\ps(\fp_{\mfa})<\ps(\fp)$. By definition of
+  $E$, the tile contributes zero to the sum on the left-hand side of \ref{eqanti-0.5}
+  unless $\scI(\fp)\cap \scI(\fp_{\mfa}) \neq \emptyset$, which we may assume. With
+  $\ps(\fp_{\mfa})<\ps(\fp)$ and the dyadic property \ref{dyadicproperty} we conclude
+  $\scI(\fp_{\mfa})\subset \scI(\fp)$. We conclude from $\fp \in \mathfrak{A}_{\mfa,N}$ that
+  $$\begin{equation}
+      \mfa \in B_\fp(\fcc(\fp), 2^{N+1})\, .
+  \end{equation}$$ With `Antichain.tile_reach` and the assumption on $\fp_\mfa$, we conclude
+  $$\begin{equation}
+      2^{N+3}\fp_{\mfa} \lesssim 2^{N+3}\fp \, .
+  \end{equation}$$ By Definition \ref{definee2} of $E_2$, we conclude $$\begin{equation}
+      E(\fp)\cap G \cap \scI(\fp_{\mfa}) \subset E_2(2^{N+3},\fp_{\mfa})\, .
+  \end{equation}$$ Using disjointedness of the various $E(\fp)$ with $\fp\in \mathfrak{A}$ by
+  `tile_disjointness`, we obtain \ref{eqanti-0.5}. This proves the lemma.
+  -/)
+  (latexEnv := "lemma")]
 lemma local_antichain_density {𝔄 : Set (𝔓 X)} (h𝔄 : IsAntichain (· ≤ ·) 𝔄) (ϑ : Θ X) (N : ℕ)
     {p' : 𝔓 X} (hp' : ϑ ∈ ball_(p') (𝒬 p') (2 ^ (N + 1))) :
     ∑ p ∈ 𝔄_aux 𝔄 ϑ N with 𝔰 p' < 𝔰 p, volume (E p ∩ G ∩ 𝓘 p') ≤
@@ -894,7 +1013,140 @@ private lemma le_C6_3_4 (ha : 4 ≤ a) :
   linarith [sixteen_times_le_cube ha]
 
 open Classical in
-/-- Lemma 6.3.4. -/
+/--
+Let $\mfa\in Q(X)$ and let $N\ge 0$ be an integer. Then we have $$\begin{equation}
+\label{eqanti00}
+    \sum_{\fp\in\mathfrak{A}_{\mfa,N}}\mu(E(\fp)\cap G)
+    \le
+ 2^{101a^3+Na}\dens_1(\mathfrak{A})\mu\left(\cup_{\fp\in\mathfrak{A}}I_{\fp}\right)\, .
+\end{equation}$$
+
+Lemma 6.3.4.
+-/
+@[blueprint
+  "global antichain density"
+  (proof := /--
+  Fix $\mfa$ and $N$. Let $\mathfrak{A}'$ be the set of $\fp\in\mathfrak{A}_{\mfa,N}$ such that
+  $\scI(\fp)\cap G$ is not empty and $s(\fp) > -S$. Let $\mathfrak{A}_{-S}$ be the set of
+  $\fp\in\mathfrak{A}_{\mfa,N}$ such that $\scI(\fp)\cap G$ is not empty and $s(\fp) = -S$ Then we
+  have $$\begin{equation*}
+      \sum_{\fp\in\mathfrak{A}_{\mfa,N}}\mu(E(\fp)\cap G) =
+      \sum_{\fp\in\mathfrak{A}'}\mu(E(\fp)\cap G) + \sum_{\fp\in\mathfrak{A}_{-S}}\mu(E(\fp)\cap G)
+  \end{equation*}$$
+  
+  We start by estimating the contribution of $\mathfrak{A}_{-S}$. Let $\mathcal{L}_{-S}$ be the
+  collection of dyadic cubes $\scI(\fp)$ with $\fp \in \mathfrak{A}_{-S}$. They all have scale $-S$,
+  by definition of $\mathcal{L}_{-S}$, and hence they are pairwise disjoint by the dyadic property
+  \ref{dyadicproperty}. We write $$\sum_{\fp\in\mathfrak{A}_{-S}}\mu(E(\fp)\cap G)
+      = \sum_{L \in \mathcal{L}_{-S}} \sum_{\fp\in\mathfrak{A}_{-S}, \scI(\fp) = L} \mu(E(\fp)\cap G),$$
+  and using `Antichain.stack_density`, we estimate $$\begin{equation}
+  \label{eq_minus_S}
+      \le 2^{a(N+5)} \dens_1(\mathfrak{A}) \sum_{L \in \mathcal{L}_{-S}} \mu(L)
+      \le 2^{a(N+5)} \dens_1(\mathfrak{A}) \mu\left(\cup_{\fp\in\mathfrak{A}}I_{\fp}\right).
+  \end{equation}$$
+  
+  We turn to $\mathfrak{A}'$. Let $\mathcal{L}$ be the collection of dyadic cubes $I\in\mathcal{D}$
+  such that $I \le \scI(\fp)$ for some $\fp\in\mathfrak{A}'$ and such that $\scI(\fp)\not \subset I$
+  for all $\fp\in\mathfrak{A}'$. By \ref{coverdyadic}, for each $\fp \in \mathfrak{A}'$
+  and each $x\in \scI(\fp)\cap G$, there is $I\in \mathcal{D}$ with $s(I)=-S$ and $x\in I$. By
+  \ref{dyadicproperty}, we have $I\subset \scI(\fp)$. Since for all
+  $\fp' \in \mathfrak{A}'$ we have $s(\fp') > -S$, we have $I \in \mathcal{L}$. Hence
+  $$\begin{equation}
+      \scI(\fp)\subset \bigcup\{I\in \mathcal{D}: s(I)=-S, I\subset \scI(\fp)\}\subset \bigcup \mathcal{L}\, .
+  \end{equation}$$ As each $I\in \mathcal{L}$ satisfies $I\subset \scI(\fp)$ for some $\fp$ in
+  $\mathfrak{A'}$, we conclude $$\begin{equation}
+      \bigcup\mathcal{L}=\bigcup_{\fp \in \mathfrak{A}'}\scI(\fp)\, .
+  \end{equation}$$ Let $\mathcal{L}^*$ be the set of maximal elements in $\mathcal{L}$ with respect to
+  set inclusion. By \ref{dyadicproperty}, the elements in $\mathcal{L}^*$ are
+  pairwise disjoint and we have $$\begin{equation}
+  \label{eqdecAprime}
+  \bigcup\mathcal{L}^*=\bigcup_{\fp \in \mathfrak{A}'}\scI(\fp)\, .
+  \end{equation}$$ Using the partition \ref{eqdecAprime} into elements of $\mathcal{L}$
+  in \ref{eqanti0}, it suffices to show for each $L\in \mathcal{L}^*$ $$\begin{equation}
+  \label{eqanti0}
+      \sum_{\fp\in\mathfrak{A}'}\mu(E(\fp)\cap G \cap L)
+      \le
+      2^{101a^3+aN}
+      \dens_1(\mathfrak{A})\mu(L)\,.
+  \end{equation}$$ Fix $L\in \mathcal{L}^*$. By definition of $\mathcal{L}^*$, there exists an element
+  $\fp'\in \mathfrak{A}'$ such that $L\subset \scI(\fp')$. Pick such an element $\fp'$ in
+  $\mathfrak{A}$ with minimal $\ps(\fp')$. As $\scI(\fp')\not \subset L$ by definition of $L$, we have
+  with \ref{dyadicproperty} that $s(L)< \ps(\fp')$. In particular $s(L)<S$, thus
+  $L \ne I_0$ and hence by \ref{subsetmaxcube} there exists a cube $J \in \mathcal{D}$
+  with $L \subsetneq J$. By \ref{coverdyadic}, there is an $L'\in \mathcal{D}$ with
+  $s(L')=s(L)+1$ and $L \le L'$. By \ref{dyadicproperty}, we have $L\subset L'$.
+  
+  We split the left-hand side of \ref{eqanti0} as $$\begin{equation}
+  \label{eqanti1}
+      \sum_{\fp\in\mathfrak{A}':\scI(\fp)=L'}\mu(E(\fp)\cap G\cap L)
+  \end{equation}$$ $$\begin{equation}
+  \label{eqanti2}
+      +
+       \sum_{\fp\in\mathfrak{A}':\scI(\fp)\neq L'}\mu(E(\fp)\cap G\cap L)\, ,
+  \end{equation}$$
+  
+  We first estimate \ref{eqanti1} with `Antichain.stack_density` by $$\begin{equation}
+  \label{equanti1.5}
+      \le \sum_{\fp\in\mathfrak{A}':\scI(\fp)=L'}\mu(E(\fp)\cap G\cap L')\le 2^{a(N+5)}\dens_1(\mathfrak{A})\mu(L')\, .
+  \end{equation}$$
+  
+  We turn to \ref{eqanti2}. Consider the element $\fp'\in \mathfrak{A}'$ as above with
+  $L\subset \scI(\fp')$ and $s(L)<\ps(\fp')$. As $L\subset L'$ and $s(L')=s(L)+1$, we conclude with
+  the dyadic property that $L'\subset \scI(\fp')$. By maximality of $L$, we have
+  $L'\not\in \mathcal{L}$. This together with the existence of the given $\fp'\in \mathfrak{A}$ with
+  $L'\subset \scI(\fp')$ shows by definition of $\mathcal{L}$ that there exists
+  $\fp''\in \mathfrak{A}'$ with $\scI(\fp'')\subset L'$.
+  
+  If $\scI(\fp'') = L'$, then we set $\fp_{\mfa} = \fp''$ and note that as
+  $\fp'' \in \mathfrak{A}_{\mfa,N}$ $$\begin{equation}
+      \mfa \in B(\fcc(\fp''), 2^{N+1})\, .
+  \end{equation}$$
+  
+  If $\scI(\fp'') \ne L'$, then it follows that $s(\fp'') < s(L')$. By the covering property
+  \ref{eq-dis-freq-cover}, there exists a unique $\fp_{\mfa}$ with
+  $$\begin{equation*}
+      \scI(\fp_{\mfa})=L'
+  \end{equation*}$$ such that $\mfa\in \fc(\fp_{\mfa})$. We take this as the definition of $\fp_\mfa$
+  in this case. Note that $$\begin{equation}
+      \mfa\in B(\fcc(\fp_{\mfa}), 1)
+  \end{equation}$$ so by `Antichain.tile_reach`, we conclude $$\begin{equation}
+      2^{N+3}\fp'' \lesssim 2^{N+3}\fp_{\mfa} \, .
+  \end{equation}$$ This clearly also holds in the case $\scI(\fp'') = L'$, since then
+  $\fp'' = \fp_\mfa$. Furthermore, in both cases it also holds that $$\begin{equation}
+      \mfa\in B_{\fp_{\mfa}}(\fcc(\fp_{\mfa}), 2^{N+1}).
+  \end{equation}$$
+  
+  As $\fp''\in \mathfrak{A}'$, we have by Definition \ref{definedens1} of $\dens_1$ that
+  $$\begin{equation}
+  \label{pmfadens}
+     \mu(E_2(2^{N+3}, \fp_{\mfa}))\le 2^{Na+3a}\dens_1(\mathfrak{A}) {\mu(L')}\, .
+  \end{equation}$$ Now let $\fp$ be any tile in the summation set in \ref{eqanti2}, that is,
+  $\fp\in \mathfrak{A}'$ and $\scI(\fp)\neq L'$. Then $\scI(\fp)\cap L\neq \emptyset$. It follows by
+  the dyadic property \ref{dyadicproperty} and the definition of $L$ that
+  $L\subset \scI(\fp)$ and $L\neq \scI(\fp)$. By the dyadic property
+  \ref{dyadicproperty}, we have $s(L)<\ps(\fp)$ and thus $s(L')\le \ps(\fp)$. By the
+  dyadic property \ref{dyadicproperty} again, we have $L'\subset \scI(\fp)$. As
+  $L'\neq \scI(\fp)$, we conclude $s(L)<\ps(\fp)$. By `Antichain.local_antichain_density`, we can thus
+  estimate \ref{eqanti2} by $$\begin{equation}
+  \label{eqanti0.5}
+      \sum_{\fp\in\mathfrak{A}':\scI(\fp)\neq L'}\mu(E(\fp)\cap G\cap L')
+      \le \mu (E_2(2^{N+3},\fp_{\mfa}))\, .
+  \end{equation}$$ With the decomposition in \ref{eqanti1} and \ref{eqanti2} and
+  the estimates \ref{equanti1.5}, \ref{eqanti-0.5},
+  \ref{pmfadens} we obtain the estimate $$\begin{equation}
+  \label{eqanti3.14}
+  \sum_{\fp\in\mathfrak{A}'}\mu(E(\fp)\cap G \cap L)
+      \le (2^{a(N+5)}+2^{Na+3a})\dens_1(\mathfrak{A})\mu(L')\,.
+  \end{equation}$$
+  
+  Using $s(L')=s(L)+1$ and $D=2^{100a^2}$ and the squeezing property
+  \ref{eq-vol-sp-cube} and the doubling property \ref{doublingx}
+  $100a^2+4$ times , we obtain $$\begin{equation}
+      \mu(L')\le 2^{100a^3+4a}\mu(L)\, .
+  \end{equation}$$ Inserting in \ref{eqanti3.14}, adding the estimate `eq_minus_S` and
+  using $a\ge 4$ gives \ref{eqanti0}. This completes the proof of the lemma.
+  -/)
+  (latexEnv := "lemma")]
 lemma global_antichain_density {𝔄 : Set (𝔓 X)} (h𝔄 : IsAntichain (· ≤ ·) 𝔄) (ϑ : range Q) (N : ℕ) :
     ∑ p ∈ (𝔄_aux 𝔄 ϑ.val N).toFinset, volume (E p ∩ G) ≤
       C6_3_4 a N * dens₁ (𝔄 : Set (𝔓 X)) * volume (⋃ p ∈ 𝔄, (𝓘 p : Set X)) := by
@@ -1102,7 +1354,50 @@ lemma le_C6_1_6 (a4 : 4 ≤ a) :
       · omega
 
 open Classical in
-/-- Lemma 6.1.6. -/
+/--
+Set $p:=4a^4$. For every $\mfa\in\Mf$ and every antichain $\mathfrak{A}$ we have $$\begin{equation}
+        \label{eq-antichain-Lp}
+        \Big\|\sum_{\fp\in\mathfrak{A}}(1+d_{\fp}(\fcc(\fp), \mfa))^{-1/(2a^2+a^3)}\mathbf{1}_{E(\fp)}\mathbf{1}_G\Big\|_{p}
+\end{equation}$$ $$\begin{equation}
+        \le
+        2^{5a}\dens_1(\mathfrak{A})^{\frac 1p}\mu\left(\cup_{\fp\in\mathfrak{A}}I_{\fp}\right)^{\frac 1p}\, .
+\end{equation}$$
+
+Lemma 6.1.6.
+-/
+@[blueprint
+  "antichain tile count"
+  (proof := /--
+  Using that $\mathfrak{A}$ is the disjoint union of the $\mathfrak{A}_{\mfa,N}$ with $N\ge 0$, we
+  estimate the left-hand side \ref{eq-antichain-Lp} with the triangle inequality by
+  $$\begin{equation}
+  \label{eqanti23}
+  \le \sum_{N\ge 0} \left\|\sum_{\fp\in \mathfrak{A}_{\mfa,N}} 2^{-N/(2a^2+a^3)}\mathbf{1}_{E(\fp)} \mathbf{1}_G\right\|_{p}
+  \end{equation}$$ We consider each individual term in this sum and estimate its $p$-th power. Using
+  that for each $x\in X$ by `tile_disjointness` there is at most one $\fp\in \mathfrak{A}$ with
+  $x\in E(\fp)$, we have $$\begin{equation}
+      \left\|\sum_{\fp\in \mathfrak{A}_{\mfa,N}} 2^{-N/(2a^2+a^3)}\mathbf{1}_{E(\fp)} \mathbf{1}_G\right\|_{p}^p
+  \end{equation}$$ $$\begin{equation}
+      =\int\Big(\sum_{\fp\in \mathfrak{A}_{\mfa,N}}2^{-N/(2a^2+a^3)}\mathbf{1}_{E(\fp)\cap G}(x)\Big)^p\, d\mu(x)
+  \end{equation}$$ $$\begin{equation}
+      =\int\sum_{\fp\in\mathfrak{A}_{\mfa,N}}2^{-pN/(2a^2+a^3)}\mathbf{1}_{E(\fp)\cap G}(x)\, d\mu(x)
+  \end{equation}$$ $$\begin{equation}
+      = 2^{-pN/(2a^2+a^3)} \sum_{\fp\in\mathfrak{A}_{\mfa,N}}\mu(E(\fp)\cap G)
+  \end{equation}$$
+  
+  Using `Antichain.global_antichain_density`, we estimate the last display by $$\begin{equation}
+  \label{eqanti21}
+      \le 2^{-pN/(2a^2+a^3)+101a^3+Na}\dens_1(\mathfrak{A})\mu\left(\cup_{\fp\in\mathfrak{A}}\scI(\fp)\right)
+  \end{equation}$$ Using that $a\ge 4$ and since $p = 4a^4$, we have
+  $$pN/(2a^2+a^3)\ge 4a^4N/(3a^3) \ge Na+N\, .$$ Hence we have for \ref{eqanti21} the upper
+  bound
+  $$\le 2^{101a^3-N}\dens_1(\mathfrak{A})\mu\left(\cup_{\fp\in\mathfrak{A}}\scI(\fp)\right)\, .$$
+  Taking the $p$-th root and summing over $N\ge 0$ gives for \ref{eqanti23} the upper bound
+  $$\le \left(\sum_{N\ge 0} 2^{-N/p}\right)2^{101a^3/p}\dens_1(\mathfrak{A})^{{\frac{1}{p}}}\mu\left(\cup_{\fp\in\mathfrak{A}}\scI(\fp)\right)^{{\frac{1}{p}}}$$
+  $$= \left(1-2^{-1/p}\right)^{-1} 2^{101a^3/p} \dens_1(\mathfrak{A})^{\frac 1p}\mu\left(\cup_{\fp\in\mathfrak{A}}\scI(\fp)\right)^{\frac 1p}\, .$$
+  Using that $p = 4a^4$ and $a \ge 4$, this proves the lemma.
+  -/)
+  (latexEnv := "lemma")]
 lemma tile_count {𝔄 : Set (𝔓 X)} (h𝔄 : IsAntichain (· ≤ ·) 𝔄) (ϑ : range (Q (X := X))) :
     eLpNorm (fun x ↦ ∑ p with p ∈ 𝔄, (1 + edist_(p) (𝒬 p) ϑ.val) ^ (-(2 * a ^ 2 + a ^ 3 : ℝ)⁻¹) *
       (E p).indicator 1 x * G.indicator 1 x) (ENNReal.ofReal (p₆ a)) volume ≤

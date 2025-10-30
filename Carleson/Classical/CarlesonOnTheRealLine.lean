@@ -1,3 +1,4 @@
+import BlueprintGen
 import Carleson.Classical.CarlesonOperatorReal
 import Carleson.Classical.HilbertStrongType
 import Carleson.Classical.VanDerCorput
@@ -126,6 +127,11 @@ lemma localOscillation_of_integer_linear {x R : ℝ} (R_nonneg : 0 ≤ R) : ∀ 
 
 end
 
+/-- For every $R > 0$ and $x \in X$, the function $d_{B(x,R)}$ is a metric on $\Mf$. -/
+@[blueprint
+  "frequency metric"
+  (proof := /-- This follows immediately from the fact that the standard metric on $\mathbb{Z}$ is a metric. -/)
+  (latexEnv := "lemma")]
 instance instFunctionDistancesReal : FunctionDistances ℝ ℝ where
   Θ := ℤ
   coeΘ := integer_linear
@@ -153,6 +159,20 @@ lemma coeΘ_R (n : Θ ℝ) (x : ℝ) : n x = n * x := rfl
 
 lemma coeΘ_R_C (n : Θ ℝ) (x : ℝ) : (n x : ℂ) = n * x := by norm_cast
 
+/--
+For every $R > 0$ and $x \in X$, and for all $n, m \in \mathbb{Z}$, we have $$\begin{equation}
+\label{eqcarl2}
+       \sup_{y,y'\in B(x,R)}|ny-ny'-my+my'|\le 2|n-m|R\, .
+\end{equation}$$
+-/
+@[blueprint
+  "oscillation control"
+  (proof := /--
+  The right hand side of \ref{eqcarl2} equals
+  $$\sup_{y,y'\in B(x,R)}|(n-m)(y-x)-(n-m)(y'-x)|\,.$$ The lemma then follows from the triangle
+  inequality.
+  -/)
+  (latexEnv := "lemma")]
 lemma oscillation_control {x : ℝ} {r : ℝ} {f g : Θ ℝ} :
     localOscillation (ball x r) (coeΘ f) (coeΘ g) ≤ ENNReal.ofReal (dist_{x, r} f g) := by
   by_cases r_pos : r ≤ 0
@@ -183,6 +203,14 @@ lemma oscillation_control {x : ℝ} {r : ℝ} {f g : Θ ℝ} :
       gcongr
       apply le_max_left
 
+/--
+For any $x, x' \in X$ and $R, R' > 0$ with $B(x,R) \subset B(x, R')$, and for any
+$n, m \in \mathbb{Z}$ $$d_{B(x,R)}(\mfa_n, \mfa_m) \le d_{B(x',R')}(\mfa_n, \mfa_m)\,.$$
+-/
+@[blueprint
+  "frequency monotone"
+  (proof := /-- This follows immediately from the definition \ref{eqcarl4} and $R \le R'$. -/)
+  (latexEnv := "lemma")]
 lemma frequency_monotone {x₁ x₂ r R : ℝ} {f g : Θ ℝ} (h : ball x₁ r ⊆ ball x₂ R) : dist_{x₁,r} f g ≤ dist_{x₂,R} f g := by
   rw [dist_integer_linear_eq, dist_integer_linear_eq]
   by_cases r_pos : r ≤ 0
@@ -195,6 +223,20 @@ lemma frequency_monotone {x₁ x₂ r R : ℝ} {f g : Θ ℝ} (h : ball x₁ r �
   rw [Real.ball_eq_Ioo, Real.ball_eq_Ioo, Set.Ioo_subset_Ioo_iff (by linarith)] at h
   linarith [h.1, h.2]
 
+/--
+For any $x,x'\in \R$ and $R>0$ with $x\in B(x',2R)$ and any $n,m\in \mathbb{Z}$, we have
+$$\begin{equation}
+\label{firstdb1}
+    d_{B(x',2R)}(\mfa_n,\mfa_m)\le 2 d_{B(x,R)}(\mfa_n,\mfa_m) \, .
+\end{equation}$$
+-/
+@[blueprint
+  "frequency ball doubling"
+  (proof := /--
+  With \ref{eqcarl4}, both sides of \ref{firstdb1} are equal to $4R|n-m|$. This
+  proves the lemma.
+  -/)
+  (latexEnv := "lemma")]
 lemma frequency_ball_doubling {x₁ x₂ r : ℝ} {f g : Θ ℝ} :
     dist_{x₂, 2 * r} f g ≤ 2 * dist_{x₁, r} f g := by
   rw [dist_integer_linear_eq, dist_integer_linear_eq]
@@ -206,6 +248,20 @@ lemma frequency_ball_doubling {x₁ x₂ r : ℝ} {f g : Θ ℝ} :
     · simp
     all_goals linarith [r_nonneg]
 
+/--
+For any $x,x'\in \R$ and $R>0$ with $B(x,R)\subset B(x',2R)$ and any $n,m\in \mathbb{Z}$, we have
+$$\begin{equation}
+\label{seconddb1}
+    2d_{B(x,R)}(\mfa_n,\mfa_m)\le d_{B(x',2R)}(\mfa_n,\mfa_m) \, .
+\end{equation}$$
+-/
+@[blueprint
+  "frequency ball growth"
+  (proof := /--
+  With \ref{eqcarl4}, both sides of \ref{firstdb1} are equal to $4R|n-m|$. This
+  proves the lemma.
+  -/)
+  (latexEnv := "lemma")]
 theorem frequency_ball_growth {x₁ x₂ r : ℝ} {f g : Θ ℝ} :
     2 * dist_{x₁, r} f g ≤ dist_{x₂, 2 * r} f g := by
   rw [dist_integer_linear_eq, dist_integer_linear_eq]
@@ -217,6 +273,45 @@ theorem frequency_ball_growth {x₁ x₂ r : ℝ} {f g : Θ ℝ} :
     · simp
     all_goals linarith [r_nonneg]
 
+/--
+For every $x\in \R$ and $R>0$ and every $n\in \mathbb{Z}$ and $R'>0$, there exist
+$m_1, m_2, m_3\in \mathbb{Z}$ such that $$\begin{equation}
+\label{eqcarl5}
+        B'\subset B_1\cup B_2\cup B_3\, ,
+\end{equation}$$ where $$\begin{equation}
+B'= \{ \mfa \in \Mf: d_{B(x,R)}(\mfa, \mfa_n)<2R'\}
+\end{equation}$$ and for $j=1,2,3$ $$\begin{equation}
+  B_j=
+     \{ \mfa \in \Mf: d_{B(x,R)}(\mfa, \mfa_{m_j})<R'\}
+     \, .
+\end{equation}$$
+-/
+@[blueprint
+  "integer ball cover"
+  (proof := /--
+  Let $m_1$ be the largest integer smaller than or equal to $n- \frac {R'} {2R}$. Let $m_2=n$. Let
+  $m_3$ be the smallest integer larger than or equal to $n+ \frac {R'} {2R}$.
+  
+  Let $\mfa_{n'}\in B'$, then with \ref{eqcarl4}, we have $$\begin{equation}
+  \label{eqcarl6}
+      2R|n-n'|< 2R'\, .
+  \end{equation}$$
+  
+  Assume first $n'\le m_1$. With \ref{eqcarl6} we have $$\begin{equation*}
+      R|m_1-n'|=R(m_1-n')=R(m_1-n)+R(n-n')
+  \end{equation*}$$ $$\begin{equation}
+      < -\frac{R'}2+R'=-\frac{R'}2\, .
+  \end{equation}$$ We conclude $\mfa_{n'}\in B_1$.
+  
+  Assume next $m_1<n'<m_3$. Then $\mfa_{n'}\in B_2$.
+  
+  Assume finally that $m_3\le n'$. With \ref{eqcarl6} we have $$\begin{equation*}
+      R|m_3-n'|=R(n'-m_3)=R(n'-n)+R(n-m_3)
+  \end{equation*}$$ $$\begin{equation}
+      < R' -\frac{R'}2=-\frac{R'}2\, .
+  \end{equation}$$ We conclude $\mfa_{n'}\in B_1$. This completes the proof of the lemma.
+  -/)
+  (latexEnv := "lemma")]
 lemma integer_ball_cover {x : ℝ} {R R' : ℝ} {f : WithFunctionDistance x R} :
     CoveredByBalls (ball f (2 * R')) 3 R' := by
   unfold WithFunctionDistance at f
@@ -389,6 +484,26 @@ instance compatibleFunctions_R : CompatibleFunctions ℝ ℝ (2 ^ 4) where
 
 open scoped NNReal
 
+/--
+For any $x\in \R$ and $R>0$ and any function $\varphi: X\to \C$ supported on $B'=B(x,R)$ such that
+$$\begin{equation}
+    \|\varphi\|_{\Lip(B')} = \sup_{x \in B'} |\varphi(x)| + R \sup_{x,y \in B', x \neq y} \frac{|\varphi(x) - \varphi(y)|}{\rho(x,y)}
+\end{equation}$$ is finite and for any $n,m\in \mathbb{Z}$, we have $$\begin{equation}
+    \label{eq-vdc-cond1}
+    \left|\int_{B'} e(\mfa_n(x)-{\mfa_m(x)}) \varphi(x) d\mu(x)\right|\le 2\pi \mu(B')\frac{\|\varphi\|_{\Lip(B')}}{1+d_{B'}(\mfa_n,\mfa_m)}
+\, .
+\end{equation}$$
+-/
+@[blueprint
+  "real van der Corput"
+  (proof := /--
+  Set $n'=n-m$. Then we have to prove $$\begin{equation}
+      \label{eq-vdc-cond2}
+      \left|\int_{x-R}^{x+R} e^{in'y}\varphi(y) dy\right|\le 4\pi R\|\varphi\|_{\Lip(B')}
+  (1+2R|n'|)^{-1}\, .
+  \end{equation}$$ This follows from `van_der_Corput` with $\alpha = x - R$ and $\beta = x + R$.
+  -/)
+  (latexEnv := "lemma")]
 instance real_van_der_Corput : IsCancellative ℝ (defaultτ 4) := by
   apply isCancellative_of_norm_integral_exp_le
   intro x r ϕ r_pos hK hϕ f g
@@ -529,6 +644,47 @@ lemma rcarleson_general {q q' : ℝ≥0} (hq : q ∈ Set.Ioc 1 2) (hqq' : q.Hold
 
 
 /- Lemma 11.1.5 -/
+attribute [blueprint
+  "real line metric"
+  (statement := /-- The space $(\R,\rho)$ is a complete locally compact metric space. -/)
+  (proof := /-- This is part of the Lean library. -/)
+  (latexEnv := "lemma")] instProperSpaceReal
+
+attribute [blueprint
+  "real line measure"
+  (statement := /-- The measure $\mu$ is a sigma-finite non-zero Radon-Borel measure on $\R$. -/)
+  (proof := /-- This is part of the Lean library. -/)
+  (latexEnv := "lemma")] instIsAddHaarMeasureVolume
+
+/--
+Let $F,G$ be Borel subsets of $\R$ with finite measure. Let $f$ be a bounded measurable function on
+$\R$ with $|f|\le \mathbf{1}_F$. Then $$\begin{equation}
+    \left|\int _G Tf(x) \, dx\right| \le C_{4,2} |F|^{\frac 12} |G|^{\frac 12} \, ,
+\end{equation}$$ where $$\begin{equation}
+    \label{define-T-carleson}
+    T f(x)=\sup_{n\in \mathbb{Z}}
+    \sup_{r>0}\left|\int_{r<|x-y|<1} f(y)\kappa(x-y) e^{iny}\, dy\right|\, .
+\end{equation}$$
+-/
+@[blueprint
+  "real Carleson"
+  (proof := /--
+  The preceding chain of lemmas establishes that $\Mf$ is a cancellative, compatible collection of
+  functions on $(\R, \rho, \mu, 4)$. Again, some of the statements in these lemmas are stronger than
+  what is needed for $a=4$, but can be relaxed to give the desired conclusion for $a=4$.
+  
+  With $\kappa$ as near \ref{eq-hilker}, define the function $K:\R\times \R\to \mathbb{C}$
+  as in Theorem `metric_carleson` by $$\begin{equation}
+      K(x,y):=\kappa(x-y)\, .
+  \end{equation}$$ The function $K$ is continuous outside the diagonal $x=y$ and vanishes on the
+  diagonal. Hence it is measurable.
+  
+  By `Hilbert_kernel_bound`, `Hilbert_kernel_regularity`, it follows that $K$ is a two-sided
+  Calderón--Zygmund kernel on $(\R,\rho,\mu,4)$. `Hilbert_strong_2_2` verifies
+  \ref{two-sided-Hr-bound-assumption}. Thus the assumptions of
+  `two_sided_metric_carleson` are all satisfied. Applying the Theorem, `rcarleson` follows.
+  -/)
+  (latexEnv := "lemma")]
 lemma rcarleson {F G : Set ℝ} (hF : MeasurableSet F) (hG : MeasurableSet G)
     (f : ℝ → ℂ) (hmf : Measurable f) (hf : ∀ x, ‖f x‖ ≤ F.indicator 1 x) :
     ∫⁻ x in G, T f x ≤ C10_0_1 4 2 * (volume G) ^ (2 : ℝ)⁻¹ * (volume F) ^ (2 : ℝ)⁻¹ := by

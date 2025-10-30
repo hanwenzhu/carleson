@@ -1,3 +1,4 @@
+import BlueprintGen
 import Carleson.DoublingMeasure
 import Carleson.ToMathlib.RealInterpolation.Misc
 import Carleson.ToMathlib.Order.LiminfLimsup
@@ -413,6 +414,42 @@ lemma dist_carlesonOperatorIntegrand_le
     ofReal_coe_nnreal, ← edist_dist]
   exact edist_carlesonOperatorIntegrand_le mf nf hR₁
 
+/--
+Let $f$ be a measurable function with $|f| \le 1$. Then the function
+$$G: X \times \Theta \times (0,\infty) \times (0, \infty) \to \mathbb{C}$$
+$$G(x, \mfa, R_1, R_2) := \int_{R_1 < \rho(x,y) < R_2} K(x,y) f(y) e(\mfa(y)) \, \mathrm{d}\mu(y)$$
+is continuous in $\mfa$ for fixed $x, R_1, R_2$. It is right-continuous in $R_1$ for fixed
+$x, \vartheta, R_2$ and left-continuous in $R_2$ for fixed $x, \vartheta, R_1$. Finally, it is
+measurable in $x$ and bounded for fixed $\vartheta, R_1, R_2$.
+-/
+@[blueprint
+  "int continuous"
+  (proof := /--
+  Measurability in $x$ follows from joint measurability of
+  $$K(x,y) \mathbf{1}_{B(x,R_2) \setminus B(x,R_1)}(y)$$ in $x$ and $y$ and (part of the proof of)
+  Fubini's theorem.
+  
+  (Partial) continuity in $R_1$ and $R_2$ is also a standard lemma in measure theory. It follows for
+  example by splitting the integrand as $F_1 - F_{-1} + iF_i - iF_{-i}$ for positive, disjointly
+  supported functions $F_{-}$ and applying the monotone convergence theorem to each summand.
+  
+  For continuity in $\mfa$ note that $$|G(x, \mfa, R_1, R_2) - G(x, \mfa', R_1, R_2)|$$
+  $$= \left| \int_{R_1 < \rho(x,y) < R_2} K(x,y) f(y) (e(\mfa(y)) - e(\mfa'(y))) \, \mathrm{d}\mu(y) \right|$$
+  $$\le \int_{R_1 < \rho(x,y) < R_2} |K(x,y)| |f(y)| |e(\mfa(y) - \mfa'(y) - \mfa(o) + \mfa'(o)) - 1| \, \mathrm{d}\mu(y).$$
+  By $1$-Lipschitz continuity of $e^{ix}$, the property \ref{osccontrol} of the metrics
+  $d$, the kernel upper bound \ref{eqkernel-size} and $|f| \le 1$ this is
+  $$\le \mu(B(x, R_2)) \sup_{R_1 < \rho(x,y) < R_2} \frac{2^{a^3}}{V(x,y)} d_{B(x,\rho(o,x)+R_2)}(\vartheta, \vartheta').$$
+  If $R_1 < \rho(x,y) < R_2$ then there exists $n$ with $B(x,R_2) \subset B(x, 2^n \rho(x,y))$ and
+  $2^n \le 2 R_2/R_1$. Hence, by the doubling property \ref{doublingx},
+  $$V(x,y) = \mu(B(x, \rho(x,y))) \ge 2^{-an} \mu(B(x, R_2)) \ge (2R_2 / R_1)^{-a} \mu(B(x, R_2)).$$
+  Hence
+  $$|G(x, \mfa, R_1, R_2) - G(x, \mfa', R_1, R_2)| \le 2^{a^3} \Big(\frac{2R_2}{R_1}\Big)^a d_{B(x, \rho(o,x)+R_2)}(\mfa, \mfa').$$
+  Since the topology on $\Mf$ is the one induced by any of the metrics $d_B$, continuity follows.
+  
+  Finally, for boundedness as a function of $x$ note that we also have by a similar computation using
+  $|e(\mfa)|=1$ $$|G(x, \mfa, R_1, R_2)| \le 2^{a^3} \Big(\frac{2R_2}{R_1}\Big)^a.$$
+  -/)
+  (latexEnv := "lemma")]
 lemma continuous_carlesonOperatorIntegrand (mf : Measurable f) (nf : (‖f ·‖) ≤ 1) (hR₁ : 0 < R₁) :
     Continuous (carlesonOperatorIntegrand K · R₁ R₂ f x) := by
   rcases le_or_gt R₂ R₁ with hR₂ | hR₂

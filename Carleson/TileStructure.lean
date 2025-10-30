@@ -1,3 +1,4 @@
+import BlueprintGen
 import Carleson.GridStructure
 
 open Set MeasureTheory Metric Function Complex Bornology
@@ -215,12 +216,50 @@ lemma dist_𝒬_lt_one_of_le' {p q : 𝔓 X} (h : p ≤ q) : dist_(p) (𝒬 p) (
 lemma 𝓘_strictMono : StrictMono (𝓘 (X := X)) := fun _ _ h ↦ h.le.1.lt_of_ne <|
   fun h' ↦ disjoint_left.mp (disjoint_Ω h.ne h') (h.le.2 𝒬_mem_Ω) 𝒬_mem_Ω
 
-/-- Lemma 5.3.1 -/
+/--
+If $n\fp \lesssim m\fp'$ and $n' \ge n$ and $m \ge m'$ then $n'\fp \lesssim m'\fp'$.
+
+Lemma 5.3.1
+-/
+@[blueprint
+  "wiggle order 1"
+  (proof := /--
+  This follows immediately from the definition \ref{wiggleorder} of $\lesssim$ and the
+  two inclusions $B_{\fp}(\fcc(\fp), n) \subset B_{\fp}(\fcc(\fp), n')$ and
+  $B_{\fp'}(\fcc(\fp'), m') \subset B_{\fp'}(\fcc(\fp'), m)$.
+  -/)
+  (latexEnv := "lemma")]
 lemma smul_mono {m m' n n' : ℝ} (hp : smul n p ≤ smul m p') (hm : m' ≤ m) (hn : n ≤ n') :
     smul n' p ≤ smul m' p' :=
   smul_mono_left hn |>.trans hp |>.trans <| smul_mono_left hm
 
-/-- Lemma 5.3.2 (generalizing `1` to `k > 0`) -/
+/--
+Let $n, m \ge 1$ and $k > 0$. If $\fp, \fp' \in \fP$ with $\scI(\fp) \ne \scI(\fp')$ and
+$$\begin{equation}
+        \label{eq-wiggle1}
+        n \fp \lesssim k \fp'
+\end{equation}$$ then $$\begin{equation}
+        \label{eq-wiggle2}
+        (n + 2^{-95 a} m) \fp \lesssim m\fp'\,.
+\end{equation}$$
+
+Lemma 5.3.2 (generalizing `1` to `k > 0`)
+-/
+@[blueprint
+  "wiggle order 2"
+  (proof := /--
+  The assumption \ref{eq-wiggle1} together with the definition
+  \ref{wiggleorder} of $\lesssim$ implies that $\scI(\fp) \subsetneq \scI(\fp')$. Let
+  $\mfa \in B_{\fp'}(\fcc(\fp'), m)$. Then we have by the triangle inequality
+  $$d_{\fp}(\fcc(\fp), \mfa) \le d_{\fp}(\fcc(\fp), \fcc(\fp')) + d_{\fp}(\fcc(\fp'), \mfa)$$ The
+  first summand is bounded by $n$ since
+  $$\fcc(\fp') \in B_{\fp'}(\fcc(\fp'), k) \subset B_{\fp}(\fcc(\fp), n),$$ using
+  \ref{wiggleorder}. For the second summand we use `Grid.dist_mono` to show that the sum
+  is estimated by $$n + 2^{-95a} d_{\fp'}(\fcc(\fp'), \mfa) < n + 2^{-95a} m\,.$$ Thus
+  $B_{\fp'}(\fcc(\fp'),m) \subset B_{\fp}(\fcc(\fp),n + 2^{-95a}m)$. Combined with
+  $\scI(\fp) \subset \scI(\fp')$, this yields \ref{eq-wiggle2}.
+  -/)
+  (latexEnv := "lemma")]
 lemma smul_C2_1_2 (m : ℝ) {n k : ℝ} (hk : 0 < k) (hp : 𝓘 p ≠ 𝓘 p') (hl : smul n p ≤ smul k p') :
     smul (n + C2_1_2 a * m) p ≤ smul m p' := by
   replace hp : 𝓘 p < 𝓘 p' := hl.1.lt_of_ne hp
@@ -259,7 +298,32 @@ lemma C5_3_3_le : C5_3_3 a ≤ 11 / 10 := by
 
 variable [TileStructure Q D κ S o] {p p' : 𝔓 X} {f g : Θ X}
 
-/-- Lemma 5.3.3, Equation (5.3.3) -/
+/--
+The following implications hold for all $\fq, \fq' \in \fP$: $$\begin{equation}
+        \label{eq-sc1}
+        \fq \le \fq' \ \text{and} \ \lambda \ge 1.1 \implies \lambda \fq \lesssim \lambda \fq'\,,
+\end{equation}$$ $$\begin{equation}
+        \label{eq-sc2}
+        10\fq \lesssim \fq' \ \text{and} \ \scI(\fq) \ne \scI(\fq') \implies 100 \fq \lesssim 100 \fq'\,,
+\end{equation}$$ $$\begin{equation}
+        \label{eq-sc3}
+        2\fq \lesssim \fq' \ \text{and} \ \scI(\fq) \ne \scI(\fq') \implies 4 \fq \lesssim 500 \fq'\,.
+\end{equation}$$
+
+Lemma 5.3.3, Equation (5.3.3)
+-/
+@[blueprint
+  "wiggle order 3"
+  (proof := /--
+  \ref{eq-sc2} and \ref{eq-sc3} are easy consequences of `smul_mono`, `smul_C2_1_2`
+  and the fact that $a \ge 4$. For \ref{eq-sc1}, if $\scI(\fq) = \scI(\fq')$ then we get
+  $\fq = \fq'$ by \ref{eq-dis-freq-cover} and \ref{straightorder}.
+  If $\scI(\fq) \ne \scI(\fq')$, then from \ref{straightorder},
+  \ref{wiggleorder} and \ref{eq-freq-comp-ball} it follows that
+  $\fq \lesssim 0.2\fq'$, and \ref{eq-sc1} follows from an easy calculation using
+  `smul_C2_1_2`.
+  -/)
+  (latexEnv := "lemma")]
 lemma wiggle_order_11_10 {n : ℝ} (hp : p ≤ p') (hn : C5_3_3 a ≤ n) : smul n p ≤ smul n p' := by
   rcases eq_or_ne (𝓘 p) (𝓘 p') with h | h
   · rcases eq_or_ne p p' with rfl | h2
@@ -580,7 +644,7 @@ lemma eq_biUnion_iteratedMaximalSubfamily (A : Set (𝔓 X)) {N : ℕ} (hN : ∀
     rw [this]
     congr
     ext
-    simp (config := {contextual := true}) [hp]
+    simp +contextual [hp]
   classical
   have : ∑ p with p ∈ u '' (Iio N), (𝓘 p : Set X).indicator 1 x
       ≤ stackSize {q | q ∈ A ∧ q ≠ p} x := by

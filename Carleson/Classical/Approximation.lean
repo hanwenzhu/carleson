@@ -1,3 +1,4 @@
+import BlueprintGen
 import Carleson.Classical.Basic
 import Mathlib.Analysis.Calculus.BumpFunction.Convolution
 import Mathlib.Analysis.PSeries
@@ -12,6 +13,20 @@ local notation "S_" => partialFourierSum
 
 open scoped ContDiff
 
+/--
+The function $f_0$ is $2\pi$-periodic. The function $f_0$ is smooth (and therefore measurable). The
+function $f_0$ satisfies for all $x\in \R$: $$\begin{equation}
+\label{eq-ffzero}
+    |f(x)-f_0(x)|\le \epsilon' \, ,
+\end{equation}$$
+-/
+@[blueprint
+  "smooth approximation"
+  (proof := /--
+  Periodicity follows directly from the definitions. The other properties are part of the Lean
+  library.
+  -/)
+  (latexEnv := "lemma")]
 lemma close_smooth_approx_periodic {f : ℝ → ℂ} (unicontf : UniformContinuous f)
   (periodicf : f.Periodic (2 * π)) {ε : ℝ} (εpos : ε > 0) :
     ∃ (f₀ : ℝ → ℂ), ContDiff ℝ ∞ f₀ ∧ f₀.Periodic (2 * π) ∧
@@ -174,6 +189,19 @@ lemma int_sum_nat {β : Type*} [AddCommGroup β] [TopologicalSpace β] [Continuo
     · norm_num
       linarith
 
+/--
+There exists some $N_0 \in \N$ such that for all $N>N_0$ and $x\in [0,2\pi]$ we have
+$$\begin{equation}
+        |S_N f_0 (x)- f_0(x)|\le \frac \epsilon 4\, .
+\end{equation}$$
+-/
+@[blueprint
+  "convergence for smooth"
+  (proof := /--
+  `fourierConv_ofTwiceDifferentiable` now follows directly from the previous
+  `fourierConv_ofTwiceDifferentiable`.
+  -/)
+  (latexEnv := "lemma")]
 lemma fourierConv_ofTwiceDifferentiable {f : ℝ → ℂ} (periodicf : f.Periodic (2 * π))
     (fdiff : ContDiff ℝ 2 f) {ε : ℝ} (εpos : ε > 0) :
     ∃ N₀, ∀ N > N₀, ∀ x ∈ Set.Icc 0 (2 * π), ‖f x - S_ N f x‖ ≤ ε := by

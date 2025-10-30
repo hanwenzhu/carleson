@@ -1,3 +1,4 @@
+import BlueprintGen
 import Carleson.Calculations
 import Carleson.ForestOperator.AlmostOrthogonality
 
@@ -23,7 +24,21 @@ variable (t u₁) in
 We use a different notation to distinguish it from the 𝓙' used in Section 7.5 -/
 def 𝓙₆ : Set (Grid X) := 𝓙 (t u₁) ∩ Iic (𝓘 u₁)
 
-/-- Part of Lemma 7.6.1. -/
+/--
+We have $$\scI(\fu_1) = \dot{\bigcup_{J \in \mathcal{J}'}} J\,.$$
+
+Part of Lemma 7.6.1.
+-/
+@[blueprint
+  "dyadic partition 2"
+  (proof := /--
+  By `TileStructure.Forest.biUnion_𝓙`, it remains only to show that each
+  $J \in \mathcal{J}(\fT(\fu_1))$ with $J \cap \scI(\fu_1) \ne \emptyset$ is in $\mathcal{J}'$. But if
+  $J \notin \mathcal{J}'$, then by \ref{dyadicproperty} $\scI(\fu_1) \subsetneq J$.
+  Pick $\fp \in \fT(\fu_1)$. Then $\scI(\fp) \subsetneq J$. This contradicts the definition of
+  $\mathcal{J}(\fT(\fu_1))$.
+  -/)
+  (latexEnv := "lemma")]
 -- Very similar to Lemma 7.5.1. Todo: simplify
 lemma union_𝓙₆ (hu₁ : u₁ ∈ t) :
     ⋃ J ∈ 𝓙₆ t u₁, (J : Set X) = 𝓘 u₁ := by
@@ -185,7 +200,36 @@ lemma thin_scale_impact_key (hu₁ : u₁ ∈ t) (hu₂ : u₂ ∈ t) (hu : u₁
       · exact one_le_two
       · exact (Nat.ceil_lt_add_one nonneg_C7_6_3_add_two).le
 
-/-- Lemma 7.6.3. -/
+/--
+If $\fp \in \fT(\fu_2) \setminus \mathfrak{S}$ and $J \in \mathcal{J'}$ with
+$B(\scI(\fp)) \cap B(J) \ne \emptyset$, then $$\ps(\fp) \le s(J) + 2 - \frac{Zn}{202a^3}\,.$$
+
+Lemma 7.6.3.
+-/
+@[blueprint
+  "thin scale impact"
+  (proof := /--
+  Suppose that $\ps(\fp) > s(J) + 2 -\frac{Zn}{202a^3} =: s(J) - s_1$. Then, we have $s_1 + 2 \ge 0$
+  so $$\rho(\pc(\fp), c(J)) \le 8D^{s(J)}+8D^{\ps(\fp)} \le 16 D^{\ps(\fp) + s_1 + 2}\,.$$ There
+  exists a tile $\fq \in \fT(\fu_1)$. By \ref{forest1}, it satisfies
+  $\scI(\fq) \subsetneq \scI(\fu_1)$. Thus $\scI(\fu_1) \notin \mathcal{J}'$. It follows that
+  $J \subsetneq \scI(\fu_1)$. By \ref{coverdyadic} and
+  \ref{dyadicproperty}, there exists a cube $J' \in \mathcal{D}$ with $J \subset J'$
+  and $s(J') = s(J) + 1$. By definition of $\mathcal{J}'$, there exists a tile $\fp' \in \fT(\fu_1)$
+  with $$\scI(\fp') \subset B(c(J'), 100 D^{s(J') + 1})\,.$$ By the triangle inequality, the
+  definition \ref{defineD} and $a \ge 4$, we have
+  $$B(c(J'), 100 D^{s(J')+1}) \subset B(\pc(\fp), 128 D^{\ps(\fp) + s_1 + 2})\,.$$ Since
+  $\fp' \in \fT(\fu_1)$ and $\scI(\fu_1) \subset \scI(\fu_2)$, we have by \ref{forest5}
+  $$d_{\fp'}(\fcc(\fp'), \fcc(\fu_2)) > 2^{Z(n+1)}\,.$$ Hence, by \ref{forest1}, the
+  triangle inequality and using that by \ref{defineZ} $Z(n+1) = 2^{12a}(n+1) \ge 3$
+  $$d_{\fp'}(\fcc(\fu_1), \fcc(\fu_2)) > 2^{Z(n+1)} - 4 \ge 2^{Z(n+1) - 1}\,.$$ It follows that
+  $$2^{Z(n+1)-1} \le d_{\fp'}(\fcc(\fu_1), \fcc(\fu_2)) \le d_{B(\pc(\fp), 128 D^{\ps(\fp) + s_1+ 2})}(\fcc(\fu_1), \fcc(\fu_2))\,.$$
+  Using \ref{firstdb}, we obtain
+  $$\le 2^{9a + 100a^3 (s_1+3)} d_{\fp}(\fcc(\fu_1), \fcc(\fu_2))\,.$$ Since
+  $\fp' \notin \mathfrak{S}$ this is bounded by $$\le 2^{9a + 100a^3 (s_1+3)} 2^{Zn/2}\,.$$ Thus
+  $$Z n/2 + Z - 1 \le 9a + 100a^3(s_1 + 3)\,,$$ contradicting the definition of $s_1$.
+  -/)
+  (latexEnv := "lemma")]
 lemma thin_scale_impact (hu₁ : u₁ ∈ t) (hu₂ : u₂ ∈ t) (hu : u₁ ≠ u₂)
     (h2u : 𝓘 u₁ ≤ 𝓘 u₂) (hp : p ∈ t u₂ \ 𝔖₀ t u₁ u₂) (hJ : J ∈ 𝓙₆ t u₁)
     (hd : ¬Disjoint (ball (𝔠 p) (8 * D ^ 𝔰 p)) (ball (c J) (8 * D ^ s J))) :
@@ -235,7 +279,39 @@ lemma thin_scale_impact' (hu₁ : u₁ ∈ t) (hu₂ : u₂ ∈ t) (hu : u₁ �
 irreducible_def C7_6_4 (a : ℕ) (s : ℤ) : ℝ≥0 := 2 ^ (14 * (a : ℝ) + 1) * (8 * D ^ (- s)) ^ κ
 
 open Classical in
-/-- Lemma 7.6.4. -/
+/--
+For each $J \in \mathcal{J}'$ and all $s$, we have
+$$\frac{1}{\mu(J)} \int_J \Bigg(\sum_{\substack{I \in \mathcal{D}, s(I) = s(J) - s\\ I \cap \scI(\fu_1) = \emptyset\\
+        J \cap B(I) \ne \emptyset}} \mathbf{1}_{B(I)}\bigg)^2 \, \mathrm{d}\mu \le 2^{14a+1} (8 D^{-s})^\kappa\,.$$
+
+Lemma 7.6.4.
+-/
+@[blueprint
+  "square function count"
+  (proof := /--
+  Since $J \in \mathcal{J}'$ we have $J \subset \scI(\fu_1)$. Thus, if $B(I) \cap J \ne \emptyset$
+  then $$\begin{equation}
+          \label{eq-sep-small-incl}
+          B(I) \cap J \subset \{x \in J \ : \ \rho(x, X \setminus J) \le 8D^{s(I)}\}\,.
+  \end{equation}$$ Furthermore, for each $s$ the balls $B(I)$ with $s(I) = s$ have bounded overlap:
+  Consider the collection $\mathcal{D}_{s,x}$ of all $I \in \mathcal{D}$ with $x \in B(I)$ and
+  $s(I) = s$. By \ref{eq-vol-sp-cube} and \ref{dyadicproperty}, the
+  balls $B(c(I), \frac{1}{4} D^{s(I)})$, $I \in \mathcal{D}_{s,x}$ are disjoint, and by the triangle
+  inequality, they are contained in $B(x, 9 D^{s})$. By the doubling property
+  \ref{doublingx}, we have
+  $$\mu(B(x, 9D^{s})) \le 2^{7a} \mu(B(c(I), \frac{1}{4} D^{s(I)}))$$ for each
+  $I \in \mathcal{D}_{s,x}$. Thus
+  $$\mu(B(x, 9D^{s})) \ge \sum_{I \in \mathcal{D}_{s,x}} \mu(B(c(I), \frac{1}{4} D^{s(I)})) \ge 2^{-7a} |\mathcal{D}_{s,x}| \mu(B(x, 9D^{s}))\,.$$
+  Dividing by the positive $\mu(B(x, 9D^{s}))$, we obtain that for each $x$ $$\begin{equation}
+          \label{eq-sep-small-bound}
+          \Bigg(\sum_{\substack{I \in \mathcal{D}, s(I) = s(J) - s\\ I \cap \scI(\fu_1) = \emptyset\\
+          J \cap B(I) \ne \emptyset}} \mathbf{1}_{B(I)}(x) \bigg)^2 \le |\mathcal{D}_{s(J) - s,x}|^2 \le 2^{14a} \,.
+  \end{equation}$$ Combining \ref{eq-sep-small-incl},
+  \ref{eq-sep-small-bound} and the small boundary property
+  \ref{eq-small-boundary}, noting that $8D^{s(I)}=8D^{-s}D^{s(J)}$, the lemma
+  follows.
+  -/)
+  (latexEnv := "lemma")]
 lemma square_function_count (hJ : J ∈ 𝓙₆ t u₁) {s' : ℤ} :
     ⨍⁻ x in J, (∑ I with s I = s J - s' ∧ Disjoint (I : Set X) (𝓘 u₁) ∧
     ¬Disjoint (J : Set X) (ball (c I) (8 * D ^ s I)),
@@ -757,7 +833,66 @@ lemma btp_constant_bound :
         ENNReal.coe_rpow_of_ne_zero two_ne_zero, ENNReal.coe_mul, ENNReal.coe_pow]
       rfl
 
-/-- Lemma 7.6.2. -/
+/--
+We have for all bounded $f$ with bounded support
+$$\|P_{\mathcal{J}'}|T_{\fT(\fu_2) \setminus \mathfrak{S}}^* g_2|\|_2
+            \le 2^{102a^3+21a+5} 2^{-\frac{25}{101a}Zn\kappa} \|\mathbf{1}_{\scI(\fu_1)} M_{\mathcal{B},1} |g_2|\|_2$$
+
+Lemma 7.6.2.
+-/
+@[blueprint
+  "bound for tree projection"
+  (proof := /--
+  Expanding the definition of $P_{\mathcal{J}'}$, we have
+  $$\|P_{\mathcal{J}'}|T_{\fT(\fu_2) \setminus \mathfrak{S}}^* g_2|\|_2$$
+  $$= \left(\sum_{J \in \mathcal{J}'} \frac{1}{\mu(J)} \left(\int_J \left| \sum_{\fp \in \fT(\fu_2) \setminus \mathfrak{S}} T_{\fp}^* g_2(y) \right| \, \mathrm{d}\mu(y) \right)^2 \right)^{1/2}\,.$$
+  By `TileStructure.Forest.adjoint_tile_support1`, the innermost sum in the last display is $0$ if
+  $J \cap B(\scI(\fp)) = \emptyset$. Then we split that sum according to the scale of $\fp$ relative
+  to the scale of $J$. By `TileStructure.Forest.thin_scale_impact`, $s_1 \le s(J) - \ps(\fp) \le 2S$
+  with $s_1 := \lfloor\frac{Zn}{202a^3} - 2\rfloor$:
+  $$= \left(\sum_{J \in \mathcal{J}'} \frac{1}{\mu(J)} \left(\int_J \left| \sum_{s=s_1}^{2S} \sum_{\substack{\fp \in \fT(\fu_2) \setminus \mathfrak{S}\\ \ps(\fp) = s(J) - s\\
+          J \cap B(\scI(\fp)) \ne \emptyset}} T_{\fp}^* g_2(y) \right| \, \mathrm{d}\mu(y) \right)^2 \right)^{1/2}\,.$$
+  Then we apply the triangle inequality and Minkowski's inequality to get $$\begin{equation}
+      \label{eq-sep-tree-small-1}
+          \le \sum_{s=s_1}^{2S} \left( \sum_{J \in \mathcal{J}'} \frac{1}{\mu(J)} \left(\int_J \sum_{\substack{\fp \in \fT(\fu_2) \setminus \mathfrak{S}\\ \ps(\fp) = s(J) - s\\
+          J \cap B(\scI(\fp)) \ne \emptyset}} |T_{\fp}^* g_2(y)| \, \mathrm{d}\mu(y) \right)^2\right)^{1/2}\,.
+  \end{equation}$$ We have by `TileStructure.Forest.adjoint_tile_support1` and
+  \ref{eq-Ks-size}
+  $$|T_{\fp}^* g_2(y)| \le 2^{102a^3} \mathbf{1}_{B(\pc(\fp), 8D^{\ps(\fp)})}(y) \int_{E(\fp)} \frac{1}{\mu(B(x, D^{\ps(\fp)}))} |g_2(x)| \, \mathrm{d}\mu(x)\,.$$
+  Using the doubling property \ref{doublingx}, it follows that
+  $$\mu(B(\pc(\fp), 8D^{\ps(\fp)})) \le 2^{4a} \mu(B(x, D^{\ps(\fp)}))\,.$$ Thus, using also $a \ge 4$
+  $$|T_{\fp}^* g_2(y)| \le 2^{102a^3+4a} \mathbf{1}_{B(\pc(\fp), 8D^{\ps(\fp)})}(y) \frac{1}{\mu(B(\pc(\fp), 8D^{\ps(\fp)}))} \int_{E(\fp)} |g_2(x)| \, \mathrm{d}\mu(x)\,.$$
+  Since for each $I \in \mathcal{D}$ the sets $E(\fp), \fp \in \fP(I)$ are disjoint, it follows that
+  $$\int_J \sum_{\substack{\fp \in \fT(\fu_2) \setminus \mathfrak{S}\\ \scI(\fp) = I\\
+          J \cap B(\scI(\fp)) \ne \emptyset}} |T_{\fp}^* g_2(y)| \, \mathrm{d}\mu$$
+  $$\le 2^{102a^3+4a} \int_J \mathbf{1}_{B(I)} \frac{1}{\mu(B(\pc(\fp), 8D^{\ps(\fp)}))} \int_{B(\pc(\fp), 8D^{\ps(\fp)})} |g_2(x)| \, \mathrm{d}\mu(x)$$
+  $$\le 2^{102a^3+4a} \int_J M_{\mathcal{B},1} |g_2|(y) \mathbf{1}_{B(I)}(y) \, \mathrm{d}\mu(y)\,.$$
+  By `TileStructure.Forest.𝔗_subset_𝔖₀`, we have $\scI(\fp) \cap \scI(\fu_1) = \emptyset$ for all
+  $\fp \in \fT(\fu_2) \setminus \mathfrak{S}$. Thus we can estimate
+  \ref{eq-sep-tree-small-1} by
+  $$2^{102a^3+4a} \sum_{s=s_1}^{2S} \left( \sum_{J \in \mathcal{J}'} \frac{1}{\mu(J)} \left(\int_J \sum_{\substack{I \in \mathcal{D}, s(I) = s(J) - s\\ I \cap \scI(\fu_1) = \emptyset\\
+          J \cap B(I) \ne \emptyset}} M_{\mathcal{B},1} |g_2| \mathbf{1}_{B(I)} \, \mathrm{d}\mu \right)^2\right)^{1/2}\,,$$
+  which is by Cauchy-Schwarz at most $$\begin{equation}
+      \label{eq-sep-tree-small-2}
+          2^{102a^3+4a} \sum_{s=s_1}^{2S} \left( \sum_{J \in \mathcal{J}'} \int_J ( M_{\mathcal{B},1} |g_2|)^2 \, \mathrm{d}\mu \times
+          \frac{1}{\mu(J)} \int_J \left(\sum_{\substack{I \in \mathcal{D}, s(I) = s(J) - s\\ I \cap \scI(\fu_1) = \emptyset\\
+          J \cap B(I) \ne \emptyset}} \mathbf{1}_{B(I)}\right)^2 \, \mathrm{d}\mu \right)^{1/2}\,.
+  \end{equation}$$ Using `TileStructure.Forest.square_function_count`, we bound
+  \ref{eq-sep-tree-small-2} by
+  $$2^{102a^3+4a} \sum_{s=s_1}^{2S} \left(2^{14a+1} (8 D^{-s})^\kappa \sum_{J \in \mathcal{J}'} \int_J (M_{\mathcal{B},1} |g_2|)^2\right)^{1/2}\,,$$
+  and since dyadic cubes in $\mathcal{J}'$ form a partition of $\scI(\fu_1)$ by
+  `TileStructure.Forest.union_𝓙₆`, $\kappa \le 1$ by \ref{definekappa}, and $a \ge 4$
+  $$\le 2^{102a^3+11a+2} \sum_{s=s_1}^{2S} D^{-s\kappa/2} \|\mathbf{1}_{\scI(\fu_1)} M_{\mathcal{B},1} |g_2|\|_2$$
+  $$\le 2^{102a^3+11a+2} D^{-s_1 \kappa /2} \frac{1}{1 - D^{-\kappa/2}} \|\mathbf{1}_{\scI(\fu_1)} M_{\mathcal{B},1} |g_2|\|_2\,.$$
+  By convexity of $t \mapsto D^{-t}$ and since $D \ge 2$, we have for all $0 \le t \le 1$
+  $$D^{-t} \le 1 - t(1 - 1/D) \le 1 - \frac{1}{2}t\,.$$ Using this for $t = \kappa/2$ and using that
+  $s_1 = \frac{Zn}{202a^3} - 2$ and the definitions \ref{defineD} and
+  \ref{definekappa} of $\kappa$ and $D$
+  $$\le 2^{102a^3+11a+2} 2^{-100a^2(\frac{Zn}{202a^3} - 3) \frac{\kappa}{2}} \frac{2}{\kappa} \|\mathbf{1}_{\scI(\fu_1)} M_{\mathcal{B},1} |g_2|\|_2$$
+  $$= 2^{102a^3+21a+4} 2^{150a^2\kappa} 2^{-\frac{100}{404a}Zn\kappa} \|\mathbf{1}_{\scI(\fu_1)} M_{\mathcal{B},1} |g_2|\|_2\,.$$
+  Using the definition \ref{definekappa} of $\kappa$ and $a \ge 4$, the lemma follows.
+  -/)
+  (latexEnv := "lemma")]
 lemma bound_for_tree_projection (hu₁ : u₁ ∈ t) (hu₂ : u₂ ∈ t) (hu : u₁ ≠ u₂) (h2u : 𝓘 u₁ ≤ 𝓘 u₂)
     (hf : BoundedCompactSupport f) :
     eLpNorm (approxOnCube (𝓙₆ t u₁) (‖adjointCarlesonSum (t u₂ \ 𝔖₀ t u₁ u₂) f ·‖)) 2 volume ≤
@@ -807,7 +942,34 @@ lemma cntp_approxOnCube_eq (hu₁ : u₁ ∈ t) :
 Has value `2 ^ (232 * a ^ 3 + 21 * a + 5- 25/(101a) * Z n κ)` in the blueprint. -/
 irreducible_def C7_4_6 (a n : ℕ) : ℝ≥0 := C7_2_1 a * C7_6_2 a n
 
-/-- Lemma 7.4.6 -/
+/--
+We have for all $\fu_1 \ne \fu_2 \in \fU$ with $\scI(\fu_1) \subset \scI(\fu_2)$ and all bounded
+$g_1, g_2$ with bounded support $$\begin{equation}
+            \label{eq-lhs-small-sep-tree}
+            \left| \int_X \sum_{\fp_1 \in \fT(\fu_1)} \sum_{\fp_2 \in \fT(\fu_2) \setminus \mathfrak{S}} T^*_{\fp_1}g_1 \overline{T^*_{\fp_2}g_2 }\,\mathrm{d}\mu \right|
+\end{equation}$$ $$\begin{equation}
+            \label{eq-rhs-small-sep-tree}
+            \le 2^{232a^3+21a+5} 2^{-\frac{25}{101a}Zn\kappa} \prod_{j=1}^2 \|S_{2, \fu_j} g_j\|_{L^2(\scI(\fu_1))}\,.
+\end{equation}$$
+
+Lemma 7.4.6
+-/
+@[blueprint
+  "correlation near tree parts"
+  (proof := /--
+  By `TileStructure.Forest.tree_projection_estimate` and `TileStructure.Forest.adjoint_tile_support1`,
+  we have $$\begin{align*}
+              \ref{eq-lhs-small-sep-tree} \le 2^{130a^3} \|P_{\mathcal{L}(\fT(\fu_1))} |\mathbf{1}_{\scI(\fu_1)}g_1| \|_2 \|P_{\mathcal{J}(\fT(\fu_1) )}|\mathbf{1}_{\scI(\fu_1)} T_{\fT(\fu_2) \setminus \mathfrak{S}}^* g_2|\|_2\,.
+  \end{align*}$$ It follows from the definition of the projection operator $P$ and Jensen's inequality
+  that
+  $$\|P_{\mathcal{L}(\fT(\fu_1))} |g_1\mathbf{1}_{\scI(\fu_1)}| \|_2 \le \|g_1 \mathbf{1}_{\scI(\fu_1)}\|_2\,.$$
+  By `TileStructure.Forest.union_𝓙₆`, a cube $J \in \mathcal{J}(\fT(\fu_1))$ intersects $\scI(\fu_1)$
+  if and only if $J \in \mathcal{J}'$. Thus
+  $$P_{\mathcal{J}(\fT(\fu_1) )}|\mathbf{1}_{\scI(\fu_1)} T_{\fT(\fu_2) \setminus \mathfrak{S}}^* g_2| = P_{\mathcal{J}'}|T_{\fT(\fu_2) \setminus \mathfrak{S}}^* g_2|\,.$$
+  Combining this with `TileStructure.Forest.bound_for_tree_projection`, the definition
+  \ref{definekappa} and $a \ge 4$ proves the lemma.
+  -/)
+  (latexEnv := "lemma")]
 lemma correlation_near_tree_parts (hu₁ : u₁ ∈ t) (hu₂ : u₂ ∈ t) (hu : u₁ ≠ u₂) (h2u : 𝓘 u₁ ≤ 𝓘 u₂)
     (hf₁ : BoundedCompactSupport f₁) (hf₂ : BoundedCompactSupport f₂) :
     ‖∫ x, adjointCarlesonSum (t u₁) f₁ x * conj (adjointCarlesonSum (t u₂ \ 𝔖₀ t u₁ u₂) f₂ x)‖ₑ ≤

@@ -1,3 +1,4 @@
+import BlueprintGen
 import Carleson.Defs
 import Carleson.ToMathlib.MeasureTheory.Integral.Average
 import Carleson.ToMathlib.RealInterpolation.Main
@@ -20,7 +21,32 @@ section Prelude
 variable {X : Type*} [PseudoMetricSpace X] [SeparableSpace X]
 
 variable (X) in
-/-- Lemma 9.0.2 -/
+/--
+For each $r > 0$, there exists a countable collection $C(r) \subset X$ of points such that
+$$X \subset \bigcup_{c \in C(r)} B(c, r)\,.$$
+
+Lemma 9.0.2
+-/
+@[blueprint
+  "covering separable space"
+  (proof := /--
+  It clearly suffices to construct finite collections $C(r,k)$ such that
+  $$B(o, r2^k) \subset \bigcup_{c \in C(r,k)} B(c,r)\,,$$ since then the collection
+  $C(r) = \bigcup_{k \in \mathbb{N}} C(r,k)$ has the desired property.
+  
+  Suppose that $Y \subset B(o, r2^k)$ is a collection of points such that for all $y, y' \in Y$ with
+  $y \ne y'$, we have $\rho(y,y') \ge r$. Then the balls $B(y, r/2)$ are pairwise disjoint and
+  contained in $B(o, r2^{k+1})$. If $y \in B(o, r)$, then $B(o, r2^{k+1}) \subset B(y, r2^{k+2})$.
+  Thus, by the doubling property \ref{doublingx},
+  $$\mu(B(y, \frac{r}{2})) \ge 2^{-(k+2)a} \mu(B(o, r2^{k+1}))\,.$$ Thus, we have
+  $$\mu(B(o, r2^{k+1})) \ge \sum_{y \in Y} \mu(B(y, \frac{r}{2})) \ge |Y| 2^{-(k+2)a} \mu(B(o, r2^{k+1}))\,.$$
+  We conclude that $|Y| \le 2^{(k+2)a}$. In particular, there exists a set $Y$ of maximal cardinality.
+  Define $C(r,k)$ to be such a set.
+  
+  If $x \in B(o, r2^k)$ and $x \notin C(r,k)$, then there must exist $y \in C(r,k)$ with
+  $\rho(x,y) < r$. Thus $C(r,k)$ has the desired property.
+  -/)
+  (latexEnv := "lemma")]
 -- maybe not suited for Mathlib in this form
 lemma covering_separable_space :
     ∃ C : Set X, C.Countable ∧ ∀ r > 0, ⋃ c ∈ C, ball c r = univ := by
@@ -429,6 +455,208 @@ theorem Set.Countable.measure_biUnion_le_lintegral [OpensMeasurableSpace X] (h�
     _ ≤ A ^ 2 * ∫⁻ x, u x ∂μ := by
           gcongr; exact Measure.restrict_le_self
 
+/--
+Let $\mathcal{B}$ be a finite collection of balls in $X$. If for some $\lambda>0$ and some
+measurable function $u:X\to [0,\infty)$ we have $$\begin{equation}
+\label{eq-ball-assumption}
+\int_{B} u(x)\, d\mu(x)\ge \lambda \mu(B)
+\end{equation}$$ for each $B\in \mathcal{B}$, then $$\begin{equation}
+\label{eq-besico}
+    \lambda \mu(\bigcup \mathcal{B}) \le 2^{2a}\int_X u(x)\, d\mu(x)\, .
+\end{equation}$$ For every measurable function $v$ and $1\le p_1<p_2$ we have $$\begin{equation}
+\label{eq-hlm}
+    \|M_{\mathcal{B},p_1} v\|_{p_2}\le 2^{2a}\frac{p_2}{p_2-p_1} \|v\|_{p_2}\, .
+\end{equation}$$ Moreover, given any measurable bounded function $w: X \to \C$ there exists a
+measurable function $Mw: X \to [0, \infty)$ such that the following \ref{eq-ball-av}
+and \ref{eq-hlm-2} hold. For each ball $B \subset X$ and each $x \in B$
+$$\begin{equation}
+    \label{eq-ball-av}
+    \frac{1}{\mu(B)} \int_{B} |w(y)| \, \mathrm{d}\mu(y) \le Mw(x)
+\end{equation}$$ and for all $1 \le p_1 < p_2 \le \infty$ $$\begin{equation}
+    \label{eq-hlm-2}
+    \|M(w^{p_1})^{\frac{1}{p_1}}\|_{p_2} \le 2^{4a} \frac{p_2}{p_2-p_1}\|w\|_{p_2}\,.
+\end{equation}$$
+-/
+@[blueprint
+  "Hardy--Littlewood"
+  (proof := /--
+  Let the collection $\mathcal{B}$ be given. We first show \ref{eq-besico}.
+  
+  We recursively choose a finite sequence $B_i\in \mathcal{B}$ for $i\ge 0$ as follows. Assume
+  $B_{i'}$ is already chosen for $0\le i'<i$. If there exists a ball $B_{i}\in \mathcal{B}$ so that
+  $B_{i}$ is disjoint from all $B_{i'}$ with $0\le i'<i$, then choose such a ball $B_i=B(x_i,r_i)$
+  with maximal $r_i$.
+  
+  If there is no such ball, stop the selection and set $i'':=i$.
+  
+  By disjointedness of the chosen balls and since $0 \le u$, we have $$\begin{equation}
+  \sum_{0\le i<i''}\int_{B_i} u(x)\, d\mu(x) \le \int_X u(x)\, d\mu(x)\, .
+  \end{equation}$$ By \ref{eq-ball-assumption}, we conclude $$\begin{equation}
+  \label{eqbes1}
+  \lambda \sum_{0\le i<i''}\mu(B_i)
+  \le \int_X u(x)\, d\mu(x)\, .
+  \end{equation}$$ Let $x\in \bigcup \mathcal{B}$. Choose a ball $B'=B(x',r')\in \mathcal{B}$ such
+  that $x\in B'$. If $B'$ is one of the selected balls, then $$\begin{equation}
+  \label{3rone}
+      x\in \bigcup _{0\le i< i''}B_i\subset \bigcup _{0\le i< i''}B(x_i,3r_i)\, .
+  \end{equation}$$ If $B'$ is not one of the selected balls, then as it is not selected at time $i''$,
+  there is a selected ball $B_i$ with $B'\cap B_i\neq \emptyset$. Choose such $B_i$ with minimal index
+  $i$. As $B'$ is therefore disjoint from all balls $B_{i'}$ with $i'<i$ and as it was not selected in
+  place of $B_i$, we have $r_i\ge r'$.
+  
+  Using a point $y$ in the intersection of $B_i$ and $B'$, we conclude by the triangle inequality
+  $$\begin{equation}
+     \rho(x_i,x')\le \rho(x_i,y)+\rho(x',y)\le r_i+r'\le 2r_i \, .
+  \end{equation}$$ By the triangle inequality again, we further conclude $$\begin{equation}
+     \rho(x_i,x)\le \rho(x_i,x')+\rho(x',x)\le 2r_i+r'\le 3r_i \, .
+  \end{equation}$$ It follows that $$\begin{equation}
+  \label{3rtwo}
+      x\in \bigcup _{0\le i< i''}B(x_i,3r_i)\, .
+  \end{equation}$$ With \ref{3rone} and \ref{3rtwo}, we conclude $$\begin{equation}
+  \bigcup \mathcal{B}\subset
+  \bigcup _{0\le i< i''}B(x_i,3r_i)\, .
+  \end{equation}$$ With the doubling property \ref{doublingx} applied twice, we conclude
+  $$\begin{equation}
+  \label{eqbes2}
+      \mu(\bigcup{\mathcal{B}})
+      \le \sum _{0\le i< i''}\mu (B(x_i,3r_i))
+      \le 2^{2a}\sum _{0\le i< i''}\mu (B_i)\, .
+  \end{equation}$$ With \ref{eqbes1} and \ref{eqbes2} we conclude
+  \ref{eq-besico}.
+  
+  We turn to the proof of \ref{eq-hlm}. We first consider the case $p_1=1$ and recall
+  $M_{\mathcal{B}}=M_{\mathcal{B},1}$. We write for the $p_2$-th power of left-hand side of
+  \ref{eq-hlm} with `MeasureTheory.eLpNorm_pow_eq_distribution` and a change of variables
+  $$\begin{equation}
+      \|M_{\mathcal{B}}u(x)\|_{p_2}^{p_2}
+     =p_2\int _0^{\infty}
+      \lambda^{p_2-1} \mu(\{x: M_{\mathcal{B}}u(x)\ge \lambda\}) d\lambda\,
+  \end{equation}$$ $$\begin{equation}
+   \label{eqbesi11}
+     =2^{p_2} p_2\int _0^{\infty}
+      \lambda^{p_2-1} \mu(\{x: M_{\mathcal{B}}u(x)\ge 2\lambda\}) d\lambda\, .
+  \end{equation}$$ Fix $\lambda\ge 0$ and let $x\in X$ satisfy $M_{\mathcal{B}}u(x)\ge 2\lambda$. By
+  definition of $M_{\mathcal{B}}$, there is a ball $B'\in \mathcal{B}$ such that $x\in B'$ and
+  $$\begin{equation}
+  \label{eqbesi10}
+  \int_{B'} u(y)\, d\mu(y)\ge 2\lambda \mu({B'}) \, .
+  \end{equation}$$ Define $u_\lambda(y):=0$ if $|u(y)|<\lambda$ and $u_\lambda(y):=u(y)$ if
+  $|u(y)|\ge \lambda$. Then with \ref{eqbesi10} $$\begin{equation}
+  \int_{B'} u_\lambda (y)\, d\mu(y)
+  =\int_{B'} u (y)\, d\mu(y)-
+  \int_{B'} (u-u_\lambda) (y) d\mu(y)\,
+  \end{equation}$$ $$\begin{equation}
+  \ge 2\lambda \mu({B'})-
+  \int_{B'} (u-u_\lambda) (y) d\mu(y)\, .
+  \end{equation}$$ As $(u-u_\lambda)(y)\le \lambda$ by definition, we can estimate the last display by
+  $$\begin{equation}
+  \ge 2\lambda \mu({B'})-
+  \int_{B'} \lambda \, d\mu(y)
+  =\lambda \mu({B'})\, .
+  \end{equation}$$ Hence $x$ is contained in $\bigcup(\mathcal{B}_\lambda)$, where
+  $\mathcal{B}_\lambda$ is the collection of balls $B''$ in $\mathcal{B}$ such that $$\begin{equation}
+      \int_{B''} u_\lambda (y)\, d\mu(y)\ge \lambda \mu(B'')\, .
+  \end{equation}$$ We have thus seen $$\begin{equation}
+      \{x: M_{\mathcal{B}}u(x)\ge 2\lambda\}\subset
+      \bigcup \mathcal{B}_\lambda
+  \, .
+  \end{equation}$$ Applying \ref{eq-besico} to the collection $\mathcal{B}_\lambda$ gives
+  $$\begin{equation}
+      \lambda \mu(\{x: M_{\mathcal{B}}u(x)\ge 2\lambda\})\le
+     2^{2a}
+      \int u_\lambda (x)\, dx\, .
+  \end{equation}$$ With `MeasureTheory.eLpNorm_pow_eq_distribution`, $$\begin{equation}
+  \label{eqbesi12}
+      \lambda \mu(\{x: M_{\mathcal{B}}u(x)\ge 2\lambda\})\le
+     2^{2a}
+      \int_0^\infty \mu (\{x: |u_\lambda (x)|\ge \lambda'\})\, d\lambda'\, .
+  \end{equation}$$ By definition of $u_\lambda$, making a case distinction between
+  $\lambda\ge \lambda'$ and $\lambda <\lambda'$, we see that $$\begin{equation}
+  \label{eqbesi13}
+     \mu (\{x: |u_\lambda (x)|\ge \lambda'\})
+     \le
+     \mu (\{x: |u (x)|\ge \max(\lambda,\lambda')\})\, .
+  \end{equation}$$ We obtain with \ref{eqbesi11}, \ref{eqbesi12}, and
+  \ref{eqbesi13} $$\begin{equation}
+      \|M_{\mathcal{B}}u(x)\|_{p_2}^{p_2}
+  \end{equation}$$ $$\begin{equation}
+     \le 2^{p_2+2a} p_2
+     \int_0^\infty \lambda^{p_2-2}
+     \int_0^\infty
+     \mu (\{x: |u (x)|\ge \max(\lambda,\lambda')\})
+     \, d\lambda'd\lambda\, .
+  \end{equation}$$ We split the integral into $\lambda\ge \lambda'$ and $\lambda<\lambda'$ and resolve
+  the maximum correspondingly. We have for $\lambda\ge \lambda'$ with
+  `MeasureTheory.eLpNorm_pow_eq_distribution` $$\begin{equation}
+      \int_0^\infty \lambda^{p_2-2}
+     \int_0^\lambda
+     \mu (\{x: |u (x)|\ge \lambda\})
+     \, d\lambda'd\lambda
+  \end{equation}$$ $$\begin{equation}
+     =\int_0^\infty \lambda^{p_2-1}
+       \mu (\{x: |u (x)|\ge \lambda\})
+  d\lambda.
+  \end{equation}$$ $$\begin{equation}
+  \label{eqbesi14}
+     =p_2^{-1} \|u\|_{p_2}^{p_2}\, .
+  \end{equation}$$ We have for $\lambda< \lambda'$ with Fubini and
+  `MeasureTheory.eLpNorm_pow_eq_distribution` $$\begin{equation}
+      \int_0^\infty \lambda^{p_2-2}
+     \int_\lambda^\infty
+     \mu (\{x: |u(x)|\ge \lambda'\})
+     \, d\lambda'd\lambda.
+  \end{equation}$$ $$\begin{equation}
+     =\int_0^\infty \int_0^{\lambda'}\lambda^{p_2-2}
+       \mu (\{x: |u (x)|\ge \lambda'\})
+  d\lambda d\lambda'.
+  \end{equation}$$ $$\begin{equation}
+     =(p_2-1)^{-1}\int_0^\infty (\lambda')^{p_2-1}
+       \mu (\{x: |u(x)|\ge \lambda'\})
+  d\lambda'.
+  \end{equation}$$ $$\begin{equation}
+  \label{eqbesi15}
+     =(p_2-1)^{-1} p_2^{-1}\|u\|_{p_2}^{p_2}\, .
+  \end{equation}$$ Adding the two estimates \ref{eqbesi14} and \ref{eqbesi15}
+  gives $$\begin{equation}
+      \|M_{\mathcal{B}}u(x)\|_{p_2}^{p_2}
+     \le 2^{p_2+2a} (1+(p_2-1)^{-1})\|u\|_{p_2}^{p_2}
+     = 2^{p_2+2a} p_2(p_2-1)^{-1}\|u\|_{p_2}^{p_2}
+     \, .
+  \end{equation}$$ With $a\ge 1$ and $p_2>1$, taking the $p_2$-th root, we obtain
+  \ref{eq-hlm}. We turn to the case of general $1\le p_1<p_2$. We have $$\begin{equation}
+      M_{\mathcal{B},p_1}u=(M_{\mathcal{B}} (|u|^{p_1}))^{\frac 1{p_1}}\, .
+  \end{equation}$$ Applying the special case of \ref{eq-hlm} for $M_{\mathcal{B}}$ gives
+  $$\begin{equation}
+      \|M_{\mathcal{B},p_1}u\|_{p_2}=
+      \|M_{\mathcal{B}} (|u|^{p_1})\|_{p_2/p_1}^{\frac 1{p_1}}
+  \end{equation}$$ $$\begin{equation}
+      \le 2^{2a} (p_2/p_1) (p_2/p_1-1)^{-1}
+      \|(|u|^{p_1})\|_{p_2/p_1}^{\frac 1{p_1}}
+      =2^{2a} p_2(p_2-p_1)^{-1}\|u\|_{p_2}\, .
+  \end{equation}$$ This proves \ref{eq-hlm} in general.
+  
+  Now we construct the operator $M$ satisfying \ref{eq-ball-av} and
+  \ref{eq-hlm-2}. For each $k \in \mathbb{Z}$ we choose a countable set $C(2^k)$ as in
+  `covering_separable_space`. Define
+  $$\mathcal{B}_\infty = \{B(c, 2^k) \ : \ c \in C(2^k), k \in \mathbb{Z}\}\,.$$ By
+  `covering_separable_space`, this is a countable collection of balls. We choose an enumeration
+  $\mathcal{B}_\infty = \{B_1, \dotsc\}$ and define $$\mathcal{B}_n = \{B_1, \dotsc, B_n\}\,.$$ We
+  define $$Mw := 2^{2a}\sup_{n \in \mathbb{N}} M_{\mathcal{B}_n}w\,.$$ This function is measurable for
+  each measurable $w$, since it is a countable supremum of measurable functions. Estimate
+  \ref{eq-hlm-2} follows immediately from \ref{eq-hlm} and the monotone
+  convergence theorem.
+  
+  It remains to show \ref{eq-ball-av}. Let $B = B(x, r) \subset X$. Let $k$ be the
+  smallest integer such that $2^k \ge r$, in particular we have $2^k < 2r$. By definition of $C(2^k)$,
+  there exists $c \in C(2^k)$ with $x \in B(c, 2^k)$. By the triangle inequality, we have
+  $B(c, 2^k) \subset B(x, 4r)$, and hence by the doubling property \ref{doublingx}
+  $$\mu(B(c, 2^k)) \le 2^{2a} \mu(B(x,r))\,.$$ It follows that for each $z \in B(x,r)$
+  $$\begin{align*}
+      \frac{1}{\mu(B(x,r))}\int_{B(x,r)} |w(y)| \, \mathrm{d}\mu(y) &\le \frac{2^{2a}}{\mu(B(c,2^k))}\int_{B(c,2^k)} |w(y)| \, \mathrm{d}\mu(y) \\
+      &\le Mw(z)\,.
+  \end{align*}$$ This completes the proof.
+  -/)
+  (latexEnv := "proposition")]
 protected theorem Finset.measure_biUnion_le_lintegral [OpensMeasurableSpace X] (𝓑 : Finset ι)
     (l : ℝ≥0∞) (u : X → ℝ≥0∞)
     (h2u : ∀ i ∈ 𝓑, l * μ (ball (c i) (r i)) ≤ ∫⁻ x in ball (c i) (r i), u x ∂μ) :

@@ -1,3 +1,4 @@
+import BlueprintGen
 import Carleson.ForestOperator.PointwiseEstimate
 import Carleson.ToMathlib.MeasureTheory.Integral.MeanInequalities
 
@@ -348,7 +349,84 @@ lemma le_C7_2_2 (a4 : 4 ≤ a) :
         _ ≤ 4 * 4 * a := by omega
         _ ≤ _ := by rw [pow_three']; gcongr
 
-/-- Lemma 7.2.2. -/
+/--
+For all bounded $f$ with bounded support and all $\mfa \in \Mf$
+$$\|T_{\mathcal{N}}^{\mfa} f\|_2 \le 2^{102a^3} \|f\|_2\,.$$
+
+Lemma 7.2.2.
+-/
+@[blueprint
+  "nontangential operator bound"
+  (proof := /--
+  Fix $s_1, s_2$. By \ref{eq-psisum} we have for all $x \in (0, \infty)$
+  $$\sum_{s = s_1}^{s_2} \psi(D^{-s}x) = 1 - \sum_{s < s_1} \psi(D^{-s}x) - \sum_{s > s_1} \psi(D^{-s}x)\,.$$
+  Since $\psi$ is supported in $[\frac{1}{4D}, \frac{1}{2}]$, the two sums on the right hand side are
+  zero for all $x \in [\frac{1}{2}D^{s_1-1}, \frac{1}{4} D^{s_2 - 1}]$, hence
+  $$x \in [\frac{1}{2}D^{s_1-1}, \frac{1}{4} D^{s_2}] \implies \sum_{s = s_1}^{s_2} \psi(D^{-s}x) = 1\,.$$
+  Since $\psi$ is supported in $[\frac{1}{4D}, \frac{1}{2}]$, we further have
+  $$x \notin [\frac{1}{4}D^{s_1 - 1}, \frac{1}{2}D^{s_2}] \implies \sum_{s = s_1}^{s_2} \psi(D^{-s}x) = 0\,.$$
+  Finally, since $\psi \ge 0$ and $\sum_{s \in \mathbb{Z}} \psi(D^{-s}x) = 1$, we have for all $x$
+  $$0 \le \sum_{s = s_1}^{s_2} \psi(D^{-s}x) \le 1\,.$$ Let $x' \in I_{s_1}(x)$ and suppose that
+  $D^{s_2 - 1} \le R_Q(\mfa, x')$. By the triangle inequality and
+  \ref{eq-vol-sp-cube}, it holds that $\rho(x,x') \le 8D^{s_1}$. We have
+  $$\Bigg|\sum_{s = s_1}^{s_2} \int K_s(x',y) f(y) \, \mathrm{d}\mu(y)\Bigg|$$
+  $$= \Bigg|\int \sum_{s = s_1}^{s_2} \psi(D^{-s}\rho(x',y)) K(x',y) f(y) \, \mathrm{d}\mu(y)\Bigg|$$
+  $$\begin{equation}
+          \label{eq-sharp-trunc-term}
+          \le \Bigg| \int_{8D^{s_1} < \rho(x',y) \le \frac{1}{4}D^{s_2-1}} K(x',y) f(y) \, \mathrm{d}\mu(y) \Bigg|
+  \end{equation}$$ $$\begin{equation}
+          \label{eq-lower-bound-term}
+          + \int_{\frac{1}{4}D^{s_1-1} \le \rho(x',y) \le 8D^{s_1}} |K(x', y)| |f(y)| \, \mathrm{d}\mu(y)
+  \end{equation}$$ $$\begin{equation}
+          \label{eq-upper-bound-term}
+          + \int_{\frac{1}{4}D^{s_2-1} \le \rho(x',y) \le \frac{1}{2}D^{s_2}} |K(x', y)| |f(y)| \, \mathrm{d}\mu(y)\,.
+  \end{equation}$$
+  
+  The first term \ref{eq-sharp-trunc-term} is at most $2T_{\tQ}^\mfa f(x)$,
+  using with $R_1 := 8D^{s_1}$, $R_2 := \frac{1}{4}D^{s_2-1}$ and $R_1 < R_2 < R_{\tQ}(\mfa,x')$ the
+  triangle inequality in the form $$\begin{equation}
+          \left|\int_{R_1 < \rho(x',y) \le R_2} K(x',y) f(y) \, \mathrm{d}\mu(y) \right|
+  \end{equation}$$ $$\begin{equation}
+          \le \left|\int_{R_1 < \rho(x',y) < R_{\tQ}(\mfa,x')} K(x',y) f(y) \, \mathrm{d}\mu(y) \right|
+  \end{equation}$$ $$\begin{equation}
+          + \left|\int_{R_2 < \rho(x',y) < R_{\tQ}(\mfa,x')} K(x',y) f(y) \, \mathrm{d}\mu(y) \right|.
+  \end{equation}$$
+  
+  The other two terms will be estimated by the finitary maximal function from
+  `Finset.measure_biUnion_le_lintegral`. For the second term
+  \ref{eq-lower-bound-term} we use \ref{eqkernel-size} which
+  implies that for all $y$ with $\rho(x', y) \ge \frac{1}{4}D^{s_1 - 1}$, we have
+  $$|K(x', y)| \le \frac{2^{a^3}}{\mu(B(x', \frac{1}{4}D^{s_1 - 1}))}\,.$$ Using $D=2^{100a^2}$ and
+  the doubling property \ref{doublingx} $7 +100a^2$ times estimates the last display by
+  $$\begin{equation}
+      \label{pf-nontangential-operator-bound-imeq}
+          \le \frac{2^{7a+101a^3}}{\mu(B(x', 32D^{s_1}))}\, .
+  \end{equation}$$ By the triangle inequality and \ref{eq-vol-sp-cube}, we have
+  $$B(x', 8D^{s_1}) \subset B(c(I_{s_1}(x)), 16D^{s(I_{s_1}(x))}) \subset B(x', 32D^{s_1})\,.$$
+  Combining this with
+  \ref{pf-nontangential-operator-bound-imeq}, we conclude that
+  \ref{eq-lower-bound-term} is at most
+  $$2^{7a + 101a^3} M_{\mathcal{B},1} f(x)\,.$$
+  
+  For \ref{eq-upper-bound-term} we argue similarly. We have for all $y$ with
+  $\rho(x', y) \ge \frac{1}{4}D^{s_2-1}$
+  $$|K(x', y)| \le \frac{2^{a^3}}{\mu(B(x', \frac{1}{4}D^{s_2-1}))}\,.$$ Using the doubling property
+  \ref{doublingx} $7 + 100a^2$ times estimates the last display by $$\begin{equation}
+          \le \frac{2^{7a + 101a^3}}{\mu(B(x', 32 D^{s_2}))}\, .
+  \end{equation}$$ Note that by \ref{dyadicproperty} we have
+  $I_{s_1}(x) \subset I_{s_2}(x)$, in particular $x' \in I_{s_2}(x)$. By the triangle inequality and
+  \ref{eq-vol-sp-cube}, we have
+  $$B(x', 8D^{s_2}) \subset B(c(I_{s_2}(x)), 16D^{s(I_{s_2}(x))}) \subset B(x', 32D^{s_2})\,.$$
+  Combining this, \ref{eq-upper-bound-term} is at most
+  $$2^{7a+101a^3} M_{\mathcal{B},1} f(x)\,.$$
+  
+  Using $a \ge 4$, taking a supremum over all $x' \in I_{s_1}(x)$ and then a supremum over all
+  $-S \le s_1 < s_2 \le S$, we obtain
+  $$T_{\mathcal{N}} f(x) \le 2T_{\tQ}^\mfa f(x) + 2^{102a^3} M_{\mathcal{B},1} f(x)\,.$$ The lemma now
+  follows from assumption \ref{linnontanbound}, `Finset.measure_biUnion_le_lintegral`
+  and $a \ge 4$.
+  -/)
+  (latexEnv := "lemma")]
 lemma nontangential_operator_bound (hf : BoundedCompactSupport f) (θ : Θ X) :
     eLpNorm (nontangentialMaximalFunction θ f) 2 volume ≤ C7_2_2 a * eLpNorm f 2 volume := by
   have aemeas_MB : AEMeasurable (MB volume 𝓑 c𝓑 r𝓑 f ·) :=
@@ -435,7 +513,33 @@ lemma pairwiseDisjoint_of_kissing :
   simp_rw [Finset.mem_coe, kissing, Finset.mem_filter] at mj mk
   exact (eq_or_disjoint (mj.2.1.trans mk.2.1.symm)).resolve_left hn
 
-/-- Lemma 7.2.4. -/
+/--
+For every cube $I \in \mathcal{D}$, there exist at most $2^{9a}$ cubes $J \in \mathcal{D}$ with
+$s(J) = s(I)$ and $B(c(I), 16D^{s(I)}) \cap B(c(J), 16 D^{s(J)}) \ne \emptyset$.
+
+Lemma 7.2.4.
+-/
+@[blueprint
+  "boundary overlap"
+  (proof := /--
+  Suppose that $B(c(I), 16 D^{s(I)}) \cap B(c(J), 16 D^{s(J)}) \ne \emptyset$ and $s(I) = s(J)$. Then
+  $B(c(I), 33 D^{s(I)}) \subset B(c(J), 128 D^{s(J)})$. Hence by the doubling property
+  \ref{doublingx}
+  $$2^{9a}\mu(B(c(J), \frac{1}{4}D^{s(J)})) \ge \mu(B(c(I), 33 D^{s(I)}))\,,$$ and by the triangle
+  inequality, $B(c(J), \frac{1}{4}D^{s(J)})$ is contained in $B(c(I), 33 D^{s(I)})$.
+  
+  If $\mathcal{C}$ is any finite collection of cubes $J \in \mathcal{D}$ satisfying $s(J) = s(I)$ and
+  $$\begin{equation*}
+          B(c(I), 16 D^{s(I)}) \cap B(c(J), 16 D^{s(J)}) \ne\emptyset\ ,
+  \end{equation*}$$ then it follows from \ref{eq-vol-sp-cube} and pairwise
+  disjointedness of cubes of the same scale \ref{dyadicproperty} that the balls
+  $B(c(J), \frac{1}{4} D^{s(J)})$ are pairwise disjoint. Hence $$\begin{align*}
+          \mu(B(c(I), 33 D^{s(I)})) &\ge \sum_{J \in \mathcal{C}} \mu(B(c(J), \frac{1}{4}D^{s(J)}))\\
+          &\ge |\mathcal{C}| 2^{-9a} \mu(B(c(I), 33 D^{s(I)}))\,.
+  \end{align*}$$ Since $\mu$ is doubling and $\mu \ne 0$, we have $\mu(B(c(I), 33D^{s(I)})) > 0$. The
+  lemma follows after dividing by $2^{-9a}\mu(B(c(I), 33D^{s(I)}))$.
+  -/)
+  (latexEnv := "lemma")]
 lemma boundary_overlap (I : Grid X) : (kissing I).card ≤ 2 ^ (9 * a) := by
   have key : (kissing I).card * volume (ball (c I) (33 * D ^ s I)) ≤
       2 ^ (9 * a) * volume (ball (c I) (33 * D ^ s I)) := by
@@ -725,7 +829,44 @@ lemma boundary_operator_bound_aux (hf : BoundedCompactSupport f) (hg : BoundedCo
       have : 4 ≤ (a : ℝ) := by norm_cast; exact four_le_a X
       linarith
 
-/-- Lemma 7.2.3. -/
+/--
+For all $\fu \in \fU$ and all bounded functions $f$ with bounded support $$\begin{equation}
+        \label{eq-S-bound}
+        \|S_{1,\fu}f\|_2 \le 2^{12a} \|f\|_2\,.
+\end{equation}$$
+
+Lemma 7.2.3.
+-/
+@[blueprint
+  "boundary operator bound"
+  (proof := /--
+  Note that by definition, $S_{1,\fu}f$ is a finite sum of indicator functions of cubes
+  $I \in \mathcal{D}$ for each locally integrable $f$, and hence is bounded, has bounded support and
+  is integrable. Let $g$ be another function with the same three properties. Then $\bar g S_{1,\fu}f$
+  is integrable, and we have $$\Bigg|\int \bar g(y) S_{1,\fu}f(y) \, \mathrm{d}\mu(y)\Bigg|$$
+  $$\begin{multline*}
+          = \Bigg|\sum_{I\in\mathcal{D}} \frac{1}{\mu(B(c(I), 16 D^{s(I)}))} \int_I \bar g(y) \, \mathrm{d}\mu(y)\\
+          \times \sum_{\substack{J\in \mathcal{J}(\fT(\fu))\,:\,J\subseteq B(c(I), 16 D^{s(I)})\\s(J)\le s(I)}} D^{(s(J)-s(I))/a}\int_J |f(y)| \,\mathrm{d}\mu(y)\Bigg|
+  \end{multline*}$$ $$\begin{multline*}
+          \le \sum_{I\in\mathcal{D}} \frac{1}{\mu(B(c(I), 16D^{s(I)}))} \int_{B(c(I), 16D^{s(I)})} | g(y)| \, \mathrm{d}\mu(y)\\ \times \sum_{\substack{J\in \mathcal{J}(\fT(\fu))\,:\,J\subseteq B(c(I), 16 D^{s(I)})\\ s(J) \le s(I)}} D^{(s(J)-s(I))/a}\int_J |f(y)| \,\mathrm{d}\mu(y)\,.
+  \end{multline*}$$ Changing the order of summation and using $J \subset B(c(I), 16 D^{s(I)})$ to
+  bound the first average integral by $M_{\mathcal{B},1}|g|(y)$ for any $y \in J$, we obtain
+  $$\begin{align}
+      \label{eq-boundary-operator-bound-1}
+          \le \sum_{J\in\mathcal{J}(\fT(\fu))}\int_J|f(y)| M_{\mathcal{B},1}|g|(y) \, \mathrm{d}\mu(y) \sum_{\substack{I \in \mathcal{D} \, : \, J\subset B(c(I),16 D^{s(I)})\\ s(I) \ge s(J)}} D^{(s(J)-s(I))/a}.
+  \end{align}$$ By `TileStructure.Forest.boundary_overlap`, there are at most $2^{9a}$ cubes $I$ at
+  each scale satisfying the inclusion $J \subset B(c(I),16D^{s(I)})$. Since $D^{-1/a}\le\frac12$,
+  $(1 - D^{-1/a})^{-1} \le 2$. Using this estimate for the sum of the geometric series, we conclude
+  that \ref{eq-boundary-operator-bound-1} is at most
+  $$2^{9a+1} \sum_{J\in\mathcal{J}(\fT(\fu))}\int_J|f(y)| M_{\mathcal{B},1}|g|(y) \, \mathrm{d}\mu(y)\,.$$
+  The collection $\mathcal{J}$ is a partition of $\bigcup_{I \in \mathcal{D}} I$, so this equals
+  $$2^{9a+1} \int_X|f(y)| M_{\mathcal{B},1}|g|(y) \, \mathrm{d}\mu(y)\,.$$ Using Cauchy-Schwarz and
+  `Finset.measure_biUnion_le_lintegral`, we conclude
+  $$\left|\int \bar g S_{1,\fu}f \, \mathrm{d}\mu \right| \le 2^{12a} \|g\|_2\|f\|_2\,.$$ The lemma
+  now follows by choosing $g = S_{1,\fu}f$ and dividing on both sides by the finite
+  $\|S_{1,\fu}f\|_2$.
+  -/)
+  (latexEnv := "lemma")]
 lemma boundary_operator_bound (hf : BoundedCompactSupport f) :
     eLpNorm (t.boundaryOperator u f) 2 volume ≤ C7_2_3 a * eLpNorm f 2 volume := by
   have bcs : BoundedCompactSupport fun x ↦ (t.boundaryOperator u f x).toReal := by
@@ -861,7 +1002,50 @@ private lemma eLpNorm_two_cS_bound_le : eLpNorm (cS_bound t u f) 2 volume ≤
 @[simp 1100, norm_cast]
  protected lemma Complex.enorm_real (x : ℝ) : ‖(x : ℂ)‖ₑ = ‖x‖ₑ := by simp [enorm]
 
-/-- Lemma 7.2.1. -/
+/--
+Let $\fu \in \fU$. Then we have for all $f, g$ bounded with bounded support
+$$\Bigg|\int_X \sum_{\fp \in \fT(\fu)} \bar g(y) T_{\fp}f(y) \, \mathrm{d}\mu(y) \Bigg|$$
+$$\begin{equation}
+        \label{eq-tree-est}
+         \le 2^{130a^3}\|P_{\mathcal{J}(\fT(\fu))}|f|\|_{2}\|P_{\mathcal{L}(\fT(\fu))}|g|\|_{2}.
+\end{equation}$$
+
+Lemma 7.2.1.
+-/
+@[blueprint
+  "tree projection estimate"
+  (proof := /--
+  Let $L \in \mathcal{L}(\fT(\fu))$. Let $b(x')$ denote the right-hand side of
+  `TileStructure.Forest.pointwise_tree_estimate`. Apply this lemma to $e(\fcc(\fu)) f$, to obtain for
+  all $y, x' \in L$ $$\Bigg| \sum_{\fp \in \fT(\fu)} T_{\fp} f(y) \Bigg| \le b(x').$$ Hence, by taking
+  an infimum, we have for $y \in L$
+  $$\Bigg| \sum_{\fp \in \fT(\fu)} T_{\fp} f(y) \Bigg| \le \inf_{x' \in L} b(x').$$ Integrating this
+  estimate yields
+  $$\int_L |g(y)| \Bigg| \sum_{\fp \in \fT(\fu)} T_{\fp} f(y) \Bigg| \, \mathrm{d}\mu(y)$$
+  $$\le \int_L |g(y)| \times \inf_{x' \in L} b(x') \, \mathrm{d}\mu(y)$$
+  $$=   \int_L P_{\mathcal{L}(\fT(\fu))}|g|(y) \times \inf_{x' \in L} b(x') \, \mathrm{d}\mu(y)$$
+  $$\le \int_L P_{\mathcal{L}(\fT(\fu))}|g|(y) \times  b(y) \, \mathrm{d}\mu(y)$$ By
+  \ref{definetp}, we have $T_{\fp} f = \mathbf{1}_{\scI(\fp)} T_{\fp} f$ for all
+  $\fp \in \fP$, so
+  $$\Bigg| \int \bar g(y) \sum_{\fp \in \fT(\fu)} T_{\fp} f(y) \, \mathrm{d}\mu(y) \Bigg| = \Bigg| \int_{\bigcup_{\fp \in \fT(\fu)} \scI(\fp)} \bar g(y) \sum_{\fp \in \fT(\fu)} T_{\fp} f(y) \, \mathrm{d}\mu(y) \Bigg|\,.$$
+  Since $\mathcal{L}(\fT(\fu))$ partitions $\bigcup_{\fp \in \fT(\fu)} \scI(\fp)$ by
+  `TileStructure.Forest.biUnion_𝓙`, we get from the triangle inequality
+  $$\le \sum_{L \in \mathcal{L}(\fT(\fu))} \int_L |g(y)| \Bigg| \sum_{\fp \in \fT(\fu)} T_{\fp} f(y) \Bigg| \, \mathrm{d}\mu(y)$$
+  which by the above computation is bounded by
+  $$\sum_{L \in \mathcal{L}(\fT(\fu))} \int_L P_{\mathcal{L}(\fT(\fu))}|g|(y) \times  b(y) \, \mathrm{d}\mu(y)$$
+  $$= \int_X P_{\mathcal{L}(\fT(\fu))}|g|(y) \times  b(y) \, \mathrm{d}\mu(y)$$ Applying
+  Cauchy-Schwarz, this is bounded by $\|P_{\mathcal{L}(\fT(\fu))}|g|\|_2 \times \|b\|_2$. By
+  Minkowski's inequality, `Finset.measure_biUnion_le_lintegral`,
+  `TileStructure.Forest.nontangential_operator_bound` and
+  `TileStructure.Forest.boundary_operator_bound`, $\|b\|_2$ is at most
+  $$2^{129a^3} (2^{2a+1} + 2^{12a})\|P_{\mathcal{J}(\fT(\fu))}|f|\|_2 + 2^{103a^3} \|P_{\mathcal{J}(\fT(\fu))}[e(\fcc(\fu))f]\|_2\,.$$
+  By the triangle inequality we have for all $x \in X$ that
+  $|P_{\mathcal{J}(\fT(\fu))}[e(\fcc(\fu))f]|(x) \le P_{\mathcal{J}(\fT(\fu))}|f|(x)$, thus we can
+  further estimate the above by
+  $$(2^{129a^3} (2^{2a+1} + 2^{12a}) + 2^{103a^3}) \|P_{\mathcal{J}(\fT(\fu))}|f|\|_2\,.$$ This
+  completes the proof since $a \ge 4$.
+  -/)
+  (latexEnv := "lemma")]
 lemma tree_projection_estimate
     (hf : BoundedCompactSupport f) (hg : BoundedCompactSupport g) (hu : u ∈ t) :
     ‖∫ x, conj (g x) * carlesonSum (t u) f x‖ₑ ≤

@@ -1,3 +1,4 @@
+import BlueprintGen
 import Carleson.TileStructure
 
 open Set MeasureTheory Metric Function Complex Bornology Notation
@@ -48,6 +49,42 @@ lemma twopow_J' : 2 ^ J' X = 8 * nnD ^ (2 * S) := by
 variable (X) in
 def C4_1_1 := As (2 ^ a) (2 ^ J' X)
 
+/--
+Let $-S\le k\le S$. Consider $Y\subset X$ such that for any $y\in Y$, we have $$\begin{equation}
+\label{ybinb}
+    y\in B(o,4D^S-D^k),
+\end{equation}$$ furthermore, for any $y'\in Y$ with $y\neq y'$, we have $$\begin{equation}
+ \label{eq-disj-yballs}
+        B(y,D^k)\cap B(y',D^k)=\emptyset.
+\end{equation}$$ Then the cardinality of $Y$ is bounded by $$\begin{equation}
+\label{boundY}
+        |Y|\le 2^{3a + 200Sa^3}\, .
+\end{equation}$$
+-/
+@[blueprint
+  "counting balls"
+  (proof := /--
+  Let $k$ and $Y$ be given. By applying the doubling property \ref{doublingx} inductively,
+  we have for each integer $j\ge 0$ $$\begin{equation}
+  \label{jballs}
+      \mu(B(y,2^{j}D^k))\le 2^{aj} \mu(B(y,D^k))\, .
+  \end{equation}$$ Since $X$ is the union of the balls $B(y,2^{j}D^k)$ and $\mu$ is not zero, at least
+  one of the balls $B(y,2^{j}D^k)$ has positive measure, thus $B(y,D^k)$ has positive measure.
+  
+  Applying \ref{jballs} for $j' = \ln_2(8D^{2S}) = 3 + 2S \cdot 100a^2$ by
+  \ref{defineD}, using $-S\le k\le S$, $y\in B(o,4D^S)$, and the triangle inequality, we
+  have $$\begin{equation}
+      B(o, 4D^S) \subset B(y, 8D^S) \subset B(y,2^{j'}D^k) \, .
+  \end{equation}$$ Using the disjointedness of the balls in \ref{eq-disj-yballs},
+  \ref{ybinb}, and the triangle inequality for $\rho$, we obtain $$\begin{equation}
+  |Y|\mu(B(o,4D^S))\le 2^{j'a}\sum_{y\in Y}\mu(B(y,D^k))
+  \end{equation}$$ $$\begin{equation}
+  \le
+  2^{j'a}\mu(\bigcup_{y\in Y}B(y,D^k))
+  \le 2^{j'a}\mu(o,4D^S)\, .
+  \end{equation}$$ As $\mu(o,4D^S)$ is not zero, the lemma follows.
+  -/)
+  (latexEnv := "lemma")]
 lemma counting_balls {k : ℤ} (hk_lower : -S ≤ k) {Y : Set X}
     (hY : Y ⊆ ball o (4 * D ^ S - D ^ k))
     (hYdisjoint : Y.PairwiseDisjoint (ball · (D ^ k))) :
@@ -201,6 +238,17 @@ lemma Yk_maximal (k : ℤ) {s : Set X} (hs_sub : s ⊆ ball o (4 * D ^ S - D ^ k
 lemma o_mem_Yk_S : o ∈ Yk X S :=
   (zorn_apply_maximal_set X S).choose_spec.left.right.right rfl
 
+/--
+For each $-S\le k\le S$, the ball $B(o, 4D^S-D^k)$ is contained in the union of the balls
+$B(y,2D^k)$ with $y\in Y_k$.
+-/
+@[blueprint
+  "cover big ball"
+  (proof := /--
+  Let $x$ be any point of $B(o, 4D^S-D^k)$. By maximality of $|Y_k|$, the ball $B(x, D^k)$ intersects
+  one of the balls $B(y, D^k)$ with $y\in Y_k$. By the triangle inequality, $x\in B(y,2D^k)$.
+  -/)
+  (latexEnv := "lemma")]
 lemma cover_big_ball (k : ℤ) : ball o (4 * D ^ S - D ^ k) ⊆ ⋃ y ∈ Yk X k, ball y (2 * D ^ k) := by
   intro y hy
   have : ∃ z ∈ Yk X k, ¬Disjoint (ball y (D^k:ℝ)) (ball z (D^k:ℝ)) := by
@@ -411,7 +459,77 @@ end
 section basic_grid_structure
 
 mutual
-  lemma I1_prop_1 {k : ℤ} (hk : -S ≤ k) {x : X} {y1 y2 : Yk X k} :
+  /--
+For each $-S\le k\le S$ and $1\le j\le 3$ the following holds.
+
+If $j\neq 2$ and for some $x\in X$ and $y_1,y_2\in Y_k$ we have $$\begin{equation}
+\label{disji}
+        x\in I_j(y_1,k)\cap I_j(y_2,k),
+\end{equation}$$ then $y_1=y_2$.
+
+If $j\neq 1$, then $$\begin{equation}
+\label{unioni}
+    B(o, 4D^S-2D^k)\subset \bigcup_{y\in Y_k} I_j(y,k)\, .
+\end{equation}$$ We have for each $y\in Y_k$, $$\begin{equation}
+\label{squeezedyadic}
+        B(y,\frac 12 D^k) \subset I_3(y,k)\subset
+        B(y,4D^k).
+\end{equation}$$
+-/
+@[blueprint
+  "basic grid structure"
+  (proof := /--
+  We prove these statements simultaneously by induction on the ordered set of pairs $(y,k)$. Let
+  $-S\le k\le S$.
+  
+  We first consider \ref{disji} for $j=1$. If $k=-S$, disjointedness of the sets $I_1(y,-S)$
+  follows by definition of $I_1$ and $Y_k$. If $k>-S$, assume $x$ is in $I_1(y_m,k)$ for $m=1,2$.
+  Then, for $m=1,2$, there is $z_m\in Y_{k-1}\cap B(y_m,D^k)$ with $x\in I_3(z_m,k-1)$. Using
+  \ref{disji} inductively for $j=3$, we conclude $z_1=z_2$. This implies that the balls
+  $B(y_1, D^k)$ and $B(y_2, D^k)$ intersect. By construction of $Y_k$, this implies $y_1=y_2$. This
+  proves \ref{disji} for $j=1$.
+  
+  We next consider \ref{disji} for $j=3$. Assume $x$ is in $I_3(y_m,k)$ for $m=1,2$ and
+  $y_m\in Y_k$. If $x$ is in $X_k$, then by definition \ref{definei3}, $x\in I_1(y_m,k)$
+  for $m=1,2$. As we have already shown \ref{disji} for $j=1$, we conclude $y_1=y_2$. This
+  completes the proof in case $x\in X_k$, and we may assume $x$ is not in $X_k$. By definition
+  \ref{definei3}, $x$ is not in $I_3(z,k)$ for any $z$ with $z<y_1$ or $z<y_2$. Hence,
+  neither $y_1<y_2$ nor $y_2<y_1$, and by totality of the order of $Y_k$, we have $y_1=y_2$. This
+  completes the proof of \ref{disji} for $j=3$.
+  
+  We show \ref{unioni} for $j=2$. In case $k=-S$, this follows from `cover_big_ball`. Assume
+  $k>-S$. Let $x$ be a point of $B(o, 4D^S-2D^k)$. By induction, there is $y'\in Y_{k-1}$ such that
+  $x\in I_3(y',k-1)$. Using the inductive statement \ref{squeezedyadic}, we obtain
+  $x\in B(y',4D^{k-1})$. As $D>4$, by applying the triangle inequality with the points, $o$, $x$, and
+  $y'$, we obtain that $y'\in B(o, 4D^S-D^k)$. By `cover_big_ball`, $y'$ is in $B(y,2D^k)$ for some
+  $y\in Y_k$. It follows that $x\in I_2(y,k)$. This proves \ref{unioni} for $j=2$.
+  
+  We show \ref{unioni} for $j=3$. Let $x\in B(o, 4D^S-2D^k)$. In case $x\in X_k$, then by
+  definition of $X_k$ we have $x\in I_1(y,k)$ for some $y\in Y_k$ and thus $x\in I_3(y,k)$. We may
+  thus assume $x\not\in X_k$. As we have already seen \ref{unioni} for $j=2$, there is
+  $y\in Y_k$ such that $x\in I_2(y,k)$. We may assume this $y$ is minimal with respect to the order in
+  $Y_k$. Then $x\in I_3(y,k)$. This proves \ref{unioni} for $j=3$.
+  
+  Next, we show the first inclusion in \ref{squeezedyadic}. Let
+  $x\in B(y,\frac 12 D^k)$. As $I_1(y,k)\subset I_3(y,k)$, it suffices to show $x\in I_1(y,k)$. If
+  $k=-S$, this follows immediately from the assumption on $x$ and the definition of $I_1$. Assume
+  $k>-S$. By the inductive statement \ref{unioni} and $D>4$, there is a $y'\in Y_{k-1}$ such
+  that $x\in I_3(y',k-1)$. By the inductive statement \ref{squeezedyadic}, we conclude
+  $x\in B(y',4D^{k-1})$. By the triangle inequality with points $x$, $y$, $y'$, and $D\geq8$, we have
+  $y'\in B(y,D^k)$. It follows by definition \ref{defineij} that
+  $I_3(y',k-1)\subset I_1(y,k)$, and thus $x\in I_3(y,k)$. This proves the first inclusion in
+  \ref{squeezedyadic}.
+  
+  We show the second inclusion in \ref{squeezedyadic}. Let $x\in I_3(y,k)$. As
+  $I_1(y,k)\subset I_2(y,k)$ directly from the definition \ref{defineij}, it follows by
+  definition \ref{definei3} that $x\in I_2(y,k)$. By definition \ref{defineij},
+  there is $y'\in Y_{k-1}\cap B(y,2D^k)$ with $x\in I_3(y',k-1)$. By induction,
+  $x\in B(y', 4D^{k-1})$. By the triangle inequality applied to the points $x,y',y$ and $D>4$, we
+  conclude $x\in B(y,4D^k)$. This shows the second inclusion in \ref{squeezedyadic}
+  and completes the proof of the lemma.
+  -/)
+  (latexEnv := "lemma")]
+lemma I1_prop_1 {k : ℤ} (hk : -S ≤ k) {x : X} {y1 y2 : Yk X k} :
       x ∈ I1 hk y1 ∩ I1 hk y2 → y1 = y2 := by
     rw [I1,I1]
     if hk_s : k = -S then
@@ -671,6 +789,23 @@ lemma I3_nonempty {k : ℤ} (hk : -S ≤ k) (y : Yk X k) :
   exact zpow_pos (realD_pos a) k
 
 -- the additional argument `hk` to get decent equality theorems
+/--
+Let $-S\le l\le k\le S$ and $y\in Y_k$. We have $$\begin{equation}
+\label{3coverdyadic}
+    I_3(y,k)\subset \bigcup_{y'\in Y_l} I_3(y',l)\, .
+\end{equation}$$
+-/
+@[blueprint
+  "cover by cubes"
+  (proof := /--
+  Let $-S\le l\le k\le S$ and $y\in Y_k$. If $l=k$, the inclusion \ref{3coverdyadic} is
+  true from the definition of set union. We may then assume inductively that $k>l$ and the statement
+  of the lemma is true if $k$ is replaced by $k-1$. Let $x\in I_3(y,k)$. By definition
+  \ref{definei3}, $x\in I_j(y,k)$ for some $j\in \{1,2\}$. By \ref{defineij},
+  $x\in I_3(w,k-1)$ for some $w\in Y_{k-1}$. We conclude \ref{3coverdyadic} by
+  induction.
+  -/)
+  (latexEnv := "lemma")]
 lemma cover_by_cubes {l : ℤ} (hl : -S ≤ l) :
     ∀ {k : ℤ}, l ≤ k → (hk : -S ≤ k) → ∀ y, I3 hk y ⊆ ⋃ (yl : Yk X l), I3 hl yl := by
   apply Int.le_induction
@@ -688,6 +823,40 @@ lemma cover_by_cubes {l : ℤ} (hl : -S ≤ l) :
   specialize hind (I_induction_proof hk1 h.ne.symm) z hz'
   exact hind
 
+/--
+Let $-S\le l\le k\le S$ and $y\in Y_k$ and $y'\in Y_l$ with $I_3(y',l)\cap I_3(y,k)\neq \emptyset$.
+Then $$\begin{equation}
+        \label{3dyadicproperty}
+    I_3(y',l)\subset I_3(y,k).
+\end{equation}$$
+-/
+@[blueprint
+  "dyadic property"
+  (proof := /--
+  Let $l,k,y,y'$ be as in the lemma. Pick $x\in I_3(y',l)\cap I_3(y,k)$. Assume first $l=k$. By
+  \ref{disji} of `I1_prop_1`, we conclude $y'=y$, and thus
+  \ref{3dyadicproperty}. Now assume $l<k$. By induction, we may assume that the
+  statement of the lemma is proven for $k-1$ in place of $k$.
+  
+  By `cover_by_cubes`, there is a $y''\in Y_{k-1}$ such that $x\in I_3(y'',k-1)$. By induction, we
+  have $I_3(y',l)\subset I_3(y'',k-1)$. It remains to prove $$\begin{equation}
+  \label{wyclaim}
+  I_3(y'',k-1)\subset I_3(y,k).
+  \end{equation}$$ We make a case distinction and assume first $x\in X_k$. By Definition
+  \ref{definei3}, we have $x\in I_1(y,k)$. By Definition \ref{defineij}, there
+  is a $v\in Y_{k-1}\cap B(y,D^k)$ with $x\in I_3(v,k-1)$. By \ref{disji} of `I1_prop_1`, we
+  have $v=y''$. By Definition \ref{defineij}, we then have $I_3(y'',k-1)\subset I_1(y,k)$.
+  Then \ref{wyclaim} follows by Definition \ref{definei3} in the given case.
+  
+  Assume now the case $x\notin X_k$. By \ref{definei3}, we have $x\in I_2(y,k)$. Moreover,
+  for any $u<y$ in $Y_k$, we have $x\not\in I_3(u,k)$. Let $u<y$. By transitivity of the order in
+  $Y_k$, we conclude $x\not \in I_2(u,k)$. By \ref{defineij} and the disjointedness
+  property of `I1_prop_1`, we have $I_3(y'',k-1)\cap I_2(u,k)= \emptyset$. Similarly,
+  $I_3(y'',k-1)\cap I_1(u,k)= \emptyset$. Hence $I_3(y'',k-1)\cap I_3(u,k)=\emptyset$. As $u<y$ was
+  arbitrary, we conclude with \ref{definei3} the claim in the given case. This completes
+  the proof of \ref{wyclaim}, and thus also \ref{3dyadicproperty}.
+  -/)
+  (latexEnv := "lemma")]
 lemma dyadic_property {l : ℤ} (hl : -S ≤ l) {k : ℤ} (hl_k : l ≤ k) :
     (hk : -S ≤ k) → ∀ (y : Yk X k), ∀ (y' : Yk X l),
     ¬ Disjoint (I3 hl y') (I3 hk y) → I3 hl y' ⊆ I3 hk y := by
@@ -906,6 +1075,29 @@ lemma transitive_boundary' {k1 k2 k3 : ℤ} (hk1 : -S ≤ k1) (hk2 : -S ≤ k2) 
         rw [← right_distrib]
         norm_num
 
+/--
+Assume $-S\le k''< k'< k\le S$ and $y''\in Y_{k''}$, $y'\in Y_{k'}$, $y\in Y_k$. Assume there is
+$x\in X$ such that $$\begin{equation}
+    x\in I_3(y'',k'')\cap I_3(y',k')\cap I_3(y,k)\, .
+\end{equation}$$ If $(y'',k''|y,k)$, the also $(y'',k''|y',k')$ and $(y',k'|y,k)$
+-/
+@[blueprint
+  "transitive boundary"
+  (proof := /--
+  As $x\in I_3(y'',k'')\cap I_3(y',k')$ and $k''< k'$, we have by `dyadic_property` that
+  $I_3(y'',k'')\subset I_3(y',k')$. Similarly, $I_3(y',k')\subset I_3(y,k)$. Pick
+  $x'\in X\setminus I_3(y,k)$ such that $$\begin{equation}
+  \label{yppxp}
+          \rho(y'',x')< 6D^{k''}\, ,
+  \end{equation}$$ which exists as $(y'',k''|y,k)$. As $x'\in X\setminus I_3(y',k')$ as well, we
+  conclude $(y'',k''| y',k')$. By the triangle inequality, we have $$\begin{equation}
+      \rho(y',x')\le \rho(y',x)+\rho(x,y'')+\rho(y'',x')
+  \end{equation}$$ Using the choice of $x$ and \ref{squeezedyadic} as well as
+  \ref{yppxp}, we estimate this by $$\begin{equation}
+      < 4D^{k'}+4D^{k''}+6D^{k''}\le 6D^{k'}\, ,
+  \end{equation}$$ where we have used $D>5$ and $k''<k'$. We conclude $(y',k'|y,k)$.
+  -/)
+  (latexEnv := "lemma")]
 lemma transitive_boundary {k1 k2 k3 : ℤ} (hk1 : -S ≤ k1) (hk2 : -S ≤ k2) (hk3 : -S ≤ k3)
   (hk1_2 : k1 ≤ k2) (hk2_3 : k2 ≤ k3) (y1 : Yk X k1) (y2 : Yk X k2) (y3 : Yk X k3)
     (x : X) (hx : x ∈ I3 hk1 y1 ∩ I3 hk2 y2 ∩ I3 hk3 y3) :
@@ -1178,6 +1370,65 @@ lemma small_boundary' (k : ℤ) (hk : -S ≤ k) (hk_mK : -S ≤ k - K') (y : Yk 
       gcongr
       norm_num
 
+/--
+Let $K = 2^{4a+1}$. For each $-S+K\le k\le S$ and $y\in Y_k$ we have $$\begin{equation}
+            \label{new-small-boundary}
+            \sum_{z\in Y_{k-K}: (z,k-K|y,k)}\mu(I_3(z,k-K)) \le \frac 12 \mu(I_3(y,k))\,.
+\end{equation}$$
+-/
+@[blueprint
+  "small boundary"
+  (proof := /--
+  Let $K$ be as in the lemma. Let $-S+K\le k\le S$ and $y\in Y_k$.
+  
+  Pick $k'$ so that $k-K\le k'\le k$. For each $y''\in Y_{k-K}$ with $(y'',k-K| y,k)$, by
+  `cover_by_cubes` and `dyadic_property`, there is a unique $y'\in Y_{k'}$ such that
+  $$\begin{equation}
+  \label{4.31}
+      I_3(y'',k-K)\subset I_3(y',k')\subset I_3(y,k)\, .
+  \end{equation}$$ Using `transitive_boundary`, $(y',k'|y,k)$.
+  
+  We conclude using the disjointedness property of `I1_prop_1` that $$\begin{equation}
+  \label{scalecompare}
+      \sum_{y'': (y'',k-K|y,k)}\mu(I_3(y'',k-K))
+     \le
+  \sum_{y': (y',k'|y,k)}
+  \mu(I_3(y',k')) \, .
+  \end{equation}$$ Adding over $k-K<k'\le k$, and using
+  $$\mu(I_3(y',k'))\le 2^{4a} \mu(B(y', \frac 14 D^{k'}))$$ from the doubling property
+  \ref{doublingx} and \ref{squeezedyadic} gives $$\begin{equation}
+  \label{sumcompare}
+      K\sum_{y'': (y'',k-K|y,k)}
+      \mu(I_3(y'',k-K))
+  \end{equation}$$ $$\begin{equation}
+  \label{sumcompare1}
+      \le 2^{4a} \sum_{k-K<k'\le k}
+     \left[ \sum_{y': (y',k'|y,k)}
+  \mu(B(y', \frac 14 D^{k'}))\right]
+  \end{equation}$$ Each ball $B(y', \frac 14 D^{k'})$ occurring in \ref{sumcompare1} is
+  contained in $I_3(y',k')$ by \ref{squeezedyadic} and in turn contained in $I_3(y,k)$
+  by \ref{4.31}. Assume for the moment all these balls are pairwise disjoint. Then by
+  additivity of the measure, $$\begin{equation}
+      K\sum_{y'': (y'',k-K|y,k)}
+      \mu(I_3(y'',k-K))
+      \le 2^{4a}
+  \mu(I_3(y,k))\,
+  \end{equation}$$ which by $K=2^{4a+1}$ implies \ref{new-small-boundary}.
+  
+  It thus remains to prove that the balls occurring in \ref{sumcompare1} are pairwise
+  disjoint. Let $(u,l)$ and $(u',l')$ be two parameter pairs occurring in the sum of
+  \ref{sumcompare1} and let $B(u, \frac 14 D^l)$ and $B({u'}, \frac 14 D^{l'})$ be the
+  corresponding balls. If $l=l'$, then the balls are equal or disjoint by
+  \ref{squeezedyadic} and \ref{disji} of `I1_prop_1`. Assume then without loss
+  of generality that $l'<l$. Towards a contradiction, assume that $$\begin{equation}
+  \label{bulbul}
+      B(u, \frac 14 D^l)\cap B({u'}, \frac 14 D^{l'})\neq \emptyset
+  \end{equation}$$ As $(u',l'|y,k)$, there is a point $x$ in $X\setminus I_3(y,k)$ with
+  $\rho(x,u')<6D^{l'}$. Using $D>25$, we conclude from the triangle inequality and
+  \ref{bulbul} that $x\in B(u,\frac 12D^l)$. However, $B(u,\frac 12 D^l)\subset I_3(u,l)$,
+  and $I_3(u,l)\subset I_3(y,k)$, a contradiction to $x\not\in I_3(y,k)$. This proves the lemma.
+  -/)
+  (latexEnv := "lemma")]
 lemma small_boundary (k : ℤ) (hk : -S ≤ k) (hk_mK : -S ≤ k - K') (y : Yk X k) :
     ∑' (z : Yk X (k - K')), ∑ᶠ (_ : clProp(hk_mK,z|hk,y)), volume (I3 hk_mK z)
       ≤ 2⁻¹ * volume (I3 hk y) := by
@@ -1226,6 +1477,30 @@ lemma boundary_sum_eq {k : ℤ} (hk : -S ≤ k) {k' : ℤ} (hk' : -S ≤ k') (y 
     exact hneq (I3_prop_1 _ hx)
   exact fun y' ↦ MeasurableSet.iUnion (fun _ ↦ I3_measurableSet hk' y')
 
+/--
+Let $K = 2^{4a+1}$ and let $n\ge 0$ be an integer. Then for each $-S+nK\le k\le S$ we have
+$$\begin{equation}
+            \label{very-new-small}
+            \sum_{y'\in Y_{k-nK}: (y',k-nK|y,k)}\mu(I_3(y',k-nK)) \le 2^{-n} \mu(I_3(y,k))\,.
+\end{equation}$$
+-/
+@[blueprint
+  "smaller boundary"
+  (proof := /--
+  We prove this by induction on $n$. If $n=0$, both sides of \ref{very-new-small} are
+  equal to $\mu(I_3(y,k))$ by \ref{disji}. If $n=1$, this follows from `small_boundary`.
+  
+  Assume $n>1$ and \ref{very-new-small} has been proven for $n-1$. We write
+  \ref{very-new-small} $$\begin{equation}
+          \sum_{y''\in Y_{k-nK}: (y'',k-nK|y,k)}\mu(I_3(y'',k-nK))
+  \end{equation}$$ $$\begin{equation}
+          = \sum_{y'\in Y_{k-K}:(y',k-K|y,k)} \left[ \sum_{y''\in Y_{k-nK}: (y'',k-nK|y',k-K)}\mu(I_3(y'',k-nK)) \right]
+  \end{equation}$$ Applying the induction hypothesis, this is bounded by $$\begin{equation}
+          = \sum_{y'\in Y_{k-K}:(y',k-K|y,k)} 2^{1-n}\mu(I_3(y',k-K))
+  \end{equation}$$ Applying \ref{new-small-boundary} gives
+  \ref{very-new-small}, and proves the lemma.
+  -/)
+  (latexEnv := "lemma")]
 lemma smaller_boundary (n : ℕ) :
     ∀ {k : ℤ}, (hk : -S ≤ k) → (hk_mnK : -S ≤ k - n * K') → ∀ (y : Yk X k),
       ∑' (y' : Yk X (k - n * K')), ∑ᶠ (_ : clProp(hk_mnK,y'|hk,y)), volume (I3 hk_mnK y') ≤
@@ -1435,6 +1710,36 @@ lemma kappa_le_log2D_inv_mul_K_inv : κ ≤ (Real.logb 2 D * K')⁻¹ := by
 
 end ProofData
 
+/--
+For each $-S\le k\le S$ and $y\in Y_k$ and $0<t<1$ with $tD^k\ge D^{-S}$ we have $$\begin{equation}
+        \label{old-small-boundary}
+        \mu(\{x \in I_3(y,k) \ : \ \rho(x, X \setminus I_3(y,k)) \leq t D^{k}\}) \le 2 t^\kappa \mu(I_3(y,k))\,.
+\end{equation}$$
+-/
+@[blueprint
+  "boundary measure"
+  (proof := /--
+  Let $x\in I_3(y,k)$ with $\rho(x, X \setminus I_3(y,k)) \leq t D^{k}$. Let $K = 2^{4a+1}$ as in
+  `smaller_boundary`. Let $n$ be the largest integer such that $D^{nK} \le \frac{1}{t}$, so that
+  $tD^k \le D^{k-nK}$ and $$\begin{equation}
+  \label{eq-n-size}
+      D^{nK} > \frac{1}{tD^K}\,.
+  \end{equation}$$ Let $k' = k - nK$, by the assumption $tD^k \ge D^{-S}$, we have $k' \ge -S$. By
+  \ref{3coverdyadic}, there exists $y' \in Y_{k'}$ with $x \in I_3(y',k')$. By the
+  squeezing property \ref{squeezedyadic} and the assumption on $x$, we have
+  $$\rho(y', X \setminus I_3(y,k)) \le \rho(x,y') + \rho(x, X \setminus I_3(y,k)) \le 4 D^{k'} + t D^{k}\,.$$
+  By the assumption on $n$ and the definition of $k'$, this is
+  $$\le 4D^{k'} + D^{k - nK} < 6D^{k'}\,.$$ Together with \ref{3dyadicproperty} thus
+  $(y',k'|y,k)$. We have shown that
+  $$\{x \in I_3(y,k) \ : \ \rho(x, X \setminus I_3(y,k)) \leq t D^{k}\}$$
+  $$\subset \bigcup_{y'\in Y_{k-nK}: (y',k-nK|y,k)}I_3(y',k-nK)\,.$$ Using monotonicity and additivity
+  of the measure and `smaller_boundary`, we obtain
+  $$\mu(\{x \in I_3(y,k) \ : \ \rho(x, X \setminus I_3(y,k)) \leq t D^{k}\}) \le 2^{-n} \mu(I_3(y,k))\,.$$
+  By \ref{eq-n-size} and the definition \ref{defineD} of $D$, this is bounded by
+  $$2 t^{1/(100a^2 K)}  \mu(I_3(y,k))\,,$$ which completes the proof by the definition
+  \ref{definekappa} of $\kappa$.
+  -/)
+  (latexEnv := "lemma")]
 lemma boundary_measure {k : ℤ} (hk : -S ≤ k) (y : Yk X k) {t : ℝ≥0} (ht : t ∈ Set.Ioo 0 1)
     (htD : (D ^ (-S : ℤ) : ℝ) ≤ t * D ^ k) :
     volume ({x | x ∈ I3 hk y ∧ EMetric.infEdist x (I3 hk y)ᶜ ≤ (↑t * ↑D ^ k)}) ≤
@@ -1628,7 +1933,50 @@ lemma 𝓓_finite : Finite (𝓓 X) := by
 -- Note: we might want to slightly adapt the construction so that there is only 1 tile at level S
 -- with center `o` (then we might not cover all of `ball o (D ^ S)`, but most of it)
 variable (X) in
-/-- Proof that there exists a grid structure. -/
+/--
+There exists a grid structure $(\mathcal{D}, c,s)$.
+
+Proof that there exists a grid structure.
+-/
+@[blueprint
+  "grid existence"
+  (proof := /--
+  We first show that $(\tilde{\mathcal{D}},c,s)$ satisfies properties \ref{coverdyadic},
+  \ref{dyadicproperty}, \ref{eq-vol-sp-cube} and
+  \ref{eq-small-boundary}. Property \ref{eq-vol-sp-cube} follows
+  from \ref{squeezedyadic}, while \ref{eq-small-boundary} follows
+  from `boundary_measure`.
+  
+  Let $x\in B(o, D^S)$. We show properties \ref{coverdyadic} and
+  \ref{dyadicproperty} for $(\tilde{\mathcal{D}},c,s)$ and $x$.
+  
+  We first show \ref{coverdyadic} for $(\tilde{\mathcal{D}},c,s)$ by contradiction. Then
+  there is an $I$ violating the conclusion of \ref{coverdyadic}. Pick such $I=I_3(y,l)$
+  such that $l$ is minimal. By assumption, we have $-S\le k<l$; in particular $-S<l$. By definition,
+  $I_3(y, l)$ is contained in $I_1(y, l)\cup I_2(y, l)$, which is contained in the union of
+  $I_3(y',l-1)$ with $y'\in Y_{l-1}$. By minimality of $l$, each such $I_3(y',l-1)$ is contained in
+  the union of all $I_3(z,k)$ with $z\in Y_k$. This proves \ref{coverdyadic}.
+  
+  We now show \ref{dyadicproperty} for $(\tilde{\mathcal{D}},c,s)$. Assume to get a
+  contradiction that there are non-disjoint $I, J\in \tilde{\mathcal{D}}$ with $s(I)\le s(J)$ and
+  $I \not \subset J$. We may assume the existence of such $I$ and $J$ with minimal $s(J)-s(I)$. Let
+  $k=s(I)$. Assume first $s(J)=k$. Let $I=I_3(y_1,k)$ and $J=I_3(y_2,k)$ with $y_1,y_2\in Y_k$. If
+  $y_1=y_2$, then $I=J$, a contradiction to $I\not \subset J$. If $y_1\neq y_2$, then
+  $I\cap J=\emptyset$ by \ref{disji}, a contradiction to the non-disjointedness of $I,J$.
+  Assume now $s(J)>k$. Choose $y\in I\cap J$. By property \ref{coverdyadic}, there is
+  $K\in \tilde{\mathcal{D}}$ with $s(K)=s(J)-1$ and $y\in K$. By construction of $J$, and pairwise
+  disjointedness of all $I_3(w,s(J)-1)$ that we have already seen, we have $K\subset J$. By minimality
+  of $s(J)$, we have $I\subset K$. This proves $I\subset J$ and thus
+  \ref{dyadicproperty}.
+  
+  Now note that properties \ref{dyadicproperty},
+  \ref{eq-vol-sp-cube} and \ref{eq-small-boundary} immediately
+  carry over to $(\mathcal{D},c, s)$ by restriction. \ref{subsetmaxcube} is true for
+  $(\mathcal{D}, c, s)$ by definition, and \ref{coverdyadic} follows from
+  \ref{coverdyadic} and \ref{dyadicproperty} for
+  $(\tilde{\mathcal{D}}, c, s)$.
+  -/)
+  (latexEnv := "lemma")]
 def grid_existence : GridStructure X D κ S o where
   Grid := 𝓓 X
   fintype_Grid := @Fintype.ofFinite (𝓓 X) (𝓓_finite X)
@@ -1760,7 +2108,28 @@ instance : Inhabited (𝓩 I) := ⟨⟨_, 𝓩_nonempty.choose_spec⟩⟩
 /-- 7 / 10 -/
 @[simp] def C4_2_1 : ℝ := 7 / 10 /- 0.6 also works? -/
 
-/-- Equation (4.2.3), Lemma 4.2.1 -/
+/--
+For each $I \in \mathcal{D}$, we have $$\begin{equation}
+        \label{eq-tile-cover}
+        \tQ(X) \subset \bigcup_{z \in \mathcal{Z}(I)} B_{I^\circ}(z, 0.7)\,.
+\end{equation}$$
+
+Equation (4.2.3), Lemma 4.2.1
+-/
+@[blueprint
+  "frequency ball cover"
+  (proof := /--
+  Let $\mfb \in \bigcup_{\mfa \in \tQ(X)} B_{I^\circ}(\mfa, 1)$. By maximality of $\mathcal{Z}(I)$,
+  there must be a point $z \in \mathcal{Z}(I)$ such that
+  $B_{I^\circ}(z, 0.3) \cap B_{I^\circ}(\mfb, 0.3) \ne \emptyset$. Else,
+  $\mathcal{Z}(I) \cup \{\mfb\}$ would be a set of larger cardinality than $\mathcal{Z}(I)$ satisfying
+  \ref{eq-tile-Z} and \ref{eq-tile-disjoint-Z}. Fix such $z$, and fix
+  a point $z_1 \in B_{I^\circ}(z, 0.3) \cap B_{I^\circ}(\mfb, 0.3)$. By the triangle inequality, we
+  deduce that
+  $$d_{I^\circ}(z,\mfb) \le d_{I^\circ}(z,z_1) + d_{I^\circ}(\mfb, z_1) < 0.3 + 0.3 = 0.6\,,$$ and
+  hence $\mfb \in B_{I^\circ}(z, 0.7)$.
+  -/)
+  (latexEnv := "lemma")]
 lemma frequency_ball_cover : Q.range.toSet ⊆ ⋃ z ∈ 𝓩 I, ball_{I} z C4_2_1 := by
   intro θ hθ
   classical
@@ -1814,7 +2183,21 @@ lemma disjoint_ball_Ω₁_aux (I : Grid X) {z z' : Θ X} (hz : z ∈ 𝓩 I) (hz
 
 def Ω₁ (p : 𝔓 X) : Set (Θ X) := Ω₁_aux p.1 (Finite.equivFin (𝓩 p.1) p.2)
 
-/-- Lemma 4.2.2 -/
+/--
+For each $I \in \mathcal{D}$, and $\fp_1, \fp_2\in \fP(I)$, if
+$$\Omega_1(\fp_1)\cap \Omega_1(\fp_2)\neq \emptyset,$$ then $\fp_1=\fp_2$.
+
+Lemma 4.2.2
+-/
+@[blueprint
+  "disjoint frequency cubes"
+  (proof := /--
+  By the definition of the map $\scI$, we have $$\fP(I) = \{(I, z) \, : \, z \in \mathcal{Z}(I)\}\,.$$
+  By \ref{eq-def-omega1}, the set $\Omega_1((I, z_k))$ is disjoint from each
+  $\Omega_1((I, z_i))$ with $i < k$. Thus the sets $\Omega_1(\fp)$, $\fp \in \fP(I)$ are pairwise
+  disjoint.
+  -/)
+  (latexEnv := "lemma")]
 lemma disjoint_frequency_cubes {f g : 𝓩 I} (h : (Ω₁ ⟨I, f⟩ ∩ Ω₁ ⟨I, g⟩).Nonempty) : f = g := by
   simp_rw [← not_disjoint_iff_nonempty_inter, Ω₁] at h
   contrapose! h
@@ -1847,7 +2230,42 @@ lemma Ω₁_subset_ball (p : 𝔓 X) : Ω₁ p ⊆ ball_(p) (𝒬 p) C4_2_1 := b
     simp only [qz, zeq, Fin.eta, Equiv.symm_apply_apply, sdiff_sdiff, diff_subset]
   · exact empty_subset _
 
-/-- Equation (4.2.5) -/
+/--
+For each $I \in \mathcal{D}$, it holds that $$\begin{equation}
+    \label{eq-omega1-cover}
+            \bigcup_{z \in \mathcal{Z}(I)} B_{I^\circ}(z, 0.7)\subset \bigcup_{\fp \in \fP(I)} \Omega_1(\fp)\,.
+\end{equation}$$ For every $\fp \in \fP$, it holds that $$\begin{equation}
+        \label{eq-omega1-incl}
+        B_{\fp}(\fcc(\fp), 0.3) \subset \Omega_1(\fp) \subset B_{\fp}(\fcc(\fp), 0.7)\,.
+\end{equation}$$
+
+Equation (4.2.5)
+-/
+@[blueprint
+  "frequency cube cover"
+  (proof := /--
+  For \ref{eq-omega1-incl} let $\fp = (I, z)$. The second inclusion in
+  \ref{eq-omega1-incl} then follows from \ref{eq-def-omega1} and the
+  equality $B_{\fp}(\fcc(\fp), 0.7) = B_{I^\circ}(z, 0.7)$, which is true by definition. For the first
+  inclusion in \ref{eq-omega1-incl} let $\mfa \in B_{\fp}(\fcc(\fp),0.3)$. Let $k$ be
+  such that $z = z_k$ in the enumeration we chose above. It follows immediately from
+  \ref{eq-def-omega1} and \ref{eq-tile-disjoint-Z} that
+  $\mfa \notin \Omega_1((I, z_i))$ for all $i < k$. Thus, again from
+  \ref{eq-def-omega1}, we have $\mfa \in \Omega_1((I,z_k))$.
+  
+  To show \ref{eq-omega1-cover} let
+  $\mfa \in \bigcup_{z \in \mathcal{Z}(I)} B_{I^\circ}(z,0.7)$. If there exists $z \in \mathcal{Z}(I)$
+  with $\mfa \in B_{I^\circ}(z,0.3)$, then
+  $$z \in \Omega_1((I, z)) \subset \bigcup_{\fp \in \fP(I)} \Omega_1(\fp)$$ by the first inclusion in
+  \ref{eq-omega1-incl}.
+  
+  Now suppose that there exists no $z \in \mathcal{Z}(I)$ with $\mfa \in B_{I^\circ}(z, 0.3)$. Let $k$
+  be minimal such that $\mfa \in B_{I^\circ}(z_k, 0.7)$. Since
+  $\Omega_1((I, z_i)) \subset B_{I^\circ}(z_i, 0.7)$ for each $i$ by
+  \ref{eq-def-omega1}, we have that $\mfa \notin \Omega_1((I, z_i))$ for all $i < k$.
+  Hence $\mfa \in \Omega_1((I, z_k))$, again by \ref{eq-def-omega1}.
+  -/)
+  (latexEnv := "lemma")]
 lemma iUnion_ball_subset_iUnion_Ω₁ : ⋃ z ∈ 𝓩 I, ball_{I} z C4_2_1 ⊆ ⋃ f : 𝓩 I, Ω₁ ⟨I, f⟩ := by
   rw [iUnion₂_subset_iff]; intro z mz (ϑ : Θ X) mϑ
   set f := Finite.equivFin (𝓩 I) with hf
@@ -2058,6 +2476,102 @@ decreasing_by
 end Construction
 
 variable (X) in
+/--
+For a given grid structure $(\mathcal{D}, c,s)$, there exists a tile structure
+$(\fP,\scI,\fc,\fcc,\pc,\ps)$.
+-/
+@[blueprint
+  "tile structure"
+  (proof := /--
+  First, we prove \ref{eq-freq-comp-ball}. If $I =I_0$, then
+  \ref{eq-freq-comp-ball} holds for all $\fp \in \fP(I)$ by
+  \ref{eq-max-omega} and \ref{eq-omega1-incl}. Now suppose that $I$ is
+  not maximal in $\mathcal{D}$ with respect to set inclusion. Then we may assume by induction that for
+  all $J \in \mathcal{D}$ with $I \subset J$ and all $\fp' \in \fP(J)$,
+  \ref{eq-freq-comp-ball} holds. Let $J$ be the unique minimal cube in
+  $\mathcal{D}$ with $I \subsetneq J$.
+  
+  Suppose that $\mfa \in \Omega(\fp)$. If $\mfa\in B_{\fp}(\mathcal{Q}(\fp), 0.2)$, then since
+  $$\begin{equation*}
+          B_{\fp}(\mathcal{Q}(\fp), 0.2)\subset B_{\fp}(\mathcal{Q}(\fp), 1)\, ,
+  \end{equation*}$$ we conclude that $\mfa\in B_{\fp}(\mathcal{Q}(\fp), 0.7)$. If not, by
+  \ref{eq-it-omega}, there exists $z \in \mathcal{Z}(J) \cap \Omega_1(\fp)$ with
+  $\mfa \in \Omega(J,z)$. Using the triangle inequality and \ref{eq-omega1-incl}, we
+  obtain
+  $$d_{I^\circ}(\fcc(\fp),\mfa) \le d_{I^\circ}(\fcc(\fp), z) + d_{I^\circ}(z, \mfa) \le 0.7 + d_{I^\circ}(z, \mfa)\,.$$
+  By `Grid.dist_mono` and the induction hypothesis, this is estimated by
+  $$\le 0.7 + 2^{-95a} d_{J^\circ}(z,\mfa) \le 0.7 + 2^{-95a}\cdot 1 < 1\,.$$ This shows the second
+  inclusion in \ref{eq-freq-comp-ball}. The first inclusion is immediate from
+  \ref{eq-it-omega}.
+  
+  Next, we show \ref{eq-dis-freq-cover}. Let $I \in \mathcal{D}$.
+  
+  If $I = I_0$, then disjointedness of the sets $\fc(\fp)$ for $\fp \in \fP(I)$ follows from the
+  definition \ref{eq-max-omega} and `Construction.disjoint_frequency_cubes`. To obtain
+  the inclusion in \ref{eq-dis-freq-cover} one combines the inclusions
+  \ref{eq-tile-cover} and \ref{eq-omega1-cover} of
+  `Construction.iUnion_ball_subset_iUnion_Ω₁` with \ref{eq-max-omega}.
+  
+  Now we turn to the case where there exists $J \in \mathcal{D}$ with $I \subset J$ and $I\ne J$. In
+  this case we use induction: It suffices to show \ref{eq-dis-freq-cover} under
+  the assumption that it holds for all cubes $J \in \mathcal{D}$ with $I \subset J$. As shown before
+  definition \ref{eq-it-omega}, we may choose the unique inclusion minimal such $J$. To
+  show disjointedness of the sets $\fc(\fp), \fp \in \fP(I)$ we pick two tiles $\fp, \fp' \in \fP(I)$
+  and $\mfa \in \fc(\fp) \cap \fc(\fp')$. Then we are by \ref{eq-it-omega} in one of the
+  following four cases.
+  
+  1\. There exist $z \in \mathcal{Z}(J) \cap \Omega_1(\fp)$ such that $\mfa \in \Omega(J, z)$, and
+  there exists $z' \in \mathcal{Z}(J) \cap \Omega_1(\fp')$ such that $\mfa \in \Omega(J, z')$. By the
+  induction hypothesis, that \ref{eq-dis-freq-cover} holds for $J$, we must have
+  $z = z'$. By `Construction.disjoint_frequency_cubes`, we must then have $\fp = \fp'$.
+  
+  2\. There exists $z \in \mathcal{Z}(J) \cap \Omega_1(\fp)$ such that $\mfa \in \Omega(J,z)$, and
+  $\mfa \in B_{\fp'}(\fcc(\fp'), 0.2)$. Using the triangle inequality, `Grid.dist_mono` and
+  \ref{eq-freq-comp-ball}, we obtain
+  $$d_{\fp'}(\fcc(\fp'),z) \le d_{\fp'}(\fcc(\fp'), \mfa) + d_{\fp'}(z, \mfa) \le 0.2 + 2^{-95a} \cdot 1 < 0.3\,.$$
+  Thus $z \in \Omega_1(\fp')$ by \ref{eq-omega1-incl}. By
+  `Construction.disjoint_frequency_cubes`, it follows that $\fp = \fp'$.
+  
+  3\. There exists $z' \in \mathcal{Z}(J) \cap \Omega_1(\fp')$ such that $\mfa \in \Omega(J,z')$, and
+  $\mfa \in B_{\fp}(\fcc(\fp), 0.2)$. This case is the same as case 2., after swapping $\fp$ and
+  $\fp'$.
+  
+  4\. We have $\mfa \in B_{\fp}(\fcc(\fp), 0.2) \cap B_{\fp'}(\fcc(\fp'), 0.2)$. In this case it
+  follows that $\fp = \fp'$ since the sets $B_{\fp}(\fcc(\fp), 0.2)$ are pairwise disjoint by the
+  inclusion \ref{eq-omega1-incl} and `Construction.disjoint_frequency_cubes`.
+  
+  To show the inclusion in \ref{eq-dis-freq-cover}, let $\mfa \in \tQ(X)$. By the
+  induction hypothesis, there exists $\fp \in \fP(J)$ such that $\mfa \in \Omega(\fp)$. By definition
+  of the set $\fP$, we have $\fp = (J, z)$ for some $z \in \mathcal{Z}(J)$. Thus, by
+  \ref{eq-tile-cover}, there exists $z' \in \mathcal{Z}(I)$ with
+  $z \in B_{I^\circ}(z', 0.7)$. Then by Lemma `Construction.iUnion_ball_subset_iUnion_Ω₁` there exists
+  $\fp' \in \fP(I)$ with $z \in \mathcal{Z}(J) \cap \Omega_1(\fp')$. Consequently, by
+  \ref{eq-it-omega}, $\mfa \in \fc(\fp')$. This completes the proof of
+  \ref{eq-dis-freq-cover}.
+  
+  Finally, we show \ref{eq-freq-dyadic}. Let $\fp, \fq \in \fP$ with
+  $\scI(\fp) \subset \scI(\fq)$ and $\fc(\fp) \cap \fc(\fq) \ne \emptyset$. If we have
+  $\ps(\fp) \ge \ps(\fq)$, then it follows from \ref{dyadicproperty} that $I = J$,
+  thus $\fp, \fq \in \fP(I)$. By \ref{eq-dis-freq-cover} we have then either
+  $\fc(\fp) \cap \fc(\fq) = \emptyset$ or $\fc(\fp) = \fc(\fq)$. By the assumption in
+  \ref{eq-freq-dyadic} we have $\fc(\fp) \cap \fc(\fq) \ne \emptyset$, so we must
+  have $\fc(\fp) = \fc(\fq)$ and in particular $\fc(\fq) \subset \fc(\fp)$.
+  
+  So it remains to show \ref{eq-freq-dyadic} under the additional assumption that
+  $\ps(\fq) > \ps(\fp)$. In this case, we argue by induction on $\ps(\fq)-\ps(\fp)$. By
+  \ref{coverdyadic}, there exists a cube $J \in \mathcal{D}$ with $s(J) = \ps(\fq) - 1$
+  and $J \cap\scI(\fp) \ne \emptyset$. We pick one such $J$. By \ref{dyadicproperty},
+  we have $\scI(\fp) \subset J \subset \scI(\fq)$.
+  
+  Thus, by \ref{eq-tile-cover}, there exists $z' \in \mathcal{Z}(J)$ with
+  $\fcc(\fq) \in B_{J^\circ}(z', 0.7)$. Then by `Construction.iUnion_ball_subset_iUnion_Ω₁` there
+  exists $\fq' \in \fP(J)$ with $\fcc(\fq) \in\Omega_1(\fq')$. By \ref{eq-it-omega}, it
+  follows that $\Omega(\fq) \subset \Omega(\fq')$. Note that then $\scI(\fp) \subset \scI(\fq')$ and
+  $\fc(\fp) \cap \fc(\fq') \ne \emptyset$ and $\ps(\fq') - \ps(\fp) = \ps(\fq) - \ps(\fp) - 1$. Thus,
+  we have by the induction hypothesis that $\Omega(\fq') \subset \Omega(\fp)$. This completes the
+  proof.
+  -/)
+  (latexEnv := "lemma")]
 def tile_existence : TileStructure Q D κ S o where
   Ω := Construction.Ω
   biUnion_Ω {I} := by rw [← SimpleFunc.coe_range]; exact Construction.Ω_biUnion

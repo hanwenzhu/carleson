@@ -1,3 +1,4 @@
+import BlueprintGen
 import Carleson.TileStructure
 import Carleson.ToMathlib.MinLayer
 
@@ -87,7 +88,39 @@ lemma eq_empty_of_maxℭ_lt {k n : ℕ} (hn : maxℭ X < n) : ℭ (X := X) k n =
   contrapose! hn
   exact (exists_bound_ℭ (X := X)).choose_spec (k, n) hn
 
-/-- Lemma 5.3.11 -/
+/--
+We have for every $k\ge 0$ and $\fP'\subset \fP(k)$ $$\begin{equation}
+    \dens_1(\fP')\le \dens_k'(\fP')\, .
+\end{equation}$$
+
+Lemma 5.3.11
+-/
+@[blueprint
+  "dens compare"
+  (proof := /--
+  It suffices to show that for all $\fp'\in \fP'$ and $\lambda\ge 2$ and $\fp\in \fP(\fP')$ with
+  $\lambda \fp' \lesssim \lambda \fp$ we have $$\begin{equation}
+      \frac{\mu({E}_2(\lambda, \fp))}{\mu(\scI(\fp))}
+      \le \sup_{\fp'' \in \fP(k): \lambda \fp' \lesssim \lambda \fp''}
+      \frac{\mu({E}_2(\lambda, \fp''))}{\mu(\scI(\fp''))}.
+  \end{equation}$$ Let such $\fp'$, $\lambda$, $\fp$ be given. It suffices to show that
+  $\fp\in \fP(k)$, that is, it satisfies \ref{muhj1} and \ref{muhj2}.
+  
+  We show \ref{muhj1}. As $\fp\in \fP(\fP')$, there exists $\fp''\in \fP'$ with
+  $\scI(\fp')\subset \scI(\fp'')$. By assumption on $\fP'$, we have $\fp''\in \fP(k)$ and there exists
+  $J\in \mathcal{D}$ with $\scI(\fp'')\subset J$ and $$\begin{equation}
+         \mu(G\cap J)>2^{-k-1} \mu(J).
+  \end{equation}$$ Then also $\scI(\fp')\subset J$, which proves \ref{muhj1} for $\fp$.
+  
+  We show \ref{muhj2}. Assume to get a contradiction that there exists $J\in \mathcal{D}$ with
+  $\scI(\fp)\subset J$ and $$\begin{equation}
+  \label{mugj}
+         \mu(G\cap J)>2^{-k} \mu(J).
+  \end{equation}$$ As $\lambda\fp'\lesssim \lambda\fp$, we have $\scI(\fp')\subset \scI(\fp)$, and
+  therefore $\scI(\fp')\subset J$. This contradicts $\fp'\in \fP'\subset \fP(k)$. This proves
+  \ref{muhj2} for $\fp$.
+  -/)
+  (latexEnv := "lemma")]
 lemma dens1_le_dens' {k : ℕ} {P : Set (𝔓 X)} (hP : P ⊆ TilesAt k) : dens₁ P ≤ dens' k P := by
   rw [dens₁, dens']; gcongr with p' mp' l hl
   simp_rw [ENNReal.mul_iSup, iSup_le_iff, mul_div_assoc]; intro p mp sl
@@ -104,7 +137,22 @@ lemma dens1_le_dens' {k : ℕ} {P : Set (𝔓 X)} (hP : P ⊆ TilesAt k) : dens�
     simp_rw [TilesAt, mem_preimage, 𝓒, mem_diff, aux𝓒, mem_setOf] at hp'
     apply absurd _ hp'.2; use J, sl.1.trans lJ
 
-/-- Lemma 5.3.12 -/
+/--
+For each set $\mathfrak{A} \subset \mathfrak{C}(k,n)$, we have
+$$\dens_1(\mathfrak{A}) \le 2^{4a}2^{-n+1}\,.$$
+
+Lemma 5.3.12
+-/
+@[blueprint
+  "C dens1"
+  (proof := /--
+  We have by `dens1_le_dens'` that $\dens_1(\mathfrak{A}) \le \dens_k'(\mathfrak{A})$. Since
+  $\mathfrak{A} \subset \fC(k,n)$, it follows from monotonicity of suprema and the definition
+  \ref{eq-densdef} that $\dens_k'(\mathfrak{A}) \le \dens_k'(\fC(k,n))\,.$ By
+  \ref{eq-densdef} and \ref{def-cnk}, we have
+  $$\dens_k'(\fC(k,n)) = \sup_{\fp \in \fC(k,n)} \dens_k'(\{\fp\}) \le 2^{4a}2^{-n+1}\,.$$
+  -/)
+  (latexEnv := "lemma")]
 lemma dens1_le {k n : ℕ} {A : Set (𝔓 X)} (hA : A ⊆ ℭ k n) : dens₁ A ≤ 2 ^ (4 * (a : ℝ) - n + 1) :=
   calc
     _ ≤ dens' k A := dens1_le_dens' (hA.trans ℭ_subset_TilesAt)

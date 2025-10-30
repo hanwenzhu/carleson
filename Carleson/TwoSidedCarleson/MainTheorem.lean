@@ -1,3 +1,4 @@
+import BlueprintGen
 import Carleson.MetricCarleson.Main
 import Carleson.TwoSidedCarleson.NontangentialOperator
 
@@ -23,6 +24,46 @@ variable [CompatibleFunctions ℝ X (defaultA a)] [IsCancellative X (defaultτ a
 /-! ## Theorem 10.0.1 -/
 
 /- Theorem 10.0.1 -/
+/--
+For all integers $a \ge  4$ and real numbers $1<q\le 2$ the following holds. Let $(X,\rho,\mu,a)$ be
+a doubling metric measure space. Let $\Mf$ be a cancellative compatible collection of functions and
+let $K$ be a two-sided Calderón--Zygmund kernel on $(X,\rho,\mu,a)$. Assume that for every bounded
+measurable function $g$ on $X$ supported on a set of finite measure and all $r>0$ we have
+$$\begin{equation}
+\label{two-sided-Hr-bound-assumption}
+            \|T_r g\|_{2} \leq 2^{a^3} \|g\|_2\,.
+\end{equation}$$ Then for all Borel sets $F$ and $G$ in $X$ and all Borel functions $f:X\to \C$ with
+$|f|\le \mathbf{1}_F$, we have, with $T$ defined in \ref{def-main-op},
+$$\begin{equation}
+        \label{two-sided-resweak}
+            \left|\int_{G} T f \, \mathrm{d}\mu\right| \leq \frac{2^{474a^3}}{(q-1)^6} \mu(G)^{1-\frac{1}{q}} \mu(F)^{\frac{1}{q}}\, .
+\end{equation}$$
+-/
+@[blueprint
+  "two-sided metric space Carleson"
+  (proof := /--
+  Let $1<q\le 2$ be a real number. Let $\Theta$ be a cancellative compatible collection of functions.
+  By the assumption \ref{two-sided-Hr-bound-assumption}, we can apply
+  `nontangential_from_simple` to obtain for every bounded measurable $g:X\to\C$ supported on a set of
+  finite measure, $$\begin{equation}
+  \label{original-operator-assumption}
+          \|T_*g\|_2\le 2^{3a^3}\|g\|_2.
+  \end{equation}$$ Define $$\begin{equation*}
+          K'(x,y):= 2^{-2a^3} K(x,y) \,.
+  \end{equation*}$$ Then $K'$ is a two-sided Calderón--Zygmund kernel on $(X,\rho,\mu,a)$. Denote the
+  corresponding maximally truncated non-tangential singular operator by $T_*'$ and the corresponding
+  generalized Carleson operator by $T'$. With
+  \ref{original-operator-assumption}, we obtain for $g$ as above,
+  $$\begin{equation}
+  \label{modified-operator-assumption}
+          \|T_*'g\|_2\le 2^{a^3}\|g\|_2.
+  \end{equation}$$ Applying `metric_carleson` for $K'$ yields that for all Borel sets $F$ and $G$ in
+  $X$ and all Borel functions $f:X\to \C$ with $|f|\le \mathbf{1}_F$, we have $$\begin{equation*}
+          \left|\int_{G} T' f \, \mathrm{d}\mu\right| \leq \frac{2^{450a^3}}{(q-1)^6} \mu(G)^{1-\frac{1}{q}} \mu(F)^{\frac{1}{q}}\, .
+  \end{equation*}$$ This finishes the proof since for all $x\in X$, $$\begin{equation*}
+          T'f(x) = 2^{-2a^3} Tf(x) \,.
+  \end{equation*}$$
+  -/)]
 theorem two_sided_metric_carleson (ha : 4 ≤ a) (hq : q ∈ Ioc 1 2) (hqq' : q.HolderConjugate q')
     (hF : MeasurableSet F) (hG : MeasurableSet G)
     (hT : ∀ r > 0, HasBoundedStrongType (czOperator K r) 2 2 volume volume (C_Ts a))

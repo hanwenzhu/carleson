@@ -1,3 +1,4 @@
+import BlueprintGen
 import Carleson.ToMathlib.BoundedFiniteSupport
 import Carleson.ToMathlib.Misc
 import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
@@ -975,7 +976,30 @@ lemma lintegral_norm_pow_eq_distribution {f : α → ε} (hf : AEStronglyMeasura
     · simp_rw [rpow_eq_top_iff_of_pos hp]
       exact ae_finite
 
-/-- The layer-cake theorem, or Cavalieri's principle, written using `eLpNorm`. -/
+/--
+Let $1\le p< \infty$. Then for any measurable function $u:X\to [0,\infty)$ on the measure space $X$
+relative to the measure $\mu$ we have $$\begin{equation}
+\label{eq-layercake}
+    \|u\|_p^p=p\int_0^\infty \lambda^{p-1}\mu(\{x: u(x)\ge \lambda\})\, d\lambda\, .
+\end{equation}$$
+
+The layer-cake theorem, or Cavalieri's principle, written using `eLpNorm`.
+-/
+@[blueprint
+  "layer cake representation"
+  (proof := /--
+  The left-hand side of \ref{eq-layercake} is by definition $$\begin{equation}
+      \int_X u(x)^p \, d\mu(x)\, .
+  \end{equation}$$ Writing $u(x)$ as an elementary integral in $\lambda$ and then using Fubini, we
+  write for the last display $$\begin{equation}
+      =\int_X \int _0^{u(x)}
+      p \lambda^{p-1} d\lambda\, d\mu(x)
+  \end{equation}$$ $$\begin{equation}
+   =p\int _0^{\infty}
+      \lambda^{p-1} \mu(\{x: u(x)\ge \lambda\}) d\lambda\, .
+  \end{equation}$$ This proves the lemma.
+  -/)
+  (latexEnv := "lemma")]
 lemma eLpNorm_pow_eq_distribution {f : α → ε} (hf : AEStronglyMeasurable f μ) {p : ℝ≥0} (hp : 0 < p) :
     eLpNorm f p μ ^ (p : ℝ) =
     ∫⁻ t in Ioi (0 : ℝ), p * ENNReal.ofReal (t ^ ((p : ℝ) - 1)) * distribution f (.ofReal t) μ := by

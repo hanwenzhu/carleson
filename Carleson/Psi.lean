@@ -1,3 +1,4 @@
+import BlueprintGen
 import Carleson.ProofData
 
 open MeasureTheory Measure NNReal Metric Set TopologicalSpace Function DoublingMeasure Bornology
@@ -346,7 +347,69 @@ lemma dist_mem_Ioo_of_Ks_ne_zero {s : ℤ} {x y : X} (h : Ks s x y ≠ 0) :
     div_lt_iff₀ (zpow_realD_pos s), mul_inv, mul_assoc, inv_mul_eq_div (4 : ℝ), ← zpow_neg_one,
     ← zpow_add₀ (realD_pos a).ne.symm, neg_add_eq_sub, ← div_eq_inv_mul] at dist_mem_Ioo
 
-/-- Lemma 2.1.3 part 1, equation (2.1.2) -/
+/--
+Let $-S\le s\le S$ and $x,y,y'\in X$. If $K_s(x,y)\neq 0$, then we have $$\begin{equation}
+\label{supp-Ks}
+      \frac{1}{4} D^{s-1} \leq \rho(x,y) \leq \frac{1}{2} D^s\, .
+\end{equation}$$ We have $$\begin{equation}
+       \label{eq-Ks-size}
+        |K_s(x,y)|\le \frac{2^{102 a^3}}{\mu(B(x, D^{s}))}\,
+\end{equation}$$ and $$\begin{equation}
+        \label{eq-Ks-smooth}
+        |K_s(x,y)-K_s(x, y')|\le \frac{2^{127a^3}}{\mu(B(x, D^{s}))}
+        \left(\frac{ \rho(y,y')}{D^s}\right)^{\frac 1a}\,.
+\end{equation}$$
+
+Lemma 2.1.3 part 1, equation (2.1.2)
+-/
+@[blueprint
+  "kernel summand"
+  (proof := /--
+  By Definition \ref{defks}, the function $K_s$ is the product of $K$ with a function which is
+  supported in the set of all $x,y$ satisfying \ref{supp-Ks}. This proves
+  \ref{supp-Ks}.
+  
+  Using \ref{eqkernel-size} and the lower bound in \ref{supp-Ks} we obtain
+  $$\begin{equation}
+          \label{eqkernel-size-Ks}
+          |K_s(x,y)|\le |K(x,y)|\le \frac{2^{a^3}}{\mu(B(x,\frac 14 D^{s-1}))}
+  \end{equation}$$ Using $D=2^{100a^2}$ and the doubling property \ref{doublingx}
+  $2 +100a^2$ times estimates the last display by $$\begin{equation}
+          \label{eq-Ks-aux}
+          \le \frac{2^{2a+101a^3}}{\mu(B(x, D^{s}))}\, .
+  \end{equation}$$ Using $a\ge 4$ proves \ref{eq-Ks-size}.
+  
+  To prove \ref{eq-Ks-smooth} when $2\rho(y,y') > \rho(x,y)$, use the lower bound in
+  \ref{supp-Ks} and the inequality $2\rho(y,y') > \frac{1}{4}D^{s-1}$. Then
+  \ref{eq-Ks-smooth} follows from the triangle inequality,
+  \ref{eq-Ks-size} and $a \ge 4$.
+  
+  If $2\rho(y,y') \le \rho(x,y)$, we rewrite $|K_s(x,y)-K_s(x, y')|$ as $$\begin{equation}
+          |(K(x,y)-K(x,y')) \psi(D^{-s}\rho(x,y)) +
+          K(x,y)(\psi(D^{-s}\rho(x,y))-\psi(D^{-s}\rho(x,y')))|\,.
+  \end{equation}$$ An upper bound for $|K(x,y)-K(x, y')|$ is obtained similarly to the proof of
+  \ref{eq-Ks-size}, using \ref{eqkernel-y-smooth} and the lower bound
+  in \ref{supp-Ks} $$\begin{equation}
+          |K(x,y)-K(x, y')|\le \frac{2^{a^3}}{\mu(B(x, \frac 14 D^{s-1}))}
+          \left(\frac{ \rho(y,y')}{\frac 14 D^{s-1}}\right)^{\frac 1a}\,.
+  \end{equation}$$ As above, this is estimated by $$\begin{equation}
+         \le \frac{4D 2^{2a+101a^3}}{\mu(B(x, D^{s}))}
+          \left(\frac{ \rho(y,y')}{D^{s}}\right)^{\frac 1a}
+           = \frac{2^{2+2a+100a^2+101a^3}}{\mu(B(x, D^{s}))}
+          \left(\frac{ \rho(y,y')}{D^{s}}\right)^{\frac 1a}\,.
+  \end{equation}$$ We have the trivial bound $|\psi(D^{-s}\rho(x,y))| \leq 1$, and
+  \ref{eq-Ks-aux} provides a bound for $|K(x,y)|$. Finally, we show that
+  $$\begin{equation}
+          |\psi(D^{-s}\rho(x,y))-\psi(D^{-s}\rho(x,y'))|\le
+          4D \left(\frac{\rho(y, y')}{D ^ s}\right)^{\frac 1a}
+  \end{equation}$$ by considering separately the cases $\rho(y,y')/D^s \ge 1$ and
+  $\rho(y,y')/D^s < 1$. In the former case, the inequality is trivial; in the latter case, it follows
+  from the fact that $\psi$ is Lipschitz with constant $4D$.
+  
+  Combining the above bounds and using $a\ge 4$ proves \ref{eq-Ks-smooth} when
+  $2\rho(y,y') \le \rho(x,y)$.
+  -/)
+  (latexEnv := "lemma")]
 lemma dist_mem_Icc_of_Ks_ne_zero {s : ℤ} {x y : X} (h : Ks s x y ≠ 0) :
     dist x y ∈ Icc ((D ^ (s - 1) : ℝ) / 4) (D ^ s / 2) :=
   Ioo_subset_Icc_self (dist_mem_Ioo_of_Ks_ne_zero h)

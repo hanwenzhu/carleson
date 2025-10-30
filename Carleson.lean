@@ -96,3 +96,36 @@ import Carleson.TwoSidedCarleson.MainTheorem
 import Carleson.TwoSidedCarleson.NontangentialOperator
 import Carleson.TwoSidedCarleson.RestrictedWeakType
 import Carleson.TwoSidedCarleson.WeakCalderonZygmund
+import BlueprintGen
+
+attribute [blueprint
+  "real line ball"
+  (statement := /-- For $x\in R$ and $R>0$, the ball $B(x,R)$ is the interval $(x-R,x+R)$ -/)
+  (proof := /--
+  Let $x'\in B(x,R)$. By definition of the ball, $|x'-x|<R$. It follows that $x'-x<R$ and $x-x'<R$. It
+  follows $x'<x+R$ and $x'>x-R$. This implies $x'\in (x-R,x+R)$. Conversely, let $x'\in (x-R,x+R)$.
+  Then $x'<x+R$ and $x'>x-R$. It follows that $x'-x<R$ and $x-x'<R$. It follows that $|x'-x|<R$, hence
+  $x'\in B(x,R)$. This proves the lemma.
+  -/)
+  (latexEnv := "lemma")] Real.ball_eq_Ioo
+
+attribute [blueprint
+  (statement := /--
+  Let $f:\R \to \C$ be $2\pi$-periodic and continuously differentiable, and let
+  $n \in \Z \setminus \{0\}$. Then $$\begin{equation}
+      \widehat{f}_n = \frac{1}{i n} \widehat{f'}_n.
+  \end{equation}$$
+  -/)
+  (proof := /-- This is part of the Lean library. -/)
+  (latexEnv := "lemma")] fourierCoeffOn_of_hasDerivAt
+
+attribute [blueprint
+  (statement := /--
+  Let $f:\R \to \C$ such that $$\begin{equation}
+      \sum_{n\in \Z} |\widehat{f}_n| < \infty.
+  \end{equation}$$ Then $$\begin{equation}
+      \sup_{x\in [0,2\pi]} |f(x) - S_Nf(x)| \rightarrow 0
+  \end{equation}$$ as $N \rightarrow \infty$.
+  -/)
+  (proof := /-- This is part of the Lean library. -/)
+  (latexEnv := "lemma")] hasSum_fourier_series_of_summable

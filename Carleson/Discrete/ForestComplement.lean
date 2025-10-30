@@ -1,3 +1,4 @@
+import BlueprintGen
 import Carleson.Antichain.AntichainOperator
 import Carleson.Discrete.Defs
 import Carleson.Discrete.SumEstimates
@@ -233,7 +234,17 @@ lemma notMem_ℭ₅_iff_mem_𝔏₃ (hkn : k ≤ n) (hj : j ≤ 2 * n + 3)
     le_iSup₂_of_le hj p <| le_iSup_of_le nG₃ Subset.rfl
 
 
-/-- Lemma 5.5.1.
+/--
+We have that $$\begin{align}
+        \label{eq-fp'-decomposition}
+        &\quad \fP_2 \cap \fP_{G \setminus G'}\\
+        &= \bigcup_{k \ge 0} \bigcup_{n \ge k} \fL_0(k,n) \cap \fP_{G \setminus G'} \\
+        &\quad\cup \bigcup_{k \ge 0} \bigcup_{n \ge k}\bigcup_{0 \le j \le 2n+3} \fL_2(k,n,j) \cap \fP_{G \setminus G'}\\
+        &\quad\cup \bigcup_{k \ge 0} \bigcup_{n \ge k}\bigcup_{0 \le j \le 2n+3} \bigcup_{0 \le l \le Z(n+1)} \fL_1(k,n,j,l) \cap \fP_{G \setminus G'}\\
+        &\quad\cup \bigcup_{k \ge 0} \bigcup_{n \ge k}\bigcup_{0 \le j \le 2n+3} \bigcup_{0 \le l \le Z(n+1)} \fL_3(k,n,j,l)\cap \fP_{G \setminus G'}\,.
+\end{align}$$
+
+Lemma 5.5.1.
 
 We will not use the lemma in this form, as to decompose the Carleson sum it is also crucial that
 the union is disjoint. This is easier to formalize by decomposing into successive terms, taking
@@ -241,6 +252,28 @@ advantage of disjointess at each step, instead of doing everything in one go. St
 lemma as it corresponds to the blueprint, and the key steps of its proof will also be the key steps
 when doing the successive decompositions.
 -/
+@[blueprint
+  "antichain decomposition"
+  (proof := /--
+  Let $\fp \in \fP_2 \cap \fP_{G \setminus G'}$. Clearly, for every cube $J = \scI(\fp)$ with
+  $\fp \in \fP_{G \setminus G'}$ there exists some $k \ge 0$ such that \ref{muhj1} holds, and
+  for no cube $J \in \mathcal{D}$ and no $k < 0$ does \ref{muhj2} hold. Thus $\fp \in \fP(k)$
+  for some $k \ge 0$.
+  
+  Next, since $E_2(\lambda, \fp') \subset \scI(\fp')\cap G$ for every $\lambda \ge 2$ and every tile
+  $\fp' \in \fP(k)$ with $\lambda\fp \lesssim \lambda \fp'$, it follows from \ref{muhj2} that
+  $\mu(E_2(\lambda, \fp')) \le 2^{-k} \mu(\scI(\fp'))$ for every such $\fp'$, so
+  $\dens_k'(\{\fp\}) \le 2^{-k}$. Combining this with $a \ge 0$, it follows from
+  \ref{def-cnk} that there exists $n\ge k$ with $\fp \in \fC(k,n)$.
+  
+  Since $\fp \in \fP_{G \setminus G'}$, we have in particular
+  $\scI(\fp) \not \subset A(2n + 6, k, n)$, so there exist at most $1 + (4n + 12)2^n < 2^{2n+4}$ tiles
+  $\mathfrak{m} \in \mathfrak{M}(k,n)$ with $\fp \le \mathfrak{m}$. It follows that
+  $\fp \in \fL_0(k,n)$ or $\fp \in \fC_1(k,n,j)$ for some $1 \le j \le 2n + 3$. In the former case we
+  are done, in the latter case the equality to be shown follows from the definitions of the
+  collections $\fC_i$ and $\fL_i$.
+  -/)
+  (latexEnv := "lemma")]
 lemma antichain_decomposition : 𝔓pos (X := X) ∩ 𝔓₁ᶜ = ℜ₀ ∪ ℜ₁ ∪ ℜ₂ ∪ ℜ₃ := by
   unfold ℜ₀ ℜ₁ ℜ₂ ℜ₃ 𝔓₁; simp_rw [← inter_union_distrib_left]; ext p
   simp_rw [mem_inter_iff, and_congr_right_iff, mem_compl_iff, mem_union]; intro h
@@ -433,7 +466,60 @@ lemma exists_𝔒_with_le_quotient :
 
 end
 
-/-- Main part of Lemma 5.5.2. -/
+/--
+We have that $$\fL_0(k,n) = \dot{\bigcup_{0 \le l < n}} \fL_0(k,n,l)\,,$$ where each $\fL_0(k,n,l)$
+is an antichain.
+
+Main part of Lemma 5.5.2.
+-/
+@[blueprint
+  "L0 antichain"
+  (proof := /--
+  It suffices to show that $\fL_0(k,n)$ contains no chain of length $n + 1$. Suppose that we had such
+  a chain $\fp_0 \le \fp_1 \le \dotsb \le \fp_{n}$ with $\fp_i \ne \fp_{i+1}$ for $i =0, \dotsc, n-1$.
+  By \ref{def-cnk}, we have that $\dens_k'(\{\fp_n\}) > 2^{-n}$. Thus, by
+  \ref{eq-densdef}, there exists $\fp' \in \fP(k)$ and $\lambda \ge 2$ with
+  $\lambda \fp_n \le \lambda \fp'$ and $$\begin{equation}
+          \label{eq-p'}
+          \frac{\mu(E_2(\lambda, \fp'))}{\mu(\scI(\fp'))} > \lambda^{a} 2^{4a} 2^{-n}\,.
+  \end{equation}$$ Let $\mathfrak{O}$ be the set of all $\fp'' \in \fP(k)$ such that we have
+  $\scI(\fp'') = \scI(\fp')$ and $B_{\fp'}(\fcc(\fp'), \lambda) \cap \Omega(\fp'') \neq \emptyset$. We
+  now show that $$\begin{equation}
+          \label{eq-O-bound}
+          |\mathfrak{O}| \le 2^{4a}\lambda^a\,.
+  \end{equation}$$ The balls $B_{\fp'}(\fcc(\fp''), 0.2)$, $\fp'' \in \mathfrak{O}$ are disjoint by
+  \ref{eq-freq-comp-ball}, and by the triangle inequality contained in
+  $B_{\fp'}(\fcc(\fp'), \lambda+1.2)$. By assumption \ref{thirddb} on $\Theta$, this ball
+  can be covered with
+  $$2^{a\lceil \log_2(\lambda+1.2) + \log_2(5)\rceil} \le 2^{a(\log_2(\lambda) + 4)} = 2^{4a}\lambda^a$$
+  many $d_{\fp'}$-balls of radius $0.2$. Here we have used that for $\lambda \ge 2$
+  $$\lceil \log_2(\lambda + 1.2)  + \log_2(5) \rceil \le 1+ \log_2(1.6  \lambda) + \log_2(5) = 4 + \log_2(\lambda)\,.$$
+  By the triangle inequality, each such ball contains at most one $\fcc(\fp'')$, and each
+  $\fcc(\fp'')$ is contained in one of the balls. Thus we get \ref{eq-O-bound}.
+  
+  By \ref{definee1} and \ref{definee2} we have
+  $E_2(\lambda, \fp') \subset \bigcup_{\fp'' \in \mathfrak{O}} E_1(\fp'')$, thus
+  $$2^{4a}\lambda^a 2^{-n} < \sum_{\fp'' \in \mathfrak{O}} \frac{\mu(E_1(\fp''))}{\mu(\scI(\fp''))}\,.$$
+  Hence there exists a tile $\fp'' \in \mathfrak{O}$ with $$\begin{equation*}
+          \mu(E_1(\fp'')) \ge 2^{-n} \mu(\scI(\fp'))\,.
+  \end{equation*}$$ By the definition \ref{mnkmax} of $\mathfrak{M}(k,n)$, there exists a
+  tile $\mathfrak{m} \in \mathfrak{M}(k,n)$ with $\fp' \leq \mathfrak{m}$. From [\[eq-p\'\]](#eq-p'),
+  the inclusion $E_2(\lambda, \fp') \subset \scI(\fp')$ and $a\ge 1$ we obtain
+  $$2^n \geq 2^{4a} \lambda^{a} \geq \lambda\,.$$ From the triangle inequality, `Grid.dist_mono` and
+  $a \ge 1$, we now obtain for all $\mfa \in B_{\mathfrak{m}}(\fcc(\mathfrak{m}), 1)$ that
+  $$\begin{align*}
+          &\quad d_{\fp_0}(\fcc(\fp_0), \mfa)\\
+          &\leq d_{\fp_0}(\fcc(\fp_0), \fcc(\fp_{n})) + d_{\fp_0}(\fcc(\fp_{n}), \fcc(\fp')) + d_{\fp_0}(\fcc(\fp'), \fcc(\fp''))\\
+          &\quad+ d_{\fp_0}(\fcc(\fp''), \fcc(\mathfrak{m})) +
+          d_{\fp_0}(\fcc(\mathfrak{m}), \mfa)\\
+          &\leq 1 + 2^{-95an} (d_{\fp_{n}}(\fcc(\fp_n), \fcc(\fp')) + d_{\fp'}(\fcc(\fp'), \fcc(\fp''))\\
+          &\quad+ d_{\fp''}(\fcc(\fp''), \fcc(\mathfrak{m})) +
+          d_{\mathfrak{m}}(\fcc(\mathfrak{m}), \mfa))\\
+          &\leq 1 + 2^{-95an}(\lambda + (\lambda + 1) + 1 + 1) \leq 100\,.
+  \end{align*}$$ Thus, by \ref{straightorder}, $100\fp_0 \lesssim \mathfrak{m}$, a
+  contradiction to $\fp_0 \notin \fC(k,n)$.
+  -/)
+  (latexEnv := "lemma")]
 lemma iUnion_L0' : ⋃ (l < n), 𝔏₀' (X := X) k n l = 𝔏₀ k n := by
   classical
   refine iUnion_lt_minLayer_iff_bounded_series.mpr fun p ↦ ?_
@@ -531,7 +617,28 @@ private instance : Preorder (ℭ₁' (X := X) k n j) where
     change smul _ _ ≤ smul _ _ at xy yz ⊢
     exact xy.trans yz
 
-/-- Lemma 5.5.3 -/
+/--
+Each of the sets $\fL_2(k,n,j)$ is an antichain.
+
+Lemma 5.5.3
+-/
+@[blueprint
+  "L2 antichain"
+  (proof := /--
+  Suppose that there are $\fp_0, \fp_1 \in \fL_2(k,n,j)$ with $\fp_0 \ne \fp_1$ and $\fp_0 \le \fp_1$.
+  By `smul_mono` and `smul_C2_1_2`, it follows that $2\fp_0 \lesssim 200\fp_1$. Since $\fL_2(k,n,j)$
+  is finite, there exists a maximal $l \ge 1$ such that there exists a chain
+  $2\fp_0 \lesssim 200 \fp_1 \lesssim \dotsb \lesssim 200 \fp_l$ with all $\fp_i$ in $\fC_1(k,n,j)$
+  and $\fp_i \ne \fp_{i+1}$ for $i = 0, \dotsc, l-1$. If we have $\fp_l \in \fU_1(k,n,j)$, then it
+  follows from $2\fp_0 \lesssim 200 \fp_l \lesssim \fp_l$ and \ref{eq-L2-def} that
+  $\fp_0 \not\in \fL_2(k,n,j)$, a contradiction. Thus, by the definition \ref{defunkj} of
+  $\fU_1(k,n,j)$, there exists $\fp_{l+1} \in \fC_1(k,n,j)$ with
+  $\scI(\fp_l) \subsetneq \scI(\fp_{l+1})$ and
+  $\mfa \in B_{\fp_l}(\fcc(\fp_l), 100) \cap B_{\fp_{l+1}}(\fcc(\fp_{l+1}), 100)$. Using the triangle
+  inequality and `Grid.dist_mono`, one deduces that $200 \fp_l \lesssim 200\fp_{l+1}$. This
+  contradicts maximality of $l$.
+  -/)
+  (latexEnv := "lemma")]
 lemma antichain_L2 : IsAntichain (· ≤ ·) (𝔏₂ (X := X) k n j) := by
   classical
   by_contra h; rw [isAntichain_iff_forall_not_lt] at h; push_neg at h
@@ -583,7 +690,22 @@ lemma antichain_L2 : IsAntichain (· ≤ ·) (𝔏₂ (X := X) k n j) := by
 
 end L2Antichain
 
-/-- Part of Lemma 5.5.4 -/
+/--
+Each of the sets $\fL_1(k,n,j,l)$ and $\fL_3(k,n,j,l)$ is an antichain.
+
+Part of Lemma 5.5.4
+-/
+@[blueprint
+  "L1 L3 antichain"
+  (proof := /--
+  By its definition \ref{eq-L1-def}, each set $\fL_1(k,n,j,l)$ is a set of minimal
+  elements in some set of tiles with respect to $\le$. If there were distinct
+  $\fp, \fq \in \fL_1(k,n,j,l)$ with $\fp \le \fq$, then $\fq$ would not be minimal. Hence such
+  $\fp, \fq$ do not exist. Similarly, by \ref{eq-L3-def}, each set $\fL_3(k,n,j,l)$ is a
+  set of maximal elements in some set of tiles with respect to $\le$. If there were distinct
+  $\fp, \fq \in \fL_3(k,n,j,l)$ with $\fp \le \fq$, then $\fp$ would not be maximal.
+  -/)
+  (latexEnv := "lemma")]
 lemma antichain_L1 : IsAntichain (· ≤ ·) (𝔏₁ (X := X) k n j l) := isAntichain_minLayer
 
 /-- Part of Lemma 5.5.4 -/
@@ -1158,9 +1280,50 @@ lemma forest_complement_optimized
     have : 0 < nnq - 1 := tsub_pos_of_lt (one_lt_nnq X)
     exact ne_of_gt (by positivity)
 
-/-- Lemma 5.1.3, proving the bound on the integral of the Carleson sum over all leftover tiles
+/--
+Let $$\begin{equation}
+        \fP_2 =\fP\setminus \fP_1\,.
+\end{equation}$$ For all $f:X\to \C$ with $|f|\le \mathbf{1}_F$ we have $$\begin{equation}
+        \label{disclesssim2}
+        \int_{G \setminus G'} \left|\sum_{\fp \in \fP_2} T_{\fp} f\right| \, \mathrm{d}\mu \le \frac{2^{120a^3}}{(q-1)^5} \mu(G)^{1 - \frac{1}{q}} \mu(F)^{\frac{1}{q}}\,.
+\end{equation}$$
+
+Lemma 5.1.3, proving the bound on the integral of the Carleson sum over all leftover tiles
 which do not fit in a forest. It follows from a careful grouping of these tiles into finitely
-many antichains. -/
+many antichains.
+-/
+@[blueprint
+  "forest complement"
+  (proof := /--
+  If $\fp \not\in \fP_{G \setminus G'}$, then $\mu(\scI(\fp) \cap (G \setminus G')) = 0$. By
+  \ref{definetp} and \ref{definee1}, it follows that
+  $\mathbf{1}_{G \setminus G'} T_{\fp}f(x) = 0$ for almost every $x$. We thus have, almost everywhere,
+  $$\mathbf{1}_{G\setminus G'} \sum_{\fp \in \fP_2} T_{\fp}f(x) = \mathbf{1}_{G\setminus G'} \sum_{\fp \in \fP_2 \cap \fP_{G \setminus G'}} T_{\fp}f(x)\,.$$
+  Let $\fL(k,n)$ denote any of the terms $\fL_i(k,n,j,l) \cap \fP_{G \setminus G'}$ on the right hand
+  side of [\[eq-fp\'-decomposition\]](#eq-fp'-decomposition), where the indices $j, l$ may be void.
+  Then $\fL(k,n)$ is an antichain, by Lemmas `iUnion_L0'`,`antichain_L2`, `antichain_L1`. Further, we
+  have $$\begin{equation*}
+      \dens_1(\fL(k,n)) \le 2^{4a+1 - n}
+  \end{equation*}$$ by `dens1_le`, and we have $$\begin{equation*}
+       \dens_2(\fL(k,n)) \le 2^{2a+5} \frac{\mu(F)}{\mu(G)},
+  \end{equation*}$$ since $$\begin{equation*}
+       \fL(k,n) \cap \fP_{F,G} \subset \fP_{G \setminus G'} \cap \fP_{F, G} = \emptyset.
+  \end{equation*}$$
+  
+  Applying now the triangle inequality according to the decomposition coming from
+  `antichain_decomposition`, and then applying `antichain_operator` to each term, we obtain the
+  estimate $$\begin{multline*}
+          \le \sum_{k \ge 0} \sum_{n \ge k} (n + (2n+4) + 2(2n+4) (1+Z(n+1))) \\
+          \times 2^{117a^3}(q-1)^{-1} (2^{4a+1-n})^{\frac{q-1}{8a^4}} (2^{2a+5} \frac{\mu(F)}{\mu(G)})^{\frac{1}{q} - \frac{1}{2}} \|f\|_2\|\mathbf{1}_{G\setminus G'}\|_2\,.
+  \end{multline*}$$ Because $|f| \le \mathbf{1}_F$, we have $\|f\|_2 \le \mu(F)^{1/2}$, and we have
+  $\|\mathbf{1}_{G\setminus G'}\|_2 \le \mu(G)^{1/2}$. Using this and \ref{defineZ}, we
+  bound
+  $$\le 2^{118a^3} (q - 1)^{-1} \mu(F)^{\frac{1}{q}} \mu(G)^{\frac{1}{q'}} \sum_{k \ge 0} \sum_{n \ge k} n^2 2^{-n\frac{q-1}{8a^4}}\,.$$
+  The last sum equals, by changing the order of summation,
+  $$\sum_{n \ge 0} n^2(n+1) 2^{-n\frac{q-1}{8a^4}} \le \frac{2^{2a^3}}{(q-1)^4}\,.$$ This completes
+  the proof.
+  -/)
+  (latexEnv := "lemma")]
 lemma forest_complement {f : X → ℂ} (hf : ∀ x, ‖f x‖ ≤ F.indicator 1 x) (h'f : Measurable f) :
     ∫⁻ x in G \ G', ‖carlesonSum 𝔓₁ᶜ f x‖ₑ ≤
     C5_1_3 a nnq * volume G ^ (1 - q⁻¹) * volume F ^ q⁻¹ := by

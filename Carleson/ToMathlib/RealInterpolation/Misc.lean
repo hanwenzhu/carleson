@@ -106,7 +106,7 @@ lemma ENNReal.rpow_pos_of_pos_ne_top_ne_zero {x : ℝ≥0∞} {y : ℝ} (hx : x 
 def spf_to_tc (spf : ScaledPowerFunction) : StrictRangeToneCouple where
   ton s := (s / spf.d) ^ spf.σ
   inv t := spf.d * t ^ spf.σ⁻¹
-  mon := if 0 < spf.σ then true else false
+  mon := if 0 < spf.σ then .true else .false
   ran_ton := fun t ht ↦
       ⟨rpow_pos (ENNReal.div_pos ht.1.ne' spf.hd') ((div_lt_top ht.2.ne) spf.hd.ne').ne,
       rpow_lt_top_of_pos_ne_top_ne_zero (ENNReal.div_pos ht.1.ne' spf.hd').ne'
@@ -516,14 +516,14 @@ lemma truncCompl_eq {f : α → ε} :
 /-- A function to deal with truncations and complement of truncations in one go. -/
 def trnc (j : Bool) (f : α → ε) (t : ℝ≥0∞) : α → ε :=
   match j with
-  | false => truncCompl f t
-  | true => trunc f t
+  | .false => truncCompl f t
+  | .true => trunc f t
 
 @[simp]
-lemma trnc_false : trnc false f t = truncCompl f t := rfl
+lemma trnc_false : trnc .false f t = truncCompl f t := rfl
 
 @[simp]
-lemma trnc_true : trnc true f t = trunc f t := rfl
+lemma trnc_true : trnc .true f t = trunc f t := rfl
 
 /-- A function is the complement if its truncation and the complement of the truncation. -/
 @[simp]

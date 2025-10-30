@@ -1,3 +1,4 @@
+import BlueprintGen
 import Carleson.Discrete.ExceptionalSet
 import Carleson.Discrete.ForestComplement
 import Carleson.Discrete.ForestUnion
@@ -38,6 +39,30 @@ lemma C2_0_2_pos : 0 < C2_0_2 a nnq := by
   apply le_C2_0_2 (four_le_a X) (q_mem_Ioc X)
 
 variable (X) in
+/--
+Let $(\mathcal{D}, c, s)$ be a grid structure and $$\begin{equation*}
+    (\fP,\scI,\fc,\fcc,\pc,\ps)
+\end{equation*}$$ a tile structure for this grid structure. Define for $\fp\in \fP$
+$$\begin{equation}
+\label{defineep}
+    E(\fp)=\{x\in \scI(\fp): \tQ(x)\in \fc(\fp) , {\sigma_1}(x)\le \ps(\fp)\le {\sigma_2}(x)\}
+\end{equation}$$ and $$\begin{equation}
+\label{definetp}
+    T_{\fp} f(x)= \mathbf{1}_{E(\fp)}(x) \int K_{\ps(\fp)}(x,y) f(y) e(\tQ(x)(y)-\tQ(x)(x))\, d\mu(y).
+\end{equation}$$ Then there exists a Borel set $G'$ with $2\mu(G') \leq \mu(G)$ such that for all
+Borel functions $f:X\to \C$ with $|f|\le \mathbf{1}_F$ we have $$\begin{equation}
+    \label{disclesssim}
+   \int_{G \setminus G'} \left| \sum_{\fp \in \fP} T_{\fp} f (x) \right| \, \mathrm{d}\mu(x) \le \frac{2^{442a^3}}{(q-1)^5} \mu(G)^{1-\frac{1}{q}} \mu(F)^{\frac{1}{q}}\,.
+\end{equation}$$
+-/
+@[blueprint
+  "discrete Carleson"
+  (proof := /--
+  `discrete_carleson` follows by applying the triangle inequality to \ref{disclesssim}
+  according to the splitting in `forest_union` and `forest_complement` and using both Lemmas as well
+  as the bound on the set $G'$ given by `exceptional_set`.
+  -/)
+  (latexEnv := "proposition")]
 theorem discrete_carleson :
     ∃ G', MeasurableSet G' ∧ 2 * volume G' ≤ volume G ∧
     ∀ f : X → ℂ, Measurable f → (∀ x, ‖f x‖ ≤ F.indicator 1 x) →

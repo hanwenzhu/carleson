@@ -493,7 +493,7 @@ lemma estimate_trnc {p₀ q₀ q : ℝ} {spf : ScaledPowerFunction} {j : Bool}
     [TopologicalSpace.PseudoMetrizableSpace E₁]
     (hp₀ : 0 < p₀) (hq₀ : 0 < q₀) (hp₀q₀ : p₀ ≤ q₀)
     (hf : AEStronglyMeasurable f μ) (hf₂ : SigmaFinite (μ.restrict f.support))
-    (hpowers : if xor j (spf_to_tc spf).mon = true then q₀ < q else q < q₀)
+    (hpowers : if xor j (spf_to_tc spf).mon = .true then q₀ < q else q < q₀)
     (hpow_pos : 0 < q₀ + spf.σ⁻¹ * (q - q₀)) :
     ∫⁻ s : ℝ in Ioi 0,
     eLpNorm (trnc j f ((spf_to_tc spf).ton (ENNReal.ofReal s))) (ENNReal.ofReal p₀) μ ^ q₀ *
@@ -618,7 +618,7 @@ lemma estimate_trnc {p₀ q₀ q : ℝ} {spf : ScaledPowerFunction} {j : Bool}
       field_simp
     _ = _ := by ring
 
-def sel (j : Bool) (p₀ p₁ : ℝ≥0∞) := match j with | true => p₁ | false => p₀
+def sel (j : Bool) (p₀ p₁ : ℝ≥0∞) := match j with | .true => p₁ | .false => p₀
 
 /-- One of the key estimates for the real interpolation theorem, now using
     the particular choice of exponent, but not yet using the

@@ -1,3 +1,4 @@
+import BlueprintGen
 import Carleson.FinitaryCarleson
 
 open scoped NNReal
@@ -215,7 +216,46 @@ lemma eq_C3_0_4 : C2_0_1 a q * (2 ^ 2 / (q - 1)) = C3_0_4 a q := by
   simp only [C3_0_4, div_mul_div_comm, ← pow_add]
   congr
 
-/-- Lemma 3.0.4. -/
+/--
+Let $\sigma_1,\sigma_2\colon X\to \mathbb{Z}$ be measurable functions with finite range and
+$\sigma_1\leq \sigma_2$. Then we have $$\begin{equation}
+ \label{Sqlin}
+        \int \mathbf{1}_{G}(x)
+        \left| {T}_{2,\sigma_1,\sigma_2}f(x)\right|\, d\mu(x)
+        \le \frac{2^{442a^3+2}}{(q-1)^6} \mu(G)^{1-\frac{1}{q}} \mu(F)^{\frac{1}{q}},
+\end{equation}$$ with $$\begin{equation}
+\label{middles1}
+        {T}_{2,\sigma_1,\sigma_2}f(x)=\sum_{\sigma_1(x) \le s\le \sigma_2(x)}
+        \int K_s(x,y) f(y) e(\tQ(x)(y)) \, \mathrm{d}\mu(y)\,.
+\end{equation}$$
+
+Lemma 3.0.4.
+-/
+@[blueprint
+  "linearized truncation"
+  (proof := /--
+  Fix $\sigma_1$, $\sigma_2$ and $\tQ$ as in the lemma. Applying `finitary_carleson` recursively, we
+  obtain a sequence of sets $G_n$ with $G_0=G$ and, for each $n\ge 0$, $G_{n+1} \subset G_n$,
+  $\mu(G_{n})\le 2^{-n} \mu(G)$ and $$\begin{equation*}
+      \int \mathbf{1}_{G_{n}\setminus G_{n+1}}(x)
+      \left| {T}_{2,\sigma_1,\sigma_2} f(x) \right|\, d\mu(x)
+  \end{equation*}$$ $$\begin{equation}
+      \le \frac{2^{442a^3}}{(q-1)^5} \mu(G_n)^{1 - \frac{1}{q}} \mu(F)^{\frac{1}{q}}.
+  \end{equation}$$ Adding the first $n$ of these inequalities, we obtain by bounding a geometric
+  series $$\begin{equation}
+   \label{Sqcut2}
+      \int \mathbf{1}_{G\setminus G_{n}}(x)
+  \left| {T}_{2,\sigma_1,\sigma_2}f(x) \right|\, d\mu(x)
+  \le \frac{2^{442a^3+2}}{(q-1)^6} \mu(G)^{1-\frac{1}{q}} \mu(F)^{\frac{1}{q}}.
+  \end{equation}$$ As the integrand is non-negative and non-decreasing in $n$, we obtain by the
+  monotone convergence theorem $$\begin{equation}
+   \label{Sqcut3}
+      \int \mathbf{1}_{G}(x)
+  \left| {T}_{2,\sigma_1,\sigma_2}f(x) \right|\, d\mu(x)
+  \le \frac{2^{442a^3+2}}{(q-1)^6} \mu(G)^{1-\frac{1}{q}} \mu(F)^{\frac{1}{q}}.
+  \end{equation}$$ This completes the proof of `linearized_truncation` and thus `metric_carleson`.
+  -/)
+  (latexEnv := "lemma")]
 lemma linearized_truncation
     [IsCancellative X (defaultτ a)] (hq : q ∈ Ioc 1 2) (hqq' : q.HolderConjugate q')
     (bF : IsBounded F) (bG : IsBounded G) (mF : MeasurableSet F) (mG : MeasurableSet G)
@@ -253,7 +293,33 @@ lemma linearized_truncation
       gcongr; exact sum_le_four_div_q_sub_one hq hqq'
     _ = _ := by rw [← ENNReal.coe_mul, eq_C3_0_4]
 
-/-- Lemma 3.0.3. `B` is the blueprint's `S`. -/
+/--
+Let $F$, $G$ be bounded Borel sets in $X$. Let $f:X\to \C$ be a Borel function with $|f|\le 1_F$.
+Then for all $S\in\Z$ we have $$\begin{equation}
+ \label{Scut}
+        \int \mathbf{1}_G(x) \sup_{-S\le s_1\le s_2\le S} |T_{s_1,s_2} f(x)|\, d\mu(x)
+        \le \frac{2^{442a^3+2}}{(q-1)^6} \mu(G)^{1-\frac{1}{q}} \mu(F)^{\frac{1}{q}},
+\end{equation}$$ where $$\begin{equation}
+\label{Tss}
+        T_{s_1,s_2} f(x) = \sum_{s_1\le s \le s_2} \int_X K_s(x,y) f(y) e(Q(x)(y)) \, \mathrm{d}\mu(y).
+\end{equation}$$
+
+Lemma 3.0.3. `B` is the blueprint's `S`.
+-/
+@[blueprint
+  "S truncation"
+  (proof := /--
+  We reduce `S_truncation` to `linearized_truncation`. For each $x$, let $\sigma_1(x)$ be the minimal
+  element $s'\in [-S,S]$ such that
+  $$\max_{s'\le s_2\le S} |T_{s',s_2} f(x)| = \max_{-S\le s_1\le s_2\le S} |T_{s_1,s_2} f(x)| =: T_{1,x}.$$
+  Similarly, let ${\sigma}_2(x)$ be the minimal element $s''\in [-S,S]$ such that
+  $$|T_{\sigma_2(x), s''} f(x)| = T_{1,x}\,.$$ With these choices, and noting that with the definition
+  of $T_{2, \sigma_1, \sigma_2}$ from \ref{middles1} $$\begin{equation*}
+      T_{\sigma_1(x),\sigma_2(x)} f(x)=T_{2,\sigma_1,\sigma_2} f(x),
+  \end{equation*}$$ we conclude that the left-hand side of \ref{Scut} and \ref{Sqlin}
+  are equal. Therefore, `S_truncation` follows from `linearized_truncation`.
+  -/)
+  (latexEnv := "lemma")]
 lemma S_truncation
     [IsCancellative X (defaultτ a)] {B : ℕ} (hq : q ∈ Ioc 1 2) (hqq' : q.HolderConjugate q')
     (bF : IsBounded F) (bG : IsBounded G) (mF : MeasurableSet F) (mG : MeasurableSet G)
@@ -654,7 +720,73 @@ lemma R_truncation' (hq : q ∈ Ioc 1 2) (hqq' : q.HolderConjugate q')
     _ ≤ _ := by
       simp_rw [← mul_assoc, ← add_mul]; gcongr; norm_cast; exact le_C1_0_2 (four_le_a X) hq
 
-/-- Lemma 3.0.2. -/
+/--
+Let $F$, $G$ be Borel sets in $X$. Let $f:X\to \C$ be a Borel function with $|f|\le 1_F$. Then for
+all $R\in 2^\N$ we have $$\begin{equation}
+ \label{Rcut}
+        \int \mathbf{1}_G \sup_{1/R<R_1<R_2<R} |T_{R_1,R_2,R} f(x)|\, d\mu(x) \le \frac{2^{443a^3}}{(q-1)^6} \mu(G)^{1-\frac{1}{q}} \mu(F)^{\frac{1}{q}},
+\end{equation}$$ where $$\begin{equation}
+\label{TRR}
+        T_{R_1,R_2,R} f(x)= \mathbf{1}_{B(o,R)}(x)
+        \int_{R_1 < \rho(x,y) < R_2} K(x,y) f(y) e(Q(x)(y)) \, \mathrm{d}\mu(y) .
+\end{equation}$$
+
+Lemma 3.0.2.
+-/
+@[blueprint
+  "R truncation"
+  (proof := /--
+  Let $F,G,f$ as in the lemma be given. Let $R\in 2^\N$ be given. By replacing $G$ with $G\cap B(o,R)$
+  if necessary, a replacement that does not change the conclusion of the Lemma `R_truncation`, it
+  suffices to show \ref{Rcut} under the assumption that $G$ is contained in $B(o,R)$ and thus
+  bounded. We make this assumption. For every $x\in G$ and $R_2 < R$, the domain of integration in
+  \ref{TRR} is contained in $B(o,2R)$. By replacing $F$ with $F\cap B(o,2R)$ if necessary, and
+  correspondingly restricting $f$ to $B(o, 2R)$, it suffices to show \ref{Rcut} under the
+  assumption that $F$ is contained in $B(o,2R)$ and thus bounded. We make this assumption.
+  
+  Using the definition \ref{defks} of $K_s$ and the partition of unity
+  \ref{eq-psisum}, we observe that for fixed $R_1<R_2$ we have $$\begin{equation}
+      \label{KKs}
+      K(x,y)\mathbf{1}_{R_1<\rho(x,y)<R_2}=\sum_{s=s_1-2}^{s_2+2} K_s(x,y) \mathbf{1}_{R_1<\rho(x,y)<R_2},
+  \end{equation}$$ where $s_1=\lfloor\log_D 2R_1\rfloor+3$ and $s_2=\lceil\log_D 4R_2\rceil-2$. To
+  obtain the identity \ref{KKs}, we have used that on the set where $R_1<\rho(x,y)<R_2$ the
+  kernels $K_s$ vanish unless $s$ is inside the interval of summation in \ref{KKs}. Similarly,
+  we observe $$\begin{equation}
+      \label{KsrhoKs}
+      \sum_{s=s_1}^{s_2} K_s(x,y) \mathbf{1}_{R_1<\rho(x,y)<R_2} = \sum_{s=s_1}^{s_2} K_s(x,y),
+  \end{equation}$$ because on the support of $K_s$ with $s_1\le s\le s_2$ we have necessarily
+  $R_1<\rho(x,y)<R_2$. We thus express \ref{TRR} as the sum of $$\begin{equation}
+  \label{middles}
+  T_{s_1,s_2}f(x):=\sum_{s_1 \le s\le s_2}
+  \int K_s(x,y) f(y) e(Q(x)(y)) \, \mathrm{d}\mu(y)
+  \end{equation}$$ and $$\begin{equation}
+  \label{boundarys}
+  \sum_{s=s_1-2,s_1-1, s_2+1, s_2+2}
+  \int_{R_1 < \rho(x,y) < R_2} K_s(x,y) f(y) e(Q(x)(y)) \,
+   \mathrm{d}\mu(y),
+  \end{equation}$$
+  
+  We apply the triangle inequality and estimate \ref{Rcut} separately with $T_{R_1,R_2,R}$
+  replaced by \ref{middles} and by \ref{boundarys}. To handle the case
+  \ref{middles}, we employ `S_truncation`. Here, we utilize the fact that if
+  $\frac 1R\le R_1\le R_2\le R$, then $s_1$ and $s_2$ as in \ref{middles} are in an interval
+  $[-S,S]$ for some sufficiently large $S$ depending on $R$. To handle the case
+  \ref{boundarys}, we use the triangle inequality and the properties
+  \ref{supp-Ks}, \ref{eq-Ks-size} of $K_s$ and $|f| \le \mathbf{1}_F$ to obtain
+  for arbitrary $s$ the inequality $$\begin{multline}
+  \left|\int_{R_1 < \rho(x,y) < R_2} K_s(x,y) f(y) e(Q(x)(y)) \, \mathrm{d}\mu(y)\right|\\
+  \leq \frac{2^{102 a^3}}{\mu(B(x, D^{s}))}
+   \int_{B(x, D^s)} \mathbf{1}_F(y) \, \mathrm{d}\mu(y)
+  \leq 2^{102 a^3} M\mathbf{1}_F(x),
+  \end{multline}$$ where $M\mathbf{1}_F$ is as defined in `Finset.measure_biUnion_le_lintegral`. Now
+  the left-hand side of \ref{Rcut}, with $T_{R_1,R_2,R}$ replaced by
+  \ref{boundarys}, can be estimated using Hölder's inequality and
+  `Finset.measure_biUnion_le_lintegral` by
+  $$2^{102a^3+2}\int \mathbf{1}_{G}(x) M\mathbf{1}_F(x)\, d\mu(x)
+      \le \frac{2^{102a^3+4a+3}q}{q-1}\mu(G)^{1-\frac{1}{q}} \mu(F)^{\frac{1}{q}}\,.$$ Summing the
+  contributions from \ref{middles} and \ref{boundarys} completes the proof.
+  -/)
+  (latexEnv := "lemma")]
 lemma R_truncation (hq : q ∈ Ioc 1 2) (hqq' : q.HolderConjugate q')
     (mF : MeasurableSet F) (mG : MeasurableSet G) (mf : Measurable f) (nf : (‖f ·‖) ≤ F.indicator 1)
     {n : ℕ} {R : ℝ} (hR : R = 2 ^ n)

@@ -1,3 +1,4 @@
+import BlueprintGen
 import Carleson.ToMathlib.Analysis.Normed.Group.Basic
 import Carleson.ToMathlib.HardyLittlewood
 import Carleson.TwoSidedCarleson.Basic
@@ -31,9 +32,36 @@ Question: -/
 I(F) think the constant needs to be fixed in the blueprint. -/
 irreducible_def C10_2_1 (a : ℕ) : ℝ≥0 := 2 ^ (4 * a)
 
-/-- Lemma 10.2.1, formulated differently.
+/--
+Let $f: X \to \C$ be bounded, measurable, supported on a set of finite measure, and let
+$\alpha > 0$. Then $$\begin{equation}
+        \label{maximal-theorem-equation}
+        \mu(\{x\in X : Mf(x) > \alpha\}) \le \frac{2^{2a}}{\alpha} \int |f(y)|\, d\mu(y).
+\end{equation}$$
+
+Lemma 10.2.1, formulated differently.
 The blueprint version is basically this after unfolding `HasBoundedWeakType`, `wnorm` and `wnorm'`.
 -/
+@[blueprint
+  "Maximal theorem"
+  (proof := /--
+  By definition, for each $x\in X$ with $Mf(x) > \alpha$, there exists a ball $B_x$ such that
+  $x\in B_x$ and $$\begin{equation}
+          \label{maximal-theorem-a}
+          \alpha \mu(B_x) < \int_{B_x} |f(y)|\, d\mu(y).
+  \end{equation}$$ Since $\{x\in X : Mf(x) > \alpha\}$ is open and $\mu$ is inner regular on open
+  sets, it suffices to show that $$\begin{equation*}
+          \mu(E) \le \frac{2^{2a}}{\alpha} \int |f(y)|\, d\mu(y)
+  \end{equation*}$$ for every compact $E\subset \{x\in X : Mf(x) > \alpha\}$. For such an $E$, by
+  compactness, we can select a finite subcollection $\mathcal{B} \subset \{B_x: x\in E\}$ that covers
+  $E$. By \ref{eq-besico} applied to \ref{maximal-theorem-a},
+  $$\begin{equation}
+          \alpha \mu(\bigcup \mathcal{B}) \le 2^{2a} \int |f(y)|\,d\mu(y)
+  \end{equation}$$ and hence $$\begin{equation*}
+          \mu(E) \le \mu(\bigcup \mathcal{B}) \le \frac{2^{2a}}{\alpha} \int |f(y)|\,d\mu(y).
+  \end{equation*}$$
+  -/)
+  (latexEnv := "lemma")]
 theorem maximal_theorem :
     HasBoundedWeakType (globalMaximalFunction volume 1 : (X → ℂ) → X → ℝ≥0∞) 1 1 volume volume
       (C10_2_1 a) := by
@@ -66,7 +94,20 @@ private theorem maximal_theorem'' (hα : 0 < α) (hf : BoundedFiniteSupport f) :
   apply ENNReal.le_div_iff_mul_le (Or.inl hα.ne') (Or.inl α_top) |>.mpr
   exact mul_comm α _ ▸ maximal_theorem' α hf
 
-/-- Lemma 10.2.2. -/
+/--
+Let $f$ be a bounded measurable function supported on a set of finite measure. Then for $\mu$ almost
+every $x$, we have $$\lim_{n\to \infty} \frac{1}{\mu(B_n)}\int_{B_n} f(y)\, dy= f(x),$$ where
+$\{B_n\}_{n\geq 1}$ is a sequence of balls with radii $r_n>0$ such that $x\in B_n$ for each
+$n\geq 1$ and $$\begin{equation*}
+        \lim_{n\to \infty} r_n=0 \,.
+\end{equation*}$$
+
+Lemma 10.2.2.
+-/
+@[blueprint
+  "Lebesgue differentiation"
+  (proof := /-- This follows from the Lebesgue differentiation theorem, which is already formalized in Lean. -/)
+  (latexEnv := "lemma")]
 theorem lebesgue_differentiation {f : X → ℂ} (hf : BoundedFiniteSupport f) :
     ∀ᵐ x ∂volume, ∃ (c : ℕ → X) (r : ℕ → ℝ),
     Tendsto (fun i ↦ ⨍ y in ball (c i) (r i), f y ∂volume) atTop (𝓝 (f x)) ∧
@@ -421,7 +462,88 @@ lemma ball_covering_finite (hO : IsOpen O ∧ O ≠ univ) {U : Set X} {r' : X �
           exact encard_congr eqv
       _ ≤ _ := by rw [zero_add]; exact Ubi x mx
 
-/-- Lemma 10.2.4. -/
+attribute [blueprint
+  "Disjoint family countable"
+  (statement := /--
+  In a doubling metric measure space $(X,\rho,\mu, a)$, every disjoint family of balls
+  $B_j = B(x_j, r_j)$, $j\in J$, is countable.
+  -/)
+  (proof := /--
+  Choose an arbitrary $x\in X$ as reference point. For $q, Q\in\Q_+$, let $J_{q,Q}$ denote the set of
+  all $j\in J$ such that $B_j\subset B(x, Q)$ and $r_j \ge q$. It suffices to show that all the
+  $J_{q,Q}$ are finite. Indeed, for all $j\in J_{q,Q}$, $$\begin{equation*}
+          \mu(B(x, Q)) \le \mu(B(x_j, 2Q)) = \mu(B(x_j, \frac{2 Q}{r_j} r_j))
+          \le 2^{a\log_2{\lceil \frac{2 Q}{r_j}\rceil}} \mu(B_j).
+  \end{equation*}$$ Since the $B_j$ are disjoint, $$\begin{equation}
+          |J_{q,Q}| \mu(B(x, Q)) \le 2^{a\log_2{\lceil\frac{2Q}{q}\rceil}} \sum_{j\in J_{q,Q}} \mu(B_j) \le 2^{a\log_2{\lceil\frac{2Q}{q}\rceil}} \mu(B(x,Q))
+  \end{equation}$$ and hence $|J_{q,Q}| \le 2^{a\log_2{\lceil\frac{2Q}{q}\rceil}}$.
+  -/)
+  (latexEnv := "lemma")] Pairwise.countable_of_isOpen_disjoint
+
+/--
+Given an open set $O\ne X$, there exists a countable family of balls $B_j = B(x_j, r_j)$ such that
+$$\begin{equation}
+        \label{balls-disjoint}
+        B_j \cap B_{j'} = \emptyset \quad \text{ for } j \ne j',
+\end{equation}$$ and $$\begin{equation}
+        \label{balls-covering}
+        \bigcup_j B_{3,j} = O,
+\end{equation}$$ and $$\begin{equation}
+        \label{enlarged-balls-intersect-complement}
+        B_{7,j} \cap (X \setminus O) \ne \emptyset \quad \text{ for all } j
+\end{equation}$$ and we have the bounded intersection property that each $x\in O$ is contained in at
+most $2^{6a}$ of the $B_{3,j}$.
+
+Lemma 10.2.4.
+-/
+@[blueprint
+  "Ball covering"
+  (proof := /--
+  Define for $x\in O$, $$\begin{equation}
+      \delta(x):= \sup \{\delta\in\R : B(x,\delta)\subset O\}.
+  \end{equation}$$ Since $O$ is open, and $O\ne X$, we have $$\begin{equation}
+      0 < \delta(x) < \infty \,.
+  \end{equation}$$ Using Zorn's Lemma, we select a maximal disjoint subfamily of
+  $\{B(x,\frac{\delta(x)}{6}) : x \in O\}$. We obtain a (by `Pairwise.countable_of_isOpen_disjoint`
+  countable) family of balls $B_j = B(x_j, \frac{\delta(x_j)}{6}), j \in J$ such that
+  \ref{balls-disjoint},
+  \ref{enlarged-balls-intersect-complement}, and
+  $\bigcup_j B_{3,j} \subset O$ are also immediate. For the other inclusion, first observe that for
+  $x,y\in X$, if $B(x,\frac{\delta(x)}{6}) \cap B(y,\frac{\delta(y)}{6}) \ne \emptyset$, then
+  $$\begin{equation*}
+      \delta(x) \le \rho(x,y) + \delta(y) \le (\frac{\delta(x)}{6} + \frac{\delta(y)}{6}) + \delta(y) = \frac{\delta(x)}{6} + \frac{7\delta(y)}{6},
+  \end{equation*}$$ so $$\begin{equation}
+      \label{control-distance-growth}
+      \delta(x) \le 2 \delta(y).
+  \end{equation}$$ Now let $z\in O$. By maximality, there exists some $j\in J$ with
+  $B(z,\frac{\delta(z)}{6}) \cap B_j \ne \emptyset$. By
+  \ref{control-distance-growth}, $$\begin{equation*}
+      \rho(z,x_j)< \frac{\delta(z)}{6} + \frac{\delta(x_j)}{6} \le \frac{3\delta(x_j)}{6} = 3r_j
+  \end{equation*}$$ and thus $z\in B_{3,j}$.
+  
+  We now turn to the bounded intersection property. Assume that for some $j_1,\dots,j_N$,
+  $$\begin{equation}
+      z\in \bigcap_{k=1}^N B_{3,j_k}.
+  \end{equation}$$ Similarly as above, observe for $1\le k \le N$, $$\begin{equation}
+      \label{control-distance-growth-b}
+      \delta(z) \le \rho(z,x_{j_k}) + \delta(x_{j_k}) \le \frac{\delta(x_{j_k})}{2} + \delta(x_{j_k}) = \frac{3\delta(x_{j_k})}{2}
+  \end{equation}$$ and $$\begin{equation*}
+      \delta(x_{j_k}) \le \rho(x_{j_k},z) + \delta(z) \le \frac{\delta(x_{j_k})}{2} + \delta(z),
+  \end{equation*}$$ so $$\begin{equation}
+      \label{control-distance-growth-c}
+      \delta(x_{j_k}) \le 2 \delta(z).
+  \end{equation}$$
+  
+  By \ref{control-distance-growth-b} and
+  \ref{control-distance-growth-c}, for all $1\le k \le N$,
+  $B(z,\frac{\delta(z)}{6}) \subset B(x_{j_k}, 5r_{j_k})$ and
+  $B_{j_k} \subset B(z,\frac{8\delta(z)}{6})$. Using this and \ref{balls-disjoint},
+  we obtain $$\begin{align}
+      N \mu(B(z,\frac{\delta(z)}{6})) &\le \sum_{k=1}^N \mu(B(x_{j_k}, 5r_j)) \le 2^{3a} \sum_{k=1}^N \mu(B_{j_k}) \\
+      &= 2^{3a} \mu(\bigcup_{k=1}^N B_{j_k}) \le 2^{3a} \mu(B(z,\frac{8\delta(z)}{6})) \le 2^{6a} \mu(B(z,\frac{\delta(z)}{6}))
+  \end{align}$$ and conclude $N\le 2^{6a}$.
+  -/)
+  (latexEnv := "lemma")]
 theorem ball_covering (hO : IsOpen O ∧ O ≠ univ) :
     ∃ (c : ℕ → X) (r : ℕ → ℝ), (univ.PairwiseDisjoint fun i ↦ ball (c i) (r i)) ∧
       ⋃ i, ball (c i) (3 * r i) = O ∧ (∀ i, 0 < r i → ¬Disjoint (ball (c i) (7 * r i)) Oᶜ) ∧
@@ -543,7 +665,108 @@ private lemma czBall_subset_czBall {hX : GeneralCase f α} {i : ℕ} {b c : ℝ}
   · exact ball_subset_ball <| mul_le_mul_of_nonneg_right hbc hr
   · simp [ball_eq_empty.mpr <| mul_nonpos_of_nonneg_of_nonpos hb (le_of_not_ge hr)]
 
-/-- Part of Lemma 10.2.5 (general case). -/
+/--
+Let $f$ be a bounded, a.e. measurable function supported on a set of finite measure and let
+$\alpha>\frac{1}{\mu(X)}\int |f|\,d\mu$. Then there exists a bounded a.e. measurable function $g$
+supported on a set of finite measure, a countable family of balls $B_{3,j}$ (where we allow
+$B_{3,1} = X$ in the special case that $\mu(X)<\infty$) such that each $x\in X$ is contained in at
+most $2^{6a}$ of the $B_{3,j}$, and a countable family of a.e. measurable functions
+$\{b_j\}_{j\in J}$ such that for all $x \in X$ $$\begin{equation}
+       \label{eq-gb-dec}
+       f(x)= g(x) + \sum_{j} b_j(x)
+\end{equation}$$ and such that the following holds. For almost every $x\in X$, $$\begin{equation}
+        \label{eq-g-max}
+       |g(x)|\leq 2^{3a} \alpha\,.
+\end{equation}$$ We have $$\begin{equation}
+        \label{eq-g-L1-norm}
+        \int |g(y)|\, d\mu(y)\leq \int |f(y)|\, d\mu(y).
+\end{equation}$$ For every $j$ $$\begin{equation}
+        \label{eq-supp-bj}
+        \operatorname{supp} b_j \subset B_{3,j}\,.
+\end{equation}$$ For every $j$ $$\begin{equation}
+        \label{eq-bad-mean-zero}
+        \int_{B_{3,j}} b_j(x)\, d\mu(x)=0,
+\end{equation}$$ and $$\begin{equation}
+        \label{eq-bj-L1}
+        \int_{B_{3,j}} |b_j(x)|\, d\mu(x) \leq 2^{2a+1} \alpha \mu(B_{3,j}).
+\end{equation}$$ We have $$\begin{equation}
+        \label{eq-bset-length-sum}
+        \sum_j \mu(B_{3,j})\leq \frac{2^{6a}}{\alpha}\int |f(y)|\, d\mu(y)
+\end{equation}$$ and $$\begin{equation}
+    \label{eq-b-L1}
+    \sum_{j}\int_{B_{3,j}} |b_j(y)|\, d\mu(y)\leq 2 \int |f(y)|\, d\mu(y)\,.
+\end{equation}$$
+
+Part of Lemma 10.2.5 (general case).
+-/
+@[blueprint
+  "Calderon Zygmund decomposition"
+  (proof := /--
+  Let $E_\alpha:=\{x\in X: Mf(x)>\alpha\}$. Then $E_\alpha$ is open. Assume first that
+  $E_\alpha \ne X$. We apply `ball_covering` with $O=E_\alpha$ to obtain the family $B_j, j\in J,$.
+  Without loss of generality, we can assume $J=\N$. Define inductively $$\begin{equation}
+      Q_j := B_{3,j} \setminus \left(\bigcup_{i<j} Q_i \cup \bigcup_{i>j} B_i \right).
+  \end{equation}$$ Then $B_j\subset Q_j\subset B_{3,j}$, the $Q_j$ are pairwise disjoint and
+  $\bigcup_j Q_j = E_\alpha$. Define $$\begin{equation}
+      \label{eq-g-def}
+      g(x):=\begin{cases}
+       f(x), & x\in X\setminus E_\alpha,\\
+       \frac{1}{\mu(Q_j)}\int_{Q_j} f(y)\, d\mu(y), &x\in Q_j,
+  \end{cases}
+  \end{equation}$$ and, for each $j$, $$\begin{equation}
+      b_j(x):= \mathbf{1}_{Q_j}(x) \left(f(x)-\frac{1}{\mu(Q_j)}\int_{Q_j} f(y)\, d\mu(y) \right).
+  \end{equation}$$ Then \ref{eq-gb-dec}, \ref{eq-supp-bj} and
+  \ref{eq-bad-mean-zero} are true by construction. Boundedness of $g$ is immediate
+  from the definition, as is the fact that $\supp g$ is contained within $\supp f \cup \bigcup_j Q_j$.
+  Now the fact that $\supp g$ has finite measure follows from $\bigcup_j Q_j = E_\alpha$ and
+  \ref{eq-hlm-2}.
+  
+  For \ref{eq-g-max}, we first do the case $x\in X\setminus E_\alpha$. By definition of
+  $Mf$, $$\begin{equation}
+      \frac{1}{\mu(B)}\int_B |f(y)|\,d\mu(y) \le \alpha
+  \end{equation}$$ for every ball $B\subset X$ with $x\in B$. It follows by `lebesgue_differentiation`
+  that for almost every $x\in X\setminus E_\alpha$, $|f(x)|\le \alpha$. In the case $x\in E_\alpha$,
+  there exists some $j\in J$ with $x\in Q_j$ and we have that $$\begin{equation}
+      \label{large-ball-estimate}
+      \frac{1}{\mu(B_{7,j})} \int_{B_{7,j}} |f(y)| \,d\mu(y) \le \alpha
+  \end{equation}$$ because $B_{7,j}\cap (X\setminus E_\alpha) \ne \emptyset$. We get
+  $$\begin{equation}
+      |g(x)| \le \frac{1}{\mu(Q_j)}\int_{Q_j} |f(y)|\, d\mu(y) \le \frac{1}{\mu(B_j)}\int_{B_{7,j}} |f(y)| \, d\mu(y) \le 2^{3a}\alpha .
+  \end{equation}$$
+  
+  To prove \ref{eq-g-L1-norm}, we estimate $$\begin{align*}
+      \int |g(z)|\, d\mu(z) &\le \int_{X\setminus E_\alpha} |f(z)|\, d\mu(z) + \sum_{j} \int_{Q_j}\frac{1}{\mu(Q_j)}\int_{Q_j}|f(y)|\, d\mu(y)\,d\mu(z) \\
+      &= \int |f(z)|\,d\mu(z).
+  \end{align*}$$ Using the triangle inequality, we have that $$\begin{align}
+      \label{eq-bj-int}
+      \int_{B_{3,j}} |b_j(y)|\, dy &\le \int_{Q_j} |f(y)|\, d\mu(y) + \int_{Q_j} \frac{1}{\mu(Q_j)}\int_{Q_j} |f(x)|\, d\mu(x)\, d\mu(y) \\
+      &= 2 \int_{Q_j} |f(y)|\, dy.
+  \end{align}$$ With \ref{large-ball-estimate}, we estimate further
+  $$\begin{equation}
+      \le 2 \int_{B_{7,j}} |f(y)|\, dy \le 2\mu(B_{7,j})\alpha \le 2^{2a+1} \alpha \mu(B_{3,j})
+  \end{equation}$$ to obtain \ref{eq-bj-L1}. Further, summing up
+  \ref{eq-bj-int} in $j$ yields \ref{eq-b-L1}. At last, we estimate with
+  `maximal_theorem` $$\begin{equation}
+      \sum_j \mu(B_{3,j}) \le 2^{2a} \sum_j \mu(B_j) \le 2^{2a} \mu(E_\alpha) \le \frac{2^{6a}}{\alpha}\int |f(y)|\, d\mu(y),
+  \end{equation}$$ proving \ref{eq-bset-length-sum}.
+  
+  Assume now that $E_\alpha = X$. It follows from `maximal_theorem` that then $\mu(X)<\infty$. Define
+  $$\begin{equation*}
+      g := \frac{1}{\mu(X)} \int |f(y)|\,d\mu(y)
+  \end{equation*}$$ and $$\begin{equation*}
+      b_1 := f - g.
+  \end{equation*}$$ Then $f = g + b_1$ and $\supp b_1 \subset B_{3,1}:=X$ and
+  \ref{eq-gb-dec}, \ref{eq-g-L1-norm}, \ref{eq-supp-bj},
+  \ref{eq-bad-mean-zero} all hold immediately. By assumption,
+  $\alpha>\frac{1}{\mu(X)}\int |f|\,d\mu = g$, so \ref{eq-g-max} holds. We also have, using
+  the definitions and the same assumption, $$\begin{equation}
+      \int |b_1(y)|\, d\mu(y) \le 2 \int |f(y)|\,d\mu(y) \le 2\alpha\mu(X),
+  \end{equation}$$ which verifies both \ref{eq-b-L1} and \ref{eq-bj-L1}. Finally,
+  by `maximal_theorem`, $$\begin{equation*}
+      \mu(X) \le \frac{2^{2a}}{\alpha} \int |f(y)|\,d\mu(y),
+  \end{equation*}$$ which shows \ref{eq-bset-length-sum}.
+  -/)
+  (latexEnv := "lemma")]
 lemma encard_czBall3_le {hX : GeneralCase f α} {y : X} :
     {i | y ∈ czBall3 hX i}.encard ≤ (2 ^ (6 * a) : ℕ) := by
   by_cases hy : α < globalMaximalFunction volume 1 f y
@@ -1077,7 +1300,27 @@ private lemma div_α'_eq {p : ℝ≥0∞} : p / α' a α = p / c10_0_3 a / α :=
   · left; rw [c10_0_3]; positivity
   · left; rw [c10_0_3]; finiteness
 
-/-- Lemma 10.2.6 -/
+/--
+$$\begin{equation*}
+        \mu\left(\{x\in X: |T_r g(x)|>{\alpha}/2\}\right)
+        \le \frac{2^{2a^3+3a+2}c}{\alpha} \int |f(y)|\, d\mu(y).
+\end{equation*}$$
+
+Lemma 10.2.6
+-/
+@[blueprint
+  "Estimate good"
+  (proof := /--
+  We estimate using monotonicity of the integral $$\begin{equation*}
+       \mu\left(\{x\in X: |T_r g(x)|>{\alpha}/2\}\right)\leq \frac{4}{\alpha^2} \int |T_r g(y)|^2\, d\mu(y).
+  \end{equation*}$$ Using \ref{eq-strong-2-2-assumption} followed by
+  \ref{eq-g-max} and \ref{eq-g-L1-norm}, we estimate the right hand side
+  above by $$\begin{equation}
+      \label{eq-Hr-g}
+      \leq \frac{4\cdot 2^{2a^3}}{\alpha^2} \int |g(y)|^2\, d\mu(y)\leq \frac{2^{2a^3+3a+2}c}{\alpha} \int |g(y)|\, dy \le \frac{2^{2a^3+3a+2}c}{\alpha} \int |f(y)|\, d\mu(y).
+  \end{equation}$$
+  -/)
+  (latexEnv := "lemma")]
 lemma estimate_good (hf : BoundedFiniteSupport f) (hα : ⨍⁻ x, ‖f x‖ₑ / c10_0_3 a < α)
     (hT : HasBoundedStrongType (czOperator K r) 2 2 volume volume (C_Ts a)) :
     distribution (czOperator K r (czApproximation f (α' a α))) (α / 2) volume ≤
@@ -1469,8 +1712,111 @@ private lemma czOperator_czRemainder (hf : BoundedFiniteSupport f) (hr : 0 < r) 
   · exact pairwise_disjoint_mono czPartition_pairwise_disjoint_on (fun _ _ ↦ mem_of_mem_inter_right)
   · exact integrableOn_K_mul (hf.czRemainder hα).integrable.integrableOn x hr (by simp)
 
-/-- Lemma 10.2.7.
-Note that `hx` implies `hX`, but we keep the superfluous hypothesis to shorten the statement. -/
+/--
+Let $x\in X\setminus\Omega$. Then $$\begin{equation*}
+        |T_rb(x)| \le 3F(x)+\alpha/8,
+\end{equation*}$$ where $$\begin{equation*}
+        F(x) := 2^{a^3+2a+1} c\alpha \sum_{j\in J} \left(\frac{3r_j}{\rho(x,x_j)}\right)^{\frac{1}{a}}\frac{\mu(B_{3,j})}{V(x,x_j)}.
+\end{equation*}$$
+
+Lemma 10.2.7.
+Note that `hx` implies `hX`, but we keep the superfluous hypothesis to shorten the statement.
+-/
+@[blueprint
+  "Estimate bad partial"
+  (proof := /--
+  We decompose the index set $J$ into the following disjoint sets: $$\begin{align*}
+      \mathcal{J}_1(x)&:=\{j\,: r+3r_j \le \rho(x,x_j) \},\\
+      \mathcal{J}_2(x)&:=\{j\,: r-3r_j \le \rho(x,x_j) < r+3r_j\},\\
+      \mathcal{J}_3(x)&:=\{j\,: \rho(x,x_j) < r-3r_j\}.
+  \end{align*}$$ Then $$\begin{alignat}
+  {3}
+      \label{eq-b-dec-1}
+      |T_r b(x)|\le&&&\sum_{j\in \mathcal{J}_1(x)} |T_rb_j(x)| \\
+      \label{eq-b-dec-2}
+                  &+&&\sum_{j\in \mathcal{J}_2(x)} |T_rb_j(x)| \\
+      \label{eq-b-dec-3}
+                  &+&&\sum_{j\in \mathcal{J}_3(x)} |T_rb_j(x)|.
+  \end{alignat}$$ For all $j\in \mathcal{J}_3(x)$, $\supp b_j\subset B_{3,j}\subset B(x,r)$, and thus
+  $T_rb_j(x)=0$, so $\ref{eq-b-dec-3} = 0$.
+  
+  Next, for $j\in \mathcal{J}_1(x)$, $\supp b_j\subset B_{3,j}\subset X \setminus B(x,r)$, and we have
+  $$\begin{equation*}
+      T_rb_j(x)=\int_{X\setminus B(x,r)} K(x,y) b_j(y)\,d\mu(y)=\int_{B_{3,j}} K(x,y) b_j(y)\,d\mu(y)\,.
+  \end{equation*}$$
+  
+  Using \ref{eq-bad-mean-zero}, the above is equal to $$\begin{equation*}
+      \int_{{3,j}} (K(x,y)-K(x,x_j)) b_j(y)\,d\mu(y)\,.
+  \end{equation*}$$ Since $x\in X\setminus\Omega$, we have for each $y\in B_{3,j}$ that
+  $$\begin{equation}
+      \label{eq-Om-cj}
+      \rho(x,x_j)\ge 6r_j > 2\rho(x_j,y),
+  \end{equation}$$ so we can apply \ref{eqkernel-y-smooth} to estimate
+  $$\begin{equation*}
+      \ref{eq-b-dec-1} \le \sum_{j\in \mathcal{J}_1(x)}\int_{B_{3,j}}\left(\frac{\rho(x_j,y)}{\rho(x,x_j)}\right)^{\frac{1}{a}}\frac{2^{a^3}}{V(x,x_j)} |b_j(y)|\, d\mu(y)
+  \end{equation*}$$ $$\begin{equation}
+      \le 2^{a^3} \sum_{j} \left(\frac{3r_j}{\rho(x,x_j)}\right)^{\frac{1}{a}}\frac{1}{V(x,x_j)}\int_{B_{3,j}} |b_j(y)|\, dy
+  \end{equation}$$ and by \ref{eq-bj-L1}, $$\begin{equation}
+      \label{eq-J1-diff-est}
+      \le 2^{a^3+2a+1} c\alpha \sum_{j} \left(\frac{3r_j}{\rho(x,x_j)}\right)^{\frac{1}{a}}\frac{\mu(B_{3,j})}{V(x,x_j)} = F(x).
+  \end{equation}$$ Next, we estimate \ref{eq-b-dec-2}. For each $j\in \mathcal{J}_2(x)$,
+  set $$\begin{equation*}
+      d_j:=\frac{1}{\mu(B_{3,j})}\int_{B_{3,j}} \mathbf{1}_{X\setminus B(x,r)}(y) b_j(y)\, dy.
+  \end{equation*}$$ Then by \ref{eq-bj-L1} $$\begin{equation}
+      \label{eq-dj-est}
+      |d_j|\le 2^{2a+1} c\alpha.
+  \end{equation}$$ For each $j\in \mathcal{J}_2(x)$, we have $$\begin{align*}
+      T_r b_j(x)&=\int_{B_{3,j}} K(x,y) (\mathbf{1}_{X\setminus B(x,r)}(y)b_j(y)-d_j)\, dy + \int_{B_{3,j}} d_j K(x,y) \, dy \\
+      &= \int_{B_{3,j}} (K(x,y)-K(x,x_j)) (\mathbf{1}_{X\setminus B(x,r)}(y)b_j(y)-d_j)\, dy + \int_{B_{3,j}} d_j K(x,y) \, dy.
+  \end{align*}$$ Thus, using the triangle inequality, the equation above and
+  \ref{eq-dj-est}, we obtain $$\begin{equation*}
+      |T_r b_j(x)|\le
+  \end{equation*}$$ $$\begin{equation}
+      \label{eq-J2-diff-est}
+      \int_{B_{3,j}} |K(x,y)-K(x,x_j)| \left(|b_j(y)|+2^{2a+1} c\alpha\right)\, dy +2^{2a+1} c\alpha \int_{B_{3,j}}  |K(x,y)| \, dy.
+  \end{equation}$$ By \ref{eq-Om-cj}, we can apply
+  \ref{eqkernel-y-smooth} and arguing as in \ref{eq-J1-diff-est},
+  we get that $$\begin{equation}
+      \label{eq-J2-diff-est-2}
+      \ref{eq-b-dec-2} \le 2F(x) + 2^{2a+1}c\alpha \sum_{j\in\mathcal{J}_2(x)} \int_{B_{3,j}}  |K(x,y)|\,d\mu(y),
+  \end{equation}$$ with $F$ as in \ref{eq-J1-diff-est}. Define $$\begin{equation*}
+      A := \bigcup_{j \in \mathcal{J}_2(x)} B_{3,j}.
+  \end{equation*}$$ We claim that $$\begin{equation}
+      \label{eq-J2-union-subset}
+      A\subset B(x,3r) \setminus B(x,\frac{r}{3}).
+  \end{equation}$$ Indeed, for each $j\in \mathcal{J}_2(x)$ and $y\in B_{3,j}$, using again
+  \ref{eq-Om-cj}, $$\begin{equation*}
+      \rho(x,x_j) < r+r_{3,j} \le r + \frac{1}{2} \rho(x,x_j) \implies \rho(x,x_j) < 2r
+  \end{equation*}$$ and hence $$\begin{equation*}
+      \rho(x,y) \le \rho(x,x_j) + \rho(x_j,y) < 2r + 3r_j \le 2r + \frac{1}{2}\rho(x,x_j) < 3r.
+  \end{equation*}$$ For the lower bound, we observe $$\begin{equation*}
+      \rho(x,x_j) \ge r-3r_j \ge r - \frac{1}{2} \rho(x,x_j) \implies \rho(x,x_j) \ge \frac{2}{3}r,
+  \end{equation*}$$ and conclude $$\begin{equation*}
+      \rho(x,y) \ge \rho(x,x_j) - \rho(y,x_j) \ge \rho(x,x_j) - 3r_j \ge \rho(x,x_j) - \frac{1}{2}\rho(x,x_j) \ge \frac{1}{3} r.
+  \end{equation*}$$
+  
+  Using the bounded intersection property of the $B_{3,j}$,
+  \ref{eq-J2-union-subset} and \ref{eqkernel-size}, we get
+  $$\begin{align}
+      \sum_{j\in\mathcal{J}_2(x)} \int_{B_{3,j}}  |K(x,y)|\,d\mu(y) &\le 2^{6a} \int_{A}  |K(x,y)|\,d\mu(y) \\
+      &\le 2^{6a} \int_{B(x,3r) \setminus B(x,\frac{r}{3})}  |K(x,y)|\,d\mu(y) \\
+      &\le 2^{6a} \int_{B(x,3r) \setminus B(x,\frac{r}{3})} \frac{2^{a^3}}{V(x,y)} \,d\mu(y) \\
+      &\le 2^{a^3+6a} \int_{B(x,3r) \setminus B(x,\frac{r}{3})} \frac{1}{\mu(B(x,\frac{r}{3}))} \,d\mu(y) \\
+      &\le 2^{a^3+6a} \frac{\mu(B(x,3r))}{\mu(B(x,\frac{r}{3}))} \\
+      \label{eq-J2-diff-est-4}
+      &\le 2^{a^3+10a}.
+  \end{align}$$
+  
+  Combining the estimates \ref{eq-J1-diff-est} for \ref{eq-b-dec-1},
+  \ref{eq-J2-diff-est-2} for \ref{eq-b-dec-2}, and
+  \ref{eq-J2-diff-est-4}, we get $$\begin{equation*}
+      |T_rb(x)|\leq 3F(x)+2^{a^3+12a+1}c\alpha.
+  \end{equation*}$$ By the definition \ref{weak-1-1-proof-cz-const} of $c$,
+  this equals $$\begin{equation*}
+      3F(x)+\alpha/8.
+  \end{equation*}$$
+  -/)
+  (latexEnv := "lemma")]
 lemma estimate_bad_partial (hf : BoundedFiniteSupport f) (hr : 0 < r)
     (hα : ⨍⁻ x, ‖f x‖ₑ / c10_0_3 a < α)
     (hx : x ∈ (Ω f (α' a α))ᶜ) (hX : GeneralCase f (α' a α)) :
@@ -1566,7 +1912,38 @@ lemma czOperatorBound_inner_le (ha : 4 ≤ a) (hX : GeneralCase f (α' a α)) {i
 /-- The constant used in `distribution_czOperatorBound`. -/
 irreducible_def C10_2_8 (a : ℕ) : ℝ≥0 := 2 ^ (a ^ 3 + 11 * a + 4)
 
-/-- Lemma 10.2.8 -/
+/--
+For $F$ as defined in `estimate_bad_partial`, we have $$\begin{equation}
+        \label{eq-F-X-minus-Omega}
+        \mu(\{x\in X\setminus\Omega: F(x)>\alpha/8\}) \le \frac{2^{a^3+11a+4}}{\alpha} \int |f(y)|\,d\mu(y)\,.
+\end{equation}$$
+
+Lemma 10.2.8
+-/
+@[blueprint
+  "Estimate F set"
+  (proof := /--
+  We estimate $$\begin{align}
+          \mu(\{x\in X\setminus\Omega&: F(x)> \alpha/8\})
+          \le \frac{8}{\alpha} \int_{X\setminus \Omega} F(x)\,d\mu(x) \\
+          &\le \frac{8}{\alpha} \int_{X\setminus \Omega} 2^{a^3+2a+1} c\alpha \sum_{j} \left(\frac{3r_j}{\rho(x,x_j)}\right)^{\frac{1}{a}}\frac{\mu(B_{3,j})}{V(x,x_j)}\,d\mu(x) \\
+          \label{eq-F-est-1}
+          &\le 2^{a^3+2a+4} c \sum_{j} \mu(B_{3,j}) \int_{X\setminus B_{6,j}} \left(\frac{3r_j}{\rho(x,x_j)}\right)^{\frac{1}{a}}\frac{1}{V(x,x_j)}\,d\mu(x)
+  \end{align}$$ Using $$\begin{equation*}
+          V(x,x_j) = \mu(B(x,\rho(x,x_j))) \ge 2^{-a}\mu(B(x,2\rho(x,x_j))) \ge 2^{-a} \mu(B(x_j,\rho(x_j,x))),
+  \end{equation*}$$ we have for all $j\in J$, $$\begin{align*}
+          &\int_{X\setminus B_{6,j}} \left(\frac{3r_j}{\rho(x,x_j)}\right)^{\frac{1}{a}}\frac{1}{V(x,x_j)}\,d\mu(x) \\
+          \le& 2^a \int_{X\setminus B_{6,j}} \left(\frac{3r_j}{\rho(x,x_j)}\right)^{\frac{1}{a}}\frac{1}{\mu(B(x_j,\rho(x_j,x)))}\,d\mu(x) \\
+          \le&2^a \sum_{n=1}^\infty \int_{B(x_j,2^{n+1}\cdot3r_j)\setminus B(x_j,2^n\cdot3r_j)} \left(\frac{3r_j}{2^n \cdot3r_j}\right)^{\frac{1}{a}}\frac{1}{\mu(B(x_j,2^n \cdot3r_j))}\,d\mu(x) \\
+          \le&2^a \sum_{n=1}^\infty 2^{-\frac{n}{a}} \frac{\mu(B(x_j,2^{n+1}\cdot3r_j))}{\mu(B(x_j,2^n \cdot3r_j))} \\
+          \le&2^{3a},
+  \end{align*}$$ where we used `geometric_series_estimate` in the last step. Plugging this into
+  \ref{eq-F-est-1} and using \ref{eq-bset-length-sum}, we conclude
+  that $$\begin{equation*}
+          \mu(\{x\in X\setminus\Omega: F(x)> \alpha/8\}) \le \frac{2^{a^3+11a+4}}{\alpha} \int |f(y)|\,d\mu(y)\,.
+  \end{equation*}$$
+  -/)
+  (latexEnv := "lemma")]
 lemma distribution_czOperatorBound (ha : 4 ≤ a) (hf : BoundedFiniteSupport f)
     (hα : ⨍⁻ x, ‖f x‖ₑ / c10_0_3 a < α) (hX : GeneralCase f (α' a α)) :
     volume ((Ω f (α' a α))ᶜ ∩ czOperatorBound hX ⁻¹' Ioi (α / 8)) ≤
@@ -1621,7 +1998,33 @@ lemma distribution_czOperatorBound (ha : 4 ≤ a) (hf : BoundedFiniteSupport f)
 /-- The constant used in `estimate_bad`. -/
 irreducible_def C10_2_9 (a : ℕ) : ℝ≥0 := 2 ^ (7 * a) / c10_0_3 a + C10_2_8 a
 
-/-- Lemma 10.2.9 -/
+/--
+We have $$\begin{equation*}
+        \mu\left({\{x\in X: |T_r b(x)|>\alpha/2\}}\right) \le  \frac{\frac{2^{7a}}{c} + 2^{a^3+11a+4}}{\alpha} \int |f(y)|\,d\mu(y) \,.
+\end{equation*}$$
+
+Lemma 10.2.9
+-/
+@[blueprint
+  "Estimate bad"
+  (proof := /--
+  We estimate $$\begin{equation*}
+          \mu\left(\{x\in X: |T_r b(x)|>\alpha/2\}\right)
+  \end{equation*}$$ $$\begin{equation}
+          \label{eq-set-dec-2}
+          \le \mu (\Omega) +  \mu\left(\{x\in X\setminus\Omega: |T_r b(x)|>{\alpha}/2\}\right)\,.
+  \end{equation}$$ Using [\[eq-Ij\*-dim\]](#eq-Ij*-dim) and
+  \ref{eq-bset-length-sum}, we conclude that $$\begin{equation}
+          \label{eq-omega-bd}
+          \mu(\Omega) \le \sum_{j} \mu (B_{6,j})
+          \le 2^a \sum_j \mu(B_{3,j}) \le \frac{2^{7a}}{c\alpha} \int |f(y)|\, d\mu(y)\,.
+  \end{equation}$$ It follows from `estimate_bad_partial` and the triangle inequality that
+  $$\begin{equation}
+          \label{eq-set-dec-3}
+          \mu({\{x\in X\setminus\Omega: |T_r b(x)|>\alpha/2\}}) \le \mu(\{x\in X\setminus\Omega: F(x)> \alpha/8\})\,.
+  \end{equation}$$ The claim now follows from `distribution_czOperatorBound`.
+  -/)
+  (latexEnv := "lemma")]
 lemma estimate_bad (ha : 4 ≤ a) (hr : 0 < r)
     (hf : BoundedFiniteSupport f) (hα : ⨍⁻ x, ‖f x‖ₑ / c10_0_3 a < α) :
     distribution (czOperator K r (czRemainder f (α' a α))) (α / 2) volume ≤
@@ -1743,8 +2146,36 @@ lemma estimate_czOperator (ha : 4 ≤ a) (hr : 0 < r) (hf : BoundedFiniteSupport
           gcongr; norm_num
         _ ≤ _ := by rw [C10_0_3, add_assoc]; gcongr; exacts [one_le_two, by omega]
 
-/-- Lemma 10.0.3, formulated differently. The blueprint version is basically this after
-unfolding `HasBoundedWeakType`, `wnorm` and `wnorm'`. -/
+/--
+Let $f:X\to\C$ be a bounded measurable function supported on a set of finite measure and assume for
+some $r>0$ that for every bounded measurable function $g:X\to\C$ supported on a set of finite
+measure, $$\begin{equation}
+        \label{eq-strong-2-2-assumption}
+        \|T_rg\|_{2}\le 2^{a^3} \|g\|_2.
+\end{equation}$$ Then for all $\alpha>0$, we have $$\begin{equation}
+        \label{eq-weak-1-1}
+        \mu\left(\{x\in X: |T_r f(x)|>\alpha\}\right)\le \frac{2^{a^3 + 21a}}{\alpha} \int |f(y)|\, d\mu(y).
+\end{equation}$$
+
+Lemma 10.0.3, formulated differently. The blueprint version is basically this after
+unfolding `HasBoundedWeakType`, `wnorm` and `wnorm'`.
+-/
+@[blueprint
+  "Calderon-Zygmund Weak (1, 1)"
+  (proof := /--
+  It follows by the triangle inequality and subadditivity of $\mu$ that $$\begin{equation*}
+      \mu\left(\{x\in X: |T_r f(x)|>\alpha\}\right)
+  \end{equation*}$$ $$\begin{equation*}
+  \label{eq-set-dec-1}
+   \le \mu\left(\{x\in X: |T_r g(x)|>{\alpha}/2\}\right) +  \mu\left(\{x\in X: |T_r b(x)|>{\alpha}/2\}\right).
+  \end{equation*}$$ Using `estimate_good`, `estimate_bad` and the definition
+  \ref{weak-1-1-proof-cz-const} of $c$, we get $$\begin{align*}
+      \le& \frac{2^{2a^3+3a+2}c + \frac{2^{7a}}{c} + 2^{a^3+11a+4}}{\alpha} \int |f(y)|\, d\mu(y) \\
+      =& \frac{2^{a^3-9a-2} + 2^{a^3+19a+4} + 2^{a^3+11a+4}}{\alpha} \int |f(y)|\, d\mu(y) \\
+      \le& \frac{2^{a^3 + 21a}}{\alpha} \int |f(y)|\, d\mu(y).
+  \end{align*}$$
+  -/)
+  (latexEnv := "lemma")]
 theorem czOperator_weak_1_1 (ha : 4 ≤ a) (hr : 0 < r)
     (hT : HasBoundedStrongType (czOperator K r) 2 2 volume volume (C_Ts a)) :
     HasBoundedWeakType (czOperator K r) 1 1 volume volume (C10_0_3 a) := fun f hf ↦ by

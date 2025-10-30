@@ -1,3 +1,4 @@
+import BlueprintGen
 import Carleson.Classical.Helper
 import Carleson.Defs
 import Carleson.ToMathlib.MeasureTheory.Function.LpSeminorm.TriangleInequality
@@ -221,6 +222,21 @@ lemma lower_secant_bound_aux {η : ℝ} (ηpos : 0 < η) {x : ℝ} (le_abs_x : �
           Even.neg_pow, le_add_iff_nonneg_right, pow_two_nonneg]
         · linarith [pow_two_nonneg (1 - Real.cos x), pow_two_nonneg (Real.sin x)]
 
+/--
+Let $\eta>0$ and $-2\pi +\eta \le x\le 2\pi-\eta$ with $|x|\ge \eta$. Then $$\begin{equation}
+        |1-e^{ix}|\ge \frac{2}{\pi} \eta
+\end{equation}$$
+-/
+@[blueprint
+  "lower secant bound"
+  (proof := /--
+  We have $$|1 - e^{ix}| = \sqrt{(1 - \cos(x))^2 + \sin^2(x)} \ge |\sin(x)|\,.$$ If
+  $0 \le x \le \frac{\pi}{2}$, then we have from concavity of $\sin$ on $[0, \pi]$ and $\sin(0) = 0$
+  and $\sin(\frac{\pi}{2}) = 1$ $$|\sin(x)| \ge \frac{2}{\pi} x \ge \frac{2}{\pi} \eta\,.$$ When
+  $x\in \frac{m\pi}{2} + [0, \frac{\pi}{2}]$ for $m \in \{-4, -3, -2, -1, 1, 2, 3\}$ one can argue
+  similarly.
+  -/)
+  (latexEnv := "lemma")]
 lemma lower_secant_bound' {η : ℝ} {x : ℝ} (le_abs_x : η ≤ |x|) (abs_x_le : |x| ≤ 2 * π - η) :
     (2 / π) * η ≤ ‖1 - Complex.exp (Complex.I * x)‖ := by
   by_cases ηpos : η ≤ 0

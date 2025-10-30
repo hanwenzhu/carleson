@@ -1,3 +1,4 @@
+import BlueprintGen
 import Carleson.Antichain.AntichainTileCount
 import Carleson.Antichain.TileCorrelation
 
@@ -301,7 +302,110 @@ lemma dens1_antichain_sq (h𝔄 : IsAntichain (· ≤ ·) 𝔄)
       simp_rw [show (2 : ℝ≥0∞) = (2 : ℝ≥0) by rfl, ← ENNReal.coe_pow, ← ENNReal.coe_mul,
         ENNReal.coe_le_coe, le_C6_1_4 (four_le_a X)]
 
-/-- Lemma 6.1.4. -/
+/--
+Set $p:=4a^4$. We have $$\begin{equation}
+\label{eqttt3}
+  \left|\int \overline{g(x)} \sum_{\fp \in \mathfrak{A}} T_{\fp} f(x)\, d\mu(x)\right|\le
+   2^{117a^3}\dens_1(\mathfrak{A})^{\frac 1{2p}} \|f\|_2\|g\|_2\,.
+\end{equation}$$
+
+Lemma 6.1.4.
+-/
+@[blueprint
+  "dens1 antichain"
+  (proof := /--
+  We write for the expression inside the absolute values on the left-hand side of
+  \ref{eqttt3} $$\begin{equation}
+    \sum_{\fp \in \mathfrak{A}}\iint \overline{g(x)} \mathbf{1}_{E(\fp)}(x)
+    {K_{\ps(\fp)}(x,y)}e(\tQ(x)(y) -
+     \tQ(x)(x))
+     f(y)\, d\mu(y)\,d\mu(x)
+  \end{equation}$$ $$\begin{equation}
+    =\int \sum_{\fp \in \mathfrak{A}} \overline{T_{\fp} ^*g(y)} f(y)\, d\mu(y)
+  \end{equation}$$ with the adjoint operator $$\begin{equation}
+  \label{eq-tstarwritten}
+      T_{\fp}^*g(y)=\int_{E(\fp)} \overline{K_{\ps(\fp)}(x,y)}e(-\tQ(x)(y)+
+      \tQ(x)(x))g(x)\, d\mu(x)\, .
+  \end{equation}$$ We have by expanding the square $$\begin{equation}
+      \int \Big|\sum_{\fp\in \mathfrak{A}}T^*_{\fp}g(y)\Big|^2\, d\mu(y)=
+      \int \left(\sum_{\fp\in \mathfrak{A}} T^*_{\fp}g(y)\right)
+      \left(\sum_{\fp'\in \mathfrak{A}}\overline{T^*_{\fp'}g(y)}\right)\, d\mu(y)
+  \end{equation}$$ $$\begin{equation}
+  \label{eqtts1}
+      \le \sum_{\fp\in \mathfrak{A}} \sum_{\fp'\in \mathfrak{A}}
+      \Big|\int T^*_{\fp}g(y)\overline{T^*_{\fp'}g(y)}\, d\mu(y)\Big|\,.
+  \end{equation}$$ We split the sum into the terms with $\ps(\fp')\le \ps(\fp)$ and
+  $\ps(\fp)< \ps(\fp')$. Using the symmetry of each summand, we may switch $\fp$ and $\fp'$ in the
+  second sum. Using further positivity of each summand to replace the condition $\ps(\fp')< \ps(\fp)$
+  by $\ps(\fp')\le \ps(\fp)$ in the second sum, we estimate \ref{eqtts1} by
+  $$\begin{equation}
+  \label{eqtts2}
+      \le2 \sum_{\fp\in \mathfrak{A}} \sum_{\fp'\in \mathfrak{A}: \ps(\fp')\le \ps(\fp)}
+      \Big|\int T^*_{\fp}g(y)\overline{T^*_{\fp'}g(y)}\, d\mu(y)\Big|\,.
+  \end{equation}$$
+  
+  Define for $\fp\in \fP$ $$\begin{equation}
+      B(\fp):=B(\pc(\fp), 14D^{\ps(\fp)})
+  \end{equation}$$ and define $$\begin{equation}
+      \label{eq-Dp-definition}
+      \mathfrak{A}(\fp):=\{\fp'\in\mathfrak{A}: \ps(\fp')\leq \ps(\fp) \land \scI(\fp') \subset B(\fp)\}.
+  \end{equation}$$ Note that by the squeezing property \ref{eq-vol-sp-cube} and the
+  doubling property \ref{doublingx} applied $6$ times we have $$\begin{equation}
+  \label{eqttt4}
+      \mu(B(\fp))\le 2^{6a} \mu(\scI(\fp))\, .
+  \end{equation}$$ Using `Tile.correlation_le` and \ref{eqttt4}, we estimate
+  \ref{eqtts2} by $$\begin{equation}
+  \label{eqtts3}
+       \le 2^{232a^3+6a+1} \sum_{\fp\in \mathfrak{A}}
+      \int_{E(\fp)}|g|(y) h(\fp)\, d\mu(y)
+  \end{equation}$$ with $h(\fp)$ defined as $$\begin{equation}
+  \label{def-hp}
+      \frac 1{\mu(B(\fp))}\int \sum_{\fp'\in \mathfrak{A}(\fp)}
+      {(1+d_{\fp'}(\fcc(\fp'), \fcc(\fp))^{-1/(2a^2+a^3)}}(\mathbf{1}_{E(\fp')}|g|)(y')\, d\mu(y')\,.
+  \end{equation}$$
+  
+  Note that $p>4$ since $a\ge 4$. Let $p'$ be the dual exponent of $p$, satisfying $1/p+1/p'=1$. We
+  estimate $h(\fp)$ as defined in \ref{def-hp} with Hölder using $|g|\le \mathbf{1}_G$ and
+  $E(\fp')\subset B(\fp)$ by
+  
+  $$\begin{equation}
+      \frac{\|g\mathbf{1}_{B(\fp)}\|_{p'}}{\mu(B(\fp))}
+      \Big\|\sum_{\fp\in\mathfrak{A}(\fp)}(1+d_{\fp}(\fcc(\fp), \fcc(\fp'))^{-1/(2a^2+a^3)}\mathbf{1}_{E(\fp)}\mathbf{1}_G\Big\|_{p}\, .
+  \end{equation}$$ Then we apply `Antichain.tile_count` to estimate this by $$\begin{equation}
+  \label{eqttt5}
+      \le 2^{5a}
+      \frac{\|g\mathbf{1}_{B(\fp)}\|_{p'}}{\mu(B(\fp))}
+      \dens_1(\mathfrak{A})^{\frac 1p}\mu(B(\fp))^{\frac 1p}\,.
+  \end{equation}$$ Let $\mathcal{B}'$ be the collection of all balls $B(\fp)$ with
+  $\fp\in \mathfrak{A}$. Then for each $\fp\in \mathfrak{A}$ and $x\in B(\fp)$ we have by definition
+  \ref{def-hlm} of $M_{\mathcal{B}',p'}$ $$\begin{equation}
+      \|g\mathbf{1}_{B(\fp)}\|_{p'}\le
+      \mu(B(\fp))^{\frac 1{p'}} M_{\mathcal{B}',p'}g(x) \, .
+  \end{equation}$$ Hence we can estimate \ref{eqttt5} by $$\begin{equation}
+  \label{eqttt5b}
+      \le
+      2^{5a}
+      (M_{\mathcal{B}', p'}g(x))
+     \dens_1(\mathfrak{A})^{\frac 1p}\, .
+  \end{equation}$$ With this estimate of $h(\fp)$, using $E(\fp)\subset B(\fp)$ by construction of
+  $B(\fp)$, we estimate \ref{eqtts3} by $$\begin{equation}
+  \label{eqtts4}
+   \le 2^{232a^3+11a + 1} { \dens_1(\mathfrak{A})^{\frac 1p}}\sum_{\fp\in \mathfrak{A}}
+   \int_{E(\fp)}|g|(y)M_{\mathcal{B}', p'}g(y) \, dy\,.
+  \end{equation}$$ Using `tile_disjointness`, the last display is observed to be $$\begin{equation}
+  \label{eqtts4a}
+  \le 2^{232a^3+11a + 1}
+   {\dens_1(\mathfrak{A})^{\frac 1p}} \int |g|(y)(M_{\mathcal{B}', p'}g)(y) \, dy\,.
+  \end{equation}$$ Applying Cauchy-Schwarz and using `Finset.measure_biUnion_le_lintegral` and
+  $1<p'<\frac 32$ estimates the last display by $$\begin{equation}
+      \le 2^{232a^3+11a + 1} \dens_1(\mathfrak{A})^{\frac 1p}
+      \|g\|_2 \|M_{\mathcal{B}', p'} g\|_2
+  \end{equation}$$ $$\begin{equation}
+      \le 2^{232a^3+12a+3} \dens_1(\mathfrak{A})^{\frac 1p}\|g\|_2 ^2\,.
+  \end{equation}$$ Now `dens1_antichain` follows by applying Cauchy-Schwarz on the left-hand side and
+  using $a\ge 4$.
+  -/)
+  (latexEnv := "lemma")]
 lemma dens1_antichain (h𝔄 : IsAntichain (· ≤ ·) 𝔄) (hf : Measurable f)
     (hfF : ∀ x, ‖f x‖ ≤ F.indicator 1 x) (hg : Measurable g) (hgG : ∀ x, ‖g x‖ ≤ G.indicator 1 x) :
     ‖∫ x, conj (g x) * carlesonSum 𝔄 f x‖ₑ ≤
@@ -354,7 +458,32 @@ private lemma ineq_aux_2_0_3 :
       rw [div_eq_mul_inv, ENNReal.coe_mul, ← ENNReal.rpow_add_of_nonneg _ _ hq1 hq2,
         sub_add_sub_cancel', h21, ENNReal.rpow_one]
 
-/-- Proposition 2.0.3. -/
+/--
+For any antichain $\mathfrak{A}$ and for all $f:X\to \C$ with $|f|\le \mathbf{1}_F$ and all
+$g:X\to\C$ with $|g| \le \mathbf{1}_G$ $$\begin{equation}
+ \label{eq-antiprop}
+    |\int \overline{g(x)} \sum_{\fp \in \mathfrak{A}} T_{\fp} f(x)\, d\mu(x)|
+\end{equation}$$ $$\begin{equation}
+    \le \frac{2^{117a^3}}{q-1} \dens_1(\mathfrak{A})^{\frac {q-1}{8a^4}}\dens_2(\mathfrak{A})^{\frac 1{q}-\frac 12} \|f\|_2 \|g\|_2\, .
+\end{equation}$$
+
+Proposition 2.0.3.
+-/
+@[blueprint
+  "antichain operator"
+  (proof := /--
+  We have $$\begin{equation}
+      \left(\frac 1{\tilde{q}} -\frac 12\right) (2-q)= \frac 1q -\frac 12\,.
+  \end{equation}$$ Multiplying the $(2-q)$-th power of \ref{eqttt9} and the $(q-1)$-th power
+  of \ref{eqttt3} and estimating gives after simplification of some factors
+  $$\begin{equation}
+  \label{eqttt8}
+      \Big|\int \overline{g(x)} \sum_{\fp \in \mathfrak{A}} T_{\fp} f(x)\, d\mu(x)\Big|
+  \end{equation}$$ $$\begin{equation}
+      \le 2^{117a^3}(q-1)^{-1} \dens_1(\mathfrak{A})^{\frac {q-1}{2p}}\dens_2(\mathfrak{A})^{\frac 1{q}-\frac 12} \|f\|_2\|g\|_2\, .
+  \end{equation}$$ With the definition of $p$, this implies `antichain_operator`.
+  -/)
+  (latexEnv := "proposition")]
 theorem antichain_operator (h𝔄 : IsAntichain (· ≤ ·) 𝔄) (hf : Measurable f)
     (hf1 : ∀ x, ‖f x‖ ≤ F.indicator 1 x) (hg : Measurable g) (hg1 : ∀ x, ‖g x‖ ≤ G.indicator 1 x) :
     ‖∫ x, conj (g x) * carlesonSum 𝔄 f x‖ₑ ≤

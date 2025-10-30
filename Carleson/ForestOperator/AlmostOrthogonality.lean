@@ -1,3 +1,4 @@
+import BlueprintGen
 import Carleson.ForestOperator.QuantativeEstimate
 
 open ShortVariables TileStructure
@@ -26,8 +27,31 @@ variable (t u₁ u₂) in
 We append a subscript 0 to distinguish it from the section variable. -/
 def 𝔖₀ : Set (𝔓 X) := { p ∈ t u₁ ∪ t u₂ | 2 ^ ((Z : ℝ) * n / 2) ≤ dist_(p) (𝒬 u₁) (𝒬 u₂) }
 
-/-- Part 1 of Lemma 7.4.1.
-Todo: update blueprint with precise properties needed on the function. -/
+/--
+For each $\fp \in \fP$, we have
+$$T_{\fp}^* g = \mathbf{1}_{B(\pc(\fp), 5D^{\ps(\fp)})} T_{\fp}^* \mathbf{1}_{\scI(\fp)} g\,.$$ For
+each $\fu \in \fU$ and each $\fp \in \fT(\fu)$, we have
+$$T_{\fp}^* g = \mathbf{1}_{\scI(\fu)} T_{\fp}^* \mathbf{1}_{\scI(\fu)} g\,.$$
+
+Part 1 of Lemma 7.4.1.
+Todo: update blueprint with precise properties needed on the function.
+-/
+@[blueprint
+  "adjoint tile support"
+  (proof := /--
+  By \ref{forest1}, $E(\fp) \subset \scI(\fp) \subset \scI(\fu)$. Thus by
+  [\[definetp\*\]](#definetp*) $$T_{\fp}^* g(x) = T_{\fp}^* (\mathbf{1}_{\scI(\fp)} g)(x)$$
+  $$= \int_{E(\fp)} \overline{K_{\ps(\fp)}(y,x)} e(-\tQ(y)(x) + \tQ(y)(y)) \mathbf{1}_{\scI(\fp)}(y) g(y) \, \mathrm{d}\mu(y)\,.$$
+  If this integral is not $0$, then there exists $y \in \scI(\fp)$ such that
+  $K_{\ps(\fp)}(y,x) \ne 0$. By \ref{supp-Ks}, \ref{eq-vol-sp-cube} and the
+  triangle inequality, it follows that $$\begin{equation*}
+          x \in B(\pc(\fp), 5 D^{\ps(\fp)})\, .
+  \end{equation*}$$ Thus
+  $$T_{\fp}^* g(x) = \mathbf{1}_{B(\pc(\fp), 5D^{\ps(\fp)})}(x) T_{\fp}^* (\mathbf{1}_{\scI(\fp)} g)(x)\,.$$
+  The second claimed equation follows now since $\scI(\fp) \subset \scI(\fu)$ and by
+  \ref{forest6} we have $B(\pc(\fp), 5D^{\ps(\fp)}) \subset \scI(\fu)$.
+  -/)
+  (latexEnv := "lemma")]
 lemma adjoint_tile_support1 : adjointCarleson p f =
     (ball (𝔠 p) (5 * D ^ 𝔰 p)).indicator (adjointCarleson p ((𝓘 p : Set X).indicator f)) := by
   rw [adjoint_eq_adjoint_indicator E_subset_𝓘]; ext x
@@ -120,7 +144,26 @@ lemma enorm_adjointCarleson_le_mul_indicator {x : X} :
 Has value `2 ^ (181 * a ^ 3)` in the blueprint. -/
 irreducible_def C7_4_2 (a : ℕ) : ℝ≥0 := C7_3_1_1 a
 
-/-- Lemma 7.4.2. -/
+/--
+For all $g$ with $\text{support}(g) \subseteq G$, we have that
+$$\left\| \sum_{\fp \in \fT(\fu)} T_{\fp}^* g\right\|_2 \le 2^{181a^3} \dens_1(\fT(\fu))^{1/2} \|g\|_2\,.$$
+
+Lemma 7.4.2.
+-/
+@[blueprint
+  "adjoint tree estimate"
+  (proof := /--
+  By `TileStructure.Forest.density_tree_bound1`, we have for all bounded $f$ and $g$ with
+  $|g| \le \mathbf{1}_G$ that
+  $$\left| \int_X \overline{\sum_{\fp\in \fT(\fu)} T_{\fp}^* g} f \,\mathrm{d}\mu \right| = \left| \int_X \overline{g} \sum_{\fp \in \fT(\fu)} T_{\fp} f \,\mathrm{d}\mu \right|$$
+  $$\begin{equation}
+          \label{eq-adjoint-bound}
+          \le 2^{181a^3} \dens_1(\fT(\fu))^{1/2} \|g\|_2 \|f\|_2\,.
+  \end{equation}$$ Let $f = \sum_{\fp \in \fT(\fu)} T_{\fp}^* g$. Since $|g| \le \mathbf{1}_G$, $f$ is
+  bounded and has bounded support. In particular $\|f\|_2 < \infty$. Dividing
+  \ref{eq-adjoint-bound} by $\|f\|_2$ completes the proof.
+  -/)
+  (latexEnv := "lemma")]
 lemma adjoint_tree_estimate (hu : u ∈ t) (hf : BoundedCompactSupport f) (h2f : f.support ⊆ G) :
     eLpNorm (adjointCarlesonSum (t u) f) 2 volume ≤
     C7_4_2 a * dens₁ (t u) ^ (2 : ℝ)⁻¹ * eLpNorm f 2 volume := by
@@ -177,7 +220,19 @@ lemma le_C7_4_3 (ha : 4 ≤ a) : C7_4_2 a + CMB (defaultA a) 2 + 1 ≤ C7_4_3 a 
         grw [this]
         exact le_of_eq (by ring)
 
-/-- Lemma 7.4.3. -/
+/--
+We have for all $\fu \in \fU$ and for all $g$ with $\text{support}(g) \subseteq G$
+$$\|S_{2, \fu} g\|_2 \le 2^{182a^3} \|g\|_2\,.$$
+
+Lemma 7.4.3.
+-/
+@[blueprint
+  "adjoint tree control"
+  (proof := /--
+  This follows immediately from Minkowski's inequality, `Finset.measure_biUnion_le_lintegral` and
+  `TileStructure.Forest.adjoint_tree_estimate`, using that $a \ge 4$.
+  -/)
+  (latexEnv := "lemma")]
 lemma adjoint_tree_control
     (hu : u ∈ t) (hf : BoundedCompactSupport f) (h2f : f.support ⊆ G) :
     eLpNorm (adjointBoundaryOperator t u f ·) 2 volume ≤ C7_4_3 a * eLpNorm f 2 volume := by
@@ -253,7 +308,34 @@ lemma overlap_implies_distance (hu₁ : u₁ ∈ t) (hu₂ : u₂ ∈ t) (hu : u
         rw [@mem_ball'] at this; exact this.le
     _ ≥ _ := ha
 
-/-- Part 2 of Lemma 7.4.7. -/
+/--
+Let $\fu_1 \ne \fu_2 \in \fU$ with $\scI(\fu_1) \subset \scI(\fu_2)$. If
+$\fp \in \fT(\fu_1) \cup \fT(\fu_2)$ with $\scI(\fp) \cap \scI(\fu_1) \ne \emptyset$, then
+$\fp \in \mathfrak{S}$. In particular, we have $\fT(\fu_1) \subset \mathfrak{S}$.
+
+Part 2 of Lemma 7.4.7.
+-/
+@[blueprint
+  "overlap implies distance"
+  (proof := /--
+  Suppose first that $\fp \in \fT(\fu_1)$. Then $\scI(\fp) \subset \scI(\fu_1) \subset \scI(\fu_2)$,
+  by \ref{forest1}. Thus we have by the separation condition \ref{forest5},
+  \ref{eq-freq-comp-ball}, \ref{forest1} and the triangle inequality
+  $$\begin{align*}
+          d_{\fp}(\fcc(\fu_1), \fcc(\fu_2)) &\ge d_{\fp}(\fcc(\fp), \fcc(\fu_2)) - d_{\fp}(\fcc(\fp), \fcc(\fu_1))\\
+          &\ge 2^{Z(n+1)} - 4\\
+          &\ge 2^{Zn/2}\,,
+  \end{align*}$$ using that $Z= 2^{12a}\ge 4$. Hence $\fp \in \mathfrak{S}$.
+  
+  Suppose now that $\fp \in \fT(\fu_2)$. If $\scI(\fp) \subset \scI(\fu_1)$, then the same argument as
+  above with $\fu_1$ and $\fu_2$ swapped shows $\fp \in \mathfrak{S}$. If
+  $\scI(\fp) \not \subset \scI(\fu_1)$ then, by \ref{dyadicproperty},
+  $\scI(\fu_1) \subset \scI(\fp)$. Pick $\fp' \in \fT(\fu_1)$, we have
+  $\scI(\fp') \subset \scI(\fu_1) \subset \scI(\fp)$. Hence, by `Grid.dist_mono` and the first
+  paragraph $$d_{\fp}(\fcc(\fu_1), \fcc(\fu_2)) \ge d_{\fp'}(\fcc(\fu_1), \fcc(\fu_2)) \ge 2^{Zn}\,,$$
+  so $\fp \in \mathfrak{S}$.
+  -/)
+  (latexEnv := "lemma")]
 lemma 𝔗_subset_𝔖₀ (hu₁ : u₁ ∈ t) (hu₂ : u₂ ∈ t) (hu : u₁ ≠ u₂) (h2u : 𝓘 u₁ ≤ 𝓘 u₂) :
     t u₁ ⊆ 𝔖₀ t u₁ u₂ := fun p mp ↦ by
   apply overlap_implies_distance hu₁ hu₂ hu h2u (mem_union_left _ mp)
