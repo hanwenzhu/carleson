@@ -1,0 +1,44 @@
+\xpg@aux {}{english}
+\contentsline {section}{\tocsection {}{1}{Introduction}}{2}{section.2}%
+\contentsline {subsection}{\tocsubsection {}{1.1}{Statement of the metric space Carleson theorems}}{6}{subsection.9}%
+\contentsline {section}{\tocsection {}{2}{Proof of Metric Space Carleson, overview}}{10}{section.37}%
+\contentsline {subsection}{\tocsubsection {}{2.1}{Auxiliary lemmas}}{21}{subsection.146}%
+\contentsline {section}{\tocsection {}{3}{Proof of Metric Space Carleson}}{23}{section.163}%
+\contentsline {section}{\tocsection {}{4}{Proof of Finitary Carleson}}{27}{section.186}%
+\contentsline {subsection}{\tocsubsection {}{4.1}{Proof of Grid Existence Lemma}}{30}{subsection.196}%
+\contentsline {subsection}{\tocsubsection {}{4.2}{Proof of Tile Structure Lemma}}{35}{subsection.253}%
+\contentsline {section}{\tocsection {}{5}{Proof of discrete Carleson}}{37}{section.268}%
+\contentsline {subsection}{\tocsubsection {}{5.1}{Organisation of the tiles}}{38}{subsection.269}%
+\contentsline {subsection}{\tocsubsection {}{5.2}{Proof of the Exceptional Sets Lemma}}{42}{subsection.309}%
+\contentsline {subsection}{\tocsubsection {}{5.3}{Auxiliary lemmas}}{47}{subsection.366}%
+\contentsline {subsection}{\tocsubsection {}{5.4}{Proof of the Forest Union Lemma}}{50}{subsection.401}%
+\contentsline {subsection}{\tocsubsection {}{5.5}{Proof of the Forest Complement Lemma}}{54}{subsection.427}%
+\contentsline {section}{\tocsection {}{6}{Proof of the Antichain Operator Proposition}}{56}{section.443}%
+\contentsline {subsection}{\tocsubsection {}{6.1}{The density arguments}}{57}{subsection.444}%
+\contentsline {subsection}{\tocsubsection {}{6.2}{Proof of the Tile Correlation Lemma}}{63}{subsection.522}%
+\contentsline {subsection}{\tocsubsection {}{6.3}{Proof of the Antichain Tile Count Lemma}}{65}{thmt@dummyctr.552}%
+\contentsline {section}{\tocsection {}{7}{Proof of the Forest Operator Proposition}}{69}{section.601}%
+\contentsline {subsection}{\tocsubsection {}{7.1}{The pointwise tree estimate}}{69}{subsection.602}%
+\contentsline {subsection}{\tocsubsection {}{7.2}{An auxiliary $L^2$ tree estimate}}{74}{subsection.624}%
+\contentsline {subsection}{\tocsubsection {}{7.3}{The quantitative $L^2$ tree estimate}}{79}{subsection.644}%
+\contentsline {subsection}{\tocsubsection {}{7.4}{Almost orthogonality of separated trees}}{83}{subsection.659}%
+\contentsline {subsection}{\tocsubsection {}{7.5}{Proof of the Tiles with large separation Lemma}}{87}{subsection.684}%
+\contentsline {subsubsection}{\tocsubsubsection {}{7.5.1}{A partition of unity}}{87}{subsubsection.685}%
+\contentsline {subsubsection}{\tocsubsubsection {}{7.5.2}{H\"older estimates for adjoint tree operators}}{89}{subsubsection.698}%
+\contentsline {subsubsection}{\tocsubsubsection {}{7.5.3}{The van der Corput estimate}}{95}{thmt@dummyctr.729}%
+\contentsline {subsection}{\tocsubsection {}{7.6}{Proof of The Remaining Tiles Lemma}}{96}{subsection.731}%
+\contentsline {subsection}{\tocsubsection {}{7.7}{Forests}}{100}{subsection.744}%
+\contentsline {section}{\tocsection {}{8}{Proof of the H\"older cancellative condition}}{103}{section.758}%
+\contentsline {section}{\tocsection {}{9}{Proof of Vitali covering and Hardy--Littlewood}}{106}{section.787}%
+\contentsline {section}{\tocsection {}{10}{Two-sided Metric Space Carleson}}{107}{section.796}%
+\contentsline {subsection}{\tocsubsection {}{10.1}{Proof of Cotlar's Inequality}}{109}{thmt@dummyctr.815}%
+\contentsline {subsection}{\tocsubsection {}{10.2}{Calder\'on-Zygmund Decomposition}}{115}{subsection.877}%
+\contentsline {section}{\tocsection {}{11}{Proof of The Classical Carleson Theorem}}{125}{section.959}%
+\contentsline {subsection}{\tocsubsection {}{11.1}{The classical Carleson theorem}}{126}{subsection.960}%
+\contentsline {subsection}{\tocsubsection {}{11.2}{Smooth functions.}}{133}{thmt@dummyctr.1023}%
+\contentsline {subsection}{\tocsubsection {}{11.3}{The truncated Hilbert transform}}{134}{subsection.1030}%
+\contentsline {subsection}{\tocsubsection {}{11.4}{The proof of the van der Corput Lemma}}{138}{subsection.1071}%
+\contentsline {subsection}{\tocsubsection {}{11.5}{Partial sums as orthogonal projections}}{138}{subsection.1072}%
+\contentsline {subsection}{\tocsubsection {}{11.6}{The error bound}}{138}{thmt@dummyctr.1074}%
+\contentsline {subsection}{\tocsubsection {}{11.7}{Carleson on the real line}}{140}{subsection.1084}%
+\contentsline {section}{\tocsection {}{}{References}}{143}{section*.1128}%

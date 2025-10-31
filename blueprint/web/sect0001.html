@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  MathJax = { 
+    tex: {
+		    inlineMath: [['$','$'], ['\\(','\\)']]
+	} }
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<meta name="generator" content="plasTeX" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>A blueprint for the formalization of Carleson’s theorem on convergence of Fourier series: Introduction</title>
+<link rel="next" href="overviewsection.html" title="Proof of Metric Space Carleson, overview" />
+<link rel="prev" href="index.html" title="A blueprint for the formalization of Carleson’s theorem on convergence of Fourier series" />
+<link rel="up" href="index.html" title="A blueprint for the formalization of Carleson’s theorem on convergence of Fourier series" />
+<link rel="stylesheet" href="styles/theme-white.css" />
+<link rel="stylesheet" href="styles/amsthm.css" />
+<link rel="stylesheet" href="styles/showmore.css" />
+<link rel="stylesheet" href="styles/blueprint.css" />
+<link rel="stylesheet" href="styles/extra_styles.css" />
+</head>
+
+<body>
+<header>
+<svg  id="toc-toggle" class="icon icon-list-numbered "><use xlink:href="symbol-defs.svg#icon-list-numbered"></use></svg>
+<h1 id="doc_title"><a href="index.html">A blueprint for the formalization of Carleson’s theorem on convergence of Fourier series</a></h1>
+</header>
+
+<div class="wrapper">
+<nav class="toc">
+<ul class="sub-toc-0">
+<li class=" active current">
+  <a href="sect0001.html"><span class="toc_ref">1</span> <span class="toc_entry">Introduction</span></a>
+  <span class="expand-toc">▼</span>
+  <ul class="sub-toc-1 active">
+     <li class="">
+  <a href="sect0001.html#a0000000006"><span class="toc_ref">1.1</span> <span class="toc_entry">Statement of the metric space Carleson theorems</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="overviewsection.html"><span class="toc_ref">2</span> <span class="toc_entry">Proof of Metric Space Carleson, overview</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="overviewsection.html#global-auxiliary-lemmas"><span class="toc_ref">2.1</span> <span class="toc_entry">Auxiliary lemmas</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="thmfromproplinear.html"><span class="toc_ref">3</span> <span class="toc_entry">Proof of Metric Space Carleson</span></a>
+ </li>
+<li class="">
+  <a href="christsection.html"><span class="toc_ref">4</span> <span class="toc_entry">Proof of Finitary Carleson</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="christsection.html#subsecdyadic"><span class="toc_ref">4.1</span> <span class="toc_entry">Proof of Grid Existence Lemma</span></a>
+ </li>
+<li class="">
+  <a href="christsection.html#subsectiles"><span class="toc_ref">4.2</span> <span class="toc_entry">Proof of Tile Structure Lemma</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="proptopropprop.html"><span class="toc_ref">5</span> <span class="toc_entry">Proof of discrete Carleson</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="proptopropprop.html#subsectilesorg"><span class="toc_ref">5.1</span> <span class="toc_entry">Organisation of the tiles</span></a>
+ </li>
+<li class="">
+  <a href="proptopropprop.html#subsetexcset"><span class="toc_ref">5.2</span> <span class="toc_entry">Proof of the Exceptional Sets Lemma</span></a>
+ </li>
+<li class="">
+  <a href="proptopropprop.html#subsec-lessim-aux"><span class="toc_ref">5.3</span> <span class="toc_entry">Auxiliary lemmas</span></a>
+ </li>
+<li class="">
+  <a href="proptopropprop.html#subsecforest"><span class="toc_ref">5.4</span> <span class="toc_entry">Proof of the Forest Union Lemma</span></a>
+ </li>
+<li class="">
+  <a href="proptopropprop.html#subsecantichain"><span class="toc_ref">5.5</span> <span class="toc_entry">Proof of the Forest Complement Lemma</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="antichainboundary.html"><span class="toc_ref">6</span> <span class="toc_entry">Proof of the Antichain Operator Proposition</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="antichainboundary.html#sec-TT*-T*T"><span class="toc_ref">6.1</span> <span class="toc_entry">The density arguments</span></a>
+ </li>
+<li class="">
+  <a href="antichainboundary.html#sec-tile-operator"><span class="toc_ref">6.2</span> <span class="toc_entry">Proof of the Tile Correlation Lemma</span></a>
+ </li>
+<li class="">
+  <a href="antichainboundary.html#subsec-geolem"><span class="toc_ref">6.3</span> <span class="toc_entry">Proof of the Antichain Tile Count Lemma</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="treesection.html"><span class="toc_ref">7</span> <span class="toc_entry">Proof of the Forest Operator Proposition</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="treesection.html#a0000000022"><span class="toc_ref">7.1</span> <span class="toc_entry">The pointwise tree estimate</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#a0000000023"><span class="toc_ref">7.2</span> <span class="toc_entry">An auxiliary \(L^2\) tree estimate</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#a0000000024"><span class="toc_ref">7.3</span> <span class="toc_entry">The quantitative \(L^2\) tree estimate</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#a0000000025"><span class="toc_ref">7.4</span> <span class="toc_entry">Almost orthogonality of separated trees</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#subsec-big-tiles"><span class="toc_ref">7.5</span> <span class="toc_entry">Proof of the Tiles with large separation Lemma</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#subsec-rest-tiles"><span class="toc_ref">7.6</span> <span class="toc_entry">Proof of The Remaining Tiles Lemma</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#a0000000026"><span class="toc_ref">7.7</span> <span class="toc_entry">Forests</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="liphoel.html"><span class="toc_ref">8</span> <span class="toc_entry">Proof of the Hölder cancellative condition</span></a>
+ </li>
+<li class="">
+  <a href="sec-hlm.html"><span class="toc_ref">9</span> <span class="toc_entry">Proof of Vitali covering and Hardy–Littlewood</span></a>
+ </li>
+<li class="">
+  <a href="sect0002.html"><span class="toc_ref">10</span> <span class="toc_entry">Two-sided Metric Space Carleson</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0002.html#subsec-cotlar"><span class="toc_ref">10.1</span> <span class="toc_entry">Proof of Cotlar’s Inequality</span></a>
+ </li>
+<li class="">
+  <a href="sect0002.html#subsec-CZD"><span class="toc_ref">10.2</span> <span class="toc_entry">Calderón-Zygmund Decomposition</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="sect0003.html"><span class="toc_ref">11</span> <span class="toc_entry">Proof of The Classical Carleson Theorem</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0003.html#10classical"><span class="toc_ref">11.1</span> <span class="toc_entry">The classical Carleson theorem</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10smooth"><span class="toc_ref">11.2</span> <span class="toc_entry">Smooth functions.</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10hilbert"><span class="toc_ref">11.3</span> <span class="toc_entry">The truncated Hilbert transform</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10vandercorput"><span class="toc_ref">11.4</span> <span class="toc_entry">The proof of the van der Corput Lemma</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10projection"><span class="toc_ref">11.5</span> <span class="toc_entry">Partial sums as orthogonal projections</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10difference"><span class="toc_ref">11.6</span> <span class="toc_entry">The error bound</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10carleson"><span class="toc_ref">11.7</span> <span class="toc_entry">Carleson on the real line</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li ><a href="dep_graph_document.html">Dependency graph</a></li>
+</ul>
+</nav>
+
+<div class="content">
+<div class="content-wrapper">
+
+
+<div class="main-text">
+<h1 id="a0000000002">1 Introduction</h1>
+<p>Trigonometric series represent functions as possibly infinite linear combinations of pure frequencies. They gained particular prominence through the work of J. Fourier, who used them in his analytical theory of heat <span class="cite">
+	[
+</span>, see also <span class="cite">
+	[
+</span>, thereby establishing them as a tool for solving partial differential equations. Fourier also made the groundbreaking claim that a wide range of functions could be represented using trigonometric series. This sparked the interest of many mathematicians, including Dirichlet, who gave some rigorous conditions for convergence of Fourier series, as trigonometric series are now called. Dirichlet also opened a branch of analytic number theory partially inspired by the ideas of Fourier. Nowadays, Fourier analysis plays an important role in many areas of mathematics. </p>
+<p>With Euler’s formula to represent pure frequencies in mind, a trigonometric polynomial can be expressed as </p>
+<div class="equation" id="eq:trig-series">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{eq:trig-series} S_N(x):= \sum _{n=-N}^N c_n e^{inx} \  . \end{equation}
+  </div>
+  <span class="equation_label">1.0.1</span>
+</p>
+</div>
+<p> The Fourier series is then defined as the limit \(f\) of such a sequence \(S_N\) as \(N\) tends to \(\infty \). Fourier’s vision to represent rather general functions raises two fundamental questions. The first question is to identify the appropriate choice of coefficients \(c_n\) to use to represent a given \(f\). The second question addresses the convergence of \(S_N\) to \(f\). </p>
+<p>The first question has a fairly canonical and standard answer, provided by the Fourier integral formula: </p>
+<div class="equation" id="eq:fourier-coefficients">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{eq:fourier-coefficients} c_n:=\widehat{f}_n:=\frac1{2\pi }\int _0^{2\pi }f(x) e^{- i nx}\,  dx, \end{equation}
+  </div>
+  <span class="equation_label">1.0.2</span>
+</p>
+</div>
+<p> where the precise interpretation of the integral depends on the chosen theory of integration. For a continuous function \(f\), Riemann’s notion of the integral suffices. If \(f\) is integrable in the Lebesgue sense, \(f\in L^1(0,2\pi )\), the Lebesgue integral is appropriate. More generally, if \(f\) is a distribution in the sense of Schwartz, supported in \([0,2\pi ]\) the integral can be understood as an evaluation against the periodic test function \(e^{-i nx}\). In each case, the more general definition reduces to the simpler one within the respective more restrictive domain. Hence, the Fourier coefficients given by <a href="sect0001.html#eq:fourier-coefficients" class="eqref">1.0.2</a> serve as a universal choice. This choice is unique in several respects, in particular if one is to exactly reproduce a trigonometric polynomial \(f\) in the form <a href="sect0001.html#eq:trig-series" class="eqref">1.0.1</a>. </p>
+<p>The second question of convergence bifurcates into the question of pointwise convergence of the series <a href="sect0001.html#eq:trig-series" class="eqref">1.0.1</a> (with coefficients given by <a href="sect0001.html#eq:fourier-coefficients" class="eqref">1.0.2</a>) for a given \(x\) on the one hand and convergence of the functions \(S_N\) to the function \(f\) in a suitable function space with corresponding topology on the other hand. There are at least as many function spaces for the question of convergence as there are different definitions of the integral elaborated earlier. There are some very canonical answers to the convergence question in function spaces, albeit not known at the time of Fourier and Dirichlet. One example is convergence in the Hilbert space sense for \(f\) in \(L^2(0,2\pi )\), as discovered in the first decade of the twentieth century as a consequence of the rapid development of Lebesgue integration theory. Another canonical example is convergence in the sense of distributions for general distributional \(f\), as discovered a few decades after Lebesgue integration. For some other natural spaces, such as \(L^1(0,2\pi )\), there is no guarantee of convergence in the norm of that space even if \(f\) is in the space. </p>
+<p>In contrast to these examples of function spaces with a very natural theory of convergence of Fourier series in the topology of the function space, there are no similarly elegant solutions to the characterization of pointwise convergence. In particular, the space of functions \(f\) such that the sequence \(S_N(x)\) converges for every \(x\) does not have a good characterization in terms of \(f\) itself. Similarly, the space of all functions \(f\) such that the sequence of coefficients \(\widehat{f}_n\) is absolutely summable has also no good characterization. </p>
+<p>When the Fourier integral is defined in the Lebesgue sense and \(f\in L^1(0,2\pi )\), then the function \(f\) itself is meaningful not everywhere but only pointwise almost everywhere in the Lebesgue sense. The question of pointwise convergence to \(f\) for all \(x\) then becomes meaningless, and instead one asks for almost everywhere convergence. Such convergence was conjectured by N. Luzin <span class="cite">
+	[
+</span> for the space \(L^2(0,2\pi )\), see also the collected works <span class="cite">
+	[
+</span>. Kolmogorov’s example <span class="cite">
+	[
+</span> of an \(L^1\) function whose Fourier series diverges at almost every point seemed to provide some evidence against Luzin’s conjecture. Indeed, in the 1960s, L. Carleson tried to construct a counterexample to Luzin’s conjecture. In his own recollection, his efforts led him to better and better understand how such a potential counterexample should look like. In the end, the counterexample had to satisfy so many properties that the properties started to contradict each other, and Carleson realized that a counterexample could not exist. Thus, he had proved Luzin’s conjecture <span class="cite">
+	[
+</span>. In particular, he had proven the more elementary statement </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="classical_carleson">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">1.0.1</span>
+    <span class="theorem_thmtitle">classical Carleson</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0001.html#classical_carleson">#</a>
+    
+    <a class="icon proof" href="sect0001.html#a0000000005"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0003.html#instProperSpaceReal">Lemma 11.7.1</a></li>
+          
+          <li><a href="sect0003.html#instIsAddHaarMeasureVolume">Lemma 11.7.3</a></li>
+          
+          <li><a href="sect0003.html#exceptional_set_carleson">Theorem 11.1.4</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/classical_carleson" class="lean_decl">classical_carleson</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p> Let \(f\) be a \(2\pi \)-periodic complex-valued continuous function on \(\mathbb {R}\). Then for almost all \(x \in \mathbb {R}\) we have </p>
+<div class="equation" id="eq:fourier-limit">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq:fourier-limit} \lim _{N\to \infty }S_N f(x) = f(x), \end{equation}
+  </div>
+  <span class="equation_label">1.0.3</span>
+</p>
+</div>
+<p> where \(S_N f\) is the \(N\)-th partial Fourier sum of \(f\) defined in <a href="sect0001.html#eq:trig-series">1.0.1</a> with coefficients <a href="sect0001.html#eq:fourier-coefficients">1.0.2</a>.</p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000005">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>By applying <a href="sect0003.html#exceptional_set_carleson">11.1.4</a> with a sequence of \(\epsilon _n:= 2^{-n}\delta \) for \(n\ge 1\) and taking the union of corresponding exceptional sets \(E_n\), we see that outside a set of measure \(\delta \), the partial Fourier sums converge pointwise for \(N\to \infty \). Applying this with a sequence of \(\delta \) shrinking to zero and taking the intersection of the corresponding exceptional sets, which has measure zero, we see that the Fourier series converges outside a set of measure zero.</p>
+
+  </div>
+</div>
+<p>Here, almost every \(x\) means in the Lebesgue sense, i.e., for every \(\epsilon {\gt}0\) the set of \(x\) where convergence fails can be covered by a sequence of intervals such that the sum of the lengths of these intervals is less than \(\epsilon \). While Carleson had proven the more general Luzin conjecture for functions in \(L^2[0,2\pi ]\), even the more elementary statement for continuous functions was not known before Carleson’s work. Moreover, until now, the elementary statement has not seen any substantially easier proof than those generalizing to \(L^2\), partially because there is no readily usable criterion on the level of Fourier coefficients to distinguish between continuous functions and \(L^2\) functions. </p>
+<p>Shortly after Carleson’s breakthrough, Hunt <span class="cite">
+	[
+</span> proved the analogous result for \(L^p\) functions with \(p{\gt}1\) and for functions in \(L^1\log (L)^2\). Billard <span class="cite">
+	[
+</span> adapted Carleson’s arguments to prove almost everywhere convergence of Walsh-Fourier series for functions in \(L^2\). </p>
+<p>In <span class="cite">
+	[
+</span>, C. Fefferman gave an alternative proof of Carleson’s theorem via an a priori bound for Carleson’s operator, the maximally modulated singular integral </p>
+<div class="equation" id="eq:feffermancarleson">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{eq:feffermancarleson} Tf(x):=\sup _{N} \int _{-\pi }^\pi e^{iNy}f(x-y)\frac1y {dy}\,  . \end{equation}
+  </div>
+  <span class="equation_label">1.0.4</span>
+</p>
+</div>
+<p> In <span class="cite">
+	[
+</span>, a duality between the approaches by Carleson and Fefferman was pointed out and a more symmetric and self-dual proof was presented. </p>
+<p>Various strengthenings of Fefferman’s estimates for Carleson’s operator have appeared since, such as bounds for a higher dimensional Carleson operator in the isotropic <span class="cite">
+	[
+</span>, <span class="cite">
+	[
+</span> and anisotropic <span class="cite">
+	[
+</span> setting. The supremum norm in the variable \(N\) in <a href="sect0001.html#eq:feffermancarleson" class="eqref">1.0.4</a> was strengthened to maximal multiplier norms in <span class="cite">
+	[
+</span> with applications to return times theorems in ergodic theory. It was strengthened to variation norms \(V^r\) with \(r{\gt}2\) in <span class="cite">
+	[
+</span> with applications to nonlinear analysis. </p>
+<p>Stein and Wainger <span class="cite">
+	[
+</span> proposed to study variants of <a href="sect0001.html#eq:feffermancarleson" class="eqref">1.0.4</a> replacing the linear modulation phase \(Ny\) by polynomial phases in \(y\) and proved a result for polynomials without a linear term. This was generalized by Lie to general polynomial Carleson operators, first for a supremum over all quadratic polynomials <span class="cite">
+	[
+</span> and then for a supremum over all polynomials in <span class="cite">
+	[
+</span>. The polynomial Carleson operator was further generalized to higher dimensions and Hölder regular kernels in <span class="cite">
+	[
+</span>. The development of polynomial Carleson operators has led to further generalisations, for example to almost everywhere convergence of Malmquist-Takenaka series <span class="cite">
+	[
+</span> and maximally modulated singular Radon transforms <span class="cite">
+	[
+</span>, <span class="cite">
+	[
+</span>. </p>
+<p>Surveys to Carleson’s theorem can be found in <span class="cite">
+	[
+</span>, <span class="cite">
+	[
+</span>. </p>
+<p>In this blueprint, we prove Theorem <a href="sect0001.html#classical_carleson">1.0.1</a> as a corollary to a further generalization of the polynomial Carleson operator towards doubling metric measure spaces, Theorem <a href="sect0001.html#metric_carleson">1.1.1</a> below, which is new and appears in the sibling communication <span class="cite">
+	[
+</span>. Theorem <a href="sect0001.html#metric_carleson">1.1.1</a> is an axiomatic approach to Carleson type theorems on doubling metric measure spaces. This axiomatic approach is suitable for formalization and a good route towards the classical theorem. </p>
+<p>Early drafts of the sibling communication <span class="cite">
+	[
+</span> existed in summer 2023. Based on this, the first draft of the present blueprint was written in the first half of 2024, containing a much more detailed proof, which involved increasing the size by a factor of four, and adding the derivation of Carleson’s classical result. In June 2024, the fourth author launched a <a href ="https://florisvandoorn.com/carleson/">public website</a> to post the blueprint, using the open-source software <span class="ttfamily">leanblueprint</span> developed by Patrick Massot, calling for contributions to formalize the proof. The goal was to formalize the blueprint in the Lean proof assistant&#160;<span class="cite">
+	[
+</span>, building on top of its mathematical library <span class="ttfamily">Mathlib</span>&#160;<span class="cite">
+	[
+</span>. The work was split up into about 180 tasks, to be claimed by individual contributors. Most tasks were to formalize the proof of a single lemma from the blueprint, and some were to develop basic theory or refactor existing code. The contributors adapted the blueprint to fix some gaps found during the formalization and gave feedback that led to discussions about the proof. This even resulted in a few changes to the general setup and the main theorems. All of the gaps found required only fairly localized changes to the blueprint, indicating that the initial blueprint was already of high quality. The formalization was completed in July 2025. It is attached to this arXiv posting, and the latest version can be found <a href ="https://github.com/fpvandoorn/carleson">on Github</a>. </p>
+<p>Everyone that completed a substantial amount of tasks is included as a coauthor of the blueprint. The authors acknowledge contributions in the form of small formalization additions, pointing out corrections to the blueprint, or supplying ideas to the Lean efforts by the following people: Michel Alexis, Bolton Bailey, Julian Berman, Joachim Breitner, Martin Dvořák, Georges Gonthier, Aaron Hill, Austin Letson, Bhavik Mehta, Eric Paul, Clara Torres, Dennis Tsar, Andrew Yang, Ruben van de Velde. </p>
+<p><i class="itshape">Acknowledgement.</i> L.B., M.I.d.F.F., L.D., F.v.D., M.R., R.S., and C.T. were funded by the Deutsche Forschungsgemeinschaft (DFG, German Research Foundation) under Germany’s Excellence Strategy – EXC-2047/1 – 390685813. L.B. , R.S., and C.T. were also supported by SFB 1060. A.J. is funded by the TÜBITAK (Scientific and Technological Research Council of Türkiye) under Grant Number 123F122. J.R. was supported in part by NSF grant DMS-2154835 and a HIM fellowship for the Fall 2024 trimester program in Bonn. </p>
+<h2 id="a0000000006">1.1 Statement of the metric space Carleson theorems</h2>
+<p>Let </p>
+<div class="equation" id="a0000000007">
+<p>
+  <div class="equation_content">
+    \begin{equation}  a\ge 4 \end{equation}
+  </div>
+  <span class="equation_label">1.1.1</span>
+</p>
+</div>
+<p> be a natural number that as it gets larger will allow for more general applications of Theorem <a href="sect0001.html#metric_carleson">1.1.1</a> but will worsen the constants in the estimates. </p>
+<p>A doubling metric measure space \((X,\rho ,\mu , a)\) is a complete and locally compact metric space \((X,\rho )\) equipped with a non-zero locally finite Borel measure \(\mu \) that satisfies the doubling condition that for all \(x\in X\) and all \(R{\gt}0\) we have </p>
+<div class="equation" id="doublingx">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{doublingx} \mu (B(x,2R))\le 2^a\mu (B(x,R))\, , \end{equation}
+  </div>
+  <span class="equation_label">1.1.2</span>
+</p>
+</div>
+<p> where we have denoted by \(B(x,R)\) the open ball of radius \(R\) centered at \(x\): </p>
+<div class="equation" id="eq-define-ball">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{eq-define-ball} B(x,R):=\{ y\in X: \rho (x,y){\lt}R\} . \end{equation}
+  </div>
+  <span class="equation_label">1.1.3</span>
+</p>
+</div>
+<p> In a doubling metric measure space the closed balls are compact and \(\mu \) is positive on all non-empty open sets. </p>
+<p>A collection \({\Theta }\) of real valued continuous functions on the doubling metric measure space \((X,\rho ,\mu ,a)\) is called compatible, if there is a point \(o\in X\) where all the functions are equal to \(0\), and if there exists for each ball \(B \subset X\) a metric \(d_B\) on \({\Theta }\), such that the following five properties <a href="sect0001.html#osccontrol" class="eqref">1.1.4</a>, <a href="sect0001.html#firstdb" class="eqref">1.1.5</a>, <a href="sect0001.html#monotonedb" class="eqref">1.1.6</a>, <a href="sect0001.html#seconddb" class="eqref">1.1.7</a>, and <a href="sect0001.html#thirddb" class="eqref">1.1.8</a> are satisfied. For every ball \(B \subset X\) </p>
+<div class="equation" id="osccontrol">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{osccontrol} \sup _{x,y\in B}|{\vartheta }(x)-{{\vartheta }(y)}- {\theta }(x)+{{\theta }(y)}| \le d_{B}({\vartheta },{\theta })\, . \end{equation}
+  </div>
+  <span class="equation_label">1.1.4</span>
+</p>
+</div>
+<p> For any two balls \(B_1=B(x_1,R)\), \(B_2= B(x_2,2R)\) in \(X\) with \(x_1\in B_2\) and any \({\vartheta },{\theta }\in {\Theta }\), </p>
+<div class="equation" id="firstdb">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{firstdb} d_{B_2}({\vartheta },{\theta })\le 2^a d_{B_1}({\vartheta },{\theta }) . \end{equation}
+  </div>
+  <span class="equation_label">1.1.5</span>
+</p>
+</div>
+<p> For any two balls \(B_1, B_2\) in \(X\) with \(B_1 \subset B_2\) and any \({\vartheta }, {\theta }\in {\Theta }\) </p>
+<div class="equation" id="monotonedb">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{monotonedb} d_{B_1}({\vartheta },{\theta }) \le d_{B_2}({\vartheta }, {\theta }) \end{equation}
+  </div>
+  <span class="equation_label">1.1.6</span>
+</p>
+</div>
+<p> and for any two balls \(B_1=B(x_1,R)\), \(B_2= B(x_2,2^aR)\) with \(B_1\subset B_2\), and \({\vartheta },{\theta }\in {\Theta }\), </p>
+<div class="equation" id="seconddb">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{seconddb} 2d_{B_1}({\vartheta },{\theta }) \le d_{B_2}({\vartheta },{\theta }) . \end{equation}
+  </div>
+  <span class="equation_label">1.1.7</span>
+</p>
+</div>
+<p> For every ball \(B\) in \(X\) and every \(d_B\)-ball \(\tilde B\) of radius \(2R\) in \({\Theta }\), there is a collection \(\mathcal{B}\) of at most \(2^a\) many \(d_B\)-balls of radius \(R\) covering \(\tilde B\), that is, </p>
+<div class="equation" id="thirddb">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{thirddb} \tilde B\subset \bigcup \mathcal{B}. \end{equation}
+  </div>
+  <span class="equation_label">1.1.8</span>
+</p>
+</div>
+<p>Further, a compatible collection \({\Theta }\) is called cancellative, if for any ball \(B\) in \(X\) of radius \(R\), any Lipschitz function \(\varphi : X\to {\mathbb {C}}\) supported on \(B\), and any \({\vartheta },{\theta }\in {\Theta }\) we have </p>
+<div class="equation" id="eq-vdc-cond">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-vdc-cond} |\int _B e({\vartheta }(x)-{{\theta }(x)}) \varphi (x) d\mu (x)|\le 2^a \mu (B)\| \varphi \| _{\operatorname{\operatorname {Lip}}(B)} (1+d_B({\vartheta },{\theta }))^{-\frac{1}{a}}, \end{equation}
+  </div>
+  <span class="equation_label">1.1.9</span>
+</p>
+</div>
+<p> where \(\| \cdot \| _{\operatorname{\operatorname {Lip}}(B)}\) denotes the inhomogeneous Lipschitz norm on \(B\): </p>
+<div class="displaymath" id="a0000000008">
+  \[  \| \varphi \| _{\operatorname{\operatorname {Lip}}(B)} = \sup _{x \in B} |\varphi (x)| + R \sup _{x,y \in B, x \neq y} \frac{|\varphi (x) - \varphi (y)|}{\rho (x,y)}\, .  \]
+</div>
+<p>A one-sided Calderón–Zygmund kernel \(K\) on the doubling metric measure space \((X, \rho , \mu , a)\) is a measurable function </p>
+<div class="equation" id="eqkernel0">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{eqkernel0} K:X\times X\to \mathbb {C} \end{equation}
+  </div>
+  <span class="equation_label">1.1.10</span>
+</p>
+</div>
+<p> such that for all \(x,y',y\in X\) with \(x\neq y\), we have </p>
+<div class="equation" id="eqkernel-size">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{eqkernel-size} |K(x,y)| \leq \frac{2^{a^3}}{V(x,y)} \end{equation}
+  </div>
+  <span class="equation_label">1.1.11</span>
+</p>
+</div>
+<p> and if \(2\rho (y,y') \leq \rho (x,y)\), then </p>
+<div class="equation" id="eqkernel-y-smooth">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqkernel-y-smooth} |K(x,y) - K(x,y')| \leq \left(\frac{\rho (y,y')}{\rho (x,y)}\right)^{\frac{1}{a}}\frac{2^{a^3}}{V(x,y)}, \end{equation}
+  </div>
+  <span class="equation_label">1.1.12</span>
+</p>
+</div>
+<p> where </p>
+<div class="displaymath" id="a0000000009">
+  \[ V(x,y):=\mu (B(x,\rho (x,y))). \]
+</div>
+<p> Define the maximally truncated non-tangential singular integral \(T_{*}\) associated with \(K\) by </p>
+<div class="equation" id="def-tang-unm-op">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{def-tang-unm-op} T_{*}f(x):=\sup _{R_1 {\lt} R_2} \sup _{\rho (x,x'){\lt}R_1} \left|\int _{R_1{\lt} \rho (x',y) {\lt} R_2} K(x',y) f(y) \,  \mathrm{d}\mu (y) \right|\, . \end{equation}
+  </div>
+  <span class="equation_label">1.1.13</span>
+</p>
+</div>
+<p> We define the generalized Carleson operator \(T\) by </p>
+<div class="equation" id="def-main-op">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{def-main-op} Tf(x):=\sup _{{\vartheta }\in {\Theta }} \sup _{0 {\lt} R_1 {\lt} R_2}\left| \int _{R_1 {\lt} \rho (x,y) {\lt} R_2} K(x,y) f(y) e({\vartheta }(y)) \,  \mathrm{d}\mu (y) \right|\,  , \end{equation}
+  </div>
+  <span class="equation_label">1.1.14</span>
+</p>
+</div>
+<p> where \(e(r)=e^{ir}\). </p>
+<p>Our first main result is the following restricted weak type estimate for \(T\) in the range \(1{\lt}q\le 2\), which by interpolation techniques recovers \(L^q\) estimates for the open range \(1{\lt}q{\lt}2\). </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="metric_carleson">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">1.1.1</span>
+    <span class="theorem_thmtitle">metric space Carleson</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0001.html#metric_carleson">#</a>
+    
+    <a class="icon proof" href="sect0001.html#a0000000010"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/metric_carleson" class="lean_decl">metric_carleson</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p> For all integers \(a \ge 4\) and real numbers \(1{\lt}q\le 2\) the following holds. Let \((X,\rho ,\mu ,a)\) be a doubling metric measure space. Let \({\Theta }\) be a cancellative compatible collection of functions and let \(K\) be a one-sided Calderón–Zygmund kernel on \((X,\rho ,\mu ,a)\). Assume that for every bounded measurable function \(g\) on \(X\) supported on a set of finite measure we have </p>
+<div class="equation" id="nontanbound">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{nontanbound} \| T_{*}g\| _{2} \leq 2^{a^3} \| g\| _2\, , \end{equation}
+  </div>
+  <span class="equation_label">1.1.15</span>
+</p>
+</div>
+<p> where \(T_{*}\) is defined in <a href="sect0001.html#def-tang-unm-op">1.1.13</a>. Then for all Borel sets \(F\) and \(G\) in \(X\) and all Borel functions \(f:X\to {\mathbb {C}}\) with \(|f|\le \mathbf{1}_F\), we have, with \(T\) defined in <a href="sect0001.html#def-main-op">1.1.14</a>, </p>
+<div class="equation" id="resweak">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{resweak} \left|\int _{G} T f \,  \mathrm{d}\mu \right| \leq \frac{2^{443a^3}}{(q-1)^6} \mu (G)^{1-\frac{1}{q}} \mu (F)^{\frac{1}{q}}\,  . \end{equation}
+  </div>
+  <span class="equation_label">1.1.16</span>
+</p>
+</div>
+<p>Theorem 1.1.1</p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000010">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Let Borel sets \(F\), \(G\) in \(X\) be given. Let a Borel function \(f: X \to \mathbb {C}\) with \(f \le \mathbf{1}_F\) be given. </p>
+<p>Let \({\Theta }' \subset {\Theta }\) be a countable dense set. By Lemma <a href="thmfromproplinear.html#continuous_carlesonOperatorIntegrand">3.0.1</a> we have </p>
+<div class="displaymath" id="a0000000011">
+  \[ \sup _{{\vartheta }\in {\Theta }} \sup _{0 {\lt} R_1 {\lt} R_2}\left| \int _{R_1 {\lt} \rho (x,y) {\lt} R_2} K(x,y) f(y) e({\vartheta }(y)) \,  \mathrm{d}\mu (y) \right| \]
+</div>
+<div class="displaymath" id="a0000000012">
+  \[ = \sup _{{\vartheta }\in {\Theta }'} \sup _{0 {\lt} R_1 {\lt} R_2, R_i \in \mathbb {Q}}\left| \int _{R_1 {\lt} \rho (x,y) {\lt} R_2} K(x,y) f(y) e({\vartheta }(y)) \,  \mathrm{d}\mu (y) \right|. \]
+</div>
+<p> Consider an enumeration of \({\Theta }'\) and let \({\Theta }_n\) be the finite set consisting of the first \(n+1\) functions in the enumeration. Then by the monotone convergence theorem </p>
+<div class="displaymath" id="a0000000013">
+  \[ \Big| \int _G Tf \,  \mathrm{d}\mu \Big| \]
+</div>
+<div class="displaymath" id="a0000000014">
+  \[ = \int _G \sup _{{\vartheta }\in {\Theta }'} \sup _{0 {\lt} R_1 {\lt} R_2, R_i \in \mathbb {Q}}\left| \int _{R_1 {\lt} \rho (x,y) {\lt} R_2} K(x,y) f(y) e({\vartheta }(y)) \,  \mathrm{d}\mu (y) \right| \,  \mathrm{d}\mu (x) \]
+</div>
+<div class="displaymath" id="a0000000015">
+  \[ = \lim _{n \to \infty } \int _G \sup _{{\vartheta }\in {\Theta }_n} \sup _{0 {\lt} R_1 {\lt} R_2, R_i \in \mathbb {Q}}\left| \int _{R_1 {\lt} \rho (x,y) {\lt} R_2} K(x,y) f(y) e({\vartheta }(y)) \,  \mathrm{d}\mu (y) \right| \,  \mathrm{d}\mu (x). \]
+</div>
+<p> For each \(n\), let \(Q_n(x)\) be the measurable function specifying the maximizer in the supremum in \({\vartheta }\) in the previous line. It is possible to construct such a measurable function of \(x\), because the function inside the supremum is measurable in \(x\), being a countable supremum of measurable functions, and because \({\Theta }_n\) is finite. (For example one may fix some order on the finite set \({\Theta }_n\) and pick the smallest maximizer with respect to that order. This is a measurable choice function.) Then the previous display becomes </p>
+<div class="displaymath" id="a0000000016">
+  \[ \le \lim _{n \to \infty } \int _G \sup _{0 {\lt} R_1 {\lt} R_2} \left| \int _{R_1 {\lt} \rho (x,y) {\lt} R_2} K(x,y) f(y) e(Q_n(x)(y)) \,  \mathrm{d}\mu (y) \right| \,  \mathrm{d}\mu (x). \]
+</div>
+<div class="displaymath" id="a0000000017">
+  \[ = \lim _{n \to \infty } \int _G T_{Q_n} f \,  \mathrm{d}\mu . \]
+</div>
+<p> It remains to verify the assumptions of Theorem <a href="sect0001.html#linearized_metric_carleson">1.1.2</a>, which when applied here completes the proof. </p>
+<p>The assumptions of Theorem <a href="sect0001.html#metric_carleson">1.1.1</a> and Theorem <a href="sect0001.html#linearized_metric_carleson">1.1.2</a> are the same, with the exception of the assumption <a href="sect0001.html#linnontanbound">1.1.20</a>. The assumption <a href="sect0001.html#linnontanbound">1.1.20</a> however is weaker than the assumption <a href="sect0001.html#nontanbound">1.1.15</a> of Theorem <a href="sect0001.html#metric_carleson">1.1.1</a>. Indeed, setting for fixed \(x, {\vartheta }\) the outer radius \(R_2\) in <a href="sect0001.html#def-tang-unm-op">1.1.13</a> to \(\min \{ R_2', R_Q({\vartheta }, x')\} \), where \(R_2'\) is the outer radius in <a href="sect0001.html#def-lin-star-op">1.1.18</a>, shows that <a href="sect0001.html#def-lin-star-op">1.1.18</a> is smaller than or equal to <a href="sect0001.html#def-tang-unm-op">1.1.13</a>. Thus we can apply Theorem <a href="sect0001.html#linearized_metric_carleson">1.1.2</a>, which completes the proof.</p>
+
+  </div>
+</div>
+<p>In some applications, such as the Walsh-case of Carleson’s theorem, the kernel \(K\) naturally depends also on the modulation functions \({\vartheta }\). The fact that we don’t assume Hölder-continuity of the kernel \(K\) in the first argument allows us to also capture this situation. </p>
+<p>We now state another Theorem with a slightly weaker replacement of the assumption <a href="sect0001.html#nontanbound" class="eqref">1.1.15</a>. It implies the Walsh-case of Carleson’s theorem. For a Borel function \({Q}:X\to {\Theta }\), and \({\vartheta }\in {\Theta }\) and \(x\in X\) define </p>
+<div class="equation" id="a0000000018">
+<p>
+  <div class="equation_content">
+    \begin{equation}  R_{{Q}}({\vartheta },x)=\sup \{ r{\gt}0:d_{B(x,r)}({\vartheta }, {Q}(x)){\lt}1\}  \end{equation}
+  </div>
+  <span class="equation_label">1.1.17</span>
+</p>
+</div>
+<p> and define further </p>
+<div class="equation" id="def-lin-star-op">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{def-lin-star-op} T_{{Q}}^{\vartheta }f(x):=\sup _{R_1{\lt}R_2} \  \sup _{\rho (x,x'){\lt}R_1} \left|\int _{R_1{\lt} \rho (x',y) {\lt} \min \{ R_2, R_{{Q}}({\vartheta },x')\} } K(x',y) f(y) \,  \mathrm{d}\mu (y) \right| \end{equation}
+  </div>
+  <span class="equation_label">1.1.18</span>
+</p>
+</div>
+<p> Define further the linearized generalized Carleson operator \(T_{Q}\) by </p>
+<div class="equation" id="def-lin-main-op">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{def-lin-main-op} T_{Q}f(x):= \sup _{0 {\lt} R_1 {\lt} R_2}\left| \int _{R_1 {\lt} \rho (x,y) {\lt} R_2} K(x,y) f(y) e({Q}(x)(y)) \,  \mathrm{d}\mu (y) \right|\,  , \end{equation}
+  </div>
+  <span class="equation_label">1.1.19</span>
+</p>
+</div>
+<p> where again \(e(r)=e^{ir}\). </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="linearized_metric_carleson">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">1.1.2</span>
+    <span class="theorem_thmtitle">linearised metric Carleson</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0001.html#linearized_metric_carleson">#</a>
+    
+    <a class="icon proof" href="sect0001.html#a0000000019"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/linearized_metric_carleson" class="lean_decl">linearized_metric_carleson</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p> For all integers \(a \ge 4\) and real numbers \(1{\lt}q\le 2\) the following holds. Let \((X,\rho ,\mu ,a)\) be a doubling metric measure space. Let \({\Theta }\) be a cancellative compatible collection of functions. Let \({Q}:X\to {\Theta }\) be a Borel function with finite range. Let \(K\) be a one-sided Calderón–Zygmund kernel on \((X,\rho ,\mu ,a)\). Assume that for every \({\vartheta }\in {\Theta }\) and every bounded measurable function \(g\) on \(X\) supported on a set of finite measure we have </p>
+<div class="equation" id="linnontanbound">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{linnontanbound} \| T_{{Q}}^{\vartheta }g\| _{2} \leq 2^{a^3} \| g\| _2\, , \end{equation}
+  </div>
+  <span class="equation_label">1.1.20</span>
+</p>
+</div>
+<p> where \(T_{{Q}}^{\vartheta }\) is defined in <a href="sect0001.html#def-lin-star-op">1.1.18</a>. Then for all Borel sets \(F\) and \(G\) in \(X\) and all Borel functions \(f:X\to {\mathbb {C}}\) with \(|f|\le \mathbf{1}_F\), we have, with \(T_{Q}\) defined in <a href="sect0001.html#def-lin-main-op">1.1.19</a>, </p>
+<div class="equation" id="linresweak">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{linresweak} \left|\int _{G} T_{Q}f \,  \mathrm{d}\mu \right| \le \frac{2^{443a^3}}{(q-1)^6} \mu (G)^{1-\frac{1}{q}} \mu (F)^{\frac{1}{q}}\,  . \end{equation}
+  </div>
+  <span class="equation_label">1.1.21</span>
+</p>
+</div>
+<p>Theorem 1.1.2</p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000019">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Let Borel sets \(F\), \(G\) in \(X\) with finite measure be given. Let a Borel function \(f: X \to \mathbb {C}\) with \(f \le \mathbf{1}_F\) be given. </p>
+<p>For each \(0 {\lt} R_1,R_2,R\), we define \(T_{R_1,R_2,R}f\) as in <a href="thmfromproplinear.html#TRR">3.0.2</a>. By Lemma <a href="thmfromproplinear.html#continuous_carlesonOperatorIntegrand">3.0.1</a>, \(T_{R_1,R_2,R}f\) is measurable and bounded, and we clearly have for each \(x \in X\) </p>
+<div class="displaymath" id="a0000000020">
+  \[ T_Q f(x) = \lim _{n \to \infty } \sup _{2^{-n} {\lt} R_1 {\lt} R_2 {\lt} 2^n} T_{R_1, R_2, 2^n}f(x). \]
+</div>
+<p> For each \(x\) and all \(f\), the functions \(\sup _{2^{-n} {\lt} R_1 {\lt} R_2 {\lt} 2^n} T_{R_1, R_2, 2^n} f(x)\) are measurable by Lemma <a href="thmfromproplinear.html#continuous_carlesonOperatorIntegrand">3.0.1</a> and form an increasing sequence in \(n\). By the monotone convergence theorem, the claimed estimate <a href="sect0001.html#linresweak">1.1.21</a> then follows from Lemma <a href="thmfromproplinear.html#R_truncation">3.0.2</a>.</p>
+
+  </div>
+</div>
+<div class="remark_thmwrapper theorem-style-definition" id="a0000000021">
+  <div class="remark_thmheading">
+    <span class="remark_thmcaption">
+    Remark
+    </span>
+    <span class="remark_thmlabel">1.1.3</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0001.html#a0000000021">#</a>
+    
+    
+    
+        </div>
+  </div>
+  <div class="remark_thmcontent">
+  <p>The value of the constant factor \(2^{443a^3}\) in Theorems&#160;<a href="sect0001.html#metric_carleson">1.1.1</a> and&#160;<a href="sect0001.html#linearized_metric_carleson">1.1.2</a> is by no means sharp. One source of non-sharpness is our choice to write for readability most constants in the form \(2^{na^3}\) for some explicit constant \(n\). </p>
+<p>An a posteriori byproduct of the Lean formalization of this document is that Theorems&#160;<a href="sect0001.html#metric_carleson">1.1.1</a> and&#160;<a href="sect0001.html#linearized_metric_carleson">1.1.2</a> remain true with \(2^{44a^3}\) instead of \(2^{443a^3}\). This is obtained by changing the parameter \(D\) introduced in&#160;<a href="overviewsection.html#defineD" class="eqref">2.0.1</a> from \(2^{100a^2}\) to \(2^{7a^2}\), checking that exactly the same proof goes through, tracking the constants, and getting \(2^{44a^3}\) in the end. This value is again by no means sharp. In the formalization we define the parameter \(D\) as \(2^{\mathbb {c}a^2}\) and the constants in this blueprint are obtained by setting \(\mathbb {c} = 100\). </p>
+
+  </div>
+</div>
+
+</div> <!--main-text -->
+</div> <!-- content-wrapper -->
+</div> <!-- content -->
+</div> <!-- wrapper -->
+
+<nav class="prev_up_next">
+  <svg  id="showmore-minus" class="icon icon-eye-minus showmore"><use xlink:href="symbol-defs.svg#icon-eye-minus"></use></svg>
+
+  <svg  id="showmore-plus" class="icon icon-eye-plus showmore"><use xlink:href="symbol-defs.svg#icon-eye-plus"></use></svg>
+
+  <a href="index.html" title="A blueprint for the formalization of Carleson’s theorem on convergence of Fourier series"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+</a>
+  <a href="index.html" title="A blueprint for the formalization of Carleson’s theorem on convergence of Fourier series"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+</a>
+  <a href="overviewsection.html" title="Proof of Metric Space Carleson, overview"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+</a>
+</nav>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/plastex.js"></script>
+<script type="text/javascript" src="js/svgxuse.js"></script>
+<script type="text/javascript" src="js/js.cookie.min.js"></script>
+<script type="text/javascript" src="js/showmore.js"></script>
+</body>
+</html>

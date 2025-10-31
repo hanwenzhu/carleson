@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  MathJax = { 
+    tex: {
+		    inlineMath: [['$','$'], ['\\(','\\)']]
+	} }
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<meta name="generator" content="plasTeX" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>A blueprint for the formalization of Carleson’s theorem on convergence of Fourier series: Proof of Metric Space Carleson</title>
+<link rel="next" href="christsection.html" title="Proof of Finitary Carleson" />
+<link rel="prev" href="overviewsection.html" title="Proof of Metric Space Carleson, overview" />
+<link rel="up" href="index.html" title="A blueprint for the formalization of Carleson’s theorem on convergence of Fourier series" />
+<link rel="stylesheet" href="styles/theme-white.css" />
+<link rel="stylesheet" href="styles/amsthm.css" />
+<link rel="stylesheet" href="styles/showmore.css" />
+<link rel="stylesheet" href="styles/blueprint.css" />
+<link rel="stylesheet" href="styles/extra_styles.css" />
+</head>
+
+<body>
+<header>
+<svg  id="toc-toggle" class="icon icon-list-numbered "><use xlink:href="symbol-defs.svg#icon-list-numbered"></use></svg>
+<h1 id="doc_title"><a href="index.html">A blueprint for the formalization of Carleson’s theorem on convergence of Fourier series</a></h1>
+</header>
+
+<div class="wrapper">
+<nav class="toc">
+<ul class="sub-toc-0">
+<li class="">
+  <a href="sect0001.html"><span class="toc_ref">1</span> <span class="toc_entry">Introduction</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0001.html#a0000000006"><span class="toc_ref">1.1</span> <span class="toc_entry">Statement of the metric space Carleson theorems</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="overviewsection.html"><span class="toc_ref">2</span> <span class="toc_entry">Proof of Metric Space Carleson, overview</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="overviewsection.html#global-auxiliary-lemmas"><span class="toc_ref">2.1</span> <span class="toc_entry">Auxiliary lemmas</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class=" active current">
+  <a href="thmfromproplinear.html"><span class="toc_ref">3</span> <span class="toc_entry">Proof of Metric Space Carleson</span></a>
+ </li>
+<li class="">
+  <a href="christsection.html"><span class="toc_ref">4</span> <span class="toc_entry">Proof of Finitary Carleson</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="christsection.html#subsecdyadic"><span class="toc_ref">4.1</span> <span class="toc_entry">Proof of Grid Existence Lemma</span></a>
+ </li>
+<li class="">
+  <a href="christsection.html#subsectiles"><span class="toc_ref">4.2</span> <span class="toc_entry">Proof of Tile Structure Lemma</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="proptopropprop.html"><span class="toc_ref">5</span> <span class="toc_entry">Proof of discrete Carleson</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="proptopropprop.html#subsectilesorg"><span class="toc_ref">5.1</span> <span class="toc_entry">Organisation of the tiles</span></a>
+ </li>
+<li class="">
+  <a href="proptopropprop.html#subsetexcset"><span class="toc_ref">5.2</span> <span class="toc_entry">Proof of the Exceptional Sets Lemma</span></a>
+ </li>
+<li class="">
+  <a href="proptopropprop.html#subsec-lessim-aux"><span class="toc_ref">5.3</span> <span class="toc_entry">Auxiliary lemmas</span></a>
+ </li>
+<li class="">
+  <a href="proptopropprop.html#subsecforest"><span class="toc_ref">5.4</span> <span class="toc_entry">Proof of the Forest Union Lemma</span></a>
+ </li>
+<li class="">
+  <a href="proptopropprop.html#subsecantichain"><span class="toc_ref">5.5</span> <span class="toc_entry">Proof of the Forest Complement Lemma</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="antichainboundary.html"><span class="toc_ref">6</span> <span class="toc_entry">Proof of the Antichain Operator Proposition</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="antichainboundary.html#sec-TT*-T*T"><span class="toc_ref">6.1</span> <span class="toc_entry">The density arguments</span></a>
+ </li>
+<li class="">
+  <a href="antichainboundary.html#sec-tile-operator"><span class="toc_ref">6.2</span> <span class="toc_entry">Proof of the Tile Correlation Lemma</span></a>
+ </li>
+<li class="">
+  <a href="antichainboundary.html#subsec-geolem"><span class="toc_ref">6.3</span> <span class="toc_entry">Proof of the Antichain Tile Count Lemma</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="treesection.html"><span class="toc_ref">7</span> <span class="toc_entry">Proof of the Forest Operator Proposition</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="treesection.html#a0000000022"><span class="toc_ref">7.1</span> <span class="toc_entry">The pointwise tree estimate</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#a0000000023"><span class="toc_ref">7.2</span> <span class="toc_entry">An auxiliary \(L^2\) tree estimate</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#a0000000024"><span class="toc_ref">7.3</span> <span class="toc_entry">The quantitative \(L^2\) tree estimate</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#a0000000025"><span class="toc_ref">7.4</span> <span class="toc_entry">Almost orthogonality of separated trees</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#subsec-big-tiles"><span class="toc_ref">7.5</span> <span class="toc_entry">Proof of the Tiles with large separation Lemma</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#subsec-rest-tiles"><span class="toc_ref">7.6</span> <span class="toc_entry">Proof of The Remaining Tiles Lemma</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#a0000000026"><span class="toc_ref">7.7</span> <span class="toc_entry">Forests</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="liphoel.html"><span class="toc_ref">8</span> <span class="toc_entry">Proof of the Hölder cancellative condition</span></a>
+ </li>
+<li class="">
+  <a href="sec-hlm.html"><span class="toc_ref">9</span> <span class="toc_entry">Proof of Vitali covering and Hardy–Littlewood</span></a>
+ </li>
+<li class="">
+  <a href="sect0002.html"><span class="toc_ref">10</span> <span class="toc_entry">Two-sided Metric Space Carleson</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0002.html#subsec-cotlar"><span class="toc_ref">10.1</span> <span class="toc_entry">Proof of Cotlar’s Inequality</span></a>
+ </li>
+<li class="">
+  <a href="sect0002.html#subsec-CZD"><span class="toc_ref">10.2</span> <span class="toc_entry">Calderón-Zygmund Decomposition</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="sect0003.html"><span class="toc_ref">11</span> <span class="toc_entry">Proof of The Classical Carleson Theorem</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0003.html#10classical"><span class="toc_ref">11.1</span> <span class="toc_entry">The classical Carleson theorem</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10smooth"><span class="toc_ref">11.2</span> <span class="toc_entry">Smooth functions.</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10hilbert"><span class="toc_ref">11.3</span> <span class="toc_entry">The truncated Hilbert transform</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10vandercorput"><span class="toc_ref">11.4</span> <span class="toc_entry">The proof of the van der Corput Lemma</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10projection"><span class="toc_ref">11.5</span> <span class="toc_entry">Partial sums as orthogonal projections</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10difference"><span class="toc_ref">11.6</span> <span class="toc_entry">The error bound</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10carleson"><span class="toc_ref">11.7</span> <span class="toc_entry">Carleson on the real line</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li ><a href="dep_graph_document.html">Dependency graph</a></li>
+</ul>
+</nav>
+
+<div class="content">
+<div class="content-wrapper">
+
+
+<div class="main-text">
+<h1 id="thmfromproplinear">3 Proof of Metric Space Carleson</h1>
+
+<p>In this section we prove <a href="sect0001.html#metric_carleson">Theorem 1.1.1</a> and <a href="sect0001.html#linearized_metric_carleson">Theorem 1.1.2</a>. </p>
+<p>Let \((X, \rho , \mu , a)\) be a doubling metric measure space and \(\Theta \) a cancellative, compatible collection of functions on \(X\). Let \(K\) be a one-sided Calderon-Zygmund kernel. </p>
+<p>We begin by proving some continuity properties of the integrand in <a href="sect0001.html#def-main-op" class="eqref">1.1.14</a>. </p>
+<div class="lemma_thmwrapper theorem-style-plain" id="continuous_carlesonOperatorIntegrand">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">3.0.1</span>
+    <span class="lemma_thmtitle">int continuous</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="thmfromproplinear.html#continuous_carlesonOperatorIntegrand">#</a>
+    
+    <a class="icon proof" href="thmfromproplinear.html#a0000000103"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/continuous_carlesonOperatorIntegrand" class="lean_decl">continuous_carlesonOperatorIntegrand</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p> Let \(f\) be a measurable function with \(|f| \le 1\). Then the function </p>
+<div class="displaymath" id="a0000000104">
+  \[ G: X \times \Theta \times (0,\infty ) \times (0, \infty ) \to \mathbb {C} \]
+</div>
+<div class="displaymath" id="a0000000105">
+  \[ G(x, {\vartheta }, R_1, R_2) := \int _{R_1 {\lt} \rho (x,y) {\lt} R_2} K(x,y) f(y) e({\vartheta }(y)) \,  \mathrm{d}\mu (y) \]
+</div>
+<p> is continuous in \({\vartheta }\) for fixed \(x, R_1, R_2\). It is right-continuous in \(R_1\) for fixed \(x, \vartheta , R_2\) and left-continuous in \(R_2\) for fixed \(x, \vartheta , R_1\). Finally, it is measurable in \(x\) and bounded for fixed \(\vartheta , R_1, R_2\).</p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000103">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Measurability in \(x\) follows from joint measurability of </p>
+<div class="displaymath" id="a0000000106">
+  \[ K(x,y) \mathbf{1}_{B(x,R_2) \setminus B(x,R_1)}(y) \]
+</div>
+<p> in \(x\) and \(y\) and (part of the proof of) Fubini’s theorem. </p>
+<p>(Partial) continuity in \(R_1\) and \(R_2\) is also a standard lemma in measure theory. It follows for example by splitting the integrand as \(F_1 - F_{-1} + iF_i - iF_{-i}\) for positive, disjointly supported functions \(F_{-}\) and applying the monotone convergence theorem to each summand. </p>
+<p>For continuity in \({\vartheta }\) note that </p>
+<div class="displaymath" id="a0000000107">
+  \[ |G(x, {\vartheta }, R_1, R_2) - G(x, {\vartheta }', R_1, R_2)| \]
+</div>
+<div class="displaymath" id="a0000000108">
+  \[ = \left| \int _{R_1 {\lt} \rho (x,y) {\lt} R_2} K(x,y) f(y) (e({\vartheta }(y)) - e({\vartheta }'(y))) \,  \mathrm{d}\mu (y) \right| \]
+</div>
+<div class="displaymath" id="a0000000109">
+  \[ \le \int _{R_1 {\lt} \rho (x,y) {\lt} R_2} |K(x,y)| |f(y)| |e({\vartheta }(y) - {\vartheta }'(y) - {\vartheta }(o) + {\vartheta }'(o)) - 1| \,  \mathrm{d}\mu (y). \]
+</div>
+<p> By \(1\)-Lipschitz continuity of \(e^{ix}\), the property <a href="sect0001.html#osccontrol">1.1.4</a> of the metrics \(d\), the kernel upper bound <a href="sect0001.html#eqkernel-size">1.1.11</a> and \(|f| \le 1\) this is </p>
+<div class="displaymath" id="a0000000110">
+  \[ \le \mu (B(x, R_2)) \sup _{R_1 {\lt} \rho (x,y) {\lt} R_2} \frac{2^{a^3}}{V(x,y)} d_{B(x,\rho (o,x)+R_2)}(\vartheta , \vartheta '). \]
+</div>
+<p> If \(R_1 {\lt} \rho (x,y) {\lt} R_2\) then there exists \(n\) with \(B(x,R_2) \subset B(x, 2^n \rho (x,y))\) and \(2^n \le 2 R_2/R_1\). Hence, by the doubling property <a href="sect0001.html#doublingx">1.1.2</a>, </p>
+<div class="displaymath" id="a0000000111">
+  \[ V(x,y) = \mu (B(x, \rho (x,y))) \ge 2^{-an} \mu (B(x, R_2)) \ge (2R_2 / R_1)^{-a} \mu (B(x, R_2)). \]
+</div>
+<p> Hence </p>
+<div class="displaymath" id="a0000000112">
+  \[ |G(x, {\vartheta }, R_1, R_2) - G(x, {\vartheta }', R_1, R_2)| \le 2^{a^3} \Big(\frac{2R_2}{R_1}\Big)^a d_{B(x, \rho (o,x)+R_2)}({\vartheta }, {\vartheta }'). \]
+</div>
+<p> Since the topology on \({\Theta }\) is the one induced by any of the metrics \(d_B\), continuity follows. </p>
+<p>Finally, for boundedness as a function of \(x\) note that we also have by a similar computation using \(|e({\vartheta })|=1\) </p>
+<div class="displaymath" id="a0000000113">
+  \[ |G(x, {\vartheta }, R_1, R_2)| \le 2^{a^3} \Big(\frac{2R_2}{R_1}\Big)^a. \]
+</div>
+
+  </div>
+</div>
+<p>We now prove Theorem <a href="sect0001.html#metric_carleson">1.1.1</a> using Theorem <a href="sect0001.html#linearized_metric_carleson">1.1.2</a>. </p>
+<p>We continue with the proof of Theorem <a href="sect0001.html#linearized_metric_carleson">1.1.2</a>, via a series of reductions to simpler lemmas. </p>
+<p>Let a measurable function \(Q\) with finite range be given. </p>
+<div class="lemma_thmwrapper theorem-style-plain" id="R_truncation">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">3.0.2</span>
+    <span class="lemma_thmtitle">R truncation</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="thmfromproplinear.html#R_truncation">#</a>
+    
+    <a class="icon proof" href="thmfromproplinear.html#a0000000114"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/R_truncation" class="lean_decl">R_truncation</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p> Let \(F\), \(G\) be Borel sets in \(X\). Let \(f:X\to {\mathbb {C}}\) be a Borel function with \(|f|\le 1_F\). Then for all \(R\in 2^{\mathbb {N}}\) we have </p>
+<div class="equation" id="Rcut">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{Rcut} \int \mathbf{1}_G \sup _{1/R{\lt}R_1{\lt}R_2{\lt}R} |T_{R_1,R_2,R} f(x)|\,  d\mu (x) \le \frac{2^{443a^3}}{(q-1)^6} \mu (G)^{1-\frac{1}{q}} \mu (F)^{\frac{1}{q}}, \end{equation}
+  </div>
+  <span class="equation_label">3.0.1</span>
+</p>
+</div>
+<p> where </p>
+<div class="equation" id="TRR">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{TRR} T_{R_1,R_2,R} f(x)= \mathbf{1}_{B(o,R)}(x) \int _{R_1 {\lt} \rho (x,y) {\lt} R_2} K(x,y) f(y) e(Q(x)(y)) \,  \mathrm{d}\mu (y) . \end{equation}
+  </div>
+  <span class="equation_label">3.0.2</span>
+</p>
+</div>
+<p>Lemma 3.0.2.</p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000114">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Let \(F,G,f\) as in the lemma be given. Let \(R\in 2^{\mathbb {N}}\) be given. By replacing \(G\) with \(G\cap B(o,R)\) if necessary, a replacement that does not change the conclusion of the Lemma <a href="thmfromproplinear.html#R_truncation">3.0.2</a>, it suffices to show <a href="thmfromproplinear.html#Rcut">3.0.1</a> under the assumption that \(G\) is contained in \(B(o,R)\) and thus bounded. We make this assumption. For every \(x\in G\) and \(R_2 {\lt} R\), the domain of integration in <a href="thmfromproplinear.html#TRR">3.0.2</a> is contained in \(B(o,2R)\). By replacing \(F\) with \(F\cap B(o,2R)\) if necessary, and correspondingly restricting \(f\) to \(B(o, 2R)\), it suffices to show <a href="thmfromproplinear.html#Rcut">3.0.1</a> under the assumption that \(F\) is contained in \(B(o,2R)\) and thus bounded. We make this assumption. </p>
+<p>Using the definition <a href="overviewsection.html#defks">2.0.5</a> of \(K_s\) and the partition of unity <a href="overviewsection.html#eq-psisum">2.0.4</a>, we observe that for fixed \(R_1{\lt}R_2\) we have </p>
+<div class="equation" id="KKs">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{KKs} K(x,y)\mathbf{1}_{R_1{\lt}\rho (x,y){\lt}R_2}=\sum _{s=s_1-2}^{s_2+2} K_s(x,y) \mathbf{1}_{R_1{\lt}\rho (x,y){\lt}R_2}, \end{equation}
+  </div>
+  <span class="equation_label">3.0.3</span>
+</p>
+</div>
+<p> where \(s_1=\lfloor \log _D 2R_1\rfloor +3\) and \(s_2=\lceil \log _D 4R_2\rceil -2\). To obtain the identity <a href="thmfromproplinear.html#KKs">3.0.3</a>, we have used that on the set where \(R_1{\lt}\rho (x,y){\lt}R_2\) the kernels \(K_s\) vanish unless \(s\) is inside the interval of summation in <a href="thmfromproplinear.html#KKs">3.0.3</a>. Similarly, we observe </p>
+<div class="equation" id="KsrhoKs">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{KsrhoKs} \sum _{s=s_1}^{s_2} K_s(x,y) \mathbf{1}_{R_1{\lt}\rho (x,y){\lt}R_2} = \sum _{s=s_1}^{s_2} K_s(x,y), \end{equation}
+  </div>
+  <span class="equation_label">3.0.4</span>
+</p>
+</div>
+<p> because on the support of \(K_s\) with \(s_1\le s\le s_2\) we have necessarily \(R_1{\lt}\rho (x,y){\lt}R_2\). We thus express <a href="thmfromproplinear.html#TRR">3.0.2</a> as the sum of </p>
+<div class="equation" id="middles">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{middles} T_{s_1,s_2}f(x):=\sum _{s_1 \le s\le s_2} \int K_s(x,y) f(y) e(Q(x)(y)) \,  \mathrm{d}\mu (y) \end{equation}
+  </div>
+  <span class="equation_label">3.0.5</span>
+</p>
+</div>
+<p> and </p>
+<div class="equation" id="boundarys">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{boundarys} \sum _{s=s_1-2,s_1-1, s_2+1, s_2+2} \int _{R_1 {\lt} \rho (x,y) {\lt} R_2} K_s(x,y) f(y) e(Q(x)(y)) \,  \mathrm{d}\mu (y), \end{equation}
+  </div>
+  <span class="equation_label">3.0.6</span>
+</p>
+</div>
+<p>We apply the triangle inequality and estimate <a href="thmfromproplinear.html#Rcut">3.0.1</a> separately with \(T_{R_1,R_2,R}\) replaced by <a href="thmfromproplinear.html#middles">3.0.5</a> and by <a href="thmfromproplinear.html#boundarys">3.0.6</a>. To handle the case <a href="thmfromproplinear.html#middles">3.0.5</a>, we employ <a href="thmfromproplinear.html#S_truncation">3.0.3</a>. Here, we utilize the fact that if \(\frac1R\le R_1\le R_2\le R\), then \(s_1\) and \(s_2\) as in <a href="thmfromproplinear.html#middles">3.0.5</a> are in an interval \([-S,S]\) for some sufficiently large \(S\) depending on \(R\). To handle the case <a href="thmfromproplinear.html#boundarys">3.0.6</a>, we use the triangle inequality and the properties <a href="overviewsection.html#supp-Ks">2.1.2</a>, <a href="overviewsection.html#eq-Ks-size">2.1.3</a> of \(K_s\) and \(|f| \le \mathbf{1}_F\) to obtain for arbitrary \(s\) the inequality </p>
+<div class="displaymath" id="a0000000115">
+  \begin{multline}  \left|\int _{R_1 {\lt} \rho (x,y) {\lt} R_2} K_s(x,y) f(y) e(Q(x)(y)) \,  \mathrm{d}\mu (y)\right|\\ \leq \frac{2^{102 a^3}}{\mu (B(x, D^{s}))} \int _{B(x, D^s)} \mathbf{1}_F(y) \,  \mathrm{d}\mu (y) \leq 2^{102 a^3} M\mathbf{1}_F(x), \end{multline}
+</div>
+<p> where \(M\mathbf{1}_F\) is as defined in <a href="overviewsection.html#Finset.measure_biUnion_le_lintegral">2.0.6</a>. Now the left-hand side of <a href="thmfromproplinear.html#Rcut">3.0.1</a>, with \(T_{R_1,R_2,R}\) replaced by <a href="thmfromproplinear.html#boundarys">3.0.6</a>, can be estimated using Hölder’s inequality and <a href="overviewsection.html#Finset.measure_biUnion_le_lintegral">2.0.6</a> by </p>
+<div class="displaymath" id="a0000000116">
+  \[ 2^{102a^3+2}\int \mathbf{1}_{G}(x) M\mathbf{1}_F(x)\,  d\mu (x) \le \frac{2^{102a^3+4a+3}q}{q-1}\mu (G)^{1-\frac{1}{q}} \mu (F)^{\frac{1}{q}}\, . \]
+</div>
+<p> Summing the contributions from <a href="thmfromproplinear.html#middles">3.0.5</a> and <a href="thmfromproplinear.html#boundarys">3.0.6</a> completes the proof.</p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="S_truncation">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">3.0.3</span>
+    <span class="lemma_thmtitle">S truncation</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="thmfromproplinear.html#S_truncation">#</a>
+    
+    <a class="icon proof" href="thmfromproplinear.html#a0000000117"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/S_truncation" class="lean_decl">S_truncation</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p> Let \(F\), \(G\) be bounded Borel sets in \(X\). Let \(f:X\to {\mathbb {C}}\) be a Borel function with \(|f|\le 1_F\). Then for all \(S\in {\mathbb {Z}}\) we have </p>
+<div class="equation" id="Scut">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{Scut} \int \mathbf{1}_G(x) \sup _{-S\le s_1\le s_2\le S} |T_{s_1,s_2} f(x)|\,  d\mu (x) \le \frac{2^{442a^3+2}}{(q-1)^6} \mu (G)^{1-\frac{1}{q}} \mu (F)^{\frac{1}{q}}, \end{equation}
+  </div>
+  <span class="equation_label">3.0.9</span>
+</p>
+</div>
+<p> where </p>
+<div class="equation" id="Tss">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{Tss} T_{s_1,s_2} f(x) = \sum _{s_1\le s \le s_2} \int _X K_s(x,y) f(y) e(Q(x)(y)) \,  \mathrm{d}\mu (y). \end{equation}
+  </div>
+  <span class="equation_label">3.0.10</span>
+</p>
+</div>
+<p>Lemma 3.0.3. <span class="ttfamily">B</span> is the blueprint’s <span class="ttfamily">S</span>.</p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000117">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>We reduce <a href="thmfromproplinear.html#S_truncation">3.0.3</a> to <a href="thmfromproplinear.html#linearized_truncation">3.0.4</a>. For each \(x\), let \(\sigma _1(x)\) be the minimal element \(s'\in [-S,S]\) such that </p>
+<div class="displaymath" id="a0000000118">
+  \[ \max _{s'\le s_2\le S} |T_{s',s_2} f(x)| = \max _{-S\le s_1\le s_2\le S} |T_{s_1,s_2} f(x)| =: T_{1,x}. \]
+</div>
+<p> Similarly, let \({\sigma }_2(x)\) be the minimal element \(s''\in [-S,S]\) such that </p>
+<div class="displaymath" id="a0000000119">
+  \[ |T_{\sigma _2(x), s''} f(x)| = T_{1,x}\, . \]
+</div>
+<p> With these choices, and noting that with the definition of \(T_{2, \sigma _1, \sigma _2}\) from <a href="thmfromproplinear.html#middles1">3.0.12</a> </p>
+<div class="displaymath" id="a0000000120">
+  \begin{equation*}  T_{\sigma _1(x),\sigma _2(x)} f(x)=T_{2,\sigma _1,\sigma _2} f(x), \end{equation*}
+</div>
+<p> we conclude that the left-hand side of <a href="thmfromproplinear.html#Scut">3.0.9</a> and <a href="thmfromproplinear.html#Sqlin">3.0.11</a> are equal. Therefore, <a href="thmfromproplinear.html#S_truncation">3.0.3</a> follows from <a href="thmfromproplinear.html#linearized_truncation">3.0.4</a>.</p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="linearized_truncation">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">3.0.4</span>
+    <span class="lemma_thmtitle">linearized truncation</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="thmfromproplinear.html#linearized_truncation">#</a>
+    
+    <a class="icon proof" href="thmfromproplinear.html#a0000000121"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/linearized_truncation" class="lean_decl">linearized_truncation</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p> Let \(\sigma _1,\sigma _2\colon X\to \mathbb {Z}\) be measurable functions with finite range and \(\sigma _1\leq \sigma _2\). Then we have </p>
+<div class="equation" id="Sqlin">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{Sqlin} \int \mathbf{1}_{G}(x) \left| {T}_{2,\sigma _1,\sigma _2}f(x)\right|\,  d\mu (x) \le \frac{2^{442a^3+2}}{(q-1)^6} \mu (G)^{1-\frac{1}{q}} \mu (F)^{\frac{1}{q}}, \end{equation}
+  </div>
+  <span class="equation_label">3.0.11</span>
+</p>
+</div>
+<p> with </p>
+<div class="equation" id="middles1">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{middles1} {T}_{2,\sigma _1,\sigma _2}f(x)=\sum _{\sigma _1(x) \le s\le \sigma _2(x)} \int K_s(x,y) f(y) e({Q}(x)(y)) \,  \mathrm{d}\mu (y)\, . \end{equation}
+  </div>
+  <span class="equation_label">3.0.12</span>
+</p>
+</div>
+<p>Lemma 3.0.4.</p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000121">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Fix \(\sigma _1\), \(\sigma _2\) and \({Q}\) as in the lemma. Applying <a href="overviewsection.html#finitary_carleson">2.0.1</a> recursively, we obtain a sequence of sets \(G_n\) with \(G_0=G\) and, for each \(n\ge 0\), \(G_{n+1} \subset G_n\), \(\mu (G_{n})\le 2^{-n} \mu (G)\) and </p>
+<div class="displaymath" id="a0000000122">
+  \begin{equation*}  \int \mathbf{1}_{G_{n}\setminus G_{n+1}}(x) \left| {T}_{2,\sigma _1,\sigma _2} f(x) \right|\,  d\mu (x) \end{equation*}
+</div>
+<div class="equation" id="a0000000123">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \le \frac{2^{442a^3}}{(q-1)^5} \mu (G_n)^{1 - \frac{1}{q}} \mu (F)^{\frac{1}{q}}. \end{equation}
+  </div>
+  <span class="equation_label">3.0.13</span>
+</p>
+</div>
+<p> Adding the first \(n\) of these inequalities, we obtain by bounding a geometric series </p>
+<div class="equation" id="Sqcut2">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{Sqcut2} \int \mathbf{1}_{G\setminus G_{n}}(x) \left| {T}_{2,\sigma _1,\sigma _2}f(x) \right|\,  d\mu (x) \le \frac{2^{442a^3+2}}{(q-1)^6} \mu (G)^{1-\frac{1}{q}} \mu (F)^{\frac{1}{q}}. \end{equation}
+  </div>
+  <span class="equation_label">3.0.14</span>
+</p>
+</div>
+<p> As the integrand is non-negative and non-decreasing in \(n\), we obtain by the monotone convergence theorem </p>
+<div class="equation" id="Sqcut3">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{Sqcut3} \int \mathbf{1}_{G}(x) \left| {T}_{2,\sigma _1,\sigma _2}f(x) \right|\,  d\mu (x) \le \frac{2^{442a^3+2}}{(q-1)^6} \mu (G)^{1-\frac{1}{q}} \mu (F)^{\frac{1}{q}}. \end{equation}
+  </div>
+  <span class="equation_label">3.0.15</span>
+</p>
+</div>
+<p> This completes the proof of <a href="thmfromproplinear.html#linearized_truncation">3.0.4</a> and thus <a href="sect0001.html#metric_carleson">1.1.1</a>.</p>
+
+  </div>
+</div>
+
+</div> <!--main-text -->
+</div> <!-- content-wrapper -->
+</div> <!-- content -->
+</div> <!-- wrapper -->
+
+<nav class="prev_up_next">
+  <svg  id="showmore-minus" class="icon icon-eye-minus showmore"><use xlink:href="symbol-defs.svg#icon-eye-minus"></use></svg>
+
+  <svg  id="showmore-plus" class="icon icon-eye-plus showmore"><use xlink:href="symbol-defs.svg#icon-eye-plus"></use></svg>
+
+  <a href="overviewsection.html" title="Proof of Metric Space Carleson, overview"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+</a>
+  <a href="index.html" title="A blueprint for the formalization of Carleson’s theorem on convergence of Fourier series"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+</a>
+  <a href="christsection.html" title="Proof of Finitary Carleson"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+</a>
+</nav>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/plastex.js"></script>
+<script type="text/javascript" src="js/svgxuse.js"></script>
+<script type="text/javascript" src="js/js.cookie.min.js"></script>
+<script type="text/javascript" src="js/showmore.js"></script>
+</body>
+</html>

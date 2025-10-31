@@ -1,0 +1,1832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  MathJax = { 
+    tex: {
+		    inlineMath: [['$','$'], ['\\(','\\)']]
+	} }
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<meta name="generator" content="plasTeX" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>A blueprint for the formalization of Carleson’s theorem on convergence of Fourier series: Proof of Metric Space Carleson, overview</title>
+<link rel="next" href="thmfromproplinear.html" title="Proof of Metric Space Carleson" />
+<link rel="prev" href="sect0001.html" title="Introduction" />
+<link rel="up" href="index.html" title="A blueprint for the formalization of Carleson’s theorem on convergence of Fourier series" />
+<link rel="stylesheet" href="styles/theme-white.css" />
+<link rel="stylesheet" href="styles/amsthm.css" />
+<link rel="stylesheet" href="styles/showmore.css" />
+<link rel="stylesheet" href="styles/blueprint.css" />
+<link rel="stylesheet" href="styles/extra_styles.css" />
+</head>
+
+<body>
+<header>
+<svg  id="toc-toggle" class="icon icon-list-numbered "><use xlink:href="symbol-defs.svg#icon-list-numbered"></use></svg>
+<h1 id="doc_title"><a href="index.html">A blueprint for the formalization of Carleson’s theorem on convergence of Fourier series</a></h1>
+</header>
+
+<div class="wrapper">
+<nav class="toc">
+<ul class="sub-toc-0">
+<li class="">
+  <a href="sect0001.html"><span class="toc_ref">1</span> <span class="toc_entry">Introduction</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0001.html#a0000000006"><span class="toc_ref">1.1</span> <span class="toc_entry">Statement of the metric space Carleson theorems</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class=" active current">
+  <a href="overviewsection.html"><span class="toc_ref">2</span> <span class="toc_entry">Proof of Metric Space Carleson, overview</span></a>
+  <span class="expand-toc">▼</span>
+  <ul class="sub-toc-1 active">
+     <li class="">
+  <a href="overviewsection.html#global-auxiliary-lemmas"><span class="toc_ref">2.1</span> <span class="toc_entry">Auxiliary lemmas</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="thmfromproplinear.html"><span class="toc_ref">3</span> <span class="toc_entry">Proof of Metric Space Carleson</span></a>
+ </li>
+<li class="">
+  <a href="christsection.html"><span class="toc_ref">4</span> <span class="toc_entry">Proof of Finitary Carleson</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="christsection.html#subsecdyadic"><span class="toc_ref">4.1</span> <span class="toc_entry">Proof of Grid Existence Lemma</span></a>
+ </li>
+<li class="">
+  <a href="christsection.html#subsectiles"><span class="toc_ref">4.2</span> <span class="toc_entry">Proof of Tile Structure Lemma</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="proptopropprop.html"><span class="toc_ref">5</span> <span class="toc_entry">Proof of discrete Carleson</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="proptopropprop.html#subsectilesorg"><span class="toc_ref">5.1</span> <span class="toc_entry">Organisation of the tiles</span></a>
+ </li>
+<li class="">
+  <a href="proptopropprop.html#subsetexcset"><span class="toc_ref">5.2</span> <span class="toc_entry">Proof of the Exceptional Sets Lemma</span></a>
+ </li>
+<li class="">
+  <a href="proptopropprop.html#subsec-lessim-aux"><span class="toc_ref">5.3</span> <span class="toc_entry">Auxiliary lemmas</span></a>
+ </li>
+<li class="">
+  <a href="proptopropprop.html#subsecforest"><span class="toc_ref">5.4</span> <span class="toc_entry">Proof of the Forest Union Lemma</span></a>
+ </li>
+<li class="">
+  <a href="proptopropprop.html#subsecantichain"><span class="toc_ref">5.5</span> <span class="toc_entry">Proof of the Forest Complement Lemma</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="antichainboundary.html"><span class="toc_ref">6</span> <span class="toc_entry">Proof of the Antichain Operator Proposition</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="antichainboundary.html#sec-TT*-T*T"><span class="toc_ref">6.1</span> <span class="toc_entry">The density arguments</span></a>
+ </li>
+<li class="">
+  <a href="antichainboundary.html#sec-tile-operator"><span class="toc_ref">6.2</span> <span class="toc_entry">Proof of the Tile Correlation Lemma</span></a>
+ </li>
+<li class="">
+  <a href="antichainboundary.html#subsec-geolem"><span class="toc_ref">6.3</span> <span class="toc_entry">Proof of the Antichain Tile Count Lemma</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="treesection.html"><span class="toc_ref">7</span> <span class="toc_entry">Proof of the Forest Operator Proposition</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="treesection.html#a0000000022"><span class="toc_ref">7.1</span> <span class="toc_entry">The pointwise tree estimate</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#a0000000023"><span class="toc_ref">7.2</span> <span class="toc_entry">An auxiliary \(L^2\) tree estimate</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#a0000000024"><span class="toc_ref">7.3</span> <span class="toc_entry">The quantitative \(L^2\) tree estimate</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#a0000000025"><span class="toc_ref">7.4</span> <span class="toc_entry">Almost orthogonality of separated trees</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#subsec-big-tiles"><span class="toc_ref">7.5</span> <span class="toc_entry">Proof of the Tiles with large separation Lemma</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#subsec-rest-tiles"><span class="toc_ref">7.6</span> <span class="toc_entry">Proof of The Remaining Tiles Lemma</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#a0000000026"><span class="toc_ref">7.7</span> <span class="toc_entry">Forests</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="liphoel.html"><span class="toc_ref">8</span> <span class="toc_entry">Proof of the Hölder cancellative condition</span></a>
+ </li>
+<li class="">
+  <a href="sec-hlm.html"><span class="toc_ref">9</span> <span class="toc_entry">Proof of Vitali covering and Hardy–Littlewood</span></a>
+ </li>
+<li class="">
+  <a href="sect0002.html"><span class="toc_ref">10</span> <span class="toc_entry">Two-sided Metric Space Carleson</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0002.html#subsec-cotlar"><span class="toc_ref">10.1</span> <span class="toc_entry">Proof of Cotlar’s Inequality</span></a>
+ </li>
+<li class="">
+  <a href="sect0002.html#subsec-CZD"><span class="toc_ref">10.2</span> <span class="toc_entry">Calderón-Zygmund Decomposition</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="sect0003.html"><span class="toc_ref">11</span> <span class="toc_entry">Proof of The Classical Carleson Theorem</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0003.html#10classical"><span class="toc_ref">11.1</span> <span class="toc_entry">The classical Carleson theorem</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10smooth"><span class="toc_ref">11.2</span> <span class="toc_entry">Smooth functions.</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10hilbert"><span class="toc_ref">11.3</span> <span class="toc_entry">The truncated Hilbert transform</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10vandercorput"><span class="toc_ref">11.4</span> <span class="toc_entry">The proof of the van der Corput Lemma</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10projection"><span class="toc_ref">11.5</span> <span class="toc_entry">Partial sums as orthogonal projections</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10difference"><span class="toc_ref">11.6</span> <span class="toc_entry">The error bound</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10carleson"><span class="toc_ref">11.7</span> <span class="toc_entry">Carleson on the real line</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li ><a href="dep_graph_document.html">Dependency graph</a></li>
+</ul>
+</nav>
+
+<div class="content">
+<div class="content-wrapper">
+
+
+<div class="main-text">
+<h1 id="overviewsection">2 Proof of Metric Space Carleson, overview</h1>
+
+<p>This section organizes the proof of <a href="sect0001.html#metric_carleson">Theorem 1.1.1</a> into sections <a href="thmfromproplinear.html">3</a>, <a href="christsection.html">4</a>, <a href="proptopropprop.html">5</a>, <a href="antichainboundary.html">6</a>, <a href="treesection.html">7</a>, <a href="liphoel.html">8</a>, and <a href="sec-hlm.html">9</a>. These sections are mutually independent except for referring to the statements formulated in the present section. <a href="thmfromproplinear.html">Section 3</a> proves the main <a href="sect0001.html#metric_carleson">Theorem 1.1.1</a>, while sections <a href="christsection.html">4</a>, <a href="proptopropprop.html">5</a>, <a href="antichainboundary.html">6</a>, <a href="treesection.html">7</a>, <a href="liphoel.html">8</a>, and <a href="sec-hlm.html">9</a> each prove one proposition that is stated in the present section. The present section also introduces all definitions used across these sections. </p>
+<p><a href="overviewsection.html#global-auxiliary-lemmas">Section 2.1</a> proves some auxiliary lemmas that are used in more than one of the sections 3-9. </p>
+<p>Let \(a, q\) be given as in <a href="sect0001.html#metric_carleson">Theorem 1.1.1</a>. </p>
+<p>Define </p>
+<div class="equation" id="defineD">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{defineD} D:= 2^{100 a^2}\,  , \end{equation}
+  </div>
+  <span class="equation_label">2.0.1</span>
+</p>
+</div>
+<div class="equation" id="definekappa">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{definekappa} \kappa := 2^{-10a}\, , \end{equation}
+  </div>
+  <span class="equation_label">2.0.2</span>
+</p>
+</div>
+<p> and </p>
+<div class="equation" id="defineZ">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{defineZ} Z := 2^{12a}\, . \end{equation}
+  </div>
+  <span class="equation_label">2.0.3</span>
+</p>
+</div>
+<p> Let \(\psi :{\mathbb {R}}\to {\mathbb {R}}\) be the unique compactly supported, piece-wise linear, continuous function with corners precisely at \(\frac1{4D}\), \(\frac1{2D}\), \(\frac14\) and \(\frac12\) which satisfies </p>
+<div class="equation" id="eq-psisum">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-psisum} \sum _{s\in \mathbb {Z}} \psi (D^{-s}x)=1 \end{equation}
+  </div>
+  <span class="equation_label">2.0.4</span>
+</p>
+</div>
+<p> for all \(x{\gt}0\). This function vanishes outside \([\frac1{4D},\frac12]\), is constant one on \([\frac1{2D},\frac14]\), and is Lipschitz with constant \(4D\). </p>
+<p>Let a doubling metric measure space \((X,\rho ,\mu , a)\) be given. Let a cancellative compatible collection \({\Theta }\) of functions on \(X\) be given. Let \(o\in X\) be a point such that \({\vartheta }(o)=0\) for all \({\vartheta }\in {\Theta }\). </p>
+<p>Let a Borel measurable function \({Q}:X\to {\Theta }\) with finite range be given. Let a one-sided Calderón–Zygmund kernel \(K\) on \(X\) be given so that for every \({\vartheta }\in {\Theta }\) the operator \(T_{{Q}}^{{\vartheta }}\) defined in <a href="sect0001.html#def-lin-star-op" class="eqref">1.1.18</a> satisfies <a href="sect0001.html#linnontanbound" class="eqref">1.1.20</a>. </p>
+<p>For \(s\in \mathbb {Z}\), we define </p>
+<div class="equation" id="defks">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{defks} K_s(x,y):=K(x,y)\psi (D^{-s}\rho (x,y))\, , \end{equation}
+  </div>
+  <span class="equation_label">2.0.5</span>
+</p>
+</div>
+<p> so that for each \(x, y \in X\) with \(x\neq y\) we have </p>
+<div class="displaymath" id="a0000000027">
+  \[ K(x,y)=\sum _{s\in \mathbb {Z}}K_s(x,y). \]
+</div>
+<p>In <a href="thmfromproplinear.html">Section 3</a>, we prove <a href="sect0001.html#metric_carleson">Theorem 1.1.1</a> and <a href="sect0001.html#linearized_metric_carleson">Theorem 1.1.2</a> from the finitary version, <a href="overviewsection.html#finitary_carleson">Proposition 2.0.1</a> below. Recall that a function from a measure space to a finite set is measurable if the pre-image of each of the elements in the range is measurable. </p>
+<div class="proposition_thmwrapper theorem-style-plain" id="finitary_carleson">
+  <div class="proposition_thmheading">
+    <span class="proposition_thmcaption">
+    Proposition
+    </span>
+    <span class="proposition_thmlabel">2.0.1</span>
+    <span class="proposition_thmtitle">finitary Carleson</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="overviewsection.html#finitary_carleson">#</a>
+    
+    <a class="icon proof" href="overviewsection.html#a0000000028"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/finitary_carleson" class="lean_decl">finitary_carleson</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="proposition_thmcontent">
+  <p> Let \({\sigma _1},\sigma _2\colon X\to \mathbb {Z}\) be measurable functions with finite range and \({\sigma _1}\leq \sigma _2\). Let \(F,G\) be bounded Borel sets in \(X\). Then there is a Borel set \(G'\) in \(X\) with \(2\mu (G')\leq \mu (G)\) such that for all Borel functions \(f:X\to {\mathbb {C}}\) with \(|f|\le \mathbf{1}_F\). </p>
+<div class="displaymath" id="a0000000029">
+  \begin{equation*}  \int _{G \setminus G'} \left|\sum _{s={\sigma _1}(x)}^{{\sigma _2}(x)} \int K_s(x,y) f(y) e({Q}(x)(y)) \,  \mathrm{d}\mu (y) \right| \mathrm{d}\mu (x) \end{equation*}
+</div>
+<div class="equation" id="eq-linearized">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-linearized} \le \frac{2^{442a^3}}{(q-1)^5} \mu (G)^{1-\frac{1}{q}} \mu (F)^{\frac1q}\, . \end{equation}
+  </div>
+  <span class="equation_label">2.0.6</span>
+</p>
+</div>
+<p>Proposition 2.0.1</p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000028">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>We now estimate with <a href="christsection.html#tile_sum_operator">4.0.3</a> and <a href="overviewsection.html#discrete_carleson">2.0.2</a> </p>
+<div class="equation" id="a0000000030">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \int _{G \setminus G'} \left|\sum _{s={\sigma _1}(x)}^{{\sigma _2}(x)} \int K_s(x,y) f(y) e({Q}(x)(y)) \,  \mathrm{d}\mu (y)\right| \mathrm{d}\mu (x) \end{equation}
+  </div>
+  <span class="equation_label">2.0.7</span>
+</p>
+</div>
+<div class="equation" id="a0000000031">
+<p>
+  <div class="equation_content">
+    \begin{equation}  =\int _{G \setminus G'} \left|\sum _{s={\sigma _1}(x)}^{{\sigma _2}(x)} \int K_s(x,y) f(y) e({Q}(x)(y) - {Q}(x)(x))\mathrm{d}\mu (y)\right| \mathrm{d}\mu (x) \end{equation}
+  </div>
+  <span class="equation_label">2.0.8</span>
+</p>
+</div>
+<div class="equation" id="a0000000032">
+<p>
+  <div class="equation_content">
+    \begin{equation}  =\int _{G \setminus G'} \left|\sum _{{\mathfrak p}\in {\mathfrak P}}T_{{\mathfrak p}} f(x)\right| \mathrm{d}\mu (x) \le \frac{2^{442a^3}}{(q-1)^5} \mu (G)^{1 - \frac{1}{q}} \mu (F)^{\frac{1}{q}} \, . \end{equation}
+  </div>
+  <span class="equation_label">2.0.9</span>
+</p>
+</div>
+<p> This proves <a href="overviewsection.html#eq-linearized">2.0.6</a> for the chosen set \(G'\) and arbitrary \(f\) and thus completes the proof of Proposition <a href="overviewsection.html#finitary_carleson">2.0.1</a>.</p>
+
+  </div>
+</div>
+<p> Let measurable functions \({\sigma _1}\leq \sigma _2\colon X\to \mathbb {Z}\) with finite range be given. Let bounded Borel sets \(F,G\) in \(X\) be given. Let \(S\) be the smallest integer such that the ranges of \(\sigma _1\) and \(\sigma _2\) are contained in \([-S,S]\) and \(F\) and \(G\) are contained in the ball \(B(o, \frac{1}{4}D^S)\). </p>
+<p>In <a href="christsection.html">Section 4</a>, we prove <a href="overviewsection.html#finitary_carleson">Proposition 2.0.1</a> using a bound for a dyadic model formulated in <a href="overviewsection.html#discrete_carleson">Proposition 2.0.2</a> below. </p>
+<p>A grid structure \((\mathcal{D}, c, s)\) on \(X\) consists of a finite collection \(\mathcal{D}\) of pairs \((I, k)\) of Borel sets in \(X\) and integers \(k \in [-S, S]\), the projection \(s\colon \mathcal{D}\to [-S, S], (I, k) \mapsto k\) to the second component which is assumed to be surjective and called scale function, and a function \(c:\mathcal{D}\to X\) called center function such that the five properties <a href="overviewsection.html#coverdyadic" class="eqref">2.0.10</a>, <a href="overviewsection.html#dyadicproperty" class="eqref">2.0.11</a>, <a href="overviewsection.html#subsetmaxcube" class="eqref">2.0.12</a>, <a href="overviewsection.html#eq-vol-sp-cube" class="eqref">2.0.13</a>, and <a href="overviewsection.html#eq-small-boundary" class="eqref">2.0.14</a> hold. We call the elements of \(\mathcal{D}\) dyadic cubes. By abuse of notation, we will usually write just \(I\) for the cube \((I,k)\), and we will write \(I \subset J\) to mean that for two cubes \((I,k), (J, l) \in \mathcal{D}\) we have \(I \subset J\) and \(k \le l\). </p>
+<p>For each dyadic cube \(I\) and each \(-S\le k{\lt}s(I)\) we have </p>
+<div class="equation" id="coverdyadic">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{coverdyadic} I\subset \bigcup _{J\in \mathcal{D}: s(J)=k}J\,  . \end{equation}
+  </div>
+  <span class="equation_label">2.0.10</span>
+</p>
+</div>
+<p> Any two non-disjoint dyadic cubes \(I,J\) with \(s(I)\le s(J)\) satisfy </p>
+<div class="equation" id="dyadicproperty">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{dyadicproperty} I\subset J. \end{equation}
+  </div>
+  <span class="equation_label">2.0.11</span>
+</p>
+</div>
+<p> There exists a \(I_0 \in \mathcal{D}\) with \(s(I_0) = S\) and \(c(I_0) = o\) and for all cubes \(J \in \mathcal{D}\), we have </p>
+<div class="equation" id="subsetmaxcube">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{subsetmaxcube} J \subset I_0\, . \end{equation}
+  </div>
+  <span class="equation_label">2.0.12</span>
+</p>
+</div>
+<p> For any dyadic cube \(I\), </p>
+<div class="equation" id="eq-vol-sp-cube">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-vol-sp-cube} c(I)\in B(c(I), \frac{1}{4} D^{s(I)}) \subset I \subset B(c(I), 4 D^{s(I)})\, . \end{equation}
+  </div>
+  <span class="equation_label">2.0.13</span>
+</p>
+</div>
+<p> For any dyadic cube \(I\) and any \(t\) with \(tD^{s(I)} \ge D^{-S}\), </p>
+<div class="equation" id="eq-small-boundary">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-small-boundary} \mu (\{ x \in I \  : \  \rho (x, X \setminus I) \leq t D^{s(I)}\} ) \le 2 t^\kappa \mu (I)\, . \end{equation}
+  </div>
+  <span class="equation_label">2.0.14</span>
+</p>
+</div>
+<p>A tile structure \(({\mathfrak P},{\mathcal{I}},{\Omega },{\mathcal{Q}},{\mathrm{c}},{\mathrm{s}})\) for a given grid structure \((\mathcal{D}, c, s)\) is a finite set \({\mathfrak P}\) of elements called tiles with five maps </p>
+<div class="displaymath" id="a0000000033">
+  \begin{align*}  {\mathcal{I}}& \colon {\mathfrak P}\to {\mathcal{D}}\\ {\Omega }& \colon {\mathfrak P}\to \mathcal{P}({\Theta }) \\ {\mathcal{Q}}& \colon {\mathfrak P}\to {Q}(X)\\ {\mathrm{c}}& \colon {\mathfrak P}\to X\\ {\mathrm{s}}& \colon {\mathfrak P}\to \mathbb {Z} \end{align*}
+</div>
+<p> with \({\mathcal{I}}\) surjective and \(\mathcal{P}({\Theta })\) denoting the power set of \({\Theta }\) such that the five properties <a href="overviewsection.html#eq-dis-freq-cover" class="eqref">2.0.16</a>, <a href="overviewsection.html#eq-freq-dyadic" class="eqref">2.0.17</a>, <a href="overviewsection.html#eq-freq-comp-ball" class="eqref">2.0.18</a>, <a href="overviewsection.html#tilecenter" class="eqref">2.0.21</a>, and <a href="overviewsection.html#tilescale" class="eqref">2.0.22</a> hold. For each dyadic cube \(I\), the restriction of the map \(\Omega \) to the set </p>
+<div class="equation" id="injective">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{injective} {\mathfrak P}(I)=\{ {\mathfrak p}: {\mathcal{I}}({\mathfrak p}) =I\}  \end{equation}
+  </div>
+  <span class="equation_label">2.0.15</span>
+</p>
+</div>
+<p> is injective and we have the disjoint covering property (we use the union symbol with dot on top to denote a disjoint union) </p>
+<div class="equation" id="eq-dis-freq-cover">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{eq-dis-freq-cover} {Q}(X)\subset \dot{\bigcup }_{{\mathfrak p}\in {\mathfrak P}(I)}{\Omega }({\mathfrak p}). \end{equation}
+  </div>
+  <span class="equation_label">2.0.16</span>
+</p>
+</div>
+<p> For any tiles \({\mathfrak p},{\mathfrak q}\) with \({\mathcal{I}}({\mathfrak p})\subset {\mathcal{I}}({\mathfrak q})\) and \({\Omega }({\mathfrak p}) \cap {\Omega }({\mathfrak q}) \neq \emptyset \) we have </p>
+<div class="equation" id="eq-freq-dyadic">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-freq-dyadic} {\Omega }({\mathfrak q})\subset {\Omega }({\mathfrak p}) . \end{equation}
+  </div>
+  <span class="equation_label">2.0.17</span>
+</p>
+</div>
+<p> For each tile \({\mathfrak p}\), </p>
+<div class="equation" id="eq-freq-comp-ball">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{eq-freq-comp-ball} {\mathcal{Q}}({\mathfrak p})\in B_{{\mathfrak p}}({\mathcal{Q}}({\mathfrak p}), 0.2) \subset {\Omega }({\mathfrak p}) \subset B_{{\mathfrak p}}({\mathcal{Q}}({\mathfrak p}),1)\, , \end{equation}
+  </div>
+  <span class="equation_label">2.0.18</span>
+</p>
+</div>
+<p> where </p>
+<div class="equation" id="a0000000034">
+<p>
+  <div class="equation_content">
+    \begin{equation}  B_{{\mathfrak p}} ({\vartheta }, R) := \{ {\theta }\in {\Theta }\,  : \,  d_{{\mathfrak p}}({\vartheta }, {\theta }) {\lt} R\, \}  , \end{equation}
+  </div>
+  <span class="equation_label">2.0.19</span>
+</p>
+</div>
+<p> and </p>
+<div class="equation" id="defdp">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{defdp} d_{{\mathfrak p}} := d_{B({\mathrm{c}}({\mathfrak p}),\frac14 D^{{\mathrm{s}}({\mathfrak p})})}\,  . \end{equation}
+  </div>
+  <span class="equation_label">2.0.20</span>
+</p>
+</div>
+<p> We have for each tile \({\mathfrak p}\) </p>
+<div class="equation" id="tilecenter">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{tilecenter} {\mathrm{c}}({\mathfrak p})=c({\mathcal{I}}({\mathfrak p})), \end{equation}
+  </div>
+  <span class="equation_label">2.0.21</span>
+</p>
+</div>
+<div class="equation" id="tilescale">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{tilescale} {\mathrm{s}}({\mathfrak p})=s({\mathcal{I}}({\mathfrak p})). \end{equation}
+  </div>
+  <span class="equation_label">2.0.22</span>
+</p>
+</div>
+<div class="proposition_thmwrapper theorem-style-plain" id="discrete_carleson">
+  <div class="proposition_thmheading">
+    <span class="proposition_thmcaption">
+    Proposition
+    </span>
+    <span class="proposition_thmlabel">2.0.2</span>
+    <span class="proposition_thmtitle">discrete Carleson</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="overviewsection.html#discrete_carleson">#</a>
+    
+    <a class="icon proof" href="overviewsection.html#a0000000035"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/discrete_carleson" class="lean_decl">discrete_carleson</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="proposition_thmcontent">
+  <p> Let \((\mathcal{D}, c, s)\) be a grid structure and </p>
+<div class="displaymath" id="a0000000036">
+  \begin{equation*}  ({\mathfrak P},{\mathcal{I}},{\Omega },{\mathcal{Q}},{\mathrm{c}},{\mathrm{s}}) \end{equation*}
+</div>
+<p> a tile structure for this grid structure. Define for \({\mathfrak p}\in {\mathfrak P}\) </p>
+<div class="equation" id="defineep">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{defineep} E({\mathfrak p})=\{ x\in {\mathcal{I}}({\mathfrak p}): {Q}(x)\in {\Omega }({\mathfrak p}) , {\sigma _1}(x)\le {\mathrm{s}}({\mathfrak p})\le {\sigma _2}(x)\}  \end{equation}
+  </div>
+  <span class="equation_label">2.0.23</span>
+</p>
+</div>
+<p> and </p>
+<div class="equation" id="definetp">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{definetp} T_{{\mathfrak p}} f(x)= \mathbf{1}_{E({\mathfrak p})}(x) \int K_{{\mathrm{s}}({\mathfrak p})}(x,y) f(y) e({Q}(x)(y)-{Q}(x)(x))\,  d\mu (y). \end{equation}
+  </div>
+  <span class="equation_label">2.0.24</span>
+</p>
+</div>
+<p> Then there exists a Borel set \(G'\) with \(2\mu (G') \leq \mu (G)\) such that for all Borel functions \(f:X\to {\mathbb {C}}\) with \(|f|\le \mathbf{1}_F\) we have </p>
+<div class="equation" id="disclesssim">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{disclesssim} \int _{G \setminus G'} \left| \sum _{{\mathfrak p}\in {\mathfrak P}} T_{{\mathfrak p}} f (x) \right| \,  \mathrm{d}\mu (x) \le \frac{2^{442a^3}}{(q-1)^5} \mu (G)^{1-\frac{1}{q}} \mu (F)^{\frac{1}{q}}\, . \end{equation}
+  </div>
+  <span class="equation_label">2.0.25</span>
+</p>
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000035">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p><a href="overviewsection.html#discrete_carleson">2.0.2</a> follows by applying the triangle inequality to <a href="overviewsection.html#disclesssim">2.0.25</a> according to the splitting in <a href="proptopropprop.html#forest_union">5.1.2</a> and <a href="proptopropprop.html#forest_complement">5.1.3</a> and using both Lemmas as well as the bound on the set \(G'\) given by <a href="proptopropprop.html#exceptional_set">5.1.1</a>.</p>
+
+  </div>
+</div>
+<p>The proof of <a href="overviewsection.html#discrete_carleson">Proposition 2.0.2</a> is done in <a href="proptopropprop.html">Section 5</a> by a reduction to two further propositions that we state below. </p>
+<p>Fix a grid structure \((\mathcal{D}, c, s)\) and a tile structure \(({\mathfrak P},{\mathcal{I}},{\Omega },{\mathcal{Q}},{\mathrm{c}},{\mathrm{s}})\) for this grid structure. </p>
+<p>We define the relation </p>
+<div class="equation" id="straightorder">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{straightorder} {\mathfrak p}\le {\mathfrak p}' \end{equation}
+  </div>
+  <span class="equation_label">2.0.26</span>
+</p>
+</div>
+<p> on \({\mathfrak P}\times {\mathfrak P}\) meaning \({\mathcal{I}}({\mathfrak p})\subset {\mathcal{I}}({\mathfrak p}')\) and \(\Omega ({\mathfrak p}')\subset \Omega ({\mathfrak p})\). We further define for \(\lambda ,\lambda ' {\gt}0\) the relation </p>
+<div class="equation" id="wiggleorder">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{wiggleorder} \lambda {\mathfrak p}\lesssim \lambda ' {\mathfrak p}' \end{equation}
+  </div>
+  <span class="equation_label">2.0.27</span>
+</p>
+</div>
+<p> on \({\mathfrak P}\times {\mathfrak P}\) meaning \({\mathcal{I}}({\mathfrak p})\subset {\mathcal{I}}({\mathfrak p}')\) and </p>
+<div class="equation" id="a0000000037">
+<p>
+  <div class="equation_content">
+    \begin{equation}  B_{{\mathfrak p}'}({\mathcal{Q}}({\mathfrak p}'),\lambda ') \subset B_{{\mathfrak p}}({\mathcal{Q}}({\mathfrak p}),\lambda )\,  . \end{equation}
+  </div>
+  <span class="equation_label">2.0.28</span>
+</p>
+</div>
+<p>Define for a tile \({\mathfrak p}\) and \(\lambda {\gt}0\) </p>
+<div class="equation" id="definee1">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{definee1} E_1({\mathfrak p}):=\{ x\in {\mathcal{I}}({\mathfrak p})\cap G: {Q}(x)\in {\Omega }({\mathfrak p})\} \,  , \end{equation}
+  </div>
+  <span class="equation_label">2.0.29</span>
+</p>
+</div>
+<div class="equation" id="definee2">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{definee2} E_2(\lambda , {\mathfrak p}):=\{ x\in {\mathcal{I}}({\mathfrak p})\cap G: {Q}(x)\in B_{{\mathfrak p}}({\mathcal{Q}}({\mathfrak p}), \lambda )\} \,  . \end{equation}
+  </div>
+  <span class="equation_label">2.0.30</span>
+</p>
+</div>
+<p>Given a subset \({\mathfrak P}'\) of \({\mathfrak P}\), we define \({\mathfrak P}({\mathfrak P}')\) to be the set of all \({\mathfrak p}\in {\mathfrak P}\) such that there exist \({\mathfrak p}' \in {\mathfrak P}'\) with \({\mathcal{I}}({\mathfrak p})\subset {\mathcal{I}}({\mathfrak p}')\). Define the densities </p>
+<div class="equation" id="definedens1">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{definedens1} {\operatorname{\operatorname {dens}}}_1({\mathfrak P}') := \sup _{{\mathfrak p}'\in {\mathfrak P}'}\sup _{\lambda \geq 2} \lambda ^{-a} \sup _{{\mathfrak p}\in {\mathfrak P}({\mathfrak P}'), \lambda {\mathfrak p}' \lesssim \lambda {\mathfrak p}} \frac{\mu ({E}_2(\lambda , {\mathfrak p}))}{\mu ({\mathcal{I}}({\mathfrak p}))}\,  , \end{equation}
+  </div>
+  <span class="equation_label">2.0.31</span>
+</p>
+</div>
+<div class="equation" id="definedens2">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{definedens2} {\operatorname{\operatorname {dens}}}_2({\mathfrak P}') := \sup _{{\mathfrak p}'\in {\mathfrak P}'} \sup _{r\ge 4D^{{\mathrm{s}}({\mathfrak p})}} \frac{\mu (F\cap B({\mathrm{c}}({\mathfrak p}),r))}{\mu (B({\mathrm{c}}({\mathfrak p}),r))}\,  . \end{equation}
+  </div>
+  <span class="equation_label">2.0.32</span>
+</p>
+</div>
+<p>An antichain is a subset \(\mathfrak {A}\) of \({\mathfrak P}\) such that for any distinct \({\mathfrak p},{\mathfrak q}\in \mathfrak {A}\) we do not have \({\mathfrak p}\le {\mathfrak q}\). </p>
+<p>The following proposition is proved in <a href="antichainboundary.html">Section 6</a>. </p>
+<div class="proposition_thmwrapper theorem-style-plain" id="antichain_operator">
+  <div class="proposition_thmheading">
+    <span class="proposition_thmcaption">
+    Proposition
+    </span>
+    <span class="proposition_thmlabel">2.0.3</span>
+    <span class="proposition_thmtitle">antichain operator</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="overviewsection.html#antichain_operator">#</a>
+    
+    <a class="icon proof" href="overviewsection.html#a0000000038"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/antichain_operator" class="lean_decl">antichain_operator</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="proposition_thmcontent">
+  <p> For any antichain \(\mathfrak {A}\) and for all \(f:X\to {\mathbb {C}}\) with \(|f|\le \mathbf{1}_F\) and all \(g:X\to {\mathbb {C}}\) with \(|g| \le \mathbf{1}_G\) </p>
+<div class="equation" id="eq-antiprop">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-antiprop} |\int \overline{g(x)} \sum _{{\mathfrak p}\in \mathfrak {A}} T_{{\mathfrak p}} f(x)\,  d\mu (x)| \end{equation}
+  </div>
+  <span class="equation_label">2.0.33</span>
+</p>
+</div>
+<div class="equation" id="a0000000039">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \le \frac{2^{117a^3}}{q-1} \operatorname{\operatorname {dens}}_1(\mathfrak {A})^{\frac{q-1}{8a^4}}\operatorname{\operatorname {dens}}_2(\mathfrak {A})^{\frac1{q}-\frac12} \| f\| _2 \| g\| _2\,  . \end{equation}
+  </div>
+  <span class="equation_label">2.0.34</span>
+</p>
+</div>
+<p>Proposition 2.0.3.</p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000038">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>We have </p>
+<div class="equation" id="a0000000040">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \left(\frac1{\tilde{q}} -\frac12\right) (2-q)= \frac1q -\frac12\, . \end{equation}
+  </div>
+  <span class="equation_label">2.0.35</span>
+</p>
+</div>
+<p> Multiplying the \((2-q)\)-th power of <a href="antichainboundary.html#eqttt9">6.1.11</a> and the \((q-1)\)-th power of <a href="antichainboundary.html#eqttt3">6.1.22</a> and estimating gives after simplification of some factors </p>
+<div class="equation" id="eqttt8">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqttt8} \Big|\int \overline{g(x)} \sum _{{\mathfrak p}\in \mathfrak {A}} T_{{\mathfrak p}} f(x)\,  d\mu (x)\Big| \end{equation}
+  </div>
+  <span class="equation_label">2.0.36</span>
+</p>
+</div>
+<div class="equation" id="a0000000041">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \le 2^{117a^3}(q-1)^{-1} \operatorname{\operatorname {dens}}_1(\mathfrak {A})^{\frac{q-1}{2p}}\operatorname{\operatorname {dens}}_2(\mathfrak {A})^{\frac1{q}-\frac12} \| f\| _2\| g\| _2\,  . \end{equation}
+  </div>
+  <span class="equation_label">2.0.37</span>
+</p>
+</div>
+<p> With the definition of \(p\), this implies <a href="overviewsection.html#antichain_operator">2.0.3</a>.</p>
+
+  </div>
+</div>
+<p>Let \(n\ge 0\). An \(n\)-forest is a pair \(({\mathfrak U}, \mathfrak {T})\) where \({\mathfrak U}\) is a subset of \({\mathfrak P}\) and \(\mathfrak {T}\) is a map assigning to each \({\mathfrak u}\in {\mathfrak U}\) a nonempty set \({\mathfrak T}({\mathfrak u})\subset {\mathfrak P}\) called tree such that the following properties <a href="overviewsection.html#forest1" class="eqref">2.0.38</a>, <a href="overviewsection.html#forest2" class="eqref">2.0.39</a>, <a href="overviewsection.html#forest3" class="eqref">2.0.40</a>, <a href="overviewsection.html#forest4" class="eqref">2.0.41</a>, <a href="overviewsection.html#forest5" class="eqref">2.0.42</a>, and <a href="overviewsection.html#forest6" class="eqref">2.0.43</a> hold. </p>
+<p>For each \({\mathfrak u}\in {\mathfrak U}\) and each \({\mathfrak p}\in {\mathfrak T}({\mathfrak u})\) we have \({\mathcal{I}}({\mathfrak p}) \ne {\mathcal{I}}({\mathfrak u})\) and </p>
+<div class="equation" id="forest1">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{forest1} 4{\mathfrak p}\lesssim {\mathfrak u}. \end{equation}
+  </div>
+  <span class="equation_label">2.0.38</span>
+</p>
+</div>
+<p> For each \({\mathfrak u}\in {\mathfrak U}\) and each \({\mathfrak p},{\mathfrak p}''\in {\mathfrak T}({\mathfrak u})\) and \({\mathfrak p}'\in {\mathfrak P}\) we have </p>
+<div class="equation" id="forest2">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{forest2} {\mathfrak p}, {\mathfrak p}'' \in \mathfrak {T}({\mathfrak u}), {\mathfrak p}\leq {\mathfrak p}' \leq {\mathfrak p}'' \implies {\mathfrak p}' \in \mathfrak {T}({\mathfrak u}). \end{equation}
+  </div>
+  <span class="equation_label">2.0.39</span>
+</p>
+</div>
+<p> We have </p>
+<div class="equation" id="forest3">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{forest3} \| \sum _{{\mathfrak u}\in {\mathfrak U}} \mathbf{1}_{{\mathcal{I}}({\mathfrak u})}\| _\infty \leq 2^n\, . \end{equation}
+  </div>
+  <span class="equation_label">2.0.40</span>
+</p>
+</div>
+<p> We have for every \({\mathfrak u}\in {\mathfrak U}\) </p>
+<div class="equation" id="forest4">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{forest4} \operatorname{\operatorname {dens}}_1({\mathfrak T}({\mathfrak u}))\le 2^{4a + 1-n}\,  . \end{equation}
+  </div>
+  <span class="equation_label">2.0.41</span>
+</p>
+</div>
+<p> We have for \({\mathfrak u}, {\mathfrak u}'\in {\mathfrak U}\) with \({\mathfrak u}\neq {\mathfrak u}'\) and \({\mathfrak p}\in {\mathfrak T}({\mathfrak u}')\) with \({\mathcal{I}}({\mathfrak p})\subset {\mathcal{I}}({\mathfrak u})\) that </p>
+<div class="equation" id="forest5">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{forest5} d_{{\mathfrak p}}({\mathcal{Q}}({\mathfrak p}), {\mathcal{Q}}({\mathfrak u})){\gt}2^{Z(n+1)}\,  . \end{equation}
+  </div>
+  <span class="equation_label">2.0.42</span>
+</p>
+</div>
+<p> We have for every \({\mathfrak u}\in {\mathfrak U}\) and \({\mathfrak p}\in {\mathfrak T}({\mathfrak u})\) that </p>
+<div class="equation" id="forest6">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{forest6} B({\mathrm{c}}({\mathfrak p}), 8D^{{\mathrm{s}}({\mathfrak p})})\subset {\mathcal{I}}({\mathfrak u}). \end{equation}
+  </div>
+  <span class="equation_label">2.0.43</span>
+</p>
+</div>
+<p>The following proposition is proved in <a href="treesection.html">Section 7</a>. </p>
+<div class="proposition_thmwrapper theorem-style-plain" id="forest_operator">
+  <div class="proposition_thmheading">
+    <span class="proposition_thmcaption">
+    Proposition
+    </span>
+    <span class="proposition_thmlabel">2.0.4</span>
+    <span class="proposition_thmtitle">forest operator</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="overviewsection.html#forest_operator">#</a>
+    
+    <a class="icon proof" href="overviewsection.html#a0000000042"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/forest_operator" class="lean_decl">forest_operator</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="proposition_thmcontent">
+  <p> For any \(n\ge 0\) and any \(n\)-forest \(({\mathfrak U},{\mathfrak T})\) we have for all \(f,g: X \to \mathbb {C}\) with \(|f| \le \mathbf{1}_F\) and \(|g| \le \mathbf{1}_G\) </p>
+<div class="displaymath" id="a0000000043">
+  \[ | \int \overline{g(x)} \sum _{{\mathfrak u}\in {\mathfrak U}} \sum _{{\mathfrak p}\in {\mathfrak T}({\mathfrak u})} T_{{\mathfrak p}} f(x) \,  \mathrm{d}\mu (x)| \]
+</div>
+<div class="displaymath" id="a0000000044">
+  \[ \le 2^{440a^3}2^{-\frac{q-1}{q} n} \operatorname{\operatorname {dens}}_2\left(\bigcup _{{\mathfrak u}\in {\mathfrak U}}{\mathfrak T}({\mathfrak u})\right)^{\frac{1}{q}-\frac{1}{2}} \| f\| _2 \| g\| _2 \, . \]
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000042">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>By <a href ="#definetp*">[definetp*]</a>, we have for each \(j\) </p>
+<div class="displaymath" id="a0000000045">
+  \[ T_{\mathfrak {R}_j}^*g = \sum _{{\mathfrak u}\in {\mathfrak U}_j} \sum _{{\mathfrak p}\in {\mathfrak T}({\mathfrak u})} T_{{\mathfrak p}}^* g = \sum _{{\mathfrak u}\in {\mathfrak U}_j} \sum _{{\mathfrak p}\in {\mathfrak T}({\mathfrak u})} T_{{\mathfrak p}}^* \mathbf{1}_{E_j} g = T_{\mathfrak {R}_j}^* \mathbf{1}_{E_j} g\, . \]
+</div>
+<p> Hence, by <a href="treesection.html#TileStructure.Forest.rowDecomp">7.7.1</a> and the triangle inequality, </p>
+<div class="displaymath" id="a0000000046">
+  \[ \left\| \sum _{{\mathfrak u}\in {\mathfrak U}} \sum _{{\mathfrak p}\in {\mathfrak T}({\mathfrak u})} T^*_{{\mathfrak p}} g\right\| _2^2 = \left\| \sum _{j = 1}^{2^n} T^*_{\mathfrak {R}_{j}} g\right\| _2^2 = \left\| \sum _{j=1}^{2^n} T^*_{\mathfrak {R}_{j}} \mathbf{1}_{E_j} g\right\| _2^2 \]
+</div>
+<div class="displaymath" id="a0000000047">
+  \[ = \int _X \left|\sum _{j=1}^{2^n} T^*_{\mathfrak {R}_{j}} \mathbf{1}_{E_j} g\right|^2 \,  \mathrm{d}\mu  \]
+</div>
+<div class="displaymath" id="a0000000048">
+  \[ \le \sum _{j=1}^{2^n} \| T_{\mathfrak {R}_j}^* \mathbf{1}_{E_j} g\| _2^2 + \sum _{j =1}^{2^n} \sum _{\substack {j’ = 1\\ j’ \ne j}}^{2^n} \left| \int _X \overline{ T_{\mathfrak {R}_j}^* \mathbf{1}_{E_j} g} T_{\mathfrak {R}_{j'}}^* \mathbf{1}_{E_{j'}} g \right| \,  \mathrm{d}\mu \, . \]
+</div>
+<p> We use <a href="treesection.html#TileStructure.Forest.row_bound">7.7.2</a> to estimate each term in the first sum, and <a href="treesection.html#TileStructure.Forest.row_correlation">7.7.3</a> to bound each term in the second sum: </p>
+<div class="displaymath" id="a0000000049">
+  \[ \le 2^{566a^3-n} \sum _{j = 1}^{2^n} \| \mathbf{1}_{E_j} g\| _2^2 + 2^{876a^3-4n}\sum _{j=1}^{2^n}\sum _{j' = 1}^{2^n} \| \mathbf{1}_{E_j} g\| _2 \| \mathbf{1}_{E_{j'}}g\| _2\, . \]
+</div>
+<p> By Cauchy-Schwarz in the second two sums, this is at most </p>
+<div class="displaymath" id="a0000000050">
+  \[ 2^{876a^3} (2^{-n} + 2^{n}2^{-4n}) \sum _{j = 1}^n \| \mathbf{1}_{E_j} g\| _2^2\, , \]
+</div>
+<p> and by disjointedness of the sets \(E_j\), this is at most </p>
+<div class="displaymath" id="a0000000051">
+  \[ 2^{877a^3 - n} \| g\| _2^2\, . \]
+</div>
+<p> Taking square roots, it follows that for all \(g\) </p>
+<div class="equation" id="eq-forest-bound-1">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-forest-bound-1} \left\| \sum _{{\mathfrak u}\in {\mathfrak U}} \sum _{{\mathfrak p}\in {\mathfrak T}({\mathfrak u})} T_{{\mathfrak p}}^* g\right\| _2 \le 2^{439a^3-\frac{n}{2}} \| g\| _2\, . \end{equation}
+  </div>
+  <span class="equation_label">2.0.44</span>
+</p>
+</div>
+<p> On the other hand, we have by disjointedness of the sets \(E_j\) from <a href="treesection.html#TileStructure.Forest.pairwiseDisjoint_rowSupport">7.7.4</a> and the triangle inequality </p>
+<div class="displaymath" id="a0000000052">
+  \[ \left\| \mathbf{1}_G \sum _{{\mathfrak u}\in {\mathfrak U}} \sum _{{\mathfrak p}\in {\mathfrak T}({\mathfrak u})} T_{{\mathfrak p}} f\right\| _2^2 = \left\| \sum _{j=1}^{2^n} \mathbf{1}_{E_j} \mathbf{1}_G T_{\mathfrak {R}_{j}} f\right\| _2^2 \le \sum _{j = 1}^{2^n} \| \mathbf{1}_{E_j} \mathbf{1}_G T_{\mathfrak {R}_{j}} f\| _2^2 \le \sum _{j = 1}^{2^n} \| \mathbf{1}_G T_{\mathfrak {R}_{j}} f\| _2^2\, . \]
+</div>
+<p> Now with \(|f| \le \mathbf{1}_F\) and <a href="treesection.html#TileStructure.Forest.row_bound">7.7.2</a> we obtain </p>
+<div class="displaymath" id="a0000000053">
+  \[ \|  \mathbf{1}_G T_{\mathfrak {R}_j} f \| _2^2 = \left| \int _X \overline{\mathbf{1}_G T_{\mathfrak {R}_j} f} T_{\mathfrak {R}_j} f \right| = \left| \int _X \overline{T_{\mathfrak {R}_j}^* \mathbf{1}_G T_{\mathfrak {R}_j} f} \mathbf{1}_F f \right| \]
+</div>
+<div class="displaymath" id="a0000000054">
+  \[ \le \| f\| _2 \|  \mathbf{1}_F T_{\mathfrak {R}_j}^* \mathbf{1}_G T_{\mathfrak {R}_j} f \| _2 \le 2^{283a^3-n/2} \operatorname{\operatorname {dens}}_2(\bigcup _{{\mathfrak u}\in {\mathfrak U}}{\mathfrak T}({\mathfrak u}))^{1/2} \|  \mathbf{1}_G T_{\mathfrak {R}_j} f \| _2 \| f\| _2. \]
+</div>
+<p> Dividing this last inequality by the finite \(\|  \mathbf{1}_G T_{\mathfrak {R}_j} f \| _2\), substituting back and taking square roots we get </p>
+<div class="displaymath" id="a0000000055">
+  \[ \left\| \mathbf{1}_G \sum _{{\mathfrak u}\in {\mathfrak U}} \sum _{{\mathfrak p}\in {\mathfrak T}({\mathfrak u})} T_{{\mathfrak p}} f\right\| _2 \le 2^{283a^3} \operatorname{\operatorname {dens}}_2(\bigcup _{{\mathfrak u}\in {\mathfrak U}}{\mathfrak T}({\mathfrak u}))^{\frac{1}{2}} 2^{-\frac{n}{2}} (\sum _{j = 1}^{2^n} \| f\| _2^2)^{\frac{1}{2}} \]
+</div>
+<div class="equation" id="eq-forest-bound-2">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-forest-bound-2} = 2^{283a^3} \operatorname{\operatorname {dens}}_2(\bigcup _{{\mathfrak u}\in {\mathfrak U}}{\mathfrak T}({\mathfrak u}))^{\frac{1}{2}} \| f\| _2\, . \end{equation}
+  </div>
+  <span class="equation_label">2.0.45</span>
+</p>
+</div>
+<p> <a href="overviewsection.html#forest_operator">2.0.4</a> follows by taking the product of the \((2 - \frac{2}{q})\)-th power of <a href="overviewsection.html#eq-forest-bound-1">2.0.44</a> and the \((\frac{2}{q} - 1)\)-st power of <a href="overviewsection.html#eq-forest-bound-2">2.0.45</a>.</p>
+
+  </div>
+</div>
+<p><a href="sect0001.html#metric_carleson">Theorem 1.1.1</a> is formulated at the level of generality for general kernels satisfying the mere Hölder regularity condition <a href="sect0001.html#eqkernel-y-smooth" class="eqref">1.1.12</a>. On the other hand, the cancellative condition <a href="sect0001.html#eq-vdc-cond" class="eqref">1.1.9</a> is a testing condition against more regular, namely Lipschitz functions. To bridge the gap, we follow <span class="cite">
+	[
+</span> to observe a variant of <a href="sect0001.html#eq-vdc-cond" class="eqref">1.1.9</a> that we formulate in the following proposition proved in <a href="liphoel.html">Section 8</a>. </p>
+<p>Define </p>
+<div class="equation" id="a0000000056">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \tau :=\frac1a\,  . \end{equation}
+  </div>
+  <span class="equation_label">2.0.46</span>
+</p>
+</div>
+<p> Define for any open ball \(B\) of radius \(R\) in \(X\) the \(L^\infty \)-normalized \(\tau \)-Hölder norm by </p>
+<div class="equation" id="eq-Holder-norm">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-Holder-norm} \| \varphi \| _{C^\tau (B)} = \sup _{x \in B} |\varphi (x)| + R^\tau \sup _{x,y \in B, x \neq y} \frac{|\varphi (x) - \varphi (y)|}{\rho (x,y)^\tau }\, . \end{equation}
+  </div>
+  <span class="equation_label">2.0.47</span>
+</p>
+</div>
+<div class="proposition_thmwrapper theorem-style-plain" id="holder_van_der_corput">
+  <div class="proposition_thmheading">
+    <span class="proposition_thmcaption">
+    Proposition
+    </span>
+    <span class="proposition_thmlabel">2.0.5</span>
+    <span class="proposition_thmtitle">Holder van der Corput</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="overviewsection.html#holder_van_der_corput">#</a>
+    
+    <a class="icon proof" href="overviewsection.html#a0000000057"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/holder_van_der_corput" class="lean_decl">holder_van_der_corput</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="proposition_thmcontent">
+  <p> Let \(z\in X\) and \(R{\gt}0\) and set \(B=B(z,R)\). Let \(\varphi : X \to \mathbb {C}\) be supported on \(B\) and satisfy \(\| {\varphi }\| _{C^\tau (B(z, 2R))}{\lt}\infty \). Let \({\vartheta }, {\theta }\in {\Theta }\). Then </p>
+<div class="equation" id="eq-vdc-cond-tau-2">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-vdc-cond-tau-2} |\int e({\vartheta }(x)-{{\theta }(x)})\varphi (x) dx|\le 2^{7a} \mu (B) \| {\varphi }\| _{C^\tau (B(z, 2R))} (1 + d_{B}({\vartheta },{\theta }))^{-\frac{1}{2a^2+a^3}} \, . \end{equation}
+  </div>
+  <span class="equation_label">2.0.48</span>
+</p>
+</div>
+<p>Proposition 2.0.5.</p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000057">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Let \(z\in X\) and \(R{\gt}0\) and set \(B=B(z,R)\). Let \(\varphi \) be given as in <a href="overviewsection.html#holder_van_der_corput">2.0.5</a>. Set </p>
+<div class="equation" id="eql69">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eql69} t:=(1+d_B({\vartheta },{\theta }))^{-\frac{\tau }{2+a}} \end{equation}
+  </div>
+  <span class="equation_label">2.0.49</span>
+</p>
+</div>
+<p> and define \(\tilde{\varphi }\) as in <a href="liphoel.html#support_holderApprox_subset">8.0.1</a>. Let \({\vartheta }\) and \({\theta }\) be in \({\Theta }\). Then </p>
+<div class="equation" id="eql60">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eql60} \left|\int e({\vartheta }(x)-{{\theta }(x)}) \varphi (x)\,  \mathrm{d}\mu (x)\right| \end{equation}
+  </div>
+  <span class="equation_label">2.0.50</span>
+</p>
+</div>
+<div class="equation" id="eql61">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eql61} \le \left|\int e({\vartheta }(x)-{{\theta }(x)}) \tilde{\varphi } (x)\,  \mathrm{d}\mu (x)\right| \end{equation}
+  </div>
+  <span class="equation_label">2.0.51</span>
+</p>
+</div>
+<div class="equation" id="eql62">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eql62} + \left|\int e({\vartheta }(x)-{{\theta }(x)}) (\varphi (x)-\tilde{\varphi }(x))\,  \mathrm{d}\mu (x)\right| \end{equation}
+  </div>
+  <span class="equation_label">2.0.52</span>
+</p>
+</div>
+<p> Using the cancellative condition <a href="sect0001.html#eq-vdc-cond">1.1.9</a> of \({\Theta }\) on the ball \(B(z,2R)\), the term <a href="overviewsection.html#eql61">2.0.51</a> is bounded above by </p>
+<div class="equation" id="eql63">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eql63} 2^a \mu (B(z,2R)) \| \tilde{\varphi }\| _{\operatorname{\operatorname {Lip}}(B(z,2R))} (1 + d_{B(z,2R)}({\vartheta },{\theta }))^{-\tau } \,  . \end{equation}
+  </div>
+  <span class="equation_label">2.0.53</span>
+</p>
+</div>
+<p>Using the doubling condition <a href="sect0001.html#doublingx">1.1.2</a>, the inequality <a href="liphoel.html#eq-secondt">8.0.2</a>, and the estimate \(d_B\le d_{B(z,2R)}\) from the definition, we estimate <a href="overviewsection.html#eql63">2.0.53</a> from above by </p>
+<div class="equation" id="eql64">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eql64} 2^{6a}t^{-1-a} \mu (B) \| {\varphi }\| _{C^\tau (B)} (1 + d_{B}({\vartheta },{\theta }))^{-\tau } \,  . \end{equation}
+  </div>
+  <span class="equation_label">2.0.54</span>
+</p>
+</div>
+<p>The term <a href="overviewsection.html#eql62">2.0.52</a> we estimate using <a href="liphoel.html#eq-firstt">8.0.1</a> and that \({\vartheta }\) and \({\theta }\) are real and thus \(e({\vartheta })\) and \(e({\theta })\) bounded in absolute value by \(1\). We obtain for <a href="overviewsection.html#eql62">2.0.52</a> with <a href="sect0001.html#doublingx">1.1.2</a> the upper bound </p>
+<div class="equation" id="eql65">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eql65} \mu (B(z,2R)) (t/2)^{\tau } \| \varphi \| _{C^\tau (B)} \le 2^a \mu (B) t^{\tau } \| \varphi \| _{C^\tau (B)} \, . \end{equation}
+  </div>
+  <span class="equation_label">2.0.55</span>
+</p>
+</div>
+<p> Using the definition <a href="overviewsection.html#eql69">2.0.49</a> of \(t\) and adding <a href="overviewsection.html#eql64">2.0.54</a> and <a href="overviewsection.html#eql65">2.0.55</a> estimates <a href="overviewsection.html#eql60">2.0.50</a> from above by </p>
+<div class="equation" id="a0000000058">
+<p>
+  <div class="equation_content">
+    \begin{equation}  2^{6a} \mu (B) \| {\varphi }\| _{C^\tau (B)} (1 + d_{B}({\vartheta },{\theta }))^{-\frac{\tau }{2+a}} \end{equation}
+  </div>
+  <span class="equation_label">2.0.56</span>
+</p>
+</div>
+<div class="equation" id="a0000000059">
+<p>
+  <div class="equation_content">
+    \begin{equation}  + 2^a \mu (B) \| {\varphi }\| _{C^\tau (B)} (1 + d_{B}({\vartheta },{\theta }))^{-\frac{\tau ^2}{2+a}}\,  . \end{equation}
+  </div>
+  <span class="equation_label">2.0.57</span>
+</p>
+</div>
+<div class="equation" id="eql66">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eql66} \le 2^{1+6a} \mu (B) \| {\varphi }\| _{C^\tau (B)} (1 + d_{B}({\vartheta },{\theta }))^{-\frac{\tau ^2}{2+a}} \,  , \end{equation}
+  </div>
+  <span class="equation_label">2.0.58</span>
+</p>
+</div>
+<p> where we used \(\tau \le 1\). This completes the proof of <a href="overviewsection.html#holder_van_der_corput">2.0.5</a>.</p>
+
+  </div>
+</div>
+<p>We further formulate a classical Vitali covering result and maximal function estimate that we need throughout several sections. This following proposition will typically be applied to the absolute value of a complex valued function and be proved in <a href="sec-hlm.html">Section 9</a>. By a ball \(B\) we mean a set \(B(x,r)\) with \(x\in X\) and \(r{\gt}0\) as defined in <a href="sect0001.html#eq-define-ball" class="eqref">1.1.3</a>. For a finite collection \(\mathcal{B}\) of balls in \(X\) and \(1\le p{\lt} \infty \) define the measurable function \(M_{\mathcal{B},p}u\) on \(X\) by </p>
+<div class="equation" id="def-hlm">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{def-hlm} M_{\mathcal{B},p}u(x):=\left(\sup _{B\in \mathcal{B}} \frac{\mathbf{1}_{B}(x)}{\mu (B)}\int _{B} |u(y)|^p\,  d\mu (y)\right)^\frac 1p\,  . \end{equation}
+  </div>
+  <span class="equation_label">2.0.59</span>
+</p>
+</div>
+<p> Define further \(M_{\mathcal{B}}:=M_{\mathcal{B},1}\). </p>
+<div class="proposition_thmwrapper theorem-style-plain" id="Finset.measure_biUnion_le_lintegral">
+  <div class="proposition_thmheading">
+    <span class="proposition_thmcaption">
+    Proposition
+    </span>
+    <span class="proposition_thmlabel">2.0.6</span>
+    <span class="proposition_thmtitle">Hardy–Littlewood</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="overviewsection.html#Finset.measure_biUnion_le_lintegral">#</a>
+    
+    <a class="icon proof" href="overviewsection.html#a0000000060"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/Finset.measure_biUnion_le_lintegral" class="lean_decl">Finset.measure_biUnion_le_lintegral</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="proposition_thmcontent">
+  <p> Let \(\mathcal{B}\) be a finite collection of balls in \(X\). If for some \(\lambda {\gt}0\) and some measurable function \(u:X\to [0,\infty )\) we have </p>
+<div class="equation" id="eq-ball-assumption">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-ball-assumption} \int _{B} u(x)\,  d\mu (x)\ge \lambda \mu (B) \end{equation}
+  </div>
+  <span class="equation_label">2.0.60</span>
+</p>
+</div>
+<p> for each \(B\in \mathcal{B}\), then </p>
+<div class="equation" id="eq-besico">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-besico} \lambda \mu (\bigcup \mathcal{B}) \le 2^{2a}\int _X u(x)\,  d\mu (x)\,  . \end{equation}
+  </div>
+  <span class="equation_label">2.0.61</span>
+</p>
+</div>
+<p> For every measurable function \(v\) and \(1\le p_1{\lt}p_2\) we have </p>
+<div class="equation" id="eq-hlm">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-hlm} \| M_{\mathcal{B},p_1} v\| _{p_2}\le 2^{2a}\frac{p_2}{p_2-p_1} \| v\| _{p_2}\,  . \end{equation}
+  </div>
+  <span class="equation_label">2.0.62</span>
+</p>
+</div>
+<p> Moreover, given any measurable bounded function \(w: X \to {\mathbb {C}}\) there exists a measurable function \(Mw: X \to [0, \infty )\) such that the following <a href="overviewsection.html#eq-ball-av">2.0.63</a> and <a href="overviewsection.html#eq-hlm-2">2.0.64</a> hold. For each ball \(B \subset X\) and each \(x \in B\) </p>
+<div class="equation" id="eq-ball-av">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-ball-av} \frac{1}{\mu (B)} \int _{B} |w(y)| \,  \mathrm{d}\mu (y) \le Mw(x) \end{equation}
+  </div>
+  <span class="equation_label">2.0.63</span>
+</p>
+</div>
+<p> and for all \(1 \le p_1 {\lt} p_2 \le \infty \) </p>
+<div class="equation" id="eq-hlm-2">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-hlm-2} \| M(w^{p_1})^{\frac{1}{p_1}}\| _{p_2} \le 2^{4a} \frac{p_2}{p_2-p_1}\| w\| _{p_2}\, . \end{equation}
+  </div>
+  <span class="equation_label">2.0.64</span>
+</p>
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000060">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Let the collection \(\mathcal{B}\) be given. We first show <a href="overviewsection.html#eq-besico">2.0.61</a>. </p>
+<p>We recursively choose a finite sequence \(B_i\in \mathcal{B}\) for \(i\ge 0\) as follows. Assume \(B_{i'}\) is already chosen for \(0\le i'{\lt}i\). If there exists a ball \(B_{i}\in \mathcal{B}\) so that \(B_{i}\) is disjoint from all \(B_{i'}\) with \(0\le i'{\lt}i\), then choose such a ball \(B_i=B(x_i,r_i)\) with maximal \(r_i\). </p>
+<p>If there is no such ball, stop the selection and set \(i'':=i\). </p>
+<p>By disjointedness of the chosen balls and since \(0 \le u\), we have </p>
+<div class="equation" id="a0000000061">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \sum _{0\le i{\lt}i''}\int _{B_i} u(x)\,  d\mu (x) \le \int _X u(x)\,  d\mu (x)\,  . \end{equation}
+  </div>
+  <span class="equation_label">2.0.65</span>
+</p>
+</div>
+<p> By <a href="overviewsection.html#eq-ball-assumption">2.0.60</a>, we conclude </p>
+<div class="equation" id="eqbes1">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqbes1} \lambda \sum _{0\le i{\lt}i''}\mu (B_i) \le \int _X u(x)\,  d\mu (x)\,  . \end{equation}
+  </div>
+  <span class="equation_label">2.0.66</span>
+</p>
+</div>
+<p> Let \(x\in \bigcup \mathcal{B}\). Choose a ball \(B'=B(x',r')\in \mathcal{B}\) such that \(x\in B'\). If \(B'\) is one of the selected balls, then </p>
+<div class="equation" id="3rone">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{3rone} x\in \bigcup _{0\le i{\lt} i''}B_i\subset \bigcup _{0\le i{\lt} i''}B(x_i,3r_i)\,  . \end{equation}
+  </div>
+  <span class="equation_label">2.0.67</span>
+</p>
+</div>
+<p> If \(B'\) is not one of the selected balls, then as it is not selected at time \(i''\), there is a selected ball \(B_i\) with \(B'\cap B_i\neq \emptyset \). Choose such \(B_i\) with minimal index \(i\). As \(B'\) is therefore disjoint from all balls \(B_{i'}\) with \(i'{\lt}i\) and as it was not selected in place of \(B_i\), we have \(r_i\ge r'\). </p>
+<p>Using a point \(y\) in the intersection of \(B_i\) and \(B'\), we conclude by the triangle inequality </p>
+<div class="equation" id="a0000000062">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \rho (x_i,x')\le \rho (x_i,y)+\rho (x',y)\le r_i+r'\le 2r_i \,  . \end{equation}
+  </div>
+  <span class="equation_label">2.0.68</span>
+</p>
+</div>
+<p> By the triangle inequality again, we further conclude </p>
+<div class="equation" id="a0000000063">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \rho (x_i,x)\le \rho (x_i,x')+\rho (x',x)\le 2r_i+r'\le 3r_i \,  . \end{equation}
+  </div>
+  <span class="equation_label">2.0.69</span>
+</p>
+</div>
+<p> It follows that </p>
+<div class="equation" id="3rtwo">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{3rtwo} x\in \bigcup _{0\le i{\lt} i''}B(x_i,3r_i)\,  . \end{equation}
+  </div>
+  <span class="equation_label">2.0.70</span>
+</p>
+</div>
+<p> With <a href="overviewsection.html#3rone">2.0.67</a> and <a href="overviewsection.html#3rtwo">2.0.70</a>, we conclude </p>
+<div class="equation" id="a0000000064">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \bigcup \mathcal{B}\subset \bigcup _{0\le i{\lt} i''}B(x_i,3r_i)\,  . \end{equation}
+  </div>
+  <span class="equation_label">2.0.71</span>
+</p>
+</div>
+<p> With the doubling property <a href="sect0001.html#doublingx">1.1.2</a> applied twice, we conclude </p>
+<div class="equation" id="eqbes2">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqbes2} \mu (\bigcup {\mathcal{B}}) \le \sum _{0\le i{\lt} i''}\mu (B(x_i,3r_i)) \le 2^{2a}\sum _{0\le i{\lt} i''}\mu (B_i)\,  . \end{equation}
+  </div>
+  <span class="equation_label">2.0.72</span>
+</p>
+</div>
+<p> With <a href="overviewsection.html#eqbes1">2.0.66</a> and <a href="overviewsection.html#eqbes2">2.0.72</a> we conclude <a href="overviewsection.html#eq-besico">2.0.61</a>. </p>
+<p>We turn to the proof of <a href="overviewsection.html#eq-hlm">2.0.62</a>. We first consider the case \(p_1=1\) and recall \(M_{\mathcal{B}}=M_{\mathcal{B},1}\). We write for the \(p_2\)-th power of left-hand side of <a href="overviewsection.html#eq-hlm">2.0.62</a> with <a href="sec-hlm.html#MeasureTheory.eLpNorm_pow_eq_distribution">9.0.1</a> and a change of variables </p>
+<div class="equation" id="a0000000065">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \| M_{\mathcal{B}}u(x)\| _{p_2}^{p_2} =p_2\int _0^{\infty } \lambda ^{p_2-1} \mu (\{ x: M_{\mathcal{B}}u(x)\ge \lambda \} ) d\lambda \,  \end{equation}
+  </div>
+  <span class="equation_label">2.0.73</span>
+</p>
+</div>
+<div class="equation" id="eqbesi11">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqbesi11} =2^{p_2} p_2\int _0^{\infty } \lambda ^{p_2-1} \mu (\{ x: M_{\mathcal{B}}u(x)\ge 2\lambda \} ) d\lambda \,  . \end{equation}
+  </div>
+  <span class="equation_label">2.0.74</span>
+</p>
+</div>
+<p> Fix \(\lambda \ge 0\) and let \(x\in X\) satisfy \(M_{\mathcal{B}}u(x)\ge 2\lambda \). By definition of \(M_{\mathcal{B}}\), there is a ball \(B'\in \mathcal{B}\) such that \(x\in B'\) and </p>
+<div class="equation" id="eqbesi10">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqbesi10} \int _{B'} u(y)\,  d\mu (y)\ge 2\lambda \mu ({B’}) \,  . \end{equation}
+  </div>
+  <span class="equation_label">2.0.75</span>
+</p>
+</div>
+<p> Define \(u_\lambda (y):=0\) if \(|u(y)|{\lt}\lambda \) and \(u_\lambda (y):=u(y)\) if \(|u(y)|\ge \lambda \). Then with <a href="overviewsection.html#eqbesi10">2.0.75</a> </p>
+<div class="equation" id="a0000000066">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \int _{B'} u_\lambda (y)\,  d\mu (y) =\int _{B'} u (y)\,  d\mu (y)- \int _{B'} (u-u_\lambda ) (y) d\mu (y)\,  \end{equation}
+  </div>
+  <span class="equation_label">2.0.76</span>
+</p>
+</div>
+<div class="equation" id="a0000000067">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \ge 2\lambda \mu ({B’})- \int _{B'} (u-u_\lambda ) (y) d\mu (y)\,  . \end{equation}
+  </div>
+  <span class="equation_label">2.0.77</span>
+</p>
+</div>
+<p> As \((u-u_\lambda )(y)\le \lambda \) by definition, we can estimate the last display by </p>
+<div class="equation" id="a0000000068">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \ge 2\lambda \mu ({B’})- \int _{B'} \lambda \,  d\mu (y) =\lambda \mu ({B’})\,  . \end{equation}
+  </div>
+  <span class="equation_label">2.0.78</span>
+</p>
+</div>
+<p> Hence \(x\) is contained in \(\bigcup (\mathcal{B}_\lambda )\), where \(\mathcal{B}_\lambda \) is the collection of balls \(B''\) in \(\mathcal{B}\) such that </p>
+<div class="equation" id="a0000000069">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \int _{B''} u_\lambda (y)\,  d\mu (y)\ge \lambda \mu (B'')\,  . \end{equation}
+  </div>
+  <span class="equation_label">2.0.79</span>
+</p>
+</div>
+<p> We have thus seen </p>
+<div class="equation" id="a0000000070">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \{ x: M_{\mathcal{B}}u(x)\ge 2\lambda \} \subset \bigcup \mathcal{B}_\lambda \,  . \end{equation}
+  </div>
+  <span class="equation_label">2.0.80</span>
+</p>
+</div>
+<p> Applying <a href="overviewsection.html#eq-besico">2.0.61</a> to the collection \(\mathcal{B}_\lambda \) gives </p>
+<div class="equation" id="a0000000071">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \lambda \mu (\{ x: M_{\mathcal{B}}u(x)\ge 2\lambda \} )\le 2^{2a} \int u_\lambda (x)\,  dx\,  . \end{equation}
+  </div>
+  <span class="equation_label">2.0.81</span>
+</p>
+</div>
+<p> With <a href="sec-hlm.html#MeasureTheory.eLpNorm_pow_eq_distribution">9.0.1</a>, </p>
+<div class="equation" id="eqbesi12">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqbesi12} \lambda \mu (\{ x: M_{\mathcal{B}}u(x)\ge 2\lambda \} )\le 2^{2a} \int _0^\infty \mu (\{ x: |u_\lambda (x)|\ge \lambda '\} )\,  d\lambda '\,  . \end{equation}
+  </div>
+  <span class="equation_label">2.0.82</span>
+</p>
+</div>
+<p> By definition of \(u_\lambda \), making a case distinction between \(\lambda \ge \lambda '\) and \(\lambda {\lt}\lambda '\), we see that </p>
+<div class="equation" id="eqbesi13">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqbesi13} \mu (\{ x: |u_\lambda (x)|\ge \lambda '\} ) \le \mu (\{ x: |u (x)|\ge \max (\lambda ,\lambda ')\} )\,  . \end{equation}
+  </div>
+  <span class="equation_label">2.0.83</span>
+</p>
+</div>
+<p> We obtain with <a href="overviewsection.html#eqbesi11">2.0.74</a>, <a href="overviewsection.html#eqbesi12">2.0.82</a>, and <a href="overviewsection.html#eqbesi13">2.0.83</a> </p>
+<div class="equation" id="a0000000072">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \| M_{\mathcal{B}}u(x)\| _{p_2}^{p_2} \end{equation}
+  </div>
+  <span class="equation_label">2.0.84</span>
+</p>
+</div>
+<div class="equation" id="a0000000073">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \le 2^{p_2+2a} p_2 \int _0^\infty \lambda ^{p_2-2} \int _0^\infty \mu (\{ x: |u (x)|\ge \max (\lambda ,\lambda ')\} ) \,  d\lambda 'd\lambda \,  . \end{equation}
+  </div>
+  <span class="equation_label">2.0.85</span>
+</p>
+</div>
+<p> We split the integral into \(\lambda \ge \lambda '\) and \(\lambda {\lt}\lambda '\) and resolve the maximum correspondingly. We have for \(\lambda \ge \lambda '\) with <a href="sec-hlm.html#MeasureTheory.eLpNorm_pow_eq_distribution">9.0.1</a> </p>
+<div class="equation" id="a0000000074">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \int _0^\infty \lambda ^{p_2-2} \int _0^\lambda \mu (\{ x: |u (x)|\ge \lambda \} ) \,  d\lambda 'd\lambda \end{equation}
+  </div>
+  <span class="equation_label">2.0.86</span>
+</p>
+</div>
+<div class="equation" id="a0000000075">
+<p>
+  <div class="equation_content">
+    \begin{equation}  =\int _0^\infty \lambda ^{p_2-1} \mu (\{ x: |u (x)|\ge \lambda \} ) d\lambda . \end{equation}
+  </div>
+  <span class="equation_label">2.0.87</span>
+</p>
+</div>
+<div class="equation" id="eqbesi14">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqbesi14} =p_2^{-1} \| u\| _{p_2}^{p_2}\,  . \end{equation}
+  </div>
+  <span class="equation_label">2.0.88</span>
+</p>
+</div>
+<p> We have for \(\lambda {\lt} \lambda '\) with Fubini and <a href="sec-hlm.html#MeasureTheory.eLpNorm_pow_eq_distribution">9.0.1</a> </p>
+<div class="equation" id="a0000000076">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \int _0^\infty \lambda ^{p_2-2} \int _\lambda ^\infty \mu (\{ x: |u(x)|\ge \lambda '\} ) \,  d\lambda 'd\lambda . \end{equation}
+  </div>
+  <span class="equation_label">2.0.89</span>
+</p>
+</div>
+<div class="equation" id="a0000000077">
+<p>
+  <div class="equation_content">
+    \begin{equation}  =\int _0^\infty \int _0^{\lambda '}\lambda ^{p_2-2} \mu (\{ x: |u (x)|\ge \lambda '\} ) d\lambda d\lambda '. \end{equation}
+  </div>
+  <span class="equation_label">2.0.90</span>
+</p>
+</div>
+<div class="equation" id="a0000000078">
+<p>
+  <div class="equation_content">
+    \begin{equation}  =(p_2-1)^{-1}\int _0^\infty (\lambda ')^{p_2-1} \mu (\{ x: |u(x)|\ge \lambda '\} ) d\lambda '. \end{equation}
+  </div>
+  <span class="equation_label">2.0.91</span>
+</p>
+</div>
+<div class="equation" id="eqbesi15">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqbesi15} =(p_2-1)^{-1} p_2^{-1}\| u\| _{p_2}^{p_2}\,  . \end{equation}
+  </div>
+  <span class="equation_label">2.0.92</span>
+</p>
+</div>
+<p> Adding the two estimates <a href="overviewsection.html#eqbesi14">2.0.88</a> and <a href="overviewsection.html#eqbesi15">2.0.92</a> gives </p>
+<div class="equation" id="a0000000079">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \| M_{\mathcal{B}}u(x)\| _{p_2}^{p_2} \le 2^{p_2+2a} (1+(p_2-1)^{-1})\| u\| _{p_2}^{p_2} = 2^{p_2+2a} p_2(p_2-1)^{-1}\| u\| _{p_2}^{p_2} \,  . \end{equation}
+  </div>
+  <span class="equation_label">2.0.93</span>
+</p>
+</div>
+<p> With \(a\ge 1\) and \(p_2{\gt}1\), taking the \(p_2\)-th root, we obtain <a href="overviewsection.html#eq-hlm">2.0.62</a>. We turn to the case of general \(1\le p_1{\lt}p_2\). We have </p>
+<div class="equation" id="a0000000080">
+<p>
+  <div class="equation_content">
+    \begin{equation}  M_{\mathcal{B},p_1}u=(M_{\mathcal{B}} (|u|^{p_1}))^{\frac1{p_1}}\,  . \end{equation}
+  </div>
+  <span class="equation_label">2.0.94</span>
+</p>
+</div>
+<p> Applying the special case of <a href="overviewsection.html#eq-hlm">2.0.62</a> for \(M_{\mathcal{B}}\) gives </p>
+<div class="equation" id="a0000000081">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \| M_{\mathcal{B},p_1}u\| _{p_2}= \| M_{\mathcal{B}} (|u|^{p_1})\| _{p_2/p_1}^{\frac1{p_1}} \end{equation}
+  </div>
+  <span class="equation_label">2.0.95</span>
+</p>
+</div>
+<div class="equation" id="a0000000082">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \le 2^{2a} (p_2/p_1) (p_2/p_1-1)^{-1} \| (|u|^{p_1})\| _{p_2/p_1}^{\frac1{p_1}} =2^{2a} p_2(p_2-p_1)^{-1}\| u\| _{p_2}\,  . \end{equation}
+  </div>
+  <span class="equation_label">2.0.96</span>
+</p>
+</div>
+<p> This proves <a href="overviewsection.html#eq-hlm">2.0.62</a> in general. </p>
+<p>Now we construct the operator \(M\) satisfying <a href="overviewsection.html#eq-ball-av">2.0.63</a> and <a href="overviewsection.html#eq-hlm-2">2.0.64</a>. For each \(k \in \mathbb {Z}\) we choose a countable set \(C(2^k)\) as in <a href="sec-hlm.html#covering_separable_space">9.0.2</a>. Define </p>
+<div class="displaymath" id="a0000000083">
+  \[ \mathcal{B}_\infty = \{ B(c, 2^k) \  : \  c \in C(2^k), k \in \mathbb {Z}\} \, . \]
+</div>
+<p> By <a href="sec-hlm.html#covering_separable_space">9.0.2</a>, this is a countable collection of balls. We choose an enumeration \(\mathcal{B}_\infty = \{ B_1, \dotsc \} \) and define </p>
+<div class="displaymath" id="a0000000084">
+  \[ \mathcal{B}_n = \{ B_1, \dotsc , B_n\} \, . \]
+</div>
+<p> We define </p>
+<div class="displaymath" id="a0000000085">
+  \[ Mw := 2^{2a}\sup _{n \in \mathbb {N}} M_{\mathcal{B}_n}w\, . \]
+</div>
+<p> This function is measurable for each measurable \(w\), since it is a countable supremum of measurable functions. Estimate <a href="overviewsection.html#eq-hlm-2">2.0.64</a> follows immediately from <a href="overviewsection.html#eq-hlm">2.0.62</a> and the monotone convergence theorem. </p>
+<p>It remains to show <a href="overviewsection.html#eq-ball-av">2.0.63</a>. Let \(B = B(x, r) \subset X\). Let \(k\) be the smallest integer such that \(2^k \ge r\), in particular we have \(2^k {\lt} 2r\). By definition of \(C(2^k)\), there exists \(c \in C(2^k)\) with \(x \in B(c, 2^k)\). By the triangle inequality, we have \(B(c, 2^k) \subset B(x, 4r)\), and hence by the doubling property <a href="sect0001.html#doublingx">1.1.2</a> </p>
+<div class="displaymath" id="a0000000086">
+  \[ \mu (B(c, 2^k)) \le 2^{2a} \mu (B(x,r))\, . \]
+</div>
+<p> It follows that for each \(z \in B(x,r)\) </p>
+<div class="displaymath" id="a0000000087">
+  \begin{align*}  \frac{1}{\mu (B(x,r))}\int _{B(x,r)} |w(y)| \,  \mathrm{d}\mu (y) & \le \frac{2^{2a}}{\mu (B(c,2^k))}\int _{B(c,2^k)} |w(y)| \,  \mathrm{d}\mu (y) \\ & \le Mw(z)\, . \end{align*}
+</div>
+<p> This completes the proof.</p>
+
+  </div>
+</div>
+<p>This completes the overview of the proof of <a href="sect0001.html#metric_carleson">Theorem 1.1.1</a>. </p>
+<h2 id="global-auxiliary-lemmas">2.1 Auxiliary lemmas</h2>
+<p>  We close this section by recording some auxiliary lemmas about the objects defined in <a href="overviewsection.html">Section 2</a>, which will be used in multiple sections to follow. </p>
+<p>First, we record an estimate for the metrical entropy numbers of balls in the space \({\Theta }\) equipped with any of the metrics \(d_B\), following from the doubling property <a href="sect0001.html#thirddb" class="eqref">1.1.8</a>. </p>
+<div class="lemma_thmwrapper theorem-style-plain" id="Θ.finite_and_mk_le_of_le_dist">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">2.1.1</span>
+    <span class="lemma_thmtitle">ball metric entropy</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="overviewsection.html#Θ.finite_and_mk_le_of_le_dist">#</a>
+    
+    <a class="icon proof" href="overviewsection.html#a0000000088"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/Θ.finite_and_mk_le_of_le_dist" class="lean_decl">Θ.finite_and_mk_le_of_le_dist</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p> Let \(B' \subset X\) be a ball. Let \(r {\gt} 0\), \({\vartheta }\in {\Theta }\) and \(k \in \mathbb {N}\). Suppose that \(\mathcal{Z} \subset B_{B'}({\vartheta }, r2^k)\) satisfies that \(\{ B_{B'}(z,r)\mid z \in \mathcal{Z}\} \) is a collection of pairwise disjoint sets. Then </p>
+<div class="displaymath" id="a0000000089">
+  \[ |\mathcal{Z}| \le 2^{ka}\, . \]
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000088">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>By applying property <a href="sect0001.html#thirddb">1.1.8</a> \(k\) times, we obtain a collection \(\mathcal{Z}' \subset {\Theta }\) with \(|\mathcal{Z}'| = 2^{ka}\) and </p>
+<div class="displaymath" id="a0000000090">
+  \[ B_{B'}({\vartheta },r2^k) \subset \bigcup _{z' \in \mathcal{Z}'} B_{B'}(z', \frac{r}{2})\, . \]
+</div>
+<p> Then each \(z \in \mathcal{Z}\) is contained in one of the balls \(B(z', \frac{r}{2})\), but by the separation assumption no such ball contains more than one element of \(\mathcal{Z}\). Thus \(|\mathcal{Z}| \le |\mathcal{Z}'| = 2^{ka}\).</p>
+
+  </div>
+</div>
+<p>The next lemma concerns monotonicity of the metrics \(d_{B(c(I), \frac14 D^{s(I)})}\) with respect to inclusion of cubes \(I\) in a grid. </p>
+<div class="lemma_thmwrapper theorem-style-plain" id="Grid.dist_mono">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">2.1.2</span>
+    <span class="lemma_thmtitle">monotone cube metrics</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="overviewsection.html#Grid.dist_mono">#</a>
+    
+    <a class="icon proof" href="overviewsection.html#a0000000091"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/Grid.dist_mono" class="lean_decl">Grid.dist_mono</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p> Let \((\mathcal{D}, c, s)\) be a grid structure. Denote for cubes \(I \in \mathcal{D}\) </p>
+<div class="displaymath" id="a0000000092">
+  \[ I^\circ := B(c(I), \frac{1}{4} D^{s(I)})\, . \]
+</div>
+<p> Let \(I, J \in \mathcal{D}\) with \(I \subset J\). Then for all \({\vartheta }, {\theta }\in {\Theta }\) we have </p>
+<div class="displaymath" id="a0000000093">
+  \[ d_{I^\circ }({\vartheta }, {\theta }) \le d_{J^\circ }({\vartheta }, {\theta })\, , \]
+</div>
+<p> and if \(I \ne J\) then we have </p>
+<div class="displaymath" id="a0000000094">
+  \[ d_{I^\circ }({\vartheta }, {\theta }) \le 2^{-95a} d_{J^\circ }({\vartheta }, {\theta })\, . \]
+</div>
+<p>Weaker version of Lemma 2.1.2.</p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000091">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>If \(s(I) \ge s(J)\) then <a href="overviewsection.html#dyadicproperty">2.0.11</a> and the assumption \(I\subset J\) imply \(I = J\). Then the lemma holds by reflexivity. </p>
+<p>If \(s(J) \ge s(I)+1\), then using the monotonicity property <a href="sect0001.html#monotonedb">1.1.6</a>, <a href="overviewsection.html#defineD">2.0.1</a> and <a href="sect0001.html#seconddb">1.1.7</a>, we get </p>
+<div class="equation" id="eq-dIJ-est">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-dIJ-est} d_{I^\circ }({\vartheta }, {\theta }) \le d_{B(c(I), 4 D^{s(I)})}({\vartheta }, {\theta }) \le 2^{-100a} d_{B(c(I), 4D^{s(J)})}({\vartheta }, {\theta })\, . \end{equation}
+  </div>
+  <span class="equation_label">2.1.1</span>
+</p>
+</div>
+<p> Using <a href="overviewsection.html#eq-vol-sp-cube">2.0.13</a>, together with the inclusion \(I \subset J\), we obtain </p>
+<div class="displaymath" id="a0000000095">
+  \[ c(I) \in I \subset J \subset B(c(J), 4 D^{s(J)}) \]
+</div>
+<p> and consequently by the triangle inequality </p>
+<div class="displaymath" id="a0000000096">
+  \[ B(c(I), 4 D^{s(J)}) \subset B(c(J), 8 D^{s(J)})\, . \]
+</div>
+<p> Using this together with the monotonicity property <a href="sect0001.html#monotonedb">1.1.6</a> and <a href="sect0001.html#firstdb">1.1.5</a> in <a href="overviewsection.html#eq-dIJ-est">2.1.1</a>, we obtain </p>
+<div class="displaymath" id="a0000000097">
+  \begin{align*}  d_{I^\circ }({\vartheta }, {\theta }) & \le 2^{-100a} d_{B(c(J), 8D^{s(J)})}({\vartheta }, {\theta })\\ & \le 2^{-100a + 5a} d_{B(c(J), \frac{1}{4}D^{s(J)})}({\vartheta }, {\theta })\\ & = 2^{-95a}d_{J^\circ }({\vartheta }, {\theta })\, . \end{align*}
+</div>
+<p> This proves the second inequality claimed in the Lemma, from which the first follows since \(a \ge 4\) and hence \(2^{-95a} \le 1\).</p>
+
+  </div>
+</div>
+<p>We also record the following basic estimates for the kernels \(K_s\). </p>
+<div class="lemma_thmwrapper theorem-style-plain" id="dist_mem_Icc_of_Ks_ne_zero">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">2.1.3</span>
+    <span class="lemma_thmtitle">kernel summand</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="overviewsection.html#dist_mem_Icc_of_Ks_ne_zero">#</a>
+    
+    <a class="icon proof" href="overviewsection.html#a0000000098"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/dist_mem_Icc_of_Ks_ne_zero" class="lean_decl">dist_mem_Icc_of_Ks_ne_zero</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p> Let \(-S\le s\le S\) and \(x,y,y'\in X\). If \(K_s(x,y)\neq 0\), then we have </p>
+<div class="equation" id="supp-Ks">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{supp-Ks} \frac{1}{4} D^{s-1} \leq \rho (x,y) \leq \frac{1}{2} D^s\,  . \end{equation}
+  </div>
+  <span class="equation_label">2.1.2</span>
+</p>
+</div>
+<p> We have </p>
+<div class="equation" id="eq-Ks-size">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-Ks-size} |K_s(x,y)|\le \frac{2^{102 a^3}}{\mu (B(x, D^{s}))}\,  \end{equation}
+  </div>
+  <span class="equation_label">2.1.3</span>
+</p>
+</div>
+<p> and </p>
+<div class="equation" id="eq-Ks-smooth">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-Ks-smooth} |K_s(x,y)-K_s(x, y')|\le \frac{2^{127a^3}}{\mu (B(x, D^{s}))} \left(\frac{ \rho (y,y')}{D^s}\right)^{\frac1a}\, . \end{equation}
+  </div>
+  <span class="equation_label">2.1.4</span>
+</p>
+</div>
+<p>Lemma 2.1.3 part 1, equation (2.1.2)</p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000098">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>By Definition <a href="overviewsection.html#defks">2.0.5</a>, the function \(K_s\) is the product of \(K\) with a function which is supported in the set of all \(x,y\) satisfying <a href="overviewsection.html#supp-Ks">2.1.2</a>. This proves <a href="overviewsection.html#supp-Ks">2.1.2</a>. </p>
+<p>Using <a href="sect0001.html#eqkernel-size">1.1.11</a> and the lower bound in <a href="overviewsection.html#supp-Ks">2.1.2</a> we obtain </p>
+<div class="equation" id="eqkernel-size-Ks">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqkernel-size-Ks} |K_s(x,y)|\le |K(x,y)|\le \frac{2^{a^3}}{\mu (B(x,\frac14 D^{s-1}))} \end{equation}
+  </div>
+  <span class="equation_label">2.1.5</span>
+</p>
+</div>
+<p> Using \(D=2^{100a^2}\) and the doubling property <a href="sect0001.html#doublingx">1.1.2</a> \(2 +100a^2\) times estimates the last display by </p>
+<div class="equation" id="eq-Ks-aux">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-Ks-aux} \le \frac{2^{2a+101a^3}}{\mu (B(x, D^{s}))}\,  . \end{equation}
+  </div>
+  <span class="equation_label">2.1.6</span>
+</p>
+</div>
+<p> Using \(a\ge 4\) proves <a href="overviewsection.html#eq-Ks-size">2.1.3</a>. </p>
+<p>To prove <a href="overviewsection.html#eq-Ks-smooth">2.1.4</a> when \(2\rho (y,y') {\gt} \rho (x,y)\), use the lower bound in <a href="overviewsection.html#supp-Ks">2.1.2</a> and the inequality \(2\rho (y,y') {\gt} \frac{1}{4}D^{s-1}\). Then <a href="overviewsection.html#eq-Ks-smooth">2.1.4</a> follows from the triangle inequality, <a href="overviewsection.html#eq-Ks-size">2.1.3</a> and \(a \ge 4\). </p>
+<p>If \(2\rho (y,y') \le \rho (x,y)\), we rewrite \(|K_s(x,y)-K_s(x, y')|\) as </p>
+<div class="equation" id="a0000000099">
+<p>
+  <div class="equation_content">
+    \begin{equation}  |(K(x,y)-K(x,y')) \psi (D^{-s}\rho (x,y)) + K(x,y)(\psi (D^{-s}\rho (x,y))-\psi (D^{-s}\rho (x,y')))|\, . \end{equation}
+  </div>
+  <span class="equation_label">2.1.7</span>
+</p>
+</div>
+<p> An upper bound for \(|K(x,y)-K(x, y')|\) is obtained similarly to the proof of <a href="overviewsection.html#eq-Ks-size">2.1.3</a>, using <a href="sect0001.html#eqkernel-y-smooth">1.1.12</a> and the lower bound in <a href="overviewsection.html#supp-Ks">2.1.2</a> </p>
+<div class="equation" id="a0000000100">
+<p>
+  <div class="equation_content">
+    \begin{equation}  |K(x,y)-K(x, y')|\le \frac{2^{a^3}}{\mu (B(x, \frac14 D^{s-1}))} \left(\frac{ \rho (y,y')}{\frac14 D^{s-1}}\right)^{\frac1a}\, . \end{equation}
+  </div>
+  <span class="equation_label">2.1.8</span>
+</p>
+</div>
+<p> As above, this is estimated by </p>
+<div class="equation" id="a0000000101">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \le \frac{4D 2^{2a+101a^3}}{\mu (B(x, D^{s}))} \left(\frac{ \rho (y,y')}{D^{s}}\right)^{\frac1a} = \frac{2^{2+2a+100a^2+101a^3}}{\mu (B(x, D^{s}))} \left(\frac{ \rho (y,y')}{D^{s}}\right)^{\frac1a}\, . \end{equation}
+  </div>
+  <span class="equation_label">2.1.9</span>
+</p>
+</div>
+<p> We have the trivial bound \(|\psi (D^{-s}\rho (x,y))| \leq 1\), and <a href="overviewsection.html#eq-Ks-aux">2.1.6</a> provides a bound for \(|K(x,y)|\). Finally, we show that </p>
+<div class="equation" id="a0000000102">
+<p>
+  <div class="equation_content">
+    \begin{equation}  |\psi (D^{-s}\rho (x,y))-\psi (D^{-s}\rho (x,y'))|\le 4D \left(\frac{\rho (y, y')}{D ^s}\right)^{\frac1a} \end{equation}
+  </div>
+  <span class="equation_label">2.1.10</span>
+</p>
+</div>
+<p> by considering separately the cases \(\rho (y,y')/D^s \ge 1\) and \(\rho (y,y')/D^s {\lt} 1\). In the former case, the inequality is trivial; in the latter case, it follows from the fact that \(\psi \) is Lipschitz with constant \(4D\). </p>
+<p>Combining the above bounds and using \(a\ge 4\) proves <a href="overviewsection.html#eq-Ks-smooth">2.1.4</a> when \(2\rho (y,y') \le \rho (x,y)\).</p>
+
+  </div>
+</div>
+
+</div> <!--main-text -->
+</div> <!-- content-wrapper -->
+</div> <!-- content -->
+</div> <!-- wrapper -->
+
+<nav class="prev_up_next">
+  <svg  id="showmore-minus" class="icon icon-eye-minus showmore"><use xlink:href="symbol-defs.svg#icon-eye-minus"></use></svg>
+
+  <svg  id="showmore-plus" class="icon icon-eye-plus showmore"><use xlink:href="symbol-defs.svg#icon-eye-plus"></use></svg>
+
+  <a href="sect0001.html" title="Introduction"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+</a>
+  <a href="index.html" title="A blueprint for the formalization of Carleson’s theorem on convergence of Fourier series"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+</a>
+  <a href="thmfromproplinear.html" title="Proof of Metric Space Carleson"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+</a>
+</nav>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/plastex.js"></script>
+<script type="text/javascript" src="js/svgxuse.js"></script>
+<script type="text/javascript" src="js/js.cookie.min.js"></script>
+<script type="text/javascript" src="js/showmore.js"></script>
+</body>
+</html>

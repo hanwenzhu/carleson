@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  MathJax = { 
+    tex: {
+		    inlineMath: [['$','$'], ['\\(','\\)']]
+	} }
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<meta name="generator" content="plasTeX" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>A blueprint for the formalization of Carleson’s theorem on convergence of Fourier series: Proof of the Hölder cancellative condition</title>
+<link rel="next" href="sec-hlm.html" title="Proof of Vitali covering and Hardy–Littlewood" />
+<link rel="prev" href="treesection.html" title="Proof of the Forest Operator Proposition" />
+<link rel="up" href="index.html" title="A blueprint for the formalization of Carleson’s theorem on convergence of Fourier series" />
+<link rel="stylesheet" href="styles/theme-white.css" />
+<link rel="stylesheet" href="styles/amsthm.css" />
+<link rel="stylesheet" href="styles/showmore.css" />
+<link rel="stylesheet" href="styles/blueprint.css" />
+<link rel="stylesheet" href="styles/extra_styles.css" />
+</head>
+
+<body>
+<header>
+<svg  id="toc-toggle" class="icon icon-list-numbered "><use xlink:href="symbol-defs.svg#icon-list-numbered"></use></svg>
+<h1 id="doc_title"><a href="index.html">A blueprint for the formalization of Carleson’s theorem on convergence of Fourier series</a></h1>
+</header>
+
+<div class="wrapper">
+<nav class="toc">
+<ul class="sub-toc-0">
+<li class="">
+  <a href="sect0001.html"><span class="toc_ref">1</span> <span class="toc_entry">Introduction</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0001.html#a0000000006"><span class="toc_ref">1.1</span> <span class="toc_entry">Statement of the metric space Carleson theorems</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="overviewsection.html"><span class="toc_ref">2</span> <span class="toc_entry">Proof of Metric Space Carleson, overview</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="overviewsection.html#global-auxiliary-lemmas"><span class="toc_ref">2.1</span> <span class="toc_entry">Auxiliary lemmas</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="thmfromproplinear.html"><span class="toc_ref">3</span> <span class="toc_entry">Proof of Metric Space Carleson</span></a>
+ </li>
+<li class="">
+  <a href="christsection.html"><span class="toc_ref">4</span> <span class="toc_entry">Proof of Finitary Carleson</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="christsection.html#subsecdyadic"><span class="toc_ref">4.1</span> <span class="toc_entry">Proof of Grid Existence Lemma</span></a>
+ </li>
+<li class="">
+  <a href="christsection.html#subsectiles"><span class="toc_ref">4.2</span> <span class="toc_entry">Proof of Tile Structure Lemma</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="proptopropprop.html"><span class="toc_ref">5</span> <span class="toc_entry">Proof of discrete Carleson</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="proptopropprop.html#subsectilesorg"><span class="toc_ref">5.1</span> <span class="toc_entry">Organisation of the tiles</span></a>
+ </li>
+<li class="">
+  <a href="proptopropprop.html#subsetexcset"><span class="toc_ref">5.2</span> <span class="toc_entry">Proof of the Exceptional Sets Lemma</span></a>
+ </li>
+<li class="">
+  <a href="proptopropprop.html#subsec-lessim-aux"><span class="toc_ref">5.3</span> <span class="toc_entry">Auxiliary lemmas</span></a>
+ </li>
+<li class="">
+  <a href="proptopropprop.html#subsecforest"><span class="toc_ref">5.4</span> <span class="toc_entry">Proof of the Forest Union Lemma</span></a>
+ </li>
+<li class="">
+  <a href="proptopropprop.html#subsecantichain"><span class="toc_ref">5.5</span> <span class="toc_entry">Proof of the Forest Complement Lemma</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="antichainboundary.html"><span class="toc_ref">6</span> <span class="toc_entry">Proof of the Antichain Operator Proposition</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="antichainboundary.html#sec-TT*-T*T"><span class="toc_ref">6.1</span> <span class="toc_entry">The density arguments</span></a>
+ </li>
+<li class="">
+  <a href="antichainboundary.html#sec-tile-operator"><span class="toc_ref">6.2</span> <span class="toc_entry">Proof of the Tile Correlation Lemma</span></a>
+ </li>
+<li class="">
+  <a href="antichainboundary.html#subsec-geolem"><span class="toc_ref">6.3</span> <span class="toc_entry">Proof of the Antichain Tile Count Lemma</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="treesection.html"><span class="toc_ref">7</span> <span class="toc_entry">Proof of the Forest Operator Proposition</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="treesection.html#a0000000022"><span class="toc_ref">7.1</span> <span class="toc_entry">The pointwise tree estimate</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#a0000000023"><span class="toc_ref">7.2</span> <span class="toc_entry">An auxiliary \(L^2\) tree estimate</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#a0000000024"><span class="toc_ref">7.3</span> <span class="toc_entry">The quantitative \(L^2\) tree estimate</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#a0000000025"><span class="toc_ref">7.4</span> <span class="toc_entry">Almost orthogonality of separated trees</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#subsec-big-tiles"><span class="toc_ref">7.5</span> <span class="toc_entry">Proof of the Tiles with large separation Lemma</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#subsec-rest-tiles"><span class="toc_ref">7.6</span> <span class="toc_entry">Proof of The Remaining Tiles Lemma</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#a0000000026"><span class="toc_ref">7.7</span> <span class="toc_entry">Forests</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class=" active current">
+  <a href="liphoel.html"><span class="toc_ref">8</span> <span class="toc_entry">Proof of the Hölder cancellative condition</span></a>
+ </li>
+<li class="">
+  <a href="sec-hlm.html"><span class="toc_ref">9</span> <span class="toc_entry">Proof of Vitali covering and Hardy–Littlewood</span></a>
+ </li>
+<li class="">
+  <a href="sect0002.html"><span class="toc_ref">10</span> <span class="toc_entry">Two-sided Metric Space Carleson</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0002.html#subsec-cotlar"><span class="toc_ref">10.1</span> <span class="toc_entry">Proof of Cotlar’s Inequality</span></a>
+ </li>
+<li class="">
+  <a href="sect0002.html#subsec-CZD"><span class="toc_ref">10.2</span> <span class="toc_entry">Calderón-Zygmund Decomposition</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="sect0003.html"><span class="toc_ref">11</span> <span class="toc_entry">Proof of The Classical Carleson Theorem</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0003.html#10classical"><span class="toc_ref">11.1</span> <span class="toc_entry">The classical Carleson theorem</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10smooth"><span class="toc_ref">11.2</span> <span class="toc_entry">Smooth functions.</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10hilbert"><span class="toc_ref">11.3</span> <span class="toc_entry">The truncated Hilbert transform</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10vandercorput"><span class="toc_ref">11.4</span> <span class="toc_entry">The proof of the van der Corput Lemma</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10projection"><span class="toc_ref">11.5</span> <span class="toc_entry">Partial sums as orthogonal projections</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10difference"><span class="toc_ref">11.6</span> <span class="toc_entry">The error bound</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10carleson"><span class="toc_ref">11.7</span> <span class="toc_entry">Carleson on the real line</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li ><a href="dep_graph_document.html">Dependency graph</a></li>
+</ul>
+</nav>
+
+<div class="content">
+<div class="content-wrapper">
+
+
+<div class="main-text">
+<h1 id="liphoel">8 Proof of the Hölder cancellative condition</h1>
+
+<p>We need the following auxiliary lemma. Recall that \(\tau = 1/a\). </p>
+<div class="lemma_thmwrapper theorem-style-plain" id="support_holderApprox_subset">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">8.0.1</span>
+    <span class="lemma_thmtitle">Lipschitz Holder approximation</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="liphoel.html#support_holderApprox_subset">#</a>
+    
+    <a class="icon proof" href="liphoel.html#a0000000692"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/support_holderApprox_subset" class="lean_decl">support_holderApprox_subset</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p> Let \(z\in X\) and \(R{\gt}0\). Let \(\varphi : X \to \mathbb {C}\) be a function supported in the ball \(B:=B(z,R)\) with finite norm \(\| \varphi \| _{C^\tau (B(z, 2R))}\). Let \(0 {\lt} t \leq 1\). There exists a function \(\tilde\varphi : X \to \mathbb {C}\), supported in \(B(z,2R)\), such that for every \(x\in X\) </p>
+<div class="equation" id="eq-firstt">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-firstt} |\varphi (x) - \tilde\varphi (x)| \leq (t/2)^{\tau } \| \varphi \| _{C^\tau (B(z,2R))} \end{equation}
+  </div>
+  <span class="equation_label">8.0.1</span>
+</p>
+</div>
+<p> and </p>
+<div class="equation" id="eq-secondt">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-secondt} \| \tilde\varphi \| _{\operatorname{\operatorname {Lip}}(B(z,2R))} \leq 2^{4a}t^{-1-a} \| \varphi \| _{C^{\tau }(B(z,2R))}\,  . \end{equation}
+  </div>
+  <span class="equation_label">8.0.2</span>
+</p>
+</div>
+<p>Part of Lemma 8.0.1.</p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000692">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Define for \(x,y\in X\) the Lipschitz and thus measurable function </p>
+<div class="equation" id="a0000000693">
+<p>
+  <div class="equation_content">
+    \begin{equation}  L(x,y) := \max \{ 0, 1 - \frac{\rho (x,y)}{tR}\} \,  . \end{equation}
+  </div>
+  <span class="equation_label">8.0.3</span>
+</p>
+</div>
+<p> We have that \(L(x,y)\neq 0\) implies </p>
+<div class="equation" id="eql01">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eql01} y\in B(x, tR)\,  . \end{equation}
+  </div>
+  <span class="equation_label">8.0.4</span>
+</p>
+</div>
+<p> We have for \(y\in B(x, 2^{-1}tR)\) that </p>
+<div class="equation" id="eql30">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eql30} |L(x,y)|\ge 2^{-1} \  . \end{equation}
+  </div>
+  <span class="equation_label">8.0.5</span>
+</p>
+</div>
+<p> Hence </p>
+<div class="equation" id="a0000000694">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \int L(x,y) \,  \mathrm{d}\mu (y)\ge 2^{-1}\mu (B(x, 2^{-1}tR))\,  . \end{equation}
+  </div>
+  <span class="equation_label">8.0.6</span>
+</p>
+</div>
+<p> Let \(n\) be the smallest integer so that </p>
+<div class="equation" id="2nt1">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{2nt1} 2^n t\ge 1\,  . \end{equation}
+  </div>
+  <span class="equation_label">8.0.7</span>
+</p>
+</div>
+<p> Iterating \(n+2\) times the doubling condition <a href="sect0001.html#doublingx">1.1.2</a>, we obtain </p>
+<div class="equation" id="eql32">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eql32} \int L(x,y) \,  \mathrm{d}\mu (y)\ge 2^{-1-a(n+2)}\mu (B(x, 2R))\,  . \end{equation}
+  </div>
+  <span class="equation_label">8.0.8</span>
+</p>
+</div>
+<p>Now define </p>
+<div class="displaymath" id="a0000000695">
+  \[ \tilde\varphi (x) := \left(\int L(x,y) \,  \mathrm{d}\mu (y)\right)^{-1}\int L(x,y) \varphi (y) \,  \mathrm{d}\mu (y)\,  . \]
+</div>
+<p> Using that \(\varphi \) is supported in \(B(z,R)\) and <a href="liphoel.html#eql01">8.0.4</a>, we have that \(\tilde{\varphi }\) is supported in \(B(z,2R)\). </p>
+<p>We prove <a href="liphoel.html#eq-firstt">8.0.1</a>. For any \(x\in X\), using that \(L\) is nonnegative, </p>
+<div class="equation" id="eql1">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eql1} \left(\int L(x,y) \,  \mathrm{d}\mu (y)\right) |\varphi (x) - \tilde\varphi (x)| \end{equation}
+  </div>
+  <span class="equation_label">8.0.9</span>
+</p>
+</div>
+<div class="equation" id="eql2">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eql2} = \left| \int L(x,y)(\varphi (x) - \varphi (y)) \,  \mathrm{d}\mu (y)\right|\,  . \end{equation}
+  </div>
+  <span class="equation_label">8.0.10</span>
+</p>
+</div>
+<p> Using <a href="liphoel.html#eql01">8.0.4</a>, we estimate the last display by </p>
+<div class="equation" id="eql3">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eql3} \le \int _{B(x, tR)} L(x,y)|\varphi (x) - \varphi (y)| \,  \mathrm{d}\mu (y)\,  . \end{equation}
+  </div>
+  <span class="equation_label">8.0.11</span>
+</p>
+</div>
+<p> We claim that in this integral, \(|\varphi (x) - \varphi (y)|\le \rho (x,y)^\tau \| \varphi \| _{C^\tau (B(z, 2R))}(2R)^{-\tau }\). Indeed, if \(x\) or \(y\) does not belong to \(B(z, 2R)\), then the other point is not in \(B(z,R)\) as \(\rho (x,y)\le tR \le R\). Therefore, \(\varphi (x)=\varphi (y)=0\) since \(\varphi \) is supported in \(B (z, R)\). Otherwise, both points are in \(B(z, 2R)\), and the inequality follows from the definition of \(\| \varphi \| _{C^\tau (B(z, 2R))}\). </p>
+<p>Therefore, we can estimate the last display further by </p>
+<div class="equation" id="eql4">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eql4} \le \left(\int _{B(x, tR)} L(x,y) \rho (x,y)^\tau \,  \mathrm{d}\mu (y) \right)\| \varphi \| _{C^\tau (B(z, 2R))}(2R)^{-\tau }\,  . \end{equation}
+  </div>
+  <span class="equation_label">8.0.12</span>
+</p>
+</div>
+<p>Using the condition on the domain of integration to estimate \(\rho (x,y)\) by \(tR\) and then expanding the domain by positivity of the integrand, we estimate this further by </p>
+<div class="equation" id="eql5">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eql5} \le \left(\int L(x,y) \,  \mathrm{d}\mu (y)\right) \| \varphi \| _{C^\tau (B(z, 2R))} (t/2)^{\tau } \,  . \end{equation}
+  </div>
+  <span class="equation_label">8.0.13</span>
+</p>
+</div>
+<p> Dividing the string of inequalities from <a href="liphoel.html#eql1">8.0.9</a> to <a href="liphoel.html#eql5">8.0.13</a> by the positive integral of \(L\) proves <a href="liphoel.html#eq-firstt">8.0.1</a>. </p>
+<p>We turn to <a href="liphoel.html#eq-secondt">8.0.2</a>. For every \(x\in X\), we have </p>
+<div class="equation" id="a0000000696">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \left|\int L(x,y) \,  \mathrm{d}\mu (y)\right||\tilde{\varphi }(x)| =\left|\int L(x,y) {\varphi }(y)\,  \mathrm{d}\mu (y)\right| \end{equation}
+  </div>
+  <span class="equation_label">8.0.14</span>
+</p>
+</div>
+<div class="equation" id="a0000000697">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \le \left|\int L(x,y) \,  \mathrm{d}\mu (y)\right| \sup _{x'\in X} |{\varphi }(x')|\  . \end{equation}
+  </div>
+  <span class="equation_label">8.0.15</span>
+</p>
+</div>
+<p> As \(\varphi \) is supported on \(B\), dividing by the integral of \(L\), we obtain </p>
+<div class="equation" id="eql42">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eql42} |\tilde{\varphi }(x)|\le \sup _{x'\in B} |{\varphi }(x')|\le \| \varphi \| _{C^\tau (B(z, 2R))}\  . \end{equation}
+  </div>
+  <span class="equation_label">8.0.16</span>
+</p>
+</div>
+<p> If \(\rho (x,x')\ge R\), then we have by the triangle inequality </p>
+<div class="equation" id="eql52">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eql52} R\frac{|\tilde{\varphi }(x') - \tilde\varphi (x)|}{\rho (x,x')} \le 2\sup _{x''\in X} |\tilde{\varphi }(x'')|\le 2\| \varphi \| _{C^\tau (B(z, 2R))}\,  . \end{equation}
+  </div>
+  <span class="equation_label">8.0.17</span>
+</p>
+</div>
+<p> Now assume \(\rho (x,x'){\lt} R\). For \(y\in X\) we have by the triangle inequality and a two fold case distinction for the maximum in the definition of \(L\), </p>
+<div class="equation" id="eql10">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eql10} |L(x,y) - L(x',y)| \le \frac{\rho (x,x')}{tR}. \end{equation}
+  </div>
+  <span class="equation_label">8.0.18</span>
+</p>
+</div>
+<p> We compute with <a href="liphoel.html#eql10">8.0.18</a>, first adding and subtracting a term in the integral, </p>
+<div class="equation" id="a0000000698">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \left(\int L(x,y) \,  \mathrm{d}\mu (y)\right) |\tilde{\varphi }(x') - \tilde\varphi (x)|= \end{equation}
+  </div>
+  <span class="equation_label">8.0.19</span>
+</p>
+</div>
+<div class="equation" id="a0000000699">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \left|\int L(x,y) \tilde{\varphi }(x') -L(x,y) \tilde{\varphi }(x) +L(x',y) \tilde{\varphi }(x')- L(x',y) \tilde{\varphi }(x') \,  \mathrm{d}\mu (y)\right|\, . \end{equation}
+  </div>
+  <span class="equation_label">8.0.20</span>
+</p>
+</div>
+<p> Grouping the second and third and the first and fourth term, we obtain using the definition of \(\tilde\varphi \) and Fubini, </p>
+<div class="equation" id="eql21">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eql21} \le \left| \int (L(x',y)-L(x,y)) \varphi (y) \,  \mathrm{d}\mu (y)\right| \end{equation}
+  </div>
+  <span class="equation_label">8.0.21</span>
+</p>
+</div>
+<div class="equation" id="eql22">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eql22} + \left| \int L(x,y) \,  \mathrm{d}\mu (y)-\int L(x',y) \,  \mathrm{d}\mu (y)\right||\tilde{\varphi }(x')| \end{equation}
+  </div>
+  <span class="equation_label">8.0.22</span>
+</p>
+</div>
+<div class="equation" id="eql23">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eql23} \le 2 \int |L(x,y) -L(x',y)| \,  \mathrm{d}\mu (y) \| \varphi \| _{C^\tau (B(z, 2R))}\,  , \end{equation}
+  </div>
+  <span class="equation_label">8.0.23</span>
+</p>
+</div>
+<p> where in the last inequality we have used <a href="liphoel.html#eql42">8.0.16</a>. Using further <a href="liphoel.html#eql10">8.0.18</a> and the support of \(L\), we estimate the last display by </p>
+<div class="equation" id="eql224">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eql224}\le 2 \frac{\rho (x,x')}{tR}\mu (B(x,tR)\cup B(x',tR)) \| \varphi \| _{C^\tau (B(z, 2R))}\,  . \end{equation}
+  </div>
+  <span class="equation_label">8.0.24</span>
+</p>
+</div>
+<p> Using \(\rho (x,x'){\lt}R\) and the triangle inequality, we estimate the last display by </p>
+<div class="equation" id="eql225">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eql225}\le 2 \frac{\rho (x,x')}{tR} \mu (B(x,2R)) \| \varphi \| _{C^\tau (B(z, 2R))}\,  . \end{equation}
+  </div>
+  <span class="equation_label">8.0.25</span>
+</p>
+</div>
+<p> Dividing by the integral over \(L\) and using <a href="liphoel.html#eql32">8.0.8</a> and <a href="liphoel.html#2nt1">8.0.7</a>, we obtain </p>
+<div class="equation" id="eql226">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eql226} \frac{R |\tilde{\varphi }(x') - \tilde\varphi (x)|}{\rho (x,x')} \le 2^{2+a(n+2)}t^{-1}\| \varphi \| _{C^\tau (B(z, 2R))} \le 2^{2+3a} t^{-1-a} \| \varphi \| _{C^\tau (B(z, 2R))}\,  . \end{equation}
+  </div>
+  <span class="equation_label">8.0.26</span>
+</p>
+</div>
+<p> Combining <a href="liphoel.html#eql52">8.0.17</a> and <a href="liphoel.html#eql226">8.0.26</a> using \(a\ge 4\) and \(t\le 1\) and adding <a href="liphoel.html#eql42">8.0.16</a> proves <a href="liphoel.html#eq-secondt">8.0.2</a> and completes the proof of <a href="liphoel.html#support_holderApprox_subset">8.0.1</a>.</p>
+
+  </div>
+</div>
+<p>We turn to the proof of <a href="overviewsection.html#holder_van_der_corput">Proposition 2.0.5</a>. </p>
+
+</div> <!--main-text -->
+</div> <!-- content-wrapper -->
+</div> <!-- content -->
+</div> <!-- wrapper -->
+
+<nav class="prev_up_next">
+  <svg  id="showmore-minus" class="icon icon-eye-minus showmore"><use xlink:href="symbol-defs.svg#icon-eye-minus"></use></svg>
+
+  <svg  id="showmore-plus" class="icon icon-eye-plus showmore"><use xlink:href="symbol-defs.svg#icon-eye-plus"></use></svg>
+
+  <a href="treesection.html" title="Proof of the Forest Operator Proposition"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+</a>
+  <a href="index.html" title="A blueprint for the formalization of Carleson’s theorem on convergence of Fourier series"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+</a>
+  <a href="sec-hlm.html" title="Proof of Vitali covering and Hardy–Littlewood"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+</a>
+</nav>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/plastex.js"></script>
+<script type="text/javascript" src="js/svgxuse.js"></script>
+<script type="text/javascript" src="js/js.cookie.min.js"></script>
+<script type="text/javascript" src="js/showmore.js"></script>
+</body>
+</html>

@@ -1,0 +1,2174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  MathJax = { 
+    tex: {
+		    inlineMath: [['$','$'], ['\\(','\\)']]
+	} }
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<meta name="generator" content="plasTeX" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>A blueprint for the formalization of Carleson’s theorem on convergence of Fourier series: Proof of the Antichain Operator Proposition</title>
+<link rel="next" href="treesection.html" title="Proof of the Forest Operator Proposition" />
+<link rel="prev" href="proptopropprop.html" title="Proof of discrete Carleson" />
+<link rel="up" href="index.html" title="A blueprint for the formalization of Carleson’s theorem on convergence of Fourier series" />
+<link rel="stylesheet" href="styles/theme-white.css" />
+<link rel="stylesheet" href="styles/amsthm.css" />
+<link rel="stylesheet" href="styles/showmore.css" />
+<link rel="stylesheet" href="styles/blueprint.css" />
+<link rel="stylesheet" href="styles/extra_styles.css" />
+</head>
+
+<body>
+<header>
+<svg  id="toc-toggle" class="icon icon-list-numbered "><use xlink:href="symbol-defs.svg#icon-list-numbered"></use></svg>
+<h1 id="doc_title"><a href="index.html">A blueprint for the formalization of Carleson’s theorem on convergence of Fourier series</a></h1>
+</header>
+
+<div class="wrapper">
+<nav class="toc">
+<ul class="sub-toc-0">
+<li class="">
+  <a href="sect0001.html"><span class="toc_ref">1</span> <span class="toc_entry">Introduction</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0001.html#a0000000006"><span class="toc_ref">1.1</span> <span class="toc_entry">Statement of the metric space Carleson theorems</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="overviewsection.html"><span class="toc_ref">2</span> <span class="toc_entry">Proof of Metric Space Carleson, overview</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="overviewsection.html#global-auxiliary-lemmas"><span class="toc_ref">2.1</span> <span class="toc_entry">Auxiliary lemmas</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="thmfromproplinear.html"><span class="toc_ref">3</span> <span class="toc_entry">Proof of Metric Space Carleson</span></a>
+ </li>
+<li class="">
+  <a href="christsection.html"><span class="toc_ref">4</span> <span class="toc_entry">Proof of Finitary Carleson</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="christsection.html#subsecdyadic"><span class="toc_ref">4.1</span> <span class="toc_entry">Proof of Grid Existence Lemma</span></a>
+ </li>
+<li class="">
+  <a href="christsection.html#subsectiles"><span class="toc_ref">4.2</span> <span class="toc_entry">Proof of Tile Structure Lemma</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="proptopropprop.html"><span class="toc_ref">5</span> <span class="toc_entry">Proof of discrete Carleson</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="proptopropprop.html#subsectilesorg"><span class="toc_ref">5.1</span> <span class="toc_entry">Organisation of the tiles</span></a>
+ </li>
+<li class="">
+  <a href="proptopropprop.html#subsetexcset"><span class="toc_ref">5.2</span> <span class="toc_entry">Proof of the Exceptional Sets Lemma</span></a>
+ </li>
+<li class="">
+  <a href="proptopropprop.html#subsec-lessim-aux"><span class="toc_ref">5.3</span> <span class="toc_entry">Auxiliary lemmas</span></a>
+ </li>
+<li class="">
+  <a href="proptopropprop.html#subsecforest"><span class="toc_ref">5.4</span> <span class="toc_entry">Proof of the Forest Union Lemma</span></a>
+ </li>
+<li class="">
+  <a href="proptopropprop.html#subsecantichain"><span class="toc_ref">5.5</span> <span class="toc_entry">Proof of the Forest Complement Lemma</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class=" active current">
+  <a href="antichainboundary.html"><span class="toc_ref">6</span> <span class="toc_entry">Proof of the Antichain Operator Proposition</span></a>
+  <span class="expand-toc">▼</span>
+  <ul class="sub-toc-1 active">
+     <li class="">
+  <a href="antichainboundary.html#sec-TT*-T*T"><span class="toc_ref">6.1</span> <span class="toc_entry">The density arguments</span></a>
+ </li>
+<li class="">
+  <a href="antichainboundary.html#sec-tile-operator"><span class="toc_ref">6.2</span> <span class="toc_entry">Proof of the Tile Correlation Lemma</span></a>
+ </li>
+<li class="">
+  <a href="antichainboundary.html#subsec-geolem"><span class="toc_ref">6.3</span> <span class="toc_entry">Proof of the Antichain Tile Count Lemma</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="treesection.html"><span class="toc_ref">7</span> <span class="toc_entry">Proof of the Forest Operator Proposition</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="treesection.html#a0000000022"><span class="toc_ref">7.1</span> <span class="toc_entry">The pointwise tree estimate</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#a0000000023"><span class="toc_ref">7.2</span> <span class="toc_entry">An auxiliary \(L^2\) tree estimate</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#a0000000024"><span class="toc_ref">7.3</span> <span class="toc_entry">The quantitative \(L^2\) tree estimate</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#a0000000025"><span class="toc_ref">7.4</span> <span class="toc_entry">Almost orthogonality of separated trees</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#subsec-big-tiles"><span class="toc_ref">7.5</span> <span class="toc_entry">Proof of the Tiles with large separation Lemma</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#subsec-rest-tiles"><span class="toc_ref">7.6</span> <span class="toc_entry">Proof of The Remaining Tiles Lemma</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#a0000000026"><span class="toc_ref">7.7</span> <span class="toc_entry">Forests</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="liphoel.html"><span class="toc_ref">8</span> <span class="toc_entry">Proof of the Hölder cancellative condition</span></a>
+ </li>
+<li class="">
+  <a href="sec-hlm.html"><span class="toc_ref">9</span> <span class="toc_entry">Proof of Vitali covering and Hardy–Littlewood</span></a>
+ </li>
+<li class="">
+  <a href="sect0002.html"><span class="toc_ref">10</span> <span class="toc_entry">Two-sided Metric Space Carleson</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0002.html#subsec-cotlar"><span class="toc_ref">10.1</span> <span class="toc_entry">Proof of Cotlar’s Inequality</span></a>
+ </li>
+<li class="">
+  <a href="sect0002.html#subsec-CZD"><span class="toc_ref">10.2</span> <span class="toc_entry">Calderón-Zygmund Decomposition</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="sect0003.html"><span class="toc_ref">11</span> <span class="toc_entry">Proof of The Classical Carleson Theorem</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0003.html#10classical"><span class="toc_ref">11.1</span> <span class="toc_entry">The classical Carleson theorem</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10smooth"><span class="toc_ref">11.2</span> <span class="toc_entry">Smooth functions.</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10hilbert"><span class="toc_ref">11.3</span> <span class="toc_entry">The truncated Hilbert transform</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10vandercorput"><span class="toc_ref">11.4</span> <span class="toc_entry">The proof of the van der Corput Lemma</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10projection"><span class="toc_ref">11.5</span> <span class="toc_entry">Partial sums as orthogonal projections</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10difference"><span class="toc_ref">11.6</span> <span class="toc_entry">The error bound</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10carleson"><span class="toc_ref">11.7</span> <span class="toc_entry">Carleson on the real line</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li ><a href="dep_graph_document.html">Dependency graph</a></li>
+</ul>
+</nav>
+
+<div class="content">
+<div class="content-wrapper">
+
+
+<div class="main-text">
+<h1 id="antichainboundary">6 Proof of the Antichain Operator Proposition</h1>
+
+<p>Let an antichain \(\mathfrak {A}\) and functions \(f\), \(g\) as in <a href="overviewsection.html#antichain_operator">Proposition 2.0.3</a> be given. We prove <a href="overviewsection.html#eq-antiprop" class="eqref">2.0.33</a> in <a href="antichainboundary.html#sec-TT*-T*T">Section 6.1</a> as the geometric mean of two inequalities, each involving one of the two densities. One of these two inequalities will need a careful estimate formulated in <a href="antichainboundary.html#Tile.correlation_le">Lemma 6.1.5</a> of the \(TT^*\) correlation between two tile operators. <a href="antichainboundary.html#Tile.correlation_le">Lemma 6.1.5</a> will be proven in <a href="antichainboundary.html#sec-tile-operator">Section 6.2</a>. </p>
+<p>The summation of the contributions of these individual correlations will require a geometric <a href="antichainboundary.html#Antichain.tile_count">Lemma 6.1.6</a> counting the relevant tile pairs. <a href="antichainboundary.html#Antichain.tile_count">Lemma 6.1.6</a> will be proven in Subsection <a href="antichainboundary.html#subsec-geolem">6.3</a>. </p>
+<h2 id="sec-TT*-T*T">6.1 The density arguments</h2>
+
+<p>We begin with the following crucial disjointedness property of the sets \(E({\mathfrak p})\) with \({\mathfrak p}\in \mathfrak {A}\). </p>
+<div class="lemma_thmwrapper theorem-style-plain" id="tile_disjointness">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">6.1.1</span>
+    <span class="lemma_thmtitle">tile disjointness</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="antichainboundary.html#tile_disjointness">#</a>
+    
+    <a class="icon proof" href="antichainboundary.html#a0000000306"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/tile_disjointness" class="lean_decl">tile_disjointness</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p> Let \({\mathfrak p},{\mathfrak p}'\in \mathfrak {A}\). If there exists an \(x\in X\) with \(x\in E({\mathfrak p})\cap E({\mathfrak p}')\), then \({\mathfrak p}= {\mathfrak p}'\). </p>
+<p>Lemma 6.1.1.</p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000306">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Let \({\mathfrak p},{\mathfrak p}'\) and \(x\) be given. Assume without loss of generality that \({\mathrm{s}}({\mathfrak p})\le {\mathrm{s}}({\mathfrak p}')\). As we have \(x\in E({\mathfrak p})\subset {\mathcal{I}}({\mathfrak p})\) and \(x\in E({\mathfrak p}')\subset {\mathcal{I}}({\mathfrak p}')\) by Definition <a href="overviewsection.html#defineep">2.0.23</a>, we conclude for \(i=1,2\) that \({Q}(x)\in {\Omega }({\mathfrak p})\) and \({Q}(x)\in {\Omega }({\mathfrak p}')\). By <a href="overviewsection.html#eq-freq-dyadic">2.0.17</a> we have \({\Omega }({\mathfrak p}')\subset {\Omega }({\mathfrak p})\). By Definition <a href="overviewsection.html#straightorder">2.0.26</a>, we conclude \({\mathfrak p}\le {\mathfrak p}'\). As \(\mathfrak {A}\) is an antichain, we conclude \({\mathfrak p}={\mathfrak p}'\). This proves the lemma.</p>
+
+  </div>
+</div>
+<p>Let \(\mathcal{B}\) be the collection of balls </p>
+<div class="equation" id="a0000000307">
+<p>
+  <div class="equation_content">
+    \begin{equation}  B({\mathrm{c}}({\mathfrak p}), 8D^{{\mathrm{s}}({\mathfrak p})}) \end{equation}
+  </div>
+  <span class="equation_label">6.1.1</span>
+</p>
+</div>
+<p> with \({\mathfrak p}\in \mathfrak {A}\) and recall the definition of \(M_{\mathcal{B}}\) from Definition <a href="overviewsection.html#def-hlm">2.0.59</a>. </p>
+<div class="lemma_thmwrapper theorem-style-plain" id="maximal_bound_antichain">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">6.1.2</span>
+    <span class="lemma_thmtitle">maximal bound antichain</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="antichainboundary.html#maximal_bound_antichain">#</a>
+    
+    <a class="icon proof" href="antichainboundary.html#a0000000308"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/maximal_bound_antichain" class="lean_decl">maximal_bound_antichain</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p> Let \(x\in X\). Then </p>
+<div class="equation" id="hlmbound">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{hlmbound} | \sum _{{\mathfrak p}\in \mathfrak {A}}T_{{\mathfrak p}} f(x)|\le 2^{102 a^3} M_{\mathcal{B}} f (x) \,  . \end{equation}
+  </div>
+  <span class="equation_label">6.1.2</span>
+</p>
+</div>
+<p>Lemma 6.1.2.</p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000308">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Fix \(x\in X\). By <a href="antichainboundary.html#tile_disjointness">6.1.1</a>, there is at most one \({\mathfrak p}\in \mathfrak {A}\) such that \(T_{{\mathfrak p}} f(x)\) is not zero. If there is no such \({\mathfrak p}\), the estimate <a href="antichainboundary.html#hlmbound">6.1.2</a> follows. </p>
+<p>Assume there is such a \({\mathfrak p}\). By definition of \(T_{{\mathfrak p}}\) we have \(x\in E({\mathfrak p})\subset {\mathcal{I}}({\mathfrak p})\) and by the squeezing property <a href="overviewsection.html#eq-vol-sp-cube">2.0.13</a> </p>
+<div class="equation" id="eqtttt0">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqtttt0} \rho (x, {\mathrm{c}}({\mathfrak p}))\le 4D^{{\mathrm{s}}({\mathfrak p})}\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.1.3</span>
+</p>
+</div>
+<p>Let \(y\in X\) with \(K_{{\mathrm{s}}({\mathfrak p})}(x,y)\neq 0\). By Definition <a href="overviewsection.html#defks">2.0.5</a> of \(K_{{\mathrm{s}}({\mathfrak p})}\) we have </p>
+<div class="equation" id="supp-Ks1">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{supp-Ks1} \frac{1}{4} D^{{\mathrm{s}}({\mathfrak p})-1} \leq \rho (x,y) \leq \frac{1}{2} D^{{\mathrm{s}}({\mathfrak p})}\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.1.4</span>
+</p>
+</div>
+<p> The triangle inequality with <a href="antichainboundary.html#eqtttt0">6.1.3</a> and <a href="antichainboundary.html#supp-Ks1">6.1.4</a> implies </p>
+<div class="equation" id="a0000000309">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \rho ({\mathrm{c}}({\mathfrak p}),y) {\lt} 8D^{{\mathrm{s}}({\mathfrak p})}\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.1.5</span>
+</p>
+</div>
+<p> Using the kernel bound <a href="sect0001.html#eqkernel-size">1.1.11</a> and the lower bound in <a href="overviewsection.html#supp-Ks">2.1.2</a> we obtain </p>
+<div class="equation" id="a0000000310">
+<p>
+  <div class="equation_content">
+    \begin{equation}  |K_{{\mathrm{s}}({\mathfrak p})}(x,y)|\le \frac{2^{a^3}}{\mu (B(x,\frac14 D^{{{\mathrm{s}}({\mathfrak p})}-1}))}\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.1.6</span>
+</p>
+</div>
+<p> Using \(D=2^{100a^2}\) and the doubling property <a href="sect0001.html#doublingx">1.1.2</a> \(5 +100a^2\) times estimates the last display by </p>
+<div class="equation" id="a0000000311">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \le \frac{2^{5a+101a^3}}{\mu (B(x, 8D^{{\mathrm{s}}({\mathfrak p})}))}\,  \end{equation}
+  </div>
+  <span class="equation_label">6.1.7</span>
+</p>
+</div>
+<p> which, thanks to the closeness of the points \(x\) and \({\mathrm{c}}({\mathfrak p})\) shown in <a href="antichainboundary.html#eqtttt0">6.1.3</a>, is in turn bounded by </p>
+<div class="equation" id="a0000000312">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \le \frac{2^{6a+101a^3}}{\mu (B({\mathrm{c}}({\mathfrak p}), 8D^{{\mathrm{s}}({\mathfrak p})}))}\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.1.8</span>
+</p>
+</div>
+<p> Using that \(|e({\vartheta })|\) is bounded by \(1\) for every \({\vartheta }\in {\Theta }\), we estimate with the triangle inequality and the above information </p>
+<div class="equation" id="a0000000313">
+<p>
+  <div class="equation_content">
+    \begin{equation}  | T_{{\mathfrak p}} f(x)| \le \frac{2^{6a+101 a^3}}{\mu (B({\mathrm{c}}({\mathfrak p}), 8D^{{\mathrm{s}}({\mathfrak p})}))} \int _{\mu (B({\mathrm{c}}({\mathfrak p}), 8D^{{\mathrm{s}}({\mathfrak p})}))} |f(y)|\,  dy \end{equation}
+  </div>
+  <span class="equation_label">6.1.9</span>
+</p>
+</div>
+<p> This together with \(a\ge 4\) proves the Lemma.</p>
+
+  </div>
+</div>
+<p>Set </p>
+<div class="equation" id="a0000000314">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \tilde{q}=\frac{2q}{1+q}\, . \end{equation}
+  </div>
+  <span class="equation_label">6.1.10</span>
+</p>
+</div>
+<p> Since \(1{\lt} q\le 2\), we have \(1{\lt}\tilde{q}{\lt}q\le 2\). </p>
+<div class="lemma_thmwrapper theorem-style-plain" id="dens2_antichain">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">6.1.3</span>
+    <span class="lemma_thmtitle">dens2 antichain</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="antichainboundary.html#dens2_antichain">#</a>
+    
+    <a class="icon proof" href="antichainboundary.html#a0000000315"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/dens2_antichain" class="lean_decl">dens2_antichain</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p> We have that </p>
+<div class="equation" id="eqttt9">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqttt9} \left|\int \overline{g(x)} \sum _{{\mathfrak p}\in \mathfrak {A}} T_{{\mathfrak p}} f(x)\,  d\mu (x)\right|\le 2^{103a^3}({q}-1)^{-1} \operatorname{\operatorname {dens}}_2(\mathfrak {A})^{\frac1{\tilde{q}}-\frac12} \| f\| _2\| g\| _2\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.1.11</span>
+</p>
+</div>
+<p>Lemma 6.1.3 (inequality 6.1.11).</p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000315">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>We have \(f=\mathbf{1}_Ff\). Using Hölder’s inequality, we obtain for each \(x\in B'\) and each \(B'\in \mathcal{B}\) using \(1{\lt}\tilde{q}\le 2\) </p>
+<div class="equation" id="a0000000316">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \frac1{\mu (B')}\int _{B'} |f(y)|\,  d\mu (y) \end{equation}
+  </div>
+  <span class="equation_label">6.1.12</span>
+</p>
+</div>
+<div class="equation" id="a0000000317">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \le \left(\frac1{\mu (B')}\int _{B'} |f(y)|^{\frac{2{\tilde{q}}}{3\tilde{q}-2}}\,  d\mu (y)\right)^{\frac32-\frac1{\tilde{q}}} \left(\frac1{\mu (B')}\int _{B'} \mathbf{1}_F(y)\,  d\mu (y)\right)^{\frac1{\tilde{q}}-\frac12} \end{equation}
+  </div>
+  <span class="equation_label">6.1.13</span>
+</p>
+</div>
+<div class="equation" id="a0000000318">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \le \left(M_{\mathcal{B}} (|f|^{\frac{2{\tilde{q}}}{3{\tilde{q}}-2}})(x)\right)^{\frac32-\frac1{\tilde{q}}} \operatorname{\operatorname {dens}}_2(\mathfrak {A})^{\frac1{\tilde{q}}-\frac12}\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.1.14</span>
+</p>
+</div>
+<p> Taking the maximum over all \(B'\) containing \(x\), we obtain </p>
+<div class="equation" id="eqttt1">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqttt1} M_{\mathcal{B}}|f|\le M_{\mathcal{B},\frac{2{\tilde{q}}}{3{\tilde{q}}-2} } |f| \operatorname{\operatorname {dens}}_2(\mathfrak {A})^{\frac1{\tilde{q}}-\frac12}\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.1.15</span>
+</p>
+</div>
+<p> We have with <a href="overviewsection.html#Finset.measure_biUnion_le_lintegral">2.0.6</a> </p>
+<div class="equation" id="a0000000319">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \left\| M_{\mathcal{B}, \frac{2{\tilde{q}}}{3{\tilde{q}}-2}} f\right\| _2\le 2^{2a}(3\tilde{q}-2)(2\tilde{q}-2)^{-1}\| f\| _2\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.1.16</span>
+</p>
+</div>
+<p> Using \(1{\lt}\tilde{q}\le 2\) estimates the last display by </p>
+<div class="equation" id="eqttt2">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqttt2} 2^{2a+2} (\tilde{q}-1)^{-1} \| f\| _2\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.1.17</span>
+</p>
+</div>
+<p> We obtain with Cauchy-Schwarz and then <a href="antichainboundary.html#maximal_bound_antichain">6.1.2</a> </p>
+<div class="equation" id="a0000000320">
+<p>
+  <div class="equation_content">
+    \begin{equation}  |\int \overline{g(x)} \sum _{{\mathfrak p}\in \mathfrak {A}} T_{{\mathfrak p}} f(x)\,  d\mu (x)| \end{equation}
+  </div>
+  <span class="equation_label">6.1.18</span>
+</p>
+</div>
+<div class="equation" id="a0000000321">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \le \| g\| _2 \Big\|  \sum _{{\mathfrak p}\in \mathfrak {A}} T_{{\mathfrak p}} f \Big\| _2 \end{equation}
+  </div>
+  <span class="equation_label">6.1.19</span>
+</p>
+</div>
+<div class="equation" id="a0000000322">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \le 2^{102a^3}\| g\| _2 \|  M_{\mathcal{B}}f \| _2 \end{equation}
+  </div>
+  <span class="equation_label">6.1.20</span>
+</p>
+</div>
+<p> With <a href="antichainboundary.html#eqttt1">6.1.15</a> and <a href="antichainboundary.html#eqttt2">6.1.17</a> we can estimate the last display by </p>
+<div class="equation" id="a0000000323">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \le 2^{102a^3+2a+2}(\tilde{q}-1)^{-1} \| g\| _2 \| f\| _2\operatorname{\operatorname {dens}}_2(\mathfrak {A})^{\frac1{\tilde{q}}-\frac12} \end{equation}
+  </div>
+  <span class="equation_label">6.1.21</span>
+</p>
+</div>
+<p> Using \(a\ge 4\) and \((\tilde q - 1)^{-1} = (q+1)/(q-1) \le 3(q-1)^{-1}\) proves the lemma.</p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="dens1_antichain">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">6.1.4</span>
+    <span class="lemma_thmtitle">dens1 antichain</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="antichainboundary.html#dens1_antichain">#</a>
+    
+    <a class="icon proof" href="antichainboundary.html#a0000000324"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/dens1_antichain" class="lean_decl">dens1_antichain</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p> Set \(p:=4a^4\). We have </p>
+<div class="equation" id="eqttt3">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqttt3} \left|\int \overline{g(x)} \sum _{{\mathfrak p}\in \mathfrak {A}} T_{{\mathfrak p}} f(x)\,  d\mu (x)\right|\le 2^{117a^3}\operatorname{\operatorname {dens}}_1(\mathfrak {A})^{\frac1{2p}} \| f\| _2\| g\| _2\, . \end{equation}
+  </div>
+  <span class="equation_label">6.1.22</span>
+</p>
+</div>
+<p>Lemma 6.1.4.</p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000324">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>We write for the expression inside the absolute values on the left-hand side of <a href="antichainboundary.html#eqttt3">6.1.22</a> </p>
+<div class="equation" id="a0000000325">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \sum _{{\mathfrak p}\in \mathfrak {A}}\iint \overline{g(x)} \mathbf{1}_{E({\mathfrak p})}(x) {K_{{\mathrm{s}}({\mathfrak p})}(x,y)}e({Q}(x)(y) - {Q}(x)(x)) f(y)\,  d\mu (y)\, d\mu (x) \end{equation}
+  </div>
+  <span class="equation_label">6.1.23</span>
+</p>
+</div>
+<div class="equation" id="a0000000326">
+<p>
+  <div class="equation_content">
+    \begin{equation}  =\int \sum _{{\mathfrak p}\in \mathfrak {A}} \overline{T_{{\mathfrak p}} ^*g(y)} f(y)\,  d\mu (y) \end{equation}
+  </div>
+  <span class="equation_label">6.1.24</span>
+</p>
+</div>
+<p> with the adjoint operator </p>
+<div class="equation" id="eq-tstarwritten">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-tstarwritten} T_{{\mathfrak p}}^*g(y)=\int _{E({\mathfrak p})} \overline{K_{{\mathrm{s}}({\mathfrak p})}(x,y)}e(-{Q}(x)(y)+ {Q}(x)(x))g(x)\,  d\mu (x)\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.1.25</span>
+</p>
+</div>
+<p> We have by expanding the square </p>
+<div class="equation" id="a0000000327">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \int \Big|\sum _{{\mathfrak p}\in \mathfrak {A}}T^*_{{\mathfrak p}}g(y)\Big|^2\,  d\mu (y)= \int \left(\sum _{{\mathfrak p}\in \mathfrak {A}} T^*_{{\mathfrak p}}g(y)\right) \left(\sum _{{\mathfrak p}'\in \mathfrak {A}}\overline{T^*_{{\mathfrak p}'}g(y)}\right)\,  d\mu (y) \end{equation}
+  </div>
+  <span class="equation_label">6.1.26</span>
+</p>
+</div>
+<div class="equation" id="eqtts1">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqtts1} \le \sum _{{\mathfrak p}\in \mathfrak {A}} \sum _{{\mathfrak p}'\in \mathfrak {A}} \Big|\int T^*_{{\mathfrak p}}g(y)\overline{T^*_{{\mathfrak p}'}g(y)}\,  d\mu (y)\Big|\, . \end{equation}
+  </div>
+  <span class="equation_label">6.1.27</span>
+</p>
+</div>
+<p> We split the sum into the terms with \({\mathrm{s}}({\mathfrak p}')\le {\mathrm{s}}({\mathfrak p})\) and \({\mathrm{s}}({\mathfrak p}){\lt} {\mathrm{s}}({\mathfrak p}')\). Using the symmetry of each summand, we may switch \({\mathfrak p}\) and \({\mathfrak p}'\) in the second sum. Using further positivity of each summand to replace the condition \({\mathrm{s}}({\mathfrak p}'){\lt} {\mathrm{s}}({\mathfrak p})\) by \({\mathrm{s}}({\mathfrak p}')\le {\mathrm{s}}({\mathfrak p})\) in the second sum, we estimate <a href="antichainboundary.html#eqtts1">6.1.27</a> by </p>
+<div class="equation" id="eqtts2">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqtts2} \le 2 \sum _{{\mathfrak p}\in \mathfrak {A}} \sum _{{\mathfrak p}'\in \mathfrak {A}: {\mathrm{s}}({\mathfrak p}')\le {\mathrm{s}}({\mathfrak p})} \Big|\int T^*_{{\mathfrak p}}g(y)\overline{T^*_{{\mathfrak p}'}g(y)}\,  d\mu (y)\Big|\, . \end{equation}
+  </div>
+  <span class="equation_label">6.1.28</span>
+</p>
+</div>
+<p>Define for \({\mathfrak p}\in {\mathfrak P}\) </p>
+<div class="equation" id="a0000000328">
+<p>
+  <div class="equation_content">
+    \begin{equation}  B({\mathfrak p}):=B({\mathrm{c}}({\mathfrak p}), 14D^{{\mathrm{s}}({\mathfrak p})}) \end{equation}
+  </div>
+  <span class="equation_label">6.1.29</span>
+</p>
+</div>
+<p> and define </p>
+<div class="equation" id="eq-Dp-definition">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-Dp-definition} \mathfrak {A}({\mathfrak p}):=\{ {\mathfrak p}'\in \mathfrak {A}: {\mathrm{s}}({\mathfrak p}')\leq {\mathrm{s}}({\mathfrak p}) \land {\mathcal{I}}({\mathfrak p}') \subset B({\mathfrak p})\} . \end{equation}
+  </div>
+  <span class="equation_label">6.1.30</span>
+</p>
+</div>
+<p> Note that by the squeezing property <a href="overviewsection.html#eq-vol-sp-cube">2.0.13</a> and the doubling property <a href="sect0001.html#doublingx">1.1.2</a> applied \(6\) times we have </p>
+<div class="equation" id="eqttt4">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqttt4} \mu (B({\mathfrak p}))\le 2^{6a} \mu ({\mathcal{I}}({\mathfrak p}))\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.1.31</span>
+</p>
+</div>
+<p> Using <a href="antichainboundary.html#Tile.correlation_le">6.1.5</a> and <a href="antichainboundary.html#eqttt4">6.1.31</a>, we estimate <a href="antichainboundary.html#eqtts2">6.1.28</a> by </p>
+<div class="equation" id="eqtts3">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqtts3} \le 2^{232a^3+6a+1} \sum _{{\mathfrak p}\in \mathfrak {A}} \int _{E({\mathfrak p})}|g|(y) h({\mathfrak p})\,  d\mu (y) \end{equation}
+  </div>
+  <span class="equation_label">6.1.32</span>
+</p>
+</div>
+<p> with \(h({\mathfrak p})\) defined as </p>
+<div class="equation" id="def-hp">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{def-hp} \frac1{\mu (B({\mathfrak p}))}\int \sum _{{\mathfrak p}'\in \mathfrak {A}({\mathfrak p})} {(1+d_{{\mathfrak p}'}({\mathcal{Q}}({\mathfrak p}’), {\mathcal{Q}}({\mathfrak p}))^{-1/(2a^2+a^3)}}(\mathbf{1}_{E({\mathfrak p}')}|g|)(y')\,  d\mu (y')\, . \end{equation}
+  </div>
+  <span class="equation_label">6.1.33</span>
+</p>
+</div>
+<p>Note that \(p{\gt}4\) since \(a\ge 4\). Let \(p'\) be the dual exponent of \(p\), satisfying \(1/p+1/p'=1\). We estimate \(h({\mathfrak p})\) as defined in <a href="antichainboundary.html#def-hp">6.1.33</a> with Hölder using \(|g|\le \mathbf{1}_G\) and \(E({\mathfrak p}')\subset B({\mathfrak p})\) by </p>
+<div class="equation" id="a0000000329">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \frac{\| g\mathbf{1}_{B({\mathfrak p})}\| _{p'}}{\mu (B({\mathfrak p}))} \Big\| \sum _{{\mathfrak p}\in \mathfrak {A}({\mathfrak p})}(1+d_{{\mathfrak p}}({\mathcal{Q}}({\mathfrak p}), {\mathcal{Q}}({\mathfrak p}'))^{-1/(2a^2+a^3)}\mathbf{1}_{E({\mathfrak p})}\mathbf{1}_G\Big\| _{p}\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.1.34</span>
+</p>
+</div>
+<p> Then we apply <a href="antichainboundary.html#Antichain.tile_count">6.1.6</a> to estimate this by </p>
+<div class="equation" id="eqttt5">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqttt5} \le 2^{5a} \frac{\| g\mathbf{1}_{B({\mathfrak p})}\| _{p'}}{\mu (B({\mathfrak p}))} \operatorname{\operatorname {dens}}_1(\mathfrak {A})^{\frac1p}\mu (B({\mathfrak p}))^{\frac1p}\, . \end{equation}
+  </div>
+  <span class="equation_label">6.1.35</span>
+</p>
+</div>
+<p> Let \(\mathcal{B}'\) be the collection of all balls \(B({\mathfrak p})\) with \({\mathfrak p}\in \mathfrak {A}\). Then for each \({\mathfrak p}\in \mathfrak {A}\) and \(x\in B({\mathfrak p})\) we have by definition <a href="overviewsection.html#def-hlm">2.0.59</a> of \(M_{\mathcal{B}',p'}\) </p>
+<div class="equation" id="a0000000330">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \| g\mathbf{1}_{B({\mathfrak p})}\| _{p'}\le \mu (B({\mathfrak p}))^{\frac1{p'}} M_{\mathcal{B}',p'}g(x) \,  . \end{equation}
+  </div>
+  <span class="equation_label">6.1.36</span>
+</p>
+</div>
+<p> Hence we can estimate <a href="antichainboundary.html#eqttt5">6.1.35</a> by </p>
+<div class="equation" id="eqttt5b">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqttt5b} \le 2^{5a} (M_{\mathcal{B}', p'}g(x)) \operatorname{\operatorname {dens}}_1(\mathfrak {A})^{\frac1p}\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.1.37</span>
+</p>
+</div>
+<p> With this estimate of \(h({\mathfrak p})\), using \(E({\mathfrak p})\subset B({\mathfrak p})\) by construction of \(B({\mathfrak p})\), we estimate <a href="antichainboundary.html#eqtts3">6.1.32</a> by </p>
+<div class="equation" id="eqtts4">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqtts4} \le 2^{232a^3+11a + 1} { \operatorname{\operatorname {dens}}_1(\mathfrak {A})^{\frac1p}}\sum _{{\mathfrak p}\in \mathfrak {A}} \int _{E({\mathfrak p})}|g|(y)M_{\mathcal{B}', p'}g(y) \,  dy\, . \end{equation}
+  </div>
+  <span class="equation_label">6.1.38</span>
+</p>
+</div>
+<p> Using <a href="antichainboundary.html#tile_disjointness">6.1.1</a>, the last display is observed to be </p>
+<div class="equation" id="eqtts4a">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqtts4a} \le 2^{232a^3+11a + 1} {\operatorname{\operatorname {dens}}_1(\mathfrak {A})^{\frac1p}} \int |g|(y)(M_{\mathcal{B}', p'}g)(y) \,  dy\, . \end{equation}
+  </div>
+  <span class="equation_label">6.1.39</span>
+</p>
+</div>
+<p> Applying Cauchy-Schwarz and using <a href="overviewsection.html#Finset.measure_biUnion_le_lintegral">2.0.6</a> and \(1{\lt}p'{\lt}\frac32\) estimates the last display by </p>
+<div class="equation" id="a0000000331">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \le 2^{232a^3+11a + 1} \operatorname{\operatorname {dens}}_1(\mathfrak {A})^{\frac1p} \| g\| _2 \| M_{\mathcal{B}', p'} g\| _2 \end{equation}
+  </div>
+  <span class="equation_label">6.1.40</span>
+</p>
+</div>
+<div class="equation" id="a0000000332">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \le 2^{232a^3+12a+3} \operatorname{\operatorname {dens}}_1(\mathfrak {A})^{\frac1p}\| g\| _2 ^2\, . \end{equation}
+  </div>
+  <span class="equation_label">6.1.41</span>
+</p>
+</div>
+<p> Now <a href="antichainboundary.html#dens1_antichain">6.1.4</a> follows by applying Cauchy-Schwarz on the left-hand side and using \(a\ge 4\).</p>
+
+  </div>
+</div>
+<p>The following basic \(TT^*\) estimate will be proved in <a href="antichainboundary.html#sec-tile-operator">Section 6.2</a>. </p>
+<div class="lemma_thmwrapper theorem-style-plain" id="Tile.correlation_le">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">6.1.5</span>
+    <span class="lemma_thmtitle">tile correlation</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="antichainboundary.html#Tile.correlation_le">#</a>
+    
+    <a class="icon proof" href="antichainboundary.html#a0000000333"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/Tile.correlation_le" class="lean_decl">Tile.correlation_le</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p> Let \({\mathfrak p}, {\mathfrak p}'\in {\mathfrak P}\) with \({\mathrm{s}}({{\mathfrak p}’})\leq {\mathrm{s}}({{\mathfrak p}})\). Then </p>
+<div class="equation" id="eq-basic-TT*-est">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-basic-TT*-est} \left|\int T^*_{{\mathfrak p}'}g\overline{T^*_{{\mathfrak p}}g}\right| \end{equation}
+  </div>
+  <span class="equation_label">6.1.42</span>
+</p>
+</div>
+<div class="equation" id="a0000000334">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \le 2^{232a^3}\frac{(1+d_{{\mathfrak p}'}({\mathcal{Q}}({\mathfrak p}'), {\mathcal{Q}}({\mathfrak p}))^{-1/(2a^2+a^3)}}{\mu ({\mathcal{I}}({\mathfrak p}))}\int _{E({\mathfrak p}')}|g|\int _{E({\mathfrak p})}|g|\, . \end{equation}
+  </div>
+  <span class="equation_label">6.1.43</span>
+</p>
+</div>
+<p> Moreover, the term <a href ="#eq-basic-TT*-est">[eq-basic-TT*-est]</a> vanishes unless </p>
+<div class="equation" id="a0000000335">
+<p>
+  <div class="equation_content">
+    \begin{equation}  {\mathcal{I}}({\mathfrak p}') \subset B({\mathrm{c}}({\mathfrak p}), 14D^{{\mathrm{s}}({\mathfrak p})})\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.1.44</span>
+</p>
+</div>
+<p>Part 1 of Lemma 6.1.5 (eq. 6.1.43).</p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000333">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>We begin with <a href ="#eq-basic-TT*-est">[eq-basic-TT*-est]</a>. By Lemma <a href="antichainboundary.html#Tile.range_support">6.2.2</a>, the left-hand side of <a href ="#eq-basic-TT*-est">[eq-basic-TT*-est]</a> vanishes if \(B({\mathrm{c}}({\mathfrak p}'),5D^{{\mathrm{s}}({\mathfrak p}')}) \cap B({\mathrm{c}}({\mathfrak p}),5D^{{\mathrm{s}}({\mathfrak p})}) = \emptyset \). Thus we can assume for the remainder of the proof that </p>
+<div class="equation" id="intersec5B">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{intersec5B} B({\mathrm{c}}({\mathfrak p}'),5D^{{\mathrm{s}}({\mathfrak p}')}) \cap B({\mathrm{c}}({\mathfrak p}),5D^{{\mathrm{s}}({\mathfrak p})}) \neq \emptyset \, . \end{equation}
+  </div>
+  <span class="equation_label">6.1.45</span>
+</p>
+</div>
+<p> We expand the left-hand side of <a href ="#eq-basic-TT*-est">[eq-basic-TT*-est]</a> as </p>
+<div class="equation" id="tstartstar">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{tstartstar} \left|\int \int _{E({\mathfrak p}')} \overline{K_{{\mathrm{s}}({\mathfrak p}')}(x_1,y)}e(-{Q}(x_1)(y)+ {Q}(x_1)(x_1))g(x_1)\,  d\mu (x_1) \right. \end{equation}
+  </div>
+  <span class="equation_label">6.1.46</span>
+</p>
+</div>
+<div class="equation" id="tstartstar'">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{tstartstar'} \times \left.\int _{E({\mathfrak p})} {K_{{\mathrm{s}}({\mathfrak p})}(x_2,y)}e({Q}(x_2)(y) -{Q}(x_2)(x_2))\overline{g(x_2)}\,  d\mu (x_2)\,  d\mu (y)\right|\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.1.47</span>
+</p>
+</div>
+<p> By Fubini and the triangle inequality and the fact \(|e({Q}(x_i)(x_i))|=1\) for \(i=1,2\), we can estimate <a href="antichainboundary.html#tstartstar">6.1.46</a> and <a href ="#tstartstar'">[tstartstar’]</a> from above by </p>
+<div class="equation" id="eqa1">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqa1} \int _{E({\mathfrak p}')} \int _{E({\mathfrak p})} {\bf I}(x_1, x_2)\,  d\mu (x_1)d\mu (x_2)\, . \end{equation}
+  </div>
+  <span class="equation_label">6.1.48</span>
+</p>
+</div>
+<p> with </p>
+<div class="equation" id="a0000000336">
+<p>
+  <div class="equation_content">
+    \begin{equation}  {\bf I}(x_1, x_2):= \left|\int e(-{Q}(x_1)(y)+{Q}(x_2)(y))\varphi _{x_1,x_2}(y) d\mu (y) \,  g(x_1)g(x_2)\right| \end{equation}
+  </div>
+  <span class="equation_label">6.1.49</span>
+</p>
+</div>
+<p>We estimate for fixed \(x_1\in E({\mathfrak p}')\) and \(x_2\in E({\mathfrak p})\) the inner integral of <a href="antichainboundary.html#eqa1">6.1.48</a> with <a href="overviewsection.html#holder_van_der_corput">2.0.5</a>. The function \(\varphi :=\varphi _{x_1,x_2}\) satisfies the assumptions of <a href="overviewsection.html#holder_van_der_corput">2.0.5</a> with \(z = x_1\) and \(R = D^{s_1}\) by <a href="antichainboundary.html#Tile.correlation">6.2.1</a>. We obtain with \(B':= B(x_1, D^{{\mathrm{s}}({\mathfrak p}')})\), </p>
+<div class="displaymath" id="a0000000337">
+  \begin{equation*}  {\bf I}(x_1, x_2) \le 2^{8a} \mu (B’) \| {\varphi }\| _{C^\tau (B')} (1 + d_{B'}({Q}(x_1),{Q}(x_2)))^{-1/(2a^2+a^3)}|g(x_1)g(x_2)| \end{equation*}
+</div>
+<div class="equation" id="eqa1.5">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqa1.5} \le \frac{2^{231a^3+8a}}{\mu (B(x_2, D^{{\mathrm{s}}({\mathfrak p})}))} (1 + d_{B'}({Q}(x_1),{Q}(x_2)))^{-1/(2a^2+a^3)}\, . \end{equation}
+  </div>
+  <span class="equation_label">6.1.50</span>
+</p>
+</div>
+<p> Using <a href="antichainboundary.html#intersec5B">6.1.45</a>, <a href="antichainboundary.html#Tile.uncertainty">6.2.3</a> and \(a\ge 1\) estimates <a href="antichainboundary.html#eqa1.5">6.1.50</a> by </p>
+<div class="equation" id="eqa2">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqa2} \le \frac{2^{231a^3 + 8a + 1}}{\mu (B(x_2, D^{{\mathrm{s}}({\mathfrak p})}))} (1+d_{{\mathfrak p}'}({\mathcal{Q}}({\mathfrak p}'), {\mathcal{Q}}({\mathfrak p})))^{-1/(2a^2+a^3)}|g(x_1)g(x_2)|\, . \end{equation}
+  </div>
+  <span class="equation_label">6.1.51</span>
+</p>
+</div>
+<p> As \(x_2\in {\mathcal{I}}({\mathfrak p})\) by Definition <a href="overviewsection.html#defineep">2.0.23</a> of \(E\), we have by <a href="overviewsection.html#eq-vol-sp-cube">2.0.13</a> </p>
+<div class="equation" id="a0000000338">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \rho (x_2,{\mathrm{c}}({\mathfrak p})) {\lt} 4D^{{\mathrm{s}}({\mathfrak p})} \end{equation}
+  </div>
+  <span class="equation_label">6.1.52</span>
+</p>
+</div>
+<p> and thus by <a href="overviewsection.html#eq-vol-sp-cube">2.0.13</a> again and the triangle inequality </p>
+<div class="equation" id="a0000000339">
+<p>
+  <div class="equation_content">
+    \begin{equation}  {\mathcal{I}}({\mathfrak p})\subset B(x_2,8D^{{\mathrm{s}}({\mathfrak p})})\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.1.53</span>
+</p>
+</div>
+<p> Using three iterations of the doubling property <a href="sect0001.html#doublingx">1.1.2</a> give </p>
+<div class="equation" id="a0000000340">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \mu ({\mathcal{I}}({\mathfrak p}))\le 2^{3a}\mu (B(x_2,D^{{\mathrm{s}}({\mathfrak p})}))\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.1.54</span>
+</p>
+</div>
+<p> With \(a\ge 4\) and <a href="antichainboundary.html#eqa2">6.1.51</a> we conclude <a href ="#eq-basic-TT*-est">[eq-basic-TT*-est]</a>. </p>
+<p>Now assume the left-hand side of <a href ="#eq-basic-TT*-est">[eq-basic-TT*-est]</a> is not zero. There is a \(y\in X\) with </p>
+<div class="equation" id="a0000000341">
+<p>
+  <div class="equation_content">
+    \begin{equation}  T^*_{{\mathfrak p}'}g(y)\overline{T^*_{{\mathfrak p}}g(y)}\neq 0 \end{equation}
+  </div>
+  <span class="equation_label">6.1.55</span>
+</p>
+</div>
+<p> By the triangle inequality and <a href="antichainboundary.html#Tile.range_support">6.2.2</a>, we conclude </p>
+<div class="equation" id="a0000000342">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \rho ({\mathrm{c}}({\mathfrak p}),{\mathrm{c}}({\mathfrak p}'))\le \rho ({\mathrm{c}}({\mathfrak p}),y) +\rho ({\mathrm{c}}({\mathfrak p}'),y) \le 5D^{{\mathrm{s}}({\mathfrak p})}+5D^{{\mathrm{s}}({\mathfrak p}')}\le 10 D^{{\mathrm{s}}({\mathfrak p})}\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.1.56</span>
+</p>
+</div>
+<p> By the squeezing property <a href="overviewsection.html#eq-vol-sp-cube">2.0.13</a> and the triangle inequality, we conclude </p>
+<div class="equation" id="a0000000343">
+<p>
+  <div class="equation_content">
+    \begin{equation}  {\mathcal{I}}({\mathfrak p}') \subset B({\mathrm{c}}({\mathfrak p}), 14D^{{\mathrm{s}}({\mathfrak p})})\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.1.57</span>
+</p>
+</div>
+<p> This completes the proof of Lemma <a href="antichainboundary.html#Tile.correlation_le">6.1.5</a>.</p>
+
+  </div>
+</div>
+<p>The following lemma will be proved in <a href="antichainboundary.html#subsec-geolem">Section 6.3</a>. </p>
+<div class="lemma_thmwrapper theorem-style-plain" id="Antichain.tile_count">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">6.1.6</span>
+    <span class="lemma_thmtitle">antichain tile count</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="antichainboundary.html#Antichain.tile_count">#</a>
+    
+    <a class="icon proof" href="antichainboundary.html#a0000000344"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/Antichain.tile_count" class="lean_decl">Antichain.tile_count</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p> Set \(p:=4a^4\). For every \({\vartheta }\in {\Theta }\) and every antichain \(\mathfrak {A}\) we have </p>
+<div class="equation" id="eq-antichain-Lp">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-antichain-Lp} \Big\| \sum _{{\mathfrak p}\in \mathfrak {A}}(1+d_{{\mathfrak p}}({\mathcal{Q}}({\mathfrak p}), {\vartheta }))^{-1/(2a^2+a^3)}\mathbf{1}_{E({\mathfrak p})}\mathbf{1}_G\Big\| _{p} \end{equation}
+  </div>
+  <span class="equation_label">6.1.58</span>
+</p>
+</div>
+<div class="equation" id="a0000000345">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \le 2^{5a}\operatorname{\operatorname {dens}}_1(\mathfrak {A})^{\frac1p}\mu \left(\cup _{{\mathfrak p}\in \mathfrak {A}}I_{{\mathfrak p}}\right)^{\frac1p}\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.1.59</span>
+</p>
+</div>
+<p>Lemma 6.1.6.</p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000344">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Using that \(\mathfrak {A}\) is the disjoint union of the \(\mathfrak {A}_{{\vartheta },N}\) with \(N\ge 0\), we estimate the left-hand side <a href="antichainboundary.html#eq-antichain-Lp">6.1.58</a> with the triangle inequality by </p>
+<div class="equation" id="eqanti23">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqanti23} \le \sum _{N\ge 0} \left\| \sum _{{\mathfrak p}\in \mathfrak {A}_{{\vartheta },N}} 2^{-N/(2a^2+a^3)}\mathbf{1}_{E({\mathfrak p})} \mathbf{1}_G\right\| _{p} \end{equation}
+  </div>
+  <span class="equation_label">6.1.60</span>
+</p>
+</div>
+<p> We consider each individual term in this sum and estimate its \(p\)-th power. Using that for each \(x\in X\) by <a href="antichainboundary.html#tile_disjointness">6.1.1</a> there is at most one \({\mathfrak p}\in \mathfrak {A}\) with \(x\in E({\mathfrak p})\), we have </p>
+<div class="equation" id="a0000000346">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \left\| \sum _{{\mathfrak p}\in \mathfrak {A}_{{\vartheta },N}} 2^{-N/(2a^2+a^3)}\mathbf{1}_{E({\mathfrak p})} \mathbf{1}_G\right\| _{p}^p \end{equation}
+  </div>
+  <span class="equation_label">6.1.61</span>
+</p>
+</div>
+<div class="equation" id="a0000000347">
+<p>
+  <div class="equation_content">
+    \begin{equation}  =\int \Big(\sum _{{\mathfrak p}\in \mathfrak {A}_{{\vartheta },N}}2^{-N/(2a^2+a^3)}\mathbf{1}_{E({\mathfrak p})\cap G}(x)\Big)^p\,  d\mu (x) \end{equation}
+  </div>
+  <span class="equation_label">6.1.62</span>
+</p>
+</div>
+<div class="equation" id="a0000000348">
+<p>
+  <div class="equation_content">
+    \begin{equation}  =\int \sum _{{\mathfrak p}\in \mathfrak {A}_{{\vartheta },N}}2^{-pN/(2a^2+a^3)}\mathbf{1}_{E({\mathfrak p})\cap G}(x)\,  d\mu (x) \end{equation}
+  </div>
+  <span class="equation_label">6.1.63</span>
+</p>
+</div>
+<div class="equation" id="a0000000349">
+<p>
+  <div class="equation_content">
+    \begin{equation}  = 2^{-pN/(2a^2+a^3)} \sum _{{\mathfrak p}\in \mathfrak {A}_{{\vartheta },N}}\mu (E({\mathfrak p})\cap G) \end{equation}
+  </div>
+  <span class="equation_label">6.1.64</span>
+</p>
+</div>
+<p>Using <a href="antichainboundary.html#Antichain.global_antichain_density">6.3.4</a>, we estimate the last display by </p>
+<div class="equation" id="eqanti21">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqanti21} \le 2^{-pN/(2a^2+a^3)+101a^3+Na}\operatorname{\operatorname {dens}}_1(\mathfrak {A})\mu \left(\cup _{{\mathfrak p}\in \mathfrak {A}}{\mathcal{I}}({\mathfrak p})\right) \end{equation}
+  </div>
+  <span class="equation_label">6.1.65</span>
+</p>
+</div>
+<p> Using that \(a\ge 4\) and since \(p = 4a^4\), we have </p>
+<div class="displaymath" id="a0000000350">
+  \[ pN/(2a^2+a^3)\ge 4a^4N/(3a^3) \ge Na+N\,  . \]
+</div>
+<p> Hence we have for <a href="antichainboundary.html#eqanti21">6.1.65</a> the upper bound </p>
+<div class="displaymath" id="a0000000351">
+  \[ \le 2^{101a^3-N}\operatorname{\operatorname {dens}}_1(\mathfrak {A})\mu \left(\cup _{{\mathfrak p}\in \mathfrak {A}}{\mathcal{I}}({\mathfrak p})\right)\,  . \]
+</div>
+<p> Taking the \(p\)-th root and summing over \(N\ge 0\) gives for <a href="antichainboundary.html#eqanti23">6.1.60</a> the upper bound </p>
+<div class="displaymath" id="a0000000352">
+  \[ \le \left(\sum _{N\ge 0} 2^{-N/p}\right)2^{101a^3/p}\operatorname{\operatorname {dens}}_1(\mathfrak {A})^{{\frac{1}{p}}}\mu \left(\cup _{{\mathfrak p}\in \mathfrak {A}}{\mathcal{I}}({\mathfrak p})\right)^{{\frac{1}{p}}} \]
+</div>
+<div class="displaymath" id="a0000000353">
+  \[ = \left(1-2^{-1/p}\right)^{-1} 2^{101a^3/p} \operatorname{\operatorname {dens}}_1(\mathfrak {A})^{\frac1p}\mu \left(\cup _{{\mathfrak p}\in \mathfrak {A}}{\mathcal{I}}({\mathfrak p})\right)^{\frac1p}\,  . \]
+</div>
+<p> Using that \(p = 4a^4\) and \(a \ge 4\), this proves the lemma.</p>
+
+  </div>
+</div>
+<p>From these lemmas it is easy to prove <a href="overviewsection.html#antichain_operator">Proposition 2.0.3</a>. </p>
+<h2 id="sec-tile-operator">6.2 Proof of the Tile Correlation Lemma</h2>
+
+<p>The next lemma prepares an application of <a href="overviewsection.html#holder_van_der_corput">Proposition 2.0.5</a>. </p>
+<div class="lemma_thmwrapper theorem-style-plain" id="Tile.correlation">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">6.2.1</span>
+    <span class="lemma_thmtitle">correlation kernel bound</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="antichainboundary.html#Tile.correlation">#</a>
+    
+    <a class="icon proof" href="antichainboundary.html#a0000000354"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/Tile.correlation" class="lean_decl">Tile.correlation</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p> Let \(-S\le s_1\le s_2\le S\) and let \(x_1,x_2\in X\). Define </p>
+<div class="equation" id="a0000000355">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \varphi (y) := \overline{K_{s_1}(x_1, y)} K_{s_2}(x_2, y) \,  . \end{equation}
+  </div>
+  <span class="equation_label">6.2.1</span>
+</p>
+</div>
+<p> If \(\varphi (y)\neq 0\), then </p>
+<div class="equation" id="eqt10">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqt10} y\in B(x_1, D^{s_1})\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.2.2</span>
+</p>
+</div>
+<p> Moreover, we have with \(\tau = 1/a\) </p>
+<div class="equation" id="eqt11">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqt11} \| \varphi \| _{C^\tau (B(x_1, 2 D^{s_1}))}\le \frac{2^{231 a^3}}{\mu (B(x_1, D^{s_1}))\mu (B(x_2, D^{s_2}))} \,  . \end{equation}
+  </div>
+  <span class="equation_label">6.2.3</span>
+</p>
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000354">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>If \(\varphi (y)\) is not zero, then \(K_{s_1}(x_1, y)\) is not zero and thus <a href="overviewsection.html#supp-Ks">2.1.2</a> gives <a href="antichainboundary.html#eqt10">6.2.2</a>. </p>
+<p>We next have for \(y\) with <a href="overviewsection.html#eq-Ks-size">2.1.3</a> </p>
+<div class="equation" id="suppart">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{suppart} |\varphi (y)|\le \frac{2^{204 a^3}}{\mu (B(x_1, D^{s_1}))\mu (B(x_2, D^{s_2}))} \end{equation}
+  </div>
+  <span class="equation_label">6.2.4</span>
+</p>
+</div>
+<p> and for \(y'\neq y\) additionally with <a href="overviewsection.html#eq-Ks-smooth">2.1.4</a> </p>
+<div class="equation" id="a0000000356">
+<p>
+  <div class="equation_content">
+    \begin{equation}  |\varphi (y)-\varphi (y')| \end{equation}
+  </div>
+  <span class="equation_label">6.2.5</span>
+</p>
+</div>
+<div class="equation" id="a0000000357">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \le |K_{s_1}(x_1,y)-K_{s_1}(x_1,y'))|| K_{s_2}(x_2, y)| \end{equation}
+  </div>
+  <span class="equation_label">6.2.6</span>
+</p>
+</div>
+<div class="equation" id="a0000000358">
+<p>
+  <div class="equation_content">
+    \begin{equation}  +|K_{s_1}(x_1, y')| |K_{s_2}(x_2, y) - K_{s_2}(x_2, y'))| \end{equation}
+  </div>
+  <span class="equation_label">6.2.7</span>
+</p>
+</div>
+<div class="equation" id="a0000000359">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \le \frac{2^{229 a^3}}{\mu (B(x_1, D^{s_1}))\mu (B(x_2, D^{s_2}))} \left(\left(\frac{ \rho (y,y')}{D^{s_1}}\right)^{1/a}+ \left(\frac{ \rho (y,y')}{D^{s_2}}\right)^{1/a}\right) \end{equation}
+  </div>
+  <span class="equation_label">6.2.8</span>
+</p>
+</div>
+<div class="equation" id="holderpart">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{holderpart} \le \frac{2^{230 a^3}}{\mu (B(x_1, D^{s_1}))\mu (B(x_2, D^{s_2}))} \left(\frac{ \rho (y,y')}{D^{s_1}}\right)^{1/a}\, . \end{equation}
+  </div>
+  <span class="equation_label">6.2.9</span>
+</p>
+</div>
+<p> Adding the estimates <a href="antichainboundary.html#suppart">6.2.4</a> and <a href="antichainboundary.html#holderpart">6.2.9</a> gives <a href="antichainboundary.html#eqt11">6.2.3</a>. This proves the lemma.</p>
+
+  </div>
+</div>
+<p>The following auxiliary statement about the support of \(T_{\mathfrak p}^*g\) will be used repeatedly. </p>
+<div class="lemma_thmwrapper theorem-style-plain" id="Tile.range_support">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">6.2.2</span>
+    <span class="lemma_thmtitle">tile range support</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="antichainboundary.html#Tile.range_support">#</a>
+    
+    <a class="icon proof" href="antichainboundary.html#a0000000360"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/Tile.range_support" class="lean_decl">Tile.range_support</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p> For each \({\mathfrak p}\in {\mathfrak P}\), and each \(y\in X\), we have that </p>
+<div class="equation" id="tstargnot0">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{tstargnot0} T_{{\mathfrak p}}^* g(y)\neq 0 \end{equation}
+  </div>
+  <span class="equation_label">6.2.10</span>
+</p>
+</div>
+<p> implies </p>
+<div class="equation" id="ynotfar">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{ynotfar} y\in B({\mathrm{c}}({\mathfrak p}),5D^{{\mathrm{s}}({\mathfrak p})})\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.2.11</span>
+</p>
+</div>
+<p>Lemma 6.2.2.</p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000360">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Fix \({\mathfrak p}\) and \(y\) with <a href="antichainboundary.html#tstargnot0">6.2.10</a>. Then there exists \(x\in E({\mathfrak p})\) with </p>
+<div class="equation" id="a0000000361">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \overline{K_{{\mathrm{s}}({\mathfrak p})}(x,y)}e(-{Q}(x)(y) +{Q}(x)(x))g(x) \neq 0\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.2.12</span>
+</p>
+</div>
+<p> As \(E({\mathfrak p})\subset {\mathcal{I}}({\mathfrak p})\) and by the squeezing property <a href="overviewsection.html#eq-vol-sp-cube">2.0.13</a>, we have </p>
+<div class="equation" id="a0000000362">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \rho (x,{\mathrm{c}}({\mathfrak p})) {\lt} 4D^{{\mathrm{s}}({\mathfrak p})}\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.2.13</span>
+</p>
+</div>
+<p> As \(K_{{\mathrm{s}}({\mathfrak p})}(x,y)\neq 0\), we have by <a href="overviewsection.html#supp-Ks">2.1.2</a> that </p>
+<div class="equation" id="a0000000363">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \rho (x,y)\le \frac12 D^{{\mathrm{s}}({\mathfrak p})}\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.2.14</span>
+</p>
+</div>
+<p> Now <a href="antichainboundary.html#ynotfar">6.2.11</a> follows by the triangle inequality.</p>
+
+  </div>
+</div>
+<p>The next lemma is a geometric estimate for two tiles. </p>
+<div class="lemma_thmwrapper theorem-style-plain" id="Tile.uncertainty">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">6.2.3</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="antichainboundary.html#Tile.uncertainty">#</a>
+    
+    <a class="icon proof" href="antichainboundary.html#a0000000364"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/Tile.uncertainty" class="lean_decl">Tile.uncertainty</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p> Let \({\mathfrak p}_1, {\mathfrak p}_2\in {\mathfrak P}\) with \(B({\mathrm{c}}({\mathfrak p}_1),5D^{{\mathrm{s}}({\mathfrak p}_1)}) \cap B({\mathrm{c}}({\mathfrak p}_2),5D^{{\mathrm{s}}({\mathfrak p}_2)}) \ne \emptyset \) and \({\mathrm{s}}({{\mathfrak p}_1})\leq {\mathrm{s}}({{\mathfrak p}_2})\). For each \(x_1\in E({\mathfrak p}_1)\) and \(x_2\in E({\mathfrak p}_2)\) we have </p>
+<div class="equation" id="tgeo">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{tgeo} 1+d_{{\mathfrak p}_1}({\mathcal{Q}}({\mathfrak p}_1), {\mathcal{Q}}({\mathfrak p}_2))\le 2^{8a}(1 + d_{B(x_1, D^{{\mathrm{s}}({\mathfrak p}_1)})}({Q}(x_1),{Q}(x_2)))\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.2.15</span>
+</p>
+</div>
+<p>Lemma 6.2.3 (edist version).</p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000364">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Let \(i\in \{ 1,2\} \). By Definition <a href="overviewsection.html#defineep">2.0.23</a> of \(E\), we have \({Q}(x_i)\in {\Omega }({\mathfrak p}_i)\) With <a href="overviewsection.html#eq-freq-comp-ball">2.0.18</a> we then conclude </p>
+<div class="equation" id="dponetwo">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{dponetwo} d_{{\mathfrak p}_i}({Q}(x_i),{\mathcal{Q}}({\mathfrak p}_i)) {\lt} 1\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.2.16</span>
+</p>
+</div>
+<p> We have by the triangle inequality and <a href="overviewsection.html#eq-vol-sp-cube">2.0.13</a> that \({\mathcal{I}}({\mathfrak p}_1) \subset B({\mathrm{c}}({\mathfrak p}_2),14D^{{\mathrm{s}}({\mathfrak p}_2)})\). Thus, using again <a href="overviewsection.html#eq-vol-sp-cube">2.0.13</a> and the doubling property <a href="sect0001.html#firstdb">1.1.5</a> </p>
+<div class="equation" id="tgeo0.5">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{tgeo0.5} d_{{\mathfrak p}_1}({Q}(x_2), {\mathcal{Q}}({\mathfrak p}_2)) \le 2^{6a} d_{{\mathfrak p}_2}({Q}(x_2), {\mathcal{Q}}({\mathfrak p}_2)) \le 2^{6a}\, . \end{equation}
+  </div>
+  <span class="equation_label">6.2.17</span>
+</p>
+</div>
+<p> By the triangle inequality, we obtain from <a href="antichainboundary.html#dponetwo">6.2.16</a> and <a href="antichainboundary.html#tgeo0.5">6.2.17</a> </p>
+<div class="equation" id="tgeo1">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{tgeo1} 1+d_{{\mathfrak p}_1}({\mathcal{Q}}({\mathfrak p}_1), {\mathcal{Q}}({\mathfrak p}_2))\le 2 + 2^{6a} +d_{{\mathfrak p}_1}({Q}(x_1), {Q}(x_2))\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.2.18</span>
+</p>
+</div>
+<p> As \(x_1\in {\mathcal{I}}({\mathfrak p}_1)\) by Definition <a href="overviewsection.html#defineep">2.0.23</a> of \(E\), we have by the squeezing property <a href="overviewsection.html#eq-vol-sp-cube">2.0.13</a> </p>
+<div class="equation" id="a0000000365">
+<p>
+  <div class="equation_content">
+    \begin{equation}  d(x_1,{\mathrm{c}}({\mathfrak p}_1))\le 4D^{{\mathrm{s}}({\mathfrak p}_1)} \end{equation}
+  </div>
+  <span class="equation_label">6.2.19</span>
+</p>
+</div>
+<p> and thus by <a href="overviewsection.html#eq-vol-sp-cube">2.0.13</a> again and the triangle inequality </p>
+<div class="equation" id="a0000000366">
+<p>
+  <div class="equation_content">
+    \begin{equation}  {\mathcal{I}}({\mathfrak p}_1)\subset B(x_1,8D^{{\mathrm{s}}({\mathfrak p}_1)})\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.2.20</span>
+</p>
+</div>
+<p> We thus estimate the right-hand side of <a href="antichainboundary.html#tgeo1">6.2.18</a> with monotonicity <a href="sect0001.html#monotonedb">1.1.6</a> of the metrics \(d_B\) by </p>
+<div class="equation" id="tgeo1.5">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{tgeo1.5} \le 2 + 2^{6a} + d_{B(x_1,8D^{{\mathrm{s}}({\mathfrak p}_1)})}({Q}(x_1), {Q}(x_2))\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.2.21</span>
+</p>
+</div>
+<p> This is further estimated by applying the doubling property <a href="sect0001.html#firstdb">1.1.5</a> three times by </p>
+<div class="equation" id="tgeo2">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{tgeo2} \le 2 + 2^{6a} +2^{3a}d_{B_1(x_1, D^{{\mathrm{s}}({\mathfrak p}_1)})}({Q}(x_1), {Q}(x_2))\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.2.22</span>
+</p>
+</div>
+<p> Now <a href="antichainboundary.html#tgeo">6.2.15</a> follows with \(a\ge 4\).</p>
+
+  </div>
+</div>
+<p>We now prove <a href="antichainboundary.html#Tile.correlation_le">Lemma 6.1.5</a>. </p>
+<h2 id="subsec-geolem">6.3 Proof of the Antichain Tile Count Lemma</h2>
+
+<div class="lemma_thmwrapper theorem-style-plain" id="Antichain.tile_reach">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">6.3.1</span>
+    <span class="lemma_thmtitle">tile reach</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="antichainboundary.html#Antichain.tile_reach">#</a>
+    
+    <a class="icon proof" href="antichainboundary.html#a0000000367"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/Antichain.tile_reach" class="lean_decl">Antichain.tile_reach</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p> Let \({\vartheta }\in {\Theta }\) and \(N\ge 0\) be an integer. Let \({\mathfrak p}, {\mathfrak p}'\in {\mathfrak P}\) with </p>
+<div class="equation" id="eqassumedismfa">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqassumedismfa} d_{{\mathfrak p}}({\mathcal{Q}}({\mathfrak p}), {\vartheta }))\le 2^N\,  \end{equation}
+  </div>
+  <span class="equation_label">6.3.1</span>
+</p>
+</div>
+<div class="equation" id="eqassumedismfap">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqassumedismfap} d_{{\mathfrak p}'}({\mathcal{Q}}({\mathfrak p}'), {\vartheta }))\le 2^N\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.3.2</span>
+</p>
+</div>
+<p> Assume \({\mathcal{I}}({\mathfrak p})\subset {\mathcal{I}}({\mathfrak p}')\) and \({\mathrm{s}}({\mathfrak p}){\lt}{\mathrm{s}}({\mathfrak p}')\). Then </p>
+<div class="equation" id="lp'lp''">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{lp'lp''}2^{N+2}{\mathfrak p}\lesssim 2^{N+2} {\mathfrak p}'\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.3.3</span>
+</p>
+</div>
+<p>Lemma 6.3.1.</p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000367">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>By <a href="overviewsection.html#Grid.dist_mono">2.1.2</a>, we have </p>
+<div class="equation" id="a0000000368">
+<p>
+  <div class="equation_content">
+    \begin{equation}  d_{{\mathfrak p}}({\mathcal{Q}}({\mathfrak p}'),{\vartheta }) \le d_{{\mathfrak p}'}({\mathcal{Q}}({\mathfrak p}'),{\vartheta }) \le 2^{N} \,  . \end{equation}
+  </div>
+  <span class="equation_label">6.3.4</span>
+</p>
+</div>
+<p> Together with <a href="antichainboundary.html#eqassumedismfa">6.3.1</a> and the triangle inequality, we obtain </p>
+<div class="equation" id="eqdistqpqp">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqdistqpqp} d_{{\mathfrak p}}({\mathcal{Q}}({\mathfrak p}'),{\mathcal{Q}}({\mathfrak p}))\le 2^{N+1} \,  . \end{equation}
+  </div>
+  <span class="equation_label">6.3.5</span>
+</p>
+</div>
+<p> Now assume </p>
+<div class="equation" id="a0000000369">
+<p>
+  <div class="equation_content">
+    \begin{equation}  {\vartheta }'\in B_{{\mathfrak p}'}({\mathcal{Q}}({\mathfrak p}'),2^{N+2}). \end{equation}
+  </div>
+  <span class="equation_label">6.3.6</span>
+</p>
+</div>
+<p> By the doubling property <a href="sect0001.html#firstdb">1.1.5</a>, applied five times, we have </p>
+<div class="equation" id="ageo1">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{ageo1} d_{B({\mathrm{c}}({\mathfrak p}'),8D^{{\mathrm{s}}({\mathfrak p}')})}({\mathcal{Q}}({\mathfrak p}'),{\vartheta }') {\lt} 2^{5a+N+2}\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.3.7</span>
+</p>
+</div>
+<p> We have by the squeezing property <a href="overviewsection.html#eq-vol-sp-cube">2.0.13</a> </p>
+<div class="equation" id="a0000000370">
+<p>
+  <div class="equation_content">
+    \begin{equation}  {\mathrm{c}}({\mathfrak p})\in B({\mathrm{c}}({\mathfrak p}'),4D^{{\mathrm{s}}({\mathfrak p}')})\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.3.8</span>
+</p>
+</div>
+<p> Hence by the triangle inequality </p>
+<div class="equation" id="a0000000371">
+<p>
+  <div class="equation_content">
+    \begin{equation}  B({\mathrm{c}}({\mathfrak p}), 4D^{{\mathrm{s}}({\mathfrak p}')}) \subseteq B({\mathrm{c}}({\mathfrak p}'),8D^{{\mathrm{s}}({\mathfrak p}')})\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.3.9</span>
+</p>
+</div>
+<p> Together with <a href="antichainboundary.html#ageo1">6.3.7</a> and monotonicity <a href="sect0001.html#monotonedb">1.1.6</a> of \(d\) </p>
+<div class="equation" id="a0000000372">
+<p>
+  <div class="equation_content">
+    \begin{equation}  d_{B({\mathrm{c}}({\mathfrak p}),4D^{{\mathrm{s}}({\mathfrak p}')})}({\mathcal{Q}}({\mathfrak p}'),{\vartheta }') {\lt} 2^{5a+N+2}\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.3.10</span>
+</p>
+</div>
+<p> Using the doubling property <a href="sect0001.html#seconddb">1.1.7</a> \(5a+2\) times gives </p>
+<div class="equation" id="a0000000373">
+<p>
+  <div class="equation_content">
+    \begin{equation}  d_{B({\mathrm{c}}({\mathfrak p}),2^{2-5a^2-2a}D^{{\mathrm{s}}({\mathfrak p}')})}({\mathcal{Q}}({\mathfrak p}'),{\vartheta }') {\lt} 2^{N}\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.3.11</span>
+</p>
+</div>
+<p> Using \({\mathrm{s}}({\mathfrak p}){\lt}{\mathrm{s}}({\mathfrak p}')\) and \(D=2^{100a^2}\) and \(a\ge 4\) gives </p>
+<div class="equation" id="a0000000374">
+<p>
+  <div class="equation_content">
+    \begin{equation}  d_{{\mathfrak p}}({\mathcal{Q}}({\mathfrak p}'),{\vartheta }') {\lt} 2^{N}\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.3.12</span>
+</p>
+</div>
+<p> With the triangle inequality and <a href="antichainboundary.html#eqdistqpqp">6.3.5</a>, </p>
+<div class="equation" id="a0000000375">
+<p>
+  <div class="equation_content">
+    \begin{equation}  d_{{\mathfrak p}}({\mathcal{Q}}({\mathfrak p}),{\vartheta }') {\lt} 2^{N+2}\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.3.13</span>
+</p>
+</div>
+<p> This shows </p>
+<div class="equation" id="a0000000376">
+<p>
+  <div class="equation_content">
+    \begin{equation}  B_{{\mathfrak p}'}({\mathcal{Q}}({\mathfrak p}'),2^{N+2})\subset B_{{\mathfrak p}}({\mathcal{Q}}({\mathfrak p}),2^{N+2})\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.3.14</span>
+</p>
+</div>
+<p> This implies <a href ="#lp'lp''">[lp’lp”]</a> and completes the proof of the lemma.</p>
+
+  </div>
+</div>
+<p>For \({\vartheta }\in {\Theta }\) and \(N\ge 0\) define </p>
+<div class="equation" id="eqantidefap">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{eqantidefap} \mathfrak {A}_{{\vartheta },N}:=\{ {\mathfrak p}\in \mathfrak {A}: 2^{N}\le 1+d_{{\mathfrak p}}({\mathcal{Q}}({\mathfrak p}), {\vartheta }) {\lt} 2^{N+1}\}  \,  . \end{equation}
+  </div>
+  <span class="equation_label">6.3.15</span>
+</p>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="Antichain.stack_density">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">6.3.2</span>
+    <span class="lemma_thmtitle">stack density</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="antichainboundary.html#Antichain.stack_density">#</a>
+    
+    <a class="icon proof" href="antichainboundary.html#a0000000377"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/Antichain.stack_density" class="lean_decl">Antichain.stack_density</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p> Let \({\vartheta }\in {\Theta }\), \(N\ge 0\) and \(L\in \mathcal{D}\). Then </p>
+<div class="equation" id="eqanti-1">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqanti-1} \sum _{{\mathfrak p}\in \mathfrak {A}_{{\vartheta },N}:{\mathcal{I}}({\mathfrak p})=L}\mu (E({\mathfrak p})\cap G)\le 2^{a(N+5)}\operatorname{\operatorname {dens}}_1(\mathfrak {A})\mu (L)\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.3.16</span>
+</p>
+</div>
+<p>Lemma 6.3.2.</p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000377">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Let \({\vartheta },N,L\) be given and set </p>
+<div class="equation" id="a0000000378">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \mathfrak {A}':=\{ {\mathfrak p}\in \mathfrak {A}_{{\vartheta },N}:{\mathcal{I}}({\mathfrak p})=L\} \,  . \end{equation}
+  </div>
+  <span class="equation_label">6.3.17</span>
+</p>
+</div>
+<p> Let \({\mathfrak p}\in \mathfrak {A}'\). We have by Definition <a href="overviewsection.html#definedens1">2.0.31</a> using \(\lambda =2\) and the squeezing property <a href="overviewsection.html#eq-freq-comp-ball">2.0.18</a> </p>
+<div class="equation" id="eqanti-3">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqanti-3} \mu (E({\mathfrak p})\cap G)\le \mu (E_2(2, {\mathfrak p}))\le 2^{a}\operatorname{\operatorname {dens}}_1(\mathfrak {A}')\mu (L)\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.3.18</span>
+</p>
+</div>
+<p> By the covering property <a href="sect0001.html#thirddb">1.1.8</a>, applied \(N+4\) times, there is a collection \({\Theta }'\) of at most \(2^{a(N+4)}\) elements such that </p>
+<div class="equation" id="eqanti-4">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqanti-4} B_{{\mathfrak p}}({\vartheta }, 2^{N+1})\subset \bigcup _{{\vartheta }'\in {\Theta }'} B_{{\mathfrak p}}({\vartheta }', 0.2)\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.3.19</span>
+</p>
+</div>
+<p> As each \({\mathcal{Q}}({\mathfrak p}')\) with \({\mathfrak p}'\in \mathfrak {A}'\) is contained in the left-hand-side of <a href="antichainboundary.html#eqanti-4">6.3.19</a> by definition (because \({\mathcal{I}}({\mathfrak p}') = {\mathcal{I}}({\mathfrak p}))\), it is in at least one \(B_{{\mathfrak p}}({\vartheta }', 0.2)\) with \({\vartheta }'\in {\Theta }'\). </p>
+<p>For two different \({\mathfrak p}',{\mathfrak p}''\in \mathfrak {A}'\), we have by <a href="overviewsection.html#eq-dis-freq-cover">2.0.16</a> that \({\Omega }({\mathfrak p}')\) and \({\Omega }({\mathfrak p}'')\) are disjoint and thus by the squeezing property <a href="overviewsection.html#eq-freq-comp-ball">2.0.18</a> we have for every \({\vartheta }'\in {\Theta }'\) </p>
+<div class="equation" id="a0000000379">
+<p>
+  <div class="equation_content">
+    \begin{equation}  {\vartheta }'\not\in B_{{\mathfrak p}}({\mathcal{Q}}({\mathfrak p}'), 0.2)\cap B_{{\mathfrak p}}({\mathcal{Q}}({\mathfrak p}''), 0.2)\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.3.20</span>
+</p>
+</div>
+<p> Hence at most one of \({\mathcal{Q}}({\mathfrak p}')\) and \({\mathcal{Q}}({\mathfrak p}'')\) is in \(B_{{\mathfrak p}}({\vartheta }', 0.2)\). It follows that there are at most \(2^{a(N+4)}\) elements in \(\mathfrak {A}'\). Adding <a href="antichainboundary.html#eqanti-3">6.3.18</a> over \(\mathfrak {A}'\) proves <a href="antichainboundary.html#eqanti-1">6.3.16</a>.</p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="Antichain.local_antichain_density">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">6.3.3</span>
+    <span class="lemma_thmtitle">local antichain density</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="antichainboundary.html#Antichain.local_antichain_density">#</a>
+    
+    <a class="icon proof" href="antichainboundary.html#a0000000380"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/Antichain.local_antichain_density" class="lean_decl">Antichain.local_antichain_density</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p> Let \({\vartheta }\in {\Theta }\) and \(N\) be an integer. Let \({\mathfrak p}_{{\vartheta }}\) be a tile with \({\vartheta }\in B_{{\mathfrak p}_{{\vartheta }}}({\mathcal{Q}}({\mathfrak p}_{{\vartheta }}), 2^{N+1})\). Then we have </p>
+<div class="equation" id="eqanti-0.5">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqanti-0.5} \sum _{{\mathfrak p}\in \mathfrak {A}_{{\vartheta },N}: {\mathrm{s}}({\mathfrak p}_{{\vartheta }}){\lt}{\mathrm{s}}({\mathfrak p})}\mu (E({\mathfrak p})\cap G \cap {\mathcal{I}}({\mathfrak p}_{{\vartheta }})) \le \mu (E_2(2^{N+3},{\mathfrak p}_{{\vartheta }})) \,  . \end{equation}
+  </div>
+  <span class="equation_label">6.3.21</span>
+</p>
+</div>
+<p>Lemma 6.3.3.</p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000380">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Let \({\mathfrak p}\) be any tile in \(\mathfrak {A}_{{\vartheta },N}\) with \({\mathrm{s}}({\mathfrak p}_{{\vartheta }}){\lt}{\mathrm{s}}({\mathfrak p})\). By definition of \(E\), the tile contributes zero to the sum on the left-hand side of <a href="antichainboundary.html#eqanti-0.5">6.3.21</a> unless \({\mathcal{I}}({\mathfrak p})\cap {\mathcal{I}}({\mathfrak p}_{{\vartheta }}) \neq \emptyset \), which we may assume. With \({\mathrm{s}}({\mathfrak p}_{{\vartheta }}){\lt}{\mathrm{s}}({\mathfrak p})\) and the dyadic property <a href="overviewsection.html#dyadicproperty">2.0.11</a> we conclude \({\mathcal{I}}({\mathfrak p}_{{\vartheta }})\subset {\mathcal{I}}({\mathfrak p})\). We conclude from \({\mathfrak p}\in \mathfrak {A}_{{\vartheta },N}\) that </p>
+<div class="equation" id="a0000000381">
+<p>
+  <div class="equation_content">
+    \begin{equation}  {\vartheta }\in B_{\mathfrak p}({\mathcal{Q}}({\mathfrak p}), 2^{N+1})\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.3.22</span>
+</p>
+</div>
+<p> With <a href="antichainboundary.html#Antichain.tile_reach">6.3.1</a> and the assumption on \({\mathfrak p}_{\vartheta }\), we conclude </p>
+<div class="equation" id="a0000000382">
+<p>
+  <div class="equation_content">
+    \begin{equation}  2^{N+3}{\mathfrak p}_{{\vartheta }} \lesssim 2^{N+3}{\mathfrak p}\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.3.23</span>
+</p>
+</div>
+<p> By Definition <a href="overviewsection.html#definee2">2.0.30</a> of \(E_2\), we conclude </p>
+<div class="equation" id="a0000000383">
+<p>
+  <div class="equation_content">
+    \begin{equation}  E({\mathfrak p})\cap G \cap {\mathcal{I}}({\mathfrak p}_{{\vartheta }}) \subset E_2(2^{N+3},{\mathfrak p}_{{\vartheta }})\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.3.24</span>
+</p>
+</div>
+<p> Using disjointedness of the various \(E({\mathfrak p})\) with \({\mathfrak p}\in \mathfrak {A}\) by <a href="antichainboundary.html#tile_disjointness">6.1.1</a>, we obtain <a href="antichainboundary.html#eqanti-0.5">6.3.21</a>. This proves the lemma.</p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="Antichain.global_antichain_density">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">6.3.4</span>
+    <span class="lemma_thmtitle">global antichain density</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="antichainboundary.html#Antichain.global_antichain_density">#</a>
+    
+    <a class="icon proof" href="antichainboundary.html#a0000000384"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/Antichain.global_antichain_density" class="lean_decl">Antichain.global_antichain_density</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p> Let \({\vartheta }\in Q(X)\) and let \(N\ge 0\) be an integer. Then we have </p>
+<div class="equation" id="eqanti00">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqanti00} \sum _{{\mathfrak p}\in \mathfrak {A}_{{\vartheta },N}}\mu (E({\mathfrak p})\cap G) \le 2^{101a^3+Na}\operatorname{\operatorname {dens}}_1(\mathfrak {A})\mu \left(\cup _{{\mathfrak p}\in \mathfrak {A}}I_{{\mathfrak p}}\right)\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.3.25</span>
+</p>
+</div>
+<p>Lemma 6.3.4.</p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000384">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Fix \({\vartheta }\) and \(N\). Let \(\mathfrak {A}'\) be the set of \({\mathfrak p}\in \mathfrak {A}_{{\vartheta },N}\) such that \({\mathcal{I}}({\mathfrak p})\cap G\) is not empty and \(s({\mathfrak p}) {\gt} -S\). Let \(\mathfrak {A}_{-S}\) be the set of \({\mathfrak p}\in \mathfrak {A}_{{\vartheta },N}\) such that \({\mathcal{I}}({\mathfrak p})\cap G\) is not empty and \(s({\mathfrak p}) = -S\) Then we have </p>
+<div class="displaymath" id="a0000000385">
+  \begin{equation*}  \sum _{{\mathfrak p}\in \mathfrak {A}_{{\vartheta },N}}\mu (E({\mathfrak p})\cap G) = \sum _{{\mathfrak p}\in \mathfrak {A}'}\mu (E({\mathfrak p})\cap G) + \sum _{{\mathfrak p}\in \mathfrak {A}_{-S}}\mu (E({\mathfrak p})\cap G) \end{equation*}
+</div>
+<p>We start by estimating the contribution of \(\mathfrak {A}_{-S}\). Let \(\mathcal{L}_{-S}\) be the collection of dyadic cubes \({\mathcal{I}}({\mathfrak p})\) with \({\mathfrak p}\in \mathfrak {A}_{-S}\). They all have scale \(-S\), by definition of \(\mathcal{L}_{-S}\), and hence they are pairwise disjoint by the dyadic property <a href="overviewsection.html#dyadicproperty">2.0.11</a>. We write </p>
+<div class="displaymath" id="a0000000386">
+  \[ \sum _{{\mathfrak p}\in \mathfrak {A}_{-S}}\mu (E({\mathfrak p})\cap G) = \sum _{L \in \mathcal{L}_{-S}} \sum _{{\mathfrak p}\in \mathfrak {A}_{-S}, {\mathcal{I}}({\mathfrak p}) = L} \mu (E({\mathfrak p})\cap G), \]
+</div>
+<p> and using <a href="antichainboundary.html#Antichain.stack_density">6.3.2</a>, we estimate </p>
+<div class="equation" id="<plasTeX.TeXFragment object at 0x10d74c710>">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq_minus_S} \le 2^{a(N+5)} \operatorname{\operatorname {dens}}_1(\mathfrak {A}) \sum _{L \in \mathcal{L}_{-S}} \mu (L) \le 2^{a(N+5)} \operatorname{\operatorname {dens}}_1(\mathfrak {A}) \mu \left(\cup _{{\mathfrak p}\in \mathfrak {A}}I_{{\mathfrak p}}\right). \end{equation}
+  </div>
+  <span class="equation_label">6.3.26</span>
+</p>
+</div>
+<p>We turn to \(\mathfrak {A}'\). Let \(\mathcal{L}\) be the collection of dyadic cubes \(I\in \mathcal{D}\) such that \(I \le {\mathcal{I}}({\mathfrak p})\) for some \({\mathfrak p}\in \mathfrak {A}'\) and such that \({\mathcal{I}}({\mathfrak p})\not\subset I\) for all \({\mathfrak p}\in \mathfrak {A}'\). By <a href="overviewsection.html#coverdyadic">2.0.10</a>, for each \({\mathfrak p}\in \mathfrak {A}'\) and each \(x\in {\mathcal{I}}({\mathfrak p})\cap G\), there is \(I\in \mathcal{D}\) with \(s(I)=-S\) and \(x\in I\). By <a href="overviewsection.html#dyadicproperty">2.0.11</a>, we have \(I\subset {\mathcal{I}}({\mathfrak p})\). Since for all \({\mathfrak p}' \in \mathfrak {A}'\) we have \(s({\mathfrak p}') {\gt} -S\), we have \(I \in \mathcal{L}\). Hence </p>
+<div class="equation" id="a0000000387">
+<p>
+  <div class="equation_content">
+    \begin{equation}  {\mathcal{I}}({\mathfrak p})\subset \bigcup \{ I\in \mathcal{D}: s(I)=-S, I\subset {\mathcal{I}}({\mathfrak p})\} \subset \bigcup \mathcal{L}\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.3.27</span>
+</p>
+</div>
+<p> As each \(I\in \mathcal{L}\) satisfies \(I\subset {\mathcal{I}}({\mathfrak p})\) for some \({\mathfrak p}\) in \(\mathfrak {A’}\), we conclude </p>
+<div class="equation" id="a0000000388">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \bigcup \mathcal{L}=\bigcup _{{\mathfrak p}\in \mathfrak {A}'}{\mathcal{I}}({\mathfrak p})\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.3.28</span>
+</p>
+</div>
+<p> Let \(\mathcal{L}^*\) be the set of maximal elements in \(\mathcal{L}\) with respect to set inclusion. By <a href="overviewsection.html#dyadicproperty">2.0.11</a>, the elements in \(\mathcal{L}^*\) are pairwise disjoint and we have </p>
+<div class="equation" id="eqdecAprime">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqdecAprime} \bigcup \mathcal{L}^*=\bigcup _{{\mathfrak p}\in \mathfrak {A}'}{\mathcal{I}}({\mathfrak p})\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.3.29</span>
+</p>
+</div>
+<p> Using the partition <a href="antichainboundary.html#eqdecAprime">6.3.29</a> into elements of \(\mathcal{L}\) in <a href="antichainboundary.html#eqanti0">6.3.30</a>, it suffices to show for each \(L\in \mathcal{L}^*\) </p>
+<div class="equation" id="eqanti0">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqanti0} \sum _{{\mathfrak p}\in \mathfrak {A}'}\mu (E({\mathfrak p})\cap G \cap L) \le 2^{101a^3+aN} \operatorname{\operatorname {dens}}_1(\mathfrak {A})\mu (L)\, . \end{equation}
+  </div>
+  <span class="equation_label">6.3.30</span>
+</p>
+</div>
+<p> Fix \(L\in \mathcal{L}^*\). By definition of \(\mathcal{L}^*\), there exists an element \({\mathfrak p}'\in \mathfrak {A}'\) such that \(L\subset {\mathcal{I}}({\mathfrak p}')\). Pick such an element \({\mathfrak p}'\) in \(\mathfrak {A}\) with minimal \({\mathrm{s}}({\mathfrak p}')\). As \({\mathcal{I}}({\mathfrak p}')\not\subset L\) by definition of \(L\), we have with <a href="overviewsection.html#dyadicproperty">2.0.11</a> that \(s(L){\lt} {\mathrm{s}}({\mathfrak p}')\). In particular \(s(L){\lt}S\), thus \(L \ne I_0\) and hence by <a href="overviewsection.html#subsetmaxcube">2.0.12</a> there exists a cube \(J \in \mathcal{D}\) with \(L \subsetneq J\). By <a href="overviewsection.html#coverdyadic">2.0.10</a>, there is an \(L'\in \mathcal{D}\) with \(s(L')=s(L)+1\) and \(L \le L'\). By <a href="overviewsection.html#dyadicproperty">2.0.11</a>, we have \(L\subset L'\). </p>
+<p>We split the left-hand side of <a href="antichainboundary.html#eqanti0">6.3.30</a> as </p>
+<div class="equation" id="eqanti1">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqanti1} \sum _{{\mathfrak p}\in \mathfrak {A}':{\mathcal{I}}({\mathfrak p})=L'}\mu (E({\mathfrak p})\cap G\cap L) \end{equation}
+  </div>
+  <span class="equation_label">6.3.31</span>
+</p>
+</div>
+<div class="equation" id="eqanti2">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqanti2} + \sum _{{\mathfrak p}\in \mathfrak {A}':{\mathcal{I}}({\mathfrak p})\neq L'}\mu (E({\mathfrak p})\cap G\cap L)\,  , \end{equation}
+  </div>
+  <span class="equation_label">6.3.32</span>
+</p>
+</div>
+<p>We first estimate <a href="antichainboundary.html#eqanti1">6.3.31</a> with <a href="antichainboundary.html#Antichain.stack_density">6.3.2</a> by </p>
+<div class="equation" id="equanti1.5">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{equanti1.5} \le \sum _{{\mathfrak p}\in \mathfrak {A}':{\mathcal{I}}({\mathfrak p})=L'}\mu (E({\mathfrak p})\cap G\cap L')\le 2^{a(N+5)}\operatorname{\operatorname {dens}}_1(\mathfrak {A})\mu (L')\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.3.33</span>
+</p>
+</div>
+<p>We turn to <a href="antichainboundary.html#eqanti2">6.3.32</a>. Consider the element \({\mathfrak p}'\in \mathfrak {A}'\) as above with \(L\subset {\mathcal{I}}({\mathfrak p}')\) and \(s(L){\lt}{\mathrm{s}}({\mathfrak p}')\). As \(L\subset L'\) and \(s(L')=s(L)+1\), we conclude with the dyadic property that \(L'\subset {\mathcal{I}}({\mathfrak p}')\). By maximality of \(L\), we have \(L'\not\in \mathcal{L}\). This together with the existence of the given \({\mathfrak p}'\in \mathfrak {A}\) with \(L'\subset {\mathcal{I}}({\mathfrak p}')\) shows by definition of \(\mathcal{L}\) that there exists \({\mathfrak p}''\in \mathfrak {A}'\) with \({\mathcal{I}}({\mathfrak p}'')\subset L'\). </p>
+<p>If \({\mathcal{I}}({\mathfrak p}'') = L'\), then we set \({\mathfrak p}_{{\vartheta }} = {\mathfrak p}''\) and note that as \({\mathfrak p}'' \in \mathfrak {A}_{{\vartheta },N}\) </p>
+<div class="equation" id="a0000000389">
+<p>
+  <div class="equation_content">
+    \begin{equation}  {\vartheta }\in B({\mathcal{Q}}({\mathfrak p}''), 2^{N+1})\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.3.34</span>
+</p>
+</div>
+<p>If \({\mathcal{I}}({\mathfrak p}'') \ne L'\), then it follows that \(s({\mathfrak p}'') {\lt} s(L')\). By the covering property <a href="overviewsection.html#eq-dis-freq-cover">2.0.16</a>, there exists a unique \({\mathfrak p}_{{\vartheta }}\) with </p>
+<div class="displaymath" id="a0000000390">
+  \begin{equation*}  {\mathcal{I}}({\mathfrak p}_{{\vartheta }})=L’ \end{equation*}
+</div>
+<p> such that \({\vartheta }\in {\Omega }({\mathfrak p}_{{\vartheta }})\). We take this as the definition of \({\mathfrak p}_{\vartheta }\) in this case. Note that </p>
+<div class="equation" id="a0000000391">
+<p>
+  <div class="equation_content">
+    \begin{equation}  {\vartheta }\in B({\mathcal{Q}}({\mathfrak p}_{{\vartheta }}), 1) \end{equation}
+  </div>
+  <span class="equation_label">6.3.35</span>
+</p>
+</div>
+<p> so by <a href="antichainboundary.html#Antichain.tile_reach">6.3.1</a>, we conclude </p>
+<div class="equation" id="a0000000392">
+<p>
+  <div class="equation_content">
+    \begin{equation}  2^{N+3}{\mathfrak p}'' \lesssim 2^{N+3}{\mathfrak p}_{{\vartheta }} \,  . \end{equation}
+  </div>
+  <span class="equation_label">6.3.36</span>
+</p>
+</div>
+<p> This clearly also holds in the case \({\mathcal{I}}({\mathfrak p}'') = L'\), since then \({\mathfrak p}'' = {\mathfrak p}_{\vartheta }\). Furthermore, in both cases it also holds that </p>
+<div class="equation" id="a0000000393">
+<p>
+  <div class="equation_content">
+    \begin{equation}  {\vartheta }\in B_{{\mathfrak p}_{{\vartheta }}}({\mathcal{Q}}({\mathfrak p}_{{\vartheta }}), 2^{N+1}). \end{equation}
+  </div>
+  <span class="equation_label">6.3.37</span>
+</p>
+</div>
+<p>As \({\mathfrak p}''\in \mathfrak {A}'\), we have by Definition <a href="overviewsection.html#definedens1">2.0.31</a> of \(\operatorname{\operatorname {dens}}_1\) that </p>
+<div class="equation" id="pmfadens">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{pmfadens} \mu (E_2(2^{N+3}, {\mathfrak p}_{{\vartheta }}))\le 2^{Na+3a}\operatorname{\operatorname {dens}}_1(\mathfrak {A}) {\mu (L’)}\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.3.38</span>
+</p>
+</div>
+<p> Now let \({\mathfrak p}\) be any tile in the summation set in <a href="antichainboundary.html#eqanti2">6.3.32</a>, that is, \({\mathfrak p}\in \mathfrak {A}'\) and \({\mathcal{I}}({\mathfrak p})\neq L'\). Then \({\mathcal{I}}({\mathfrak p})\cap L\neq \emptyset \). It follows by the dyadic property <a href="overviewsection.html#dyadicproperty">2.0.11</a> and the definition of \(L\) that \(L\subset {\mathcal{I}}({\mathfrak p})\) and \(L\neq {\mathcal{I}}({\mathfrak p})\). By the dyadic property <a href="overviewsection.html#dyadicproperty">2.0.11</a>, we have \(s(L){\lt}{\mathrm{s}}({\mathfrak p})\) and thus \(s(L')\le {\mathrm{s}}({\mathfrak p})\). By the dyadic property <a href="overviewsection.html#dyadicproperty">2.0.11</a> again, we have \(L'\subset {\mathcal{I}}({\mathfrak p})\). As \(L'\neq {\mathcal{I}}({\mathfrak p})\), we conclude \(s(L){\lt}{\mathrm{s}}({\mathfrak p})\). By <a href="antichainboundary.html#Antichain.local_antichain_density">6.3.3</a>, we can thus estimate <a href="antichainboundary.html#eqanti2">6.3.32</a> by </p>
+<div class="equation" id="eqanti0.5">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqanti0.5} \sum _{{\mathfrak p}\in \mathfrak {A}':{\mathcal{I}}({\mathfrak p})\neq L'}\mu (E({\mathfrak p})\cap G\cap L') \le \mu (E_2(2^{N+3},{\mathfrak p}_{{\vartheta }}))\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.3.39</span>
+</p>
+</div>
+<p> With the decomposition in <a href="antichainboundary.html#eqanti1">6.3.31</a> and <a href="antichainboundary.html#eqanti2">6.3.32</a> and the estimates <a href="antichainboundary.html#equanti1.5">6.3.33</a>, <a href="antichainboundary.html#eqanti-0.5">6.3.21</a>, <a href="antichainboundary.html#pmfadens">6.3.38</a> we obtain the estimate </p>
+<div class="equation" id="eqanti3.14">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqanti3.14} \sum _{{\mathfrak p}\in \mathfrak {A}'}\mu (E({\mathfrak p})\cap G \cap L) \le (2^{a(N+5)}+2^{Na+3a})\operatorname{\operatorname {dens}}_1(\mathfrak {A})\mu (L')\, . \end{equation}
+  </div>
+  <span class="equation_label">6.3.40</span>
+</p>
+</div>
+<p>Using \(s(L')=s(L)+1\) and \(D=2^{100a^2}\) and the squeezing property <a href="overviewsection.html#eq-vol-sp-cube">2.0.13</a> and the doubling property <a href="sect0001.html#doublingx">1.1.2</a> \(100a^2+4\) times , we obtain </p>
+<div class="equation" id="a0000000394">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \mu (L')\le 2^{100a^3+4a}\mu (L)\,  . \end{equation}
+  </div>
+  <span class="equation_label">6.3.41</span>
+</p>
+</div>
+<p> Inserting in <a href="antichainboundary.html#eqanti3.14">6.3.40</a>, adding the estimate <span class="ttfamily">eq_minus_S</span> and using \(a\ge 4\) gives <a href="antichainboundary.html#eqanti0">6.3.30</a>. This completes the proof of the lemma.</p>
+
+  </div>
+</div>
+<p>We turn to the proof of <a href="antichainboundary.html#Antichain.tile_count">Lemma 6.1.6</a>. </p>
+
+</div> <!--main-text -->
+</div> <!-- content-wrapper -->
+</div> <!-- content -->
+</div> <!-- wrapper -->
+
+<nav class="prev_up_next">
+  <svg  id="showmore-minus" class="icon icon-eye-minus showmore"><use xlink:href="symbol-defs.svg#icon-eye-minus"></use></svg>
+
+  <svg  id="showmore-plus" class="icon icon-eye-plus showmore"><use xlink:href="symbol-defs.svg#icon-eye-plus"></use></svg>
+
+  <a href="proptopropprop.html" title="Proof of discrete Carleson"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+</a>
+  <a href="index.html" title="A blueprint for the formalization of Carleson’s theorem on convergence of Fourier series"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+</a>
+  <a href="treesection.html" title="Proof of the Forest Operator Proposition"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+</a>
+</nav>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/plastex.js"></script>
+<script type="text/javascript" src="js/svgxuse.js"></script>
+<script type="text/javascript" src="js/js.cookie.min.js"></script>
+<script type="text/javascript" src="js/showmore.js"></script>
+</body>
+</html>

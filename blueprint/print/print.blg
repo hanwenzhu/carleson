@@ -1,0 +1,17 @@
+[0] Config.pm:308> INFO - This is Biber 2.20
+[0] Config.pm:311> INFO - Logfile is '/Users/zhw/Developer/lean/carleson/blueprint/print/print.blg'
+[24] biber-darwin:340> INFO - === Thu Oct 30, 2025, 00:03:58
+[29] Biber.pm:420> INFO - Reading '/Users/zhw/Developer/lean/carleson/blueprint/print/print.bcf'
+[55] Biber.pm:994> INFO - Found 29 citekeys in bib section 0
+[60] Biber.pm:4463> INFO - Processing section 0
+[66] Biber.pm:4654> INFO - Looking for bibtex file 'bibliography.bib' for section 0
+[68] bibtex.pm:1713> INFO - LaTeX decoding ...
+[112] bibtex.pm:1519> INFO - Found BibTeX data source 'bibliography.bib'
+[188] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[188] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[188] Biber.pm:4283> INFO - Sorting list 'anyt/global//global/global/global' of type 'entry' with template 'anyt' and locale 'en-US'
+[188] Biber.pm:4289> INFO - No sort tailoring available for locale 'en-US'
+[201] bbl.pm:676> INFO - Writing '/Users/zhw/Developer/lean/carleson/blueprint/print/print.bbl' with encoding 'UTF-8'
+[206] bbl.pm:779> INFO - Output to /Users/zhw/Developer/lean/carleson/blueprint/print/print.bbl
+[206] Biber.pm:131> WARN - legacy year field '1966/67' in entry 'MR217510' is not an integer - this will probably not sort properly.
+[206] Biber.pm:133> INFO - WARNINGS: 1

@@ -1,0 +1,1169 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{anyt/global//global/global/global}
+    \entry{becker2024maximal}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=961ad3fadf732912ddab3dac0ed5160e}{%
+           family={Becker},
+           familyi={B\bibinitperiod},
+           given={Lars},
+           giveni={L\bibinitperiod}}}%
+      }
+      \strng{namehash}{961ad3fadf732912ddab3dac0ed5160e}
+      \strng{fullhash}{961ad3fadf732912ddab3dac0ed5160e}
+      \strng{fullhashraw}{961ad3fadf732912ddab3dac0ed5160e}
+      \strng{bibnamehash}{961ad3fadf732912ddab3dac0ed5160e}
+      \strng{authorbibnamehash}{961ad3fadf732912ddab3dac0ed5160e}
+      \strng{authornamehash}{961ad3fadf732912ddab3dac0ed5160e}
+      \strng{authorfullhash}{961ad3fadf732912ddab3dac0ed5160e}
+      \strng{authorfullhashraw}{961ad3fadf732912ddab3dac0ed5160e}
+      \field{labelalpha}{Bec24}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0022-1236,1096-0783}
+      \field{journaltitle}{J. Funct. Anal.}
+      \field{number}{6}
+      \field{title}{Maximal polynomial modulations of singular {R}adon transforms}
+      \field{volume}{286}
+      \field{year}{2024}
+      \field{pages}{Paper No. 110299\bibrangessep 46}
+      \range{pages}{-1}
+      \verb{doi}
+      \verb 10.1016/j.jfa.2023.110299
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1016/j.jfa.2023.110299
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1016/j.jfa.2023.110299
+      \endverb
+    \endentry
+    \entry{MR217510}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=605dca3b80cb95739f4c982c3531f82c}{%
+           family={Billard},
+           familyi={B\bibinitperiod},
+           given={P.},
+           giveni={P\bibinitperiod}}}%
+      }
+      \strng{namehash}{605dca3b80cb95739f4c982c3531f82c}
+      \strng{fullhash}{605dca3b80cb95739f4c982c3531f82c}
+      \strng{fullhashraw}{605dca3b80cb95739f4c982c3531f82c}
+      \strng{bibnamehash}{605dca3b80cb95739f4c982c3531f82c}
+      \strng{authorbibnamehash}{605dca3b80cb95739f4c982c3531f82c}
+      \strng{authornamehash}{605dca3b80cb95739f4c982c3531f82c}
+      \strng{authorfullhash}{605dca3b80cb95739f4c982c3531f82c}
+      \strng{authorfullhashraw}{605dca3b80cb95739f4c982c3531f82c}
+      \field{labelalpha}{Bil67}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0039-3223,1730-6337}
+      \field{journaltitle}{Studia Math.}
+      \field{title}{Sur la convergence presque partout des séries de {F}ourier-{W}alsh des fonctions de l'espace {$L\sp{2}\,(0,\,1)$}}
+      \field{volume}{28}
+      \field{year}{1966/67}
+      \field{pages}{363\bibrangedash 388}
+      \range{pages}{26}
+      \verb{doi}
+      \verb 10.4064/sm-28-3-363-388
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.4064/sm-28-3-363-388
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.4064/sm-28-3-363-388
+      \endverb
+    \endentry
+    \entry{becker2024carlesonoperatorsdoublingmetric}{misc}{}{}
+      \name{author}{5}{}{%
+        {{hash=961ad3fadf732912ddab3dac0ed5160e}{%
+           family={Becker},
+           familyi={B\bibinitperiod},
+           given={Lars},
+           giveni={L\bibinitperiod}}}%
+        {{hash=241ef3eeb33e764da3482b74049133fa}{%
+           family={Doorn},
+           familyi={D\bibinitperiod},
+           given={Floris},
+           giveni={F\bibinitperiod},
+           prefix={van},
+           prefixi={v\bibinitperiod}}}%
+        {{hash=3a322d12793d483ca02b42578c62a0b6}{%
+           family={Jamneshan},
+           familyi={J\bibinitperiod},
+           given={Asgar},
+           giveni={A\bibinitperiod}}}%
+        {{hash=cdb07cb6a4059fbf953a37ac98343403}{%
+           family={Srivastava},
+           familyi={S\bibinitperiod},
+           given={Rajula},
+           giveni={R\bibinitperiod}}}%
+        {{hash=ee92d3f0bc15cc86a7b53a6b625793e9}{%
+           family={Thiele},
+           familyi={T\bibinitperiod},
+           given={Christoph},
+           giveni={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{35b7a3261a1cb08959bfa186cd64013b}
+      \strng{fullhash}{35b7a3261a1cb08959bfa186cd64013b}
+      \strng{fullhashraw}{35b7a3261a1cb08959bfa186cd64013b}
+      \strng{bibnamehash}{35b7a3261a1cb08959bfa186cd64013b}
+      \strng{authorbibnamehash}{35b7a3261a1cb08959bfa186cd64013b}
+      \strng{authornamehash}{35b7a3261a1cb08959bfa186cd64013b}
+      \strng{authorfullhash}{35b7a3261a1cb08959bfa186cd64013b}
+      \strng{authorfullhashraw}{35b7a3261a1cb08959bfa186cd64013b}
+      \field{labelalpha}{BvDJ\textsuperscript {+}24}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Carleson Operators on Doubling Metric Measure Spaces}
+      \field{year}{2024}
+      \verb{eprint}
+      \verb 2405.06423v2
+      \endverb
+    \endentry
+    \entry{carleson}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=40cbe052f687ef31356587fb6d5235fd}{%
+           family={Carleson},
+           familyi={C\bibinitperiod},
+           given={Lennart},
+           giveni={L\bibinitperiod}}}%
+      }
+      \strng{namehash}{40cbe052f687ef31356587fb6d5235fd}
+      \strng{fullhash}{40cbe052f687ef31356587fb6d5235fd}
+      \strng{fullhashraw}{40cbe052f687ef31356587fb6d5235fd}
+      \strng{bibnamehash}{40cbe052f687ef31356587fb6d5235fd}
+      \strng{authorbibnamehash}{40cbe052f687ef31356587fb6d5235fd}
+      \strng{authornamehash}{40cbe052f687ef31356587fb6d5235fd}
+      \strng{authorfullhash}{40cbe052f687ef31356587fb6d5235fd}
+      \strng{authorfullhashraw}{40cbe052f687ef31356587fb6d5235fd}
+      \field{labelalpha}{Car66}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0001-5962}
+      \field{journaltitle}{Acta Math.}
+      \field{title}{On convergence and growth of partial sums of {F}ourier series}
+      \field{volume}{116}
+      \field{year}{1966}
+      \field{pages}{135\bibrangedash 157}
+      \range{pages}{23}
+      \verb{doi}
+      \verb 10.1007/BF02392815
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1007/BF02392815
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1007/BF02392815
+      \endverb
+    \endentry
+    \entry{christ1990b}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=c0a3d1e847a0acbff463c6aab52d1b22}{%
+           family={Christ},
+           familyi={C\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{c0a3d1e847a0acbff463c6aab52d1b22}
+      \strng{fullhash}{c0a3d1e847a0acbff463c6aab52d1b22}
+      \strng{fullhashraw}{c0a3d1e847a0acbff463c6aab52d1b22}
+      \strng{bibnamehash}{c0a3d1e847a0acbff463c6aab52d1b22}
+      \strng{authorbibnamehash}{c0a3d1e847a0acbff463c6aab52d1b22}
+      \strng{authornamehash}{c0a3d1e847a0acbff463c6aab52d1b22}
+      \strng{authorfullhash}{c0a3d1e847a0acbff463c6aab52d1b22}
+      \strng{authorfullhashraw}{c0a3d1e847a0acbff463c6aab52d1b22}
+      \field{labelalpha}{Chr90}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Colloquium Mathematicum}
+      \field{number}{60-61}
+      \field{title}{A {T}(b) theorem with remarks on analytic capacity and the {C}auchy integral}
+      \field{volume}{2}
+      \field{year}{1990}
+      \field{pages}{601\bibrangedash 628}
+      \range{pages}{28}
+    \endentry
+    \entry{MR3334208}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=529eef336fbed8594585731e70320a93}{%
+           family={Demeter},
+           familyi={D\bibinitperiod},
+           given={Ciprian},
+           giveni={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{529eef336fbed8594585731e70320a93}
+      \strng{fullhash}{529eef336fbed8594585731e70320a93}
+      \strng{fullhashraw}{529eef336fbed8594585731e70320a93}
+      \strng{bibnamehash}{529eef336fbed8594585731e70320a93}
+      \strng{authorbibnamehash}{529eef336fbed8594585731e70320a93}
+      \strng{authornamehash}{529eef336fbed8594585731e70320a93}
+      \strng{authorfullhash}{529eef336fbed8594585731e70320a93}
+      \strng{authorfullhashraw}{529eef336fbed8594585731e70320a93}
+      \field{labelalpha}{Dem15}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0035-7596,1945-3795}
+      \field{journaltitle}{Rocky Mountain J. Math.}
+      \field{number}{1}
+      \field{title}{A guide to {C}arleson's theorem}
+      \field{volume}{45}
+      \field{year}{2015}
+      \field{pages}{169\bibrangedash 212}
+      \range{pages}{44}
+      \verb{doi}
+      \verb 10.1216/RMJ-2015-45-1-169
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1216/RMJ-2015-45-1-169
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1216/RMJ-2015-45-1-169
+      \endverb
+    \endentry
+    \entry{MR2420509}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=529eef336fbed8594585731e70320a93}{%
+           family={Demeter},
+           familyi={D\bibinitperiod},
+           given={Ciprian},
+           giveni={C\bibinitperiod}}}%
+        {{hash=e9835f22191636053b44bb38597f17b5}{%
+           family={Lacey},
+           familyi={L\bibinitperiod},
+           given={Michael\bibnamedelima T.},
+           giveni={M\bibinitperiod\bibinitdelim T\bibinitperiod}}}%
+        {{hash=4cea0d7ce90ed017dfa21b4cee6c72e9}{%
+           family={Tao},
+           familyi={T\bibinitperiod},
+           given={Terence},
+           giveni={T\bibinitperiod}}}%
+        {{hash=ee92d3f0bc15cc86a7b53a6b625793e9}{%
+           family={Thiele},
+           familyi={T\bibinitperiod},
+           given={Christoph},
+           giveni={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{ca641038bed7e25ad42624657c31a59c}
+      \strng{fullhash}{ca641038bed7e25ad42624657c31a59c}
+      \strng{fullhashraw}{ca641038bed7e25ad42624657c31a59c}
+      \strng{bibnamehash}{ca641038bed7e25ad42624657c31a59c}
+      \strng{authorbibnamehash}{ca641038bed7e25ad42624657c31a59c}
+      \strng{authornamehash}{ca641038bed7e25ad42624657c31a59c}
+      \strng{authorfullhash}{ca641038bed7e25ad42624657c31a59c}
+      \strng{authorfullhashraw}{ca641038bed7e25ad42624657c31a59c}
+      \field{labelalpha}{DLT\textsuperscript {+}08}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0012-7094,1547-7398}
+      \field{journaltitle}{Duke Math. J.}
+      \field{number}{2}
+      \field{title}{Breaking the duality in the return times theorem}
+      \field{volume}{143}
+      \field{year}{2008}
+      \field{pages}{281\bibrangedash 355}
+      \range{pages}{75}
+      \verb{doi}
+      \verb 10.1215/00127094-2008-020
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1215/00127094-2008-020
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1215/00127094-2008-020
+      \endverb
+    \endentry
+    \entry{moura2021lean}{inproceedings}{}{}
+      \name{author}{2}{}{%
+        {{hash=04ffe79f369bf9f16e299fcf4f98e780}{%
+           family={Moura},
+           familyi={M\bibinitperiod},
+           given={Leonardo},
+           giveni={L\bibinitperiod},
+           prefix={de},
+           prefixi={d\bibinitperiod}}}%
+        {{hash=f0eef0e3dc5cf232456ab1f5460e2ef4}{%
+           family={Ullrich},
+           familyi={U\bibinitperiod},
+           given={Sebastian},
+           giveni={S\bibinitperiod}}}%
+      }
+      \name{editor}{2}{}{%
+        {{hash=0fb7e4129542e3e84c6115bee2a2b227}{%
+           family={Platzer},
+           familyi={P\bibinitperiod},
+           given={André},
+           giveni={A\bibinitperiod}}}%
+        {{hash=dd1c8983ac85362d3aa2a529a62b0620}{%
+           family={Sutcliffe},
+           familyi={S\bibinitperiod},
+           given={Geoff},
+           giveni={G\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Cham}%
+      }
+      \list{publisher}{1}{%
+        {Springer International Publishing}%
+      }
+      \strng{namehash}{5c705fa7f3300303f20110861a4c6130}
+      \strng{fullhash}{5c705fa7f3300303f20110861a4c6130}
+      \strng{fullhashraw}{5c705fa7f3300303f20110861a4c6130}
+      \strng{bibnamehash}{5c705fa7f3300303f20110861a4c6130}
+      \strng{authorbibnamehash}{5c705fa7f3300303f20110861a4c6130}
+      \strng{authornamehash}{5c705fa7f3300303f20110861a4c6130}
+      \strng{authorfullhash}{5c705fa7f3300303f20110861a4c6130}
+      \strng{authorfullhashraw}{5c705fa7f3300303f20110861a4c6130}
+      \strng{editorbibnamehash}{1c4255ef6c180f317b8d14066696be61}
+      \strng{editornamehash}{1c4255ef6c180f317b8d14066696be61}
+      \strng{editorfullhash}{1c4255ef6c180f317b8d14066696be61}
+      \strng{editorfullhashraw}{1c4255ef6c180f317b8d14066696be61}
+      \field{labelalpha}{dMU21}
+      \field{sortinit}{d}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Automated Deduction -- {{CADE}} 28: 28th International Conference on Automated Deduction, Virtual Event, July 12--15, 2021, Proceedings}
+      \field{isbn}{978-3-030-79876-5}
+      \field{series}{Lecture Notes in Computer Science}
+      \field{title}{The {L}ean 4 {T}heorem {P}rover and {P}rogramming {L}anguage}
+      \field{volume}{12699}
+      \field{year}{2021}
+      \field{pages}{625\bibrangedash 635}
+      \range{pages}{11}
+      \verb{doi}
+      \verb 10.1007/978-3-030-79876-5_37
+      \endverb
+    \endentry
+    \entry{fefferman}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=c2c3e233dc770920f785d9e94fc94140}{%
+           family={Fefferman},
+           familyi={F\bibinitperiod},
+           given={Charles},
+           giveni={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{c2c3e233dc770920f785d9e94fc94140}
+      \strng{fullhash}{c2c3e233dc770920f785d9e94fc94140}
+      \strng{fullhashraw}{c2c3e233dc770920f785d9e94fc94140}
+      \strng{bibnamehash}{c2c3e233dc770920f785d9e94fc94140}
+      \strng{authorbibnamehash}{c2c3e233dc770920f785d9e94fc94140}
+      \strng{authornamehash}{c2c3e233dc770920f785d9e94fc94140}
+      \strng{authorfullhash}{c2c3e233dc770920f785d9e94fc94140}
+      \strng{authorfullhashraw}{c2c3e233dc770920f785d9e94fc94140}
+      \field{labelalpha}{Fef73}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0003-486X}
+      \field{journaltitle}{Ann. of Math. (2)}
+      \field{title}{Pointwise convergence of {F}ourier series}
+      \field{volume}{98}
+      \field{year}{1973}
+      \field{pages}{551\bibrangedash 571}
+      \range{pages}{21}
+      \verb{doi}
+      \verb 10.2307/1970917
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.2307/1970917
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.2307/1970917
+      \endverb
+    \endentry
+    \entry{MR3470070}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=2f45327197793dca73f131c4fbde5850}{%
+           family={Fourier},
+           familyi={F\bibinitperiod},
+           given={Jean\bibnamedelimb Baptiste\bibnamedelima Joseph},
+           giveni={J\bibinitperiod\bibinitdelim B\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+      }
+      \name{editor}{1}{}{%
+        {{hash=26a0be03001d94cd0499e3ac2319e780}{%
+           family={Darboux},
+           familyi={D\bibinitperiod},
+           given={Jean\bibnamedelima Gaston},
+           giveni={J\bibinitperiod\bibinitdelim G\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Cambridge University Press, Cambridge}%
+      }
+      \strng{namehash}{2f45327197793dca73f131c4fbde5850}
+      \strng{fullhash}{2f45327197793dca73f131c4fbde5850}
+      \strng{fullhashraw}{2f45327197793dca73f131c4fbde5850}
+      \strng{bibnamehash}{2f45327197793dca73f131c4fbde5850}
+      \strng{authorbibnamehash}{2f45327197793dca73f131c4fbde5850}
+      \strng{authornamehash}{2f45327197793dca73f131c4fbde5850}
+      \strng{authorfullhash}{2f45327197793dca73f131c4fbde5850}
+      \strng{authorfullhashraw}{2f45327197793dca73f131c4fbde5850}
+      \strng{editorbibnamehash}{26a0be03001d94cd0499e3ac2319e780}
+      \strng{editornamehash}{26a0be03001d94cd0499e3ac2319e780}
+      \strng{editorfullhash}{26a0be03001d94cd0499e3ac2319e780}
+      \strng{editorfullhashraw}{26a0be03001d94cd0499e3ac2319e780}
+      \field{extraname}{1}
+      \field{labelalpha}{Fou13}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{978-1-108-05938-1}
+      \field{note}{Reprint of the 1888 original}
+      \field{series}{Cambridge Library Collection}
+      \field{title}{Œuvres de {F}ourier. {V}ol. 1}
+      \field{year}{2013}
+      \field{pages}{xxviii+563}
+      \range{pages}{-1}
+    \endentry
+    \entry{Fourier}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=2f45327197793dca73f131c4fbde5850}{%
+           family={Fourier},
+           familyi={F\bibinitperiod},
+           given={Jean\bibnamedelimb Baptiste\bibnamedelima Joseph},
+           giveni={J\bibinitperiod\bibinitdelim B\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Institut de France, Paris}%
+      }
+      \strng{namehash}{2f45327197793dca73f131c4fbde5850}
+      \strng{fullhash}{2f45327197793dca73f131c4fbde5850}
+      \strng{fullhashraw}{2f45327197793dca73f131c4fbde5850}
+      \strng{bibnamehash}{2f45327197793dca73f131c4fbde5850}
+      \strng{authorbibnamehash}{2f45327197793dca73f131c4fbde5850}
+      \strng{authornamehash}{2f45327197793dca73f131c4fbde5850}
+      \strng{authorfullhash}{2f45327197793dca73f131c4fbde5850}
+      \strng{authorfullhashraw}{2f45327197793dca73f131c4fbde5850}
+      \field{extraname}{2}
+      \field{labelalpha}{Fou22}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Théorie Analytique de la Chaleur}
+      \field{year}{1822}
+    \endentry
+    \entry{MR238019}{incollection}{}{}
+      \name{author}{1}{}{%
+        {{hash=3b33c24f7922f9fc75fe7796541ff88b}{%
+           family={Hunt},
+           familyi={H\bibinitperiod},
+           given={Richard\bibnamedelima A.},
+           giveni={R\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Southern Illinois Univ. Press, Carbondale, IL}%
+      }
+      \strng{namehash}{3b33c24f7922f9fc75fe7796541ff88b}
+      \strng{fullhash}{3b33c24f7922f9fc75fe7796541ff88b}
+      \strng{fullhashraw}{3b33c24f7922f9fc75fe7796541ff88b}
+      \strng{bibnamehash}{3b33c24f7922f9fc75fe7796541ff88b}
+      \strng{authorbibnamehash}{3b33c24f7922f9fc75fe7796541ff88b}
+      \strng{authornamehash}{3b33c24f7922f9fc75fe7796541ff88b}
+      \strng{authorfullhash}{3b33c24f7922f9fc75fe7796541ff88b}
+      \strng{authorfullhashraw}{3b33c24f7922f9fc75fe7796541ff88b}
+      \field{labelalpha}{Hun68}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Orthogonal {E}xpansions and their {C}ontinuous {A}nalogues ({P}roc. {C}onf., {E}dwardsville, {I}ll., 1967)}
+      \field{title}{On the convergence of {F}ourier series}
+      \field{year}{1968}
+      \field{pages}{235\bibrangedash 255}
+      \range{pages}{21}
+    \endentry
+    \entry{Kolmogorov}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=a1fcfdd97a80b49da20bab13cb268f42}{%
+           family={Kolmogorov},
+           familyi={K\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{a1fcfdd97a80b49da20bab13cb268f42}
+      \strng{fullhash}{a1fcfdd97a80b49da20bab13cb268f42}
+      \strng{fullhashraw}{a1fcfdd97a80b49da20bab13cb268f42}
+      \strng{bibnamehash}{a1fcfdd97a80b49da20bab13cb268f42}
+      \strng{authorbibnamehash}{a1fcfdd97a80b49da20bab13cb268f42}
+      \strng{authornamehash}{a1fcfdd97a80b49da20bab13cb268f42}
+      \strng{authorfullhash}{a1fcfdd97a80b49da20bab13cb268f42}
+      \strng{authorfullhashraw}{a1fcfdd97a80b49da20bab13cb268f42}
+      \field{labelalpha}{Kol23}
+      \field{sortinit}{K}
+      \field{sortinithash}{c02bf6bff1c488450c352b40f5d853ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Fund. Math.}
+      \field{title}{Une série de {F}ourier–{L}ebesgue divergente presque partout}
+      \field{volume}{4}
+      \field{year}{1923}
+      \field{pages}{324\bibrangedash 328}
+      \range{pages}{5}
+    \endentry
+    \entry{MR2091007}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=e9835f22191636053b44bb38597f17b5}{%
+           family={Lacey},
+           familyi={L\bibinitperiod},
+           given={Michael\bibnamedelima T.},
+           giveni={M\bibinitperiod\bibinitdelim T\bibinitperiod}}}%
+      }
+      \strng{namehash}{e9835f22191636053b44bb38597f17b5}
+      \strng{fullhash}{e9835f22191636053b44bb38597f17b5}
+      \strng{fullhashraw}{e9835f22191636053b44bb38597f17b5}
+      \strng{bibnamehash}{e9835f22191636053b44bb38597f17b5}
+      \strng{authorbibnamehash}{e9835f22191636053b44bb38597f17b5}
+      \strng{authornamehash}{e9835f22191636053b44bb38597f17b5}
+      \strng{authorfullhash}{e9835f22191636053b44bb38597f17b5}
+      \strng{authorfullhashraw}{e9835f22191636053b44bb38597f17b5}
+      \field{labelalpha}{Lac04}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0214-1493,2014-4350}
+      \field{journaltitle}{Publ. Mat.}
+      \field{number}{2}
+      \field{title}{Carleson's theorem: proof, complements, variations}
+      \field{volume}{48}
+      \field{year}{2004}
+      \field{pages}{251\bibrangedash 307}
+      \range{pages}{57}
+      \verb{doi}
+      \verb 10.5565/PUBLMAT\_48204\_01
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.5565/PUBLMAT_48204_01
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.5565/PUBLMAT_48204_01
+      \endverb
+    \endentry
+    \entry{lie-quadratic}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=4fe556bf7215b6f7cdbc24c9140bdea2}{%
+           family={Lie},
+           familyi={L\bibinitperiod},
+           given={Victor},
+           giveni={V\bibinitperiod}}}%
+      }
+      \strng{namehash}{4fe556bf7215b6f7cdbc24c9140bdea2}
+      \strng{fullhash}{4fe556bf7215b6f7cdbc24c9140bdea2}
+      \strng{fullhashraw}{4fe556bf7215b6f7cdbc24c9140bdea2}
+      \strng{bibnamehash}{4fe556bf7215b6f7cdbc24c9140bdea2}
+      \strng{authorbibnamehash}{4fe556bf7215b6f7cdbc24c9140bdea2}
+      \strng{authornamehash}{4fe556bf7215b6f7cdbc24c9140bdea2}
+      \strng{authorfullhash}{4fe556bf7215b6f7cdbc24c9140bdea2}
+      \strng{authorfullhashraw}{4fe556bf7215b6f7cdbc24c9140bdea2}
+      \field{extraname}{1}
+      \field{labelalpha}{Lie09}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{1016-443X}
+      \field{journaltitle}{Geom. Funct. Anal.}
+      \field{number}{2}
+      \field{title}{The (weak-{$L^2$}) boundedness of the quadratic {C}arleson operator}
+      \field{volume}{19}
+      \field{year}{2009}
+      \field{pages}{457\bibrangedash 497}
+      \range{pages}{41}
+      \verb{doi}
+      \verb 10.1007/s00039-009-0010-x
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1007/s00039-009-0010-x
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1007/s00039-009-0010-x
+      \endverb
+    \endentry
+    \entry{lie-polynomial}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=4fe556bf7215b6f7cdbc24c9140bdea2}{%
+           family={Lie},
+           familyi={L\bibinitperiod},
+           given={Victor},
+           giveni={V\bibinitperiod}}}%
+      }
+      \strng{namehash}{4fe556bf7215b6f7cdbc24c9140bdea2}
+      \strng{fullhash}{4fe556bf7215b6f7cdbc24c9140bdea2}
+      \strng{fullhashraw}{4fe556bf7215b6f7cdbc24c9140bdea2}
+      \strng{bibnamehash}{4fe556bf7215b6f7cdbc24c9140bdea2}
+      \strng{authorbibnamehash}{4fe556bf7215b6f7cdbc24c9140bdea2}
+      \strng{authornamehash}{4fe556bf7215b6f7cdbc24c9140bdea2}
+      \strng{authorfullhash}{4fe556bf7215b6f7cdbc24c9140bdea2}
+      \strng{authorfullhashraw}{4fe556bf7215b6f7cdbc24c9140bdea2}
+      \field{extraname}{2}
+      \field{labelalpha}{Lie20}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0003-486X}
+      \field{journaltitle}{Ann. of Math. (2)}
+      \field{number}{1}
+      \field{title}{The polynomial {C}arleson operator}
+      \field{volume}{192}
+      \field{year}{2020}
+      \field{pages}{47\bibrangedash 163}
+      \range{pages}{117}
+      \verb{doi}
+      \verb 10.4007/annals.2020.192.1.2
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.4007/annals.2020.192.1.2
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.4007/annals.2020.192.1.2
+      \endverb
+    \endentry
+    \entry{lacey-thiele}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=f3b24ea81083d037fd86f16ed438919f}{%
+           family={Lacey},
+           familyi={L\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod}}}%
+        {{hash=ee92d3f0bc15cc86a7b53a6b625793e9}{%
+           family={Thiele},
+           familyi={T\bibinitperiod},
+           given={Christoph},
+           giveni={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{28ffa8ea298e60fe7732f20baefb6cdc}
+      \strng{fullhash}{28ffa8ea298e60fe7732f20baefb6cdc}
+      \strng{fullhashraw}{28ffa8ea298e60fe7732f20baefb6cdc}
+      \strng{bibnamehash}{28ffa8ea298e60fe7732f20baefb6cdc}
+      \strng{authorbibnamehash}{28ffa8ea298e60fe7732f20baefb6cdc}
+      \strng{authornamehash}{28ffa8ea298e60fe7732f20baefb6cdc}
+      \strng{authorfullhash}{28ffa8ea298e60fe7732f20baefb6cdc}
+      \strng{authorfullhashraw}{28ffa8ea298e60fe7732f20baefb6cdc}
+      \field{labelalpha}{LT00}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{1073-2780}
+      \field{journaltitle}{Math. Res. Lett.}
+      \field{number}{4}
+      \field{title}{A proof of boundedness of the {C}arleson operator}
+      \field{volume}{7}
+      \field{year}{2000}
+      \field{pages}{361\bibrangedash 370}
+      \range{pages}{10}
+      \verb{doi}
+      \verb 10.4310/MRL.2000.v7.n4.a1
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.4310/MRL.2000.v7.n4.a1
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.4310/MRL.2000.v7.n4.a1
+      \endverb
+    \endentry
+    \entry{Luzin13}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=55c8ca20cac85b9188e291b12ed410c0}{%
+           family={Luzin},
+           familyi={L\bibinitperiod},
+           given={Nikolai},
+           giveni={N\bibinitperiod}}}%
+      }
+      \strng{namehash}{55c8ca20cac85b9188e291b12ed410c0}
+      \strng{fullhash}{55c8ca20cac85b9188e291b12ed410c0}
+      \strng{fullhashraw}{55c8ca20cac85b9188e291b12ed410c0}
+      \strng{bibnamehash}{55c8ca20cac85b9188e291b12ed410c0}
+      \strng{authorbibnamehash}{55c8ca20cac85b9188e291b12ed410c0}
+      \strng{authornamehash}{55c8ca20cac85b9188e291b12ed410c0}
+      \strng{authorfullhash}{55c8ca20cac85b9188e291b12ed410c0}
+      \strng{authorfullhashraw}{55c8ca20cac85b9188e291b12ed410c0}
+      \field{extraname}{1}
+      \field{labelalpha}{Luz13}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{C. R. Acad. Sci. Paris}
+      \field{title}{Sur la convergence des séries trigonométrique de {F}ourier}
+      \field{volume}{156}
+      \field{year}{1913}
+      \field{pages}{1655\bibrangedash 1658}
+      \range{pages}{4}
+    \endentry
+    \entry{Luzin53}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=55c8ca20cac85b9188e291b12ed410c0}{%
+           family={Luzin},
+           familyi={L\bibinitperiod},
+           given={Nikolai},
+           giveni={N\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {USSR Academy of Sciences, Moscow}%
+      }
+      \strng{namehash}{55c8ca20cac85b9188e291b12ed410c0}
+      \strng{fullhash}{55c8ca20cac85b9188e291b12ed410c0}
+      \strng{fullhashraw}{55c8ca20cac85b9188e291b12ed410c0}
+      \strng{bibnamehash}{55c8ca20cac85b9188e291b12ed410c0}
+      \strng{authorbibnamehash}{55c8ca20cac85b9188e291b12ed410c0}
+      \strng{authornamehash}{55c8ca20cac85b9188e291b12ed410c0}
+      \strng{authorfullhash}{55c8ca20cac85b9188e291b12ed410c0}
+      \strng{authorfullhashraw}{55c8ca20cac85b9188e291b12ed410c0}
+      \field{extraname}{2}
+      \field{labelalpha}{Luz53}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Sobranie sochinenii. Tom 1 ({C}ollected works, Vol. 1)}
+      \field{year}{1953}
+    \endentry
+    \entry{mathlib}{inproceedings}{}{}
+      \name{author}{1}{}{%
+        {{hash=d063df01cf1c385cf086298e37b0b1aa}{%
+           family={{mathlib Community}},
+           familyi={m\bibinitperiod},
+           given={The},
+           giveni={T\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {New York, NY, USA}%
+      }
+      \list{publisher}{1}{%
+        {Association for Computing Machinery}%
+      }
+      \strng{namehash}{d063df01cf1c385cf086298e37b0b1aa}
+      \strng{fullhash}{d063df01cf1c385cf086298e37b0b1aa}
+      \strng{fullhashraw}{d063df01cf1c385cf086298e37b0b1aa}
+      \strng{bibnamehash}{d063df01cf1c385cf086298e37b0b1aa}
+      \strng{authorbibnamehash}{d063df01cf1c385cf086298e37b0b1aa}
+      \strng{authornamehash}{d063df01cf1c385cf086298e37b0b1aa}
+      \strng{authorfullhash}{d063df01cf1c385cf086298e37b0b1aa}
+      \strng{authorfullhashraw}{d063df01cf1c385cf086298e37b0b1aa}
+      \field{labelalpha}{mat20}
+      \field{sortinit}{m}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 9th ACM SIGPLAN International Conference on Certified Programs and Proofs}
+      \field{isbn}{9781450370974}
+      \field{series}{CPP 2020}
+      \field{title}{The {Lean} Mathematical Library}
+      \field{year}{2020}
+      \field{pages}{367\bibrangedash 381}
+      \range{pages}{15}
+      \verb{doi}
+      \verb 10.1145/3372885.3373824
+      \endverb
+    \endentry
+    \entry{mnatsakanyan}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=28854702b322257f0acff48507d8cc7e}{%
+           family={Mnatsakanyan},
+           familyi={M\bibinitperiod},
+           given={Gevorg},
+           giveni={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{28854702b322257f0acff48507d8cc7e}
+      \strng{fullhash}{28854702b322257f0acff48507d8cc7e}
+      \strng{fullhashraw}{28854702b322257f0acff48507d8cc7e}
+      \strng{bibnamehash}{28854702b322257f0acff48507d8cc7e}
+      \strng{authorbibnamehash}{28854702b322257f0acff48507d8cc7e}
+      \strng{authornamehash}{28854702b322257f0acff48507d8cc7e}
+      \strng{authorfullhash}{28854702b322257f0acff48507d8cc7e}
+      \strng{authorfullhashraw}{28854702b322257f0acff48507d8cc7e}
+      \field{labelalpha}{Mna22}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0022-1236}
+      \field{journaltitle}{J. Funct. Anal.}
+      \field{number}{12}
+      \field{title}{On almost everywhere convergence of {M}almquist--{T}akenaka series}
+      \field{volume}{282}
+      \field{year}{2022}
+      \field{pages}{Paper No. 109461\bibrangessep 33}
+      \range{pages}{-1}
+      \verb{doi}
+      \verb 10.1016/j.jfa.2022.109461
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1016/j.jfa.2022.109461
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1016/j.jfa.2022.109461
+      \endverb
+    \endentry
+    \entry{MR2881301}{article}{}{}
+      \name{author}{5}{}{%
+        {{hash=163c7bf37d58df2cef1a8391d1b73c9a}{%
+           family={Oberlin},
+           familyi={O\bibinitperiod},
+           given={Richard},
+           giveni={R\bibinitperiod}}}%
+        {{hash=0195343a0188ad73fea77d9a848cbaf6}{%
+           family={Seeger},
+           familyi={S\bibinitperiod},
+           given={Andreas},
+           giveni={A\bibinitperiod}}}%
+        {{hash=4cea0d7ce90ed017dfa21b4cee6c72e9}{%
+           family={Tao},
+           familyi={T\bibinitperiod},
+           given={Terence},
+           giveni={T\bibinitperiod}}}%
+        {{hash=ee92d3f0bc15cc86a7b53a6b625793e9}{%
+           family={Thiele},
+           familyi={T\bibinitperiod},
+           given={Christoph},
+           giveni={C\bibinitperiod}}}%
+        {{hash=ee0432326fb55836e8d3bcce56069166}{%
+           family={Wright},
+           familyi={W\bibinitperiod},
+           given={James},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{06989b357ec9f29b96c8fb04b680f48f}
+      \strng{fullhash}{06989b357ec9f29b96c8fb04b680f48f}
+      \strng{fullhashraw}{06989b357ec9f29b96c8fb04b680f48f}
+      \strng{bibnamehash}{06989b357ec9f29b96c8fb04b680f48f}
+      \strng{authorbibnamehash}{06989b357ec9f29b96c8fb04b680f48f}
+      \strng{authornamehash}{06989b357ec9f29b96c8fb04b680f48f}
+      \strng{authorfullhash}{06989b357ec9f29b96c8fb04b680f48f}
+      \strng{authorfullhashraw}{06989b357ec9f29b96c8fb04b680f48f}
+      \field{labelalpha}{OST\textsuperscript {+}12}
+      \field{sortinit}{O}
+      \field{sortinithash}{2cd7140a07aea5341f9e2771efe90aae}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{1435-9855,1435-9863}
+      \field{journaltitle}{J. Eur. Math. Soc. (JEMS)}
+      \field{number}{2}
+      \field{title}{A variation norm {C}arleson theorem}
+      \field{volume}{14}
+      \field{year}{2012}
+      \field{pages}{421\bibrangedash 464}
+      \range{pages}{44}
+      \verb{doi}
+      \verb 10.4171/JEMS/307
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.4171/JEMS/307
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.4171/JEMS/307
+      \endverb
+    \endentry
+    \entry{MR2007237}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=6a37dfafb51f835a861b555265c9667d}{%
+           family={Pramanik},
+           familyi={P\bibinitperiod},
+           given={Malabika},
+           giveni={M\bibinitperiod}}}%
+        {{hash=65c728b61c4b28d72b1142ed75b78dda}{%
+           family={Terwilleger},
+           familyi={T\bibinitperiod},
+           given={Erin},
+           giveni={E\bibinitperiod}}}%
+      }
+      \strng{namehash}{1121201fded6bc5451f15ff889cebae6}
+      \strng{fullhash}{1121201fded6bc5451f15ff889cebae6}
+      \strng{fullhashraw}{1121201fded6bc5451f15ff889cebae6}
+      \strng{bibnamehash}{1121201fded6bc5451f15ff889cebae6}
+      \strng{authorbibnamehash}{1121201fded6bc5451f15ff889cebae6}
+      \strng{authornamehash}{1121201fded6bc5451f15ff889cebae6}
+      \strng{authorfullhash}{1121201fded6bc5451f15ff889cebae6}
+      \strng{authorfullhashraw}{1121201fded6bc5451f15ff889cebae6}
+      \field{labelalpha}{PT03}
+      \field{sortinit}{P}
+      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0019-2082,1945-6581}
+      \field{journaltitle}{Illinois J. Math.}
+      \field{number}{3}
+      \field{title}{A weak {$L^2$} estimate for a maximal dyadic sum operator on {${\Bbb R}^n$}}
+      \field{volume}{47}
+      \field{year}{2003}
+      \field{pages}{775\bibrangedash 813}
+      \range{pages}{39}
+      \verb{urlraw}
+      \verb http://projecteuclid.org/euclid.ijm/1258138194
+      \endverb
+      \verb{url}
+      \verb http://projecteuclid.org/euclid.ijm/1258138194
+      \endverb
+    \endentry
+    \entry{ramos}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=21c555578a695ea12d72d79425d4327e}{%
+           family={Ramos},
+           familyi={R\bibinitperiod},
+           given={João\bibnamedelimb P.\bibnamedelimi G.},
+           giveni={J\bibinitperiod\bibinitdelim P\bibinitperiod\bibinitdelim G\bibinitperiod}}}%
+      }
+      \strng{namehash}{21c555578a695ea12d72d79425d4327e}
+      \strng{fullhash}{21c555578a695ea12d72d79425d4327e}
+      \strng{fullhashraw}{21c555578a695ea12d72d79425d4327e}
+      \strng{bibnamehash}{21c555578a695ea12d72d79425d4327e}
+      \strng{authorbibnamehash}{21c555578a695ea12d72d79425d4327e}
+      \strng{authornamehash}{21c555578a695ea12d72d79425d4327e}
+      \strng{authorfullhash}{21c555578a695ea12d72d79425d4327e}
+      \strng{authorfullhashraw}{21c555578a695ea12d72d79425d4327e}
+      \field{labelalpha}{Ram21}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0025-5831}
+      \field{journaltitle}{Math. Ann.}
+      \field{number}{1-2}
+      \field{title}{The {H}ilbert transform along the parabola, the polynomial {C}arleson theorem and oscillatory singular integrals}
+      \field{volume}{379}
+      \field{year}{2021}
+      \field{pages}{159\bibrangedash 185}
+      \range{pages}{27}
+      \verb{doi}
+      \verb 10.1007/s00208-020-02075-5
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1007/s00208-020-02075-5
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1007/s00208-020-02075-5
+      \endverb
+    \endentry
+    \entry{MR4014801}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=0aa692ac1c126bb7d9e05f3ab869e542}{%
+           family={Roos},
+           familyi={R\bibinitperiod},
+           given={Joris},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{0aa692ac1c126bb7d9e05f3ab869e542}
+      \strng{fullhash}{0aa692ac1c126bb7d9e05f3ab869e542}
+      \strng{fullhashraw}{0aa692ac1c126bb7d9e05f3ab869e542}
+      \strng{bibnamehash}{0aa692ac1c126bb7d9e05f3ab869e542}
+      \strng{authorbibnamehash}{0aa692ac1c126bb7d9e05f3ab869e542}
+      \strng{authornamehash}{0aa692ac1c126bb7d9e05f3ab869e542}
+      \strng{authorfullhash}{0aa692ac1c126bb7d9e05f3ab869e542}
+      \strng{authorfullhashraw}{0aa692ac1c126bb7d9e05f3ab869e542}
+      \field{labelalpha}{Roo19}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{1069-5869,1531-5851}
+      \field{journaltitle}{J. Fourier Anal. Appl.}
+      \field{number}{5}
+      \field{title}{Bounds for anisotropic {C}arleson operators}
+      \field{volume}{25}
+      \field{year}{2019}
+      \field{pages}{2324\bibrangedash 2355}
+      \range{pages}{32}
+      \verb{doi}
+      \verb 10.1007/s00041-018-09657-7
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1007/s00041-018-09657-7
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1007/s00041-018-09657-7
+      \endverb
+    \endentry
+    \entry{MR336222}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=48414ea0550385ec99658f55c7f6ceea}{%
+           family={Sjölin},
+           familyi={S\bibinitperiod},
+           given={Per},
+           giveni={P\bibinitperiod}}}%
+      }
+      \strng{namehash}{48414ea0550385ec99658f55c7f6ceea}
+      \strng{fullhash}{48414ea0550385ec99658f55c7f6ceea}
+      \strng{fullhashraw}{48414ea0550385ec99658f55c7f6ceea}
+      \strng{bibnamehash}{48414ea0550385ec99658f55c7f6ceea}
+      \strng{authorbibnamehash}{48414ea0550385ec99658f55c7f6ceea}
+      \strng{authornamehash}{48414ea0550385ec99658f55c7f6ceea}
+      \strng{authorfullhash}{48414ea0550385ec99658f55c7f6ceea}
+      \strng{authorfullhashraw}{48414ea0550385ec99658f55c7f6ceea}
+      \field{labelalpha}{Sjö71}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0004-2080,1871-2487}
+      \field{journaltitle}{Ark. Mat.}
+      \field{title}{Convergence almost everywhere of certain singular integrals and multiple {F}ourier series}
+      \field{volume}{9}
+      \field{year}{1971}
+      \field{pages}{65\bibrangedash 90}
+      \range{pages}{26}
+      \verb{doi}
+      \verb 10.1007/BF02383638
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1007/BF02383638
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1007/BF02383638
+      \endverb
+    \endentry
+    \entry{stein-book}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=1e432a4cd42a48f08962229276035a77}{%
+           family={Stein},
+           familyi={S\bibinitperiod},
+           given={Elias\bibnamedelima M.},
+           giveni={E\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Princeton University Press, Princeton, NJ}%
+      }
+      \strng{namehash}{1e432a4cd42a48f08962229276035a77}
+      \strng{fullhash}{1e432a4cd42a48f08962229276035a77}
+      \strng{fullhashraw}{1e432a4cd42a48f08962229276035a77}
+      \strng{bibnamehash}{1e432a4cd42a48f08962229276035a77}
+      \strng{authorbibnamehash}{1e432a4cd42a48f08962229276035a77}
+      \strng{authornamehash}{1e432a4cd42a48f08962229276035a77}
+      \strng{authorfullhash}{1e432a4cd42a48f08962229276035a77}
+      \strng{authorfullhashraw}{1e432a4cd42a48f08962229276035a77}
+      \field{labelalpha}{Ste93}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{0-691-03216-5}
+      \field{note}{With the assistance of Timothy S. Murphy, Monographs in Harmonic Analysis, III}
+      \field{series}{Princeton Mathematical Series}
+      \field{title}{Harmonic analysis: real-variable methods, orthogonality, and oscillatory integrals}
+      \field{volume}{43}
+      \field{year}{1993}
+      \field{pages}{xiv+695}
+      \range{pages}{-1}
+    \endentry
+    \entry{stein-wainger}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=1e432a4cd42a48f08962229276035a77}{%
+           family={Stein},
+           familyi={S\bibinitperiod},
+           given={Elias\bibnamedelima M.},
+           giveni={E\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
+        {{hash=5dafb82fc19bc6ee59022b7bc23374fd}{%
+           family={Wainger},
+           familyi={W\bibinitperiod},
+           given={Stephen},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{5221620c1d36a90e84b97d8b94a802b3}
+      \strng{fullhash}{5221620c1d36a90e84b97d8b94a802b3}
+      \strng{fullhashraw}{5221620c1d36a90e84b97d8b94a802b3}
+      \strng{bibnamehash}{5221620c1d36a90e84b97d8b94a802b3}
+      \strng{authorbibnamehash}{5221620c1d36a90e84b97d8b94a802b3}
+      \strng{authornamehash}{5221620c1d36a90e84b97d8b94a802b3}
+      \strng{authorfullhash}{5221620c1d36a90e84b97d8b94a802b3}
+      \strng{authorfullhashraw}{5221620c1d36a90e84b97d8b94a802b3}
+      \field{labelalpha}{SW01}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{1073-2780}
+      \field{journaltitle}{Math. Res. Lett.}
+      \field{number}{5-6}
+      \field{title}{Oscillatory integrals related to {C}arleson's theorem}
+      \field{volume}{8}
+      \field{year}{2001}
+      \field{pages}{789\bibrangedash 800}
+      \range{pages}{12}
+      \verb{doi}
+      \verb 10.4310/MRL.2001.v8.n6.a9
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.4310/MRL.2001.v8.n6.a9
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.4310/MRL.2001.v8.n6.a9
+      \endverb
+    \endentry
+    \entry{zk-polynomial}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=c84f023c03b3a7d4b26982e8c75d8a16}{%
+           family={Zorin-Kranich},
+           familyi={Z\bibinithyphendelim K\bibinitperiod},
+           given={Pavel},
+           giveni={P\bibinitperiod}}}%
+      }
+      \strng{namehash}{c84f023c03b3a7d4b26982e8c75d8a16}
+      \strng{fullhash}{c84f023c03b3a7d4b26982e8c75d8a16}
+      \strng{fullhashraw}{c84f023c03b3a7d4b26982e8c75d8a16}
+      \strng{bibnamehash}{c84f023c03b3a7d4b26982e8c75d8a16}
+      \strng{authorbibnamehash}{c84f023c03b3a7d4b26982e8c75d8a16}
+      \strng{authornamehash}{c84f023c03b3a7d4b26982e8c75d8a16}
+      \strng{authorfullhash}{c84f023c03b3a7d4b26982e8c75d8a16}
+      \strng{authorfullhashraw}{c84f023c03b3a7d4b26982e8c75d8a16}
+      \field{labelalpha}{Zor21}
+      \field{sortinit}{Z}
+      \field{sortinithash}{96892c0b0a36bb8557c40c49813d48b3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0001-8708}
+      \field{journaltitle}{Adv. Math.}
+      \field{title}{Maximal polynomial modulations of singular integrals}
+      \field{volume}{386}
+      \field{year}{2021}
+      \field{pages}{Paper No. 107832\bibrangessep 40}
+      \range{pages}{-1}
+      \verb{doi}
+      \verb 10.1016/j.aim.2021.107832
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1016/j.aim.2021.107832
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1016/j.aim.2021.107832
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
