@@ -1,0 +1,2279 @@
+% This is the main point of entry to the blueprint.
+% Add chapters of the blueprint here.
+% This file is not meant to be built. Build src/web.tex or src/print.tex instead.
+
+% Note: still have to upstream section ~> chapter and subsection ~> section to Overleaf
+% Replace spaces by dashes in labels using search&replace (leave out `, keep space)
+% `((\\label|\\ref|\\eqref|\\uses|\\proves)\{([^ \n},]|,\n? *[a-zA-Z])*) `
+% to
+% `$1-`
+%
+% Regex to (hopefully) count the number of green bubbles:
+%  \\begin\{proof\}.*\n(.*\n)? *\\leanok
+%
+% Regex to (hopefully) count the number of green borders:
+% \\leanok.*\n[^%\n]*\\lean
+
+\title[Formalization of Carleson's theorem]{A blueprint for the formalization of Carleson's theorem on convergence of Fourier series}
+
+\date{\today}
+
+\begin{abstract}
+This paper is the blueprint underlying the Lean formalization of the proof of Carleson's classical result \cite{carleson} asserting almost everywhere convergence of Fourier series of continuous functions. We break up the proof into two steps, a reduction of the classical result to a new theorem that appears in the sibling communication \cite{becker2024carlesonoperatorsdoublingmetric} and a proof of this new theorem, which is also detailed as blueprint in this paper. An early version of this blueprint was used to initiate the Lean formalization. During the formalization, many contributors elaborated the blueprint with minor corrections, modifications and extensions.
+The final version is presented here as a guide through the accompanying Lean code.
+\end{abstract}
+
+\maketitle
+
+\tableofcontents
+
+% \textbf{Acknowledgements}: We greatly appreciate the help by anyone proof reading this blueprint or helping with the formalization process.
+
+\section{Introduction}
+
+
+Trigonometric series represent functions as possibly infinite linear combinations of pure frequencies.
+They gained particular prominence through the work of J. Fourier, who used them in his analytical theory of heat \cite{Fourier}, see also \cite{MR3470070}, thereby establishing them as a tool for solving partial differential equations.
+Fourier also made the groundbreaking claim that a wide range of functions could be represented using trigonometric series. This sparked the interest of many mathematicians,
+including Dirichlet, who gave some rigorous conditions for convergence of Fourier series, as trigonometric series are now called. Dirichlet also opened a branch of analytic number theory partially inspired by the ideas of
+Fourier.
+Nowadays, Fourier analysis plays an important role in many areas of mathematics.
+
+
+With Euler's formula to represent pure frequencies in mind, a trigonometric polynomial can be expressed as
+\begin{equation}\label{eq:trig-series}
+    S_N(x):= \sum_{n=-N}^N c_n e^{inx} \ .
+\end{equation}
+The Fourier series is then defined as the limit $f$ of such a sequence $S_N$
+as $N$ tends to $\infty$. Fourier's vision to represent rather general
+functions raises two fundamental questions. The first question is to identify
+the appropriate choice of coefficients $c_n$ to use to represent a given $f$.
+The second question addresses the convergence of $S_N$ to $f$.
+
+The first question has a fairly canonical and standard answer, provided by the Fourier integral formula:
+\begin{equation}\label{eq:fourier-coefficients}
+    c_n:=\widehat{f}_n:=\frac 1{2\pi}\int_0^{2\pi}f(x) e^{- i nx}\, dx,
+\end{equation}
+ where the precise interpretation of the integral depends on the chosen theory of integration. For a continuous function $f$,
+Riemann's notion of the integral suffices. If $f$ is integrable in the Lebesgue sense,
+$f\in L^1(0,2\pi)$, the Lebesgue integral is appropriate. More generally, if
+$f$ is a distribution in the sense of Schwartz, supported in $[0,2\pi]$
+the integral can be understood as an evaluation against the periodic test function
+$e^{-i nx}$. In each case, the more general definition reduces to the simpler one within the respective more restrictive domain.
+Hence, the Fourier coefficients given by \eqref{eq:fourier-coefficients} serve as a universal choice.
+This choice is unique in several respects, in particular if one is to exactly reproduce
+a trigonometric polynomial $f$ in the form
+\eqref{eq:trig-series}.
+
+
+The second question of convergence bifurcates into the question of pointwise
+convergence of the series \eqref{eq:trig-series} (with coefficients given by
+\eqref{eq:fourier-coefficients}) for a given $x$ on the one hand and
+convergence of the functions $S_N$ to the function $f$ in a suitable function
+space with corresponding topology on the other hand. There are at least as
+many function spaces for the question of convergence as there are different
+definitions of the integral elaborated earlier. There are some very canonical
+answers to the convergence question in function spaces, albeit not known at
+the time of Fourier and Dirichlet. One example is convergence in the Hilbert
+space sense for $f$ in $L^2(0,2\pi)$, as discovered in the first decade of
+the twentieth century as a consequence of the rapid development of Lebesgue
+integration theory. Another canonical example is convergence in the sense of
+distributions for general distributional $f$, as discovered a few decades
+after Lebesgue integration. For some other natural spaces, such as
+$L^1(0,2\pi)$, there is no guarantee of convergence in the norm of that space
+even if $f$ is in the space.
+
+
+In contrast to these examples of function spaces with a very natural theory
+of convergence of Fourier series in the topology of the function space, there
+are no similarly elegant solutions to the characterization of pointwise
+convergence. In particular, the space of functions $f$ such that the sequence
+$S_N(x)$ converges for every $x$ does not have a good characterization in
+terms of $f$ itself. Similarly, the space of all functions $f$ such that the
+sequence of coefficients $\widehat{f}_n$ is absolutely summable has also no
+good characterization.
+
+When the Fourier integral is defined in the Lebesgue sense and
+$f\in L^1(0,2\pi)$, then the function
+$f$ itself is meaningful not everywhere but only pointwise almost everywhere
+in the Lebesgue sense. The question of pointwise convergence to $f$ for all $x$ then becomes
+meaningless, and instead one asks for almost everywhere convergence.
+Such convergence
+was conjectured by N. Luzin \cite{Luzin13}
+for the space
+$L^2(0,2\pi)$, see also the collected works \cite{Luzin53}. Kolmogorov's example \cite{Kolmogorov} of an $L^1$ function whose Fourier series diverges at almost every point seemed to provide some evidence against Luzin's conjecture.
+Indeed, in the 1960s, L. Carleson tried to construct a counterexample to Luzin's conjecture.
+In his own recollection, his efforts led him to better and better understand how such a potential counterexample should look like.
+In the end, the counterexample had to satisfy so many properties that the properties started to contradict each other,
+and Carleson realized that a counterexample could not exist.
+Thus, he had proved Luzin's conjecture \cite{carleson}.
+In particular, he had proven the more elementary statement
+
+\inputleannode{classical_carleson}
+
+Here, almost every $x$ means in the Lebesgue sense, i.e., for every $\epsilon>0$ the set of $x$ where convergence fails can be covered by a sequence of intervals
+such that the sum of the lengths of these
+intervals is less than $\epsilon$. While Carleson had proven the more general Luzin conjecture for functions in $L^2[0,2\pi]$, even the more elementary statement for continuous functions was not known before Carleson's work.
+Moreover, until now, the elementary statement has not seen any substantially easier proof than those generalizing to $L^2$,
+partially because there is no readily usable criterion on the level of
+Fourier coefficients to distinguish between continuous functions and $L^2$ functions.
+
+
+Shortly after Carleson's breakthrough, Hunt \cite{MR238019} proved the analogous result for $L^p$ functions
+with $p>1$ and for functions in $L^1\log(L)^2$.
+Billard \cite{MR217510} adapted Carleson's arguments to prove almost everywhere convergence of Walsh-Fourier series
+for functions in $L^2$.
+
+
+In \cite{fefferman}, C. Fefferman gave an alternative proof of Carleson's theorem via an a priori
+bound for Carleson's operator, the maximally modulated singular integral
+\begin{equation}\label{eq:feffermancarleson}
+    Tf(x):=\sup_{N} \int_{-\pi}^\pi e^{iNy}f(x-y)\frac 1y {dy}\, .
+\end{equation}
+In \cite{lacey-thiele}, a duality
+between the approaches by Carleson and Fefferman was pointed out and a more symmetric and self-dual proof was presented.
+
+
+Various strengthenings of Fefferman's estimates for Carleson's operator have appeared since, such as bounds for a higher dimensional Carleson operator in the isotropic
+\cite{MR336222}, \cite{MR2007237} and anisotropic \cite{MR4014801} setting.
+The supremum norm in the variable $N$ in \eqref{eq:feffermancarleson} was strengthened
+to maximal multiplier norms in \cite{MR2420509} with applications to return times theorems in ergodic theory.
+It was strengthened to variation norms $V^r$ with $r>2$ in \cite{MR2881301} with applications to nonlinear analysis.
+
+Stein and Wainger \cite{stein-wainger} proposed to study variants of \eqref{eq:feffermancarleson} replacing the
+linear modulation phase $Ny$ by polynomial phases in $y$ and proved a result for polynomials without a linear term.
+This was generalized by Lie to general polynomial Carleson operators, first for a supremum over all quadratic
+polynomials \cite{lie-quadratic} and then for a supremum over all polynomials in \cite{lie-polynomial}.
+The polynomial Carleson operator was further generalized to higher dimensions and H\"older regular kernels in \cite{zk-polynomial}.
+The development of polynomial Carleson operators has led to further generalisations, for example to almost everywhere convergence of Malmquist-Takenaka series
+\cite{mnatsakanyan} and maximally modulated singular Radon transforms \cite{ramos}, \cite{becker2024maximal}.
+
+Surveys to Carleson's theorem can be found in \cite{MR2091007}, \cite{MR3334208}.
+
+In this blueprint, we prove Theorem \ref{classical_carleson} as a corollary to a further generalization of the polynomial Carleson operator towards doubling metric measure spaces,
+Theorem \ref{metric_carleson} below,
+which is new and appears in the sibling communication \cite{becker2024carlesonoperatorsdoublingmetric}.
+Theorem \ref{metric_carleson} is an axiomatic approach to
+Carleson type theorems on doubling metric measure spaces.
+This axiomatic approach is suitable for formalization and a good route towards the classical theorem.
+
+Early drafts of the sibling communication \cite{becker2024carlesonoperatorsdoublingmetric} existed in summer 2023.
+Based on this, the first draft of the present blueprint was written in the first half of 2024,
+containing a much more detailed proof, which involved increasing the size by a factor of four,
+and adding the derivation of Carleson's classical result.
+In June 2024, the fourth author launched a \href{https://florisvandoorn.com/carleson/}{public website}
+to post the blueprint, using the open-source software \texttt{leanblueprint} developed by Patrick Massot,
+calling for contributions to formalize the proof.
+The goal was to formalize the blueprint in the Lean proof assistant~\cite{moura2021lean},
+building on top of its mathematical library \texttt{Mathlib}~\cite{mathlib}.
+The work was split up into about 180 tasks, to be claimed by individual contributors.
+Most tasks were to formalize the proof of a single lemma from the blueprint, and some were to develop basic theory or refactor existing code.
+The contributors adapted the blueprint to fix some gaps found during the formalization and gave feedback that led to discussions about the proof.
+This even resulted in a few changes to the general setup and the main theorems.
+All of the gaps found required only fairly localized changes to the blueprint, indicating that the initial blueprint was already of high quality.
+The formalization was completed in July 2025. It is attached to this arXiv posting, and the latest version can be found \href{https://github.com/fpvandoorn/carleson}{on Github}.
+
+Everyone that completed a substantial amount of tasks is included as a coauthor of the blueprint.
+The authors acknowledge contributions in the form of small formalization additions,
+pointing out corrections to the blueprint,
+or supplying ideas to the Lean efforts by the following people:
+Michel Alexis,
+Bolton Bailey,
+Julian Berman,
+Joachim Breitner,
+Martin Dvoř\'ak,
+Georges Gonthier,
+Aaron Hill,
+Austin Letson,
+Bhavik Mehta,
+Eric Paul,
+Clara Torres,
+Dennis Tsar,
+Andrew Yang,
+Ruben van de Velde.
+
+\noindent \textit{Acknowledgement.}
+L.B., M.I.d.F.F., L.D., F.v.D., M.R., R.S., and C.T. were funded by the Deutsche For\-schungs\-gemein\-schaft (DFG, German Research Foundation) under Germany's Excellence Strategy -- EXC-2047/1 -- 390685813.
+L.B. , R.S., and C.T. were also supported by SFB 1060.
+A.J. is funded by the T\"UBITAK (Scientific and Technological Research Council of T\"urkiye) under Grant Number 123F122.
+J.R. was supported in part by NSF grant DMS-2154835 and a HIM fellowship for the Fall 2024 trimester program in Bonn.
+
+\subsection{Statement of the metric space Carleson theorems}
+
+Let
+\begin{equation}
+    a\ge 4
+\end{equation}
+be a natural number that as it gets larger will allow for more general applications of Theorem \ref{metric_carleson}
+but will worsen the constants in the estimates.
+
+
+A doubling metric measure space $(X,\rho,\mu, a)$ is a complete
+and locally compact metric space $(X,\rho)$
+equipped with a non-zero locally finite Borel measure $\mu$ that satisfies the doubling condition that for all $x\in X$ and all $R>0$ we have
+\begin{equation}\label{doublingx}
+    \mu(B(x,2R))\le 2^a\mu(B(x,R))\,,
+\end{equation}
+where we have denoted by $B(x,R)$ the open ball of radius $R$ centered at $x$:
+\begin{equation}\label{eq-define-ball}
+ B(x,R):=\{y\in X: \rho(x,y)<R\}. \end{equation}
+In a doubling metric measure space the closed balls are compact and $\mu$ is positive on all non-empty open sets.
+
+A collection $\Mf$ of real valued continuous functions on the doubling metric measure space $(X,\rho,\mu,a)$ is called compatible,
+if there is a point $o\in X$ where all the functions are equal to $0$,
+and if there exists for each ball $B \subset X$ a metric $d_B$ on $\Mf$,
+such that the following five properties \eqref{osccontrol}, \eqref{firstdb}, \eqref{monotonedb}, \eqref{seconddb}, and \eqref{thirddb} are satisfied.
+For every ball $B \subset X$
+\begin{equation}\label{osccontrol}
+    \sup_{x,y\in B}|\mfa(x)-{\mfa(y)}- \mfb(x)+{\mfb(y)}| \le d_{B}(\mfa,\mfb)\,.
+\end{equation}
+For any two balls $B_1=B(x_1,R)$, $B_2= B(x_2,2R)$ in $X$ with $x_1\in B_2$ and any $\mfa,\mfb\in \Mf$,
+\begin{equation}\label{firstdb}
+    d_{B_2}(\mfa,\mfb)\le 2^a d_{B_1}(\mfa,\mfb) .
+\end{equation}
+For any two balls $B_1, B_2$ in $X$ with $B_1 \subset B_2$ and any $\mfa, \mfb \in \Mf$
+\begin{equation}\label{monotonedb}
+    d_{B_1}(\mfa,\mfb) \le d_{B_2}(\mfa, \mfb)
+\end{equation}
+and for any two balls
+$B_1=B(x_1,R)$, $B_2= B(x_2,2^aR)$
+with $B_1\subset B_2$, and $\mfa,\mfb\in \Mf$,
+\begin{equation}\label{seconddb}
+    2d_{B_1}(\mfa,\mfb)
+\le d_{B_2}(\mfa,\mfb) .
+\end{equation}
+For every ball $B$ in $X$ and every $d_B$-ball $\tilde B$ of radius $2R$ in $\Mf$, there is a collection $\mathcal{B}$ of
+at most $2^a$ many $d_B$-balls of radius $R$ covering $\tilde B$, that is,
+\begin{equation}\label{thirddb}
+    \tilde B\subset \bigcup \mathcal{B}.
+\end{equation}
+
+
+Further, a compatible collection $\Mf$ is called cancellative, if
+for any ball $B$ in $X$ of radius $R$, any Lipschitz function $\varphi: X\to \C$
+supported on $B$, and any $\mfa,\mfb\in \Mf$ we have
+\begin{equation}
+    \label{eq-vdc-cond}
+    |\int_B e(\mfa(x)-{\mfb(x)}) \varphi(x) d\mu(x)|\le 2^a \mu(B)\|\varphi\|_{\Lip(B)}
+(1+d_B(\mfa,\mfb))^{-\frac{1}{a}},
+\end{equation}
+where $\|\cdot\|_{\Lip(B)}$ denotes the inhomogeneous Lipschitz norm on $B$:
+$$
+    \|\varphi\|_{\Lip(B)} = \sup_{x \in B} |\varphi(x)| + R \sup_{x,y \in B, x \neq y} \frac{|\varphi(x) - \varphi(y)|}{\rho(x,y)}\,.
+$$
+
+A one-sided Calder\'on--Zygmund kernel $K$ on the doubling metric measure space $(X, \rho, \mu, a)$ is a measurable function
+\begin{equation}\label{eqkernel0}
+  K:X\times X\to \mathbb{C}
+\end{equation}
+such that for all $x,y',y\in X$ with $x\neq y$, we have
+\begin{equation}\label{eqkernel-size}
+    |K(x,y)| \leq \frac{2^{a^3}}{V(x,y)}
+\end{equation}
+and if $2\rho(y,y') \leq \rho(x,y)$, then
+\begin{equation}
+  \label{eqkernel-y-smooth}
+  |K(x,y) - K(x,y')| \leq \left(\frac{\rho(y,y')}{\rho(x,y)}\right)^{\frac{1}{a}}\frac{2^{a^3}}{V(x,y)},
+\end{equation}
+where \[V(x,y):=\mu(B(x,\rho(x,y))).\]
+Define the maximally truncated non-tangential singular integral $T_{*}$ associated with $K$ by
+\begin{equation}
+    \label{def-tang-unm-op}
+    T_{*}f(x):=\sup_{R_1 < R_2} \sup_{\rho(x,x')<R_1} \left|\int_{R_1< \rho(x',y) < R_2} K(x',y) f(y) \, \mathrm{d}\mu(y) \right|\,.
+\end{equation}
+We define the generalized Carleson operator $T$ by
+\begin{equation}
+    \label{def-main-op}
+    Tf(x):=\sup_{\mfa\in\Mf} \sup_{0 < R_1 < R_2}\left| \int_{R_1 < \rho(x,y) < R_2} K(x,y) f(y) e(\mfa(y)) \, \mathrm{d}\mu(y) \right|\, ,
+\end{equation}
+where $e(r)=e^{ir}$.
+
+Our first main result is the following restricted weak type estimate for $T$ in the range $1<q\le 2$,
+which by interpolation techniques recovers $L^q$ estimates for the open range $1<q<2$.
+\inputleannode{metric_carleson}
+
+In some applications, such as the Walsh-case of Carleson's theorem, the kernel $K$ naturally depends also on the modulation functions $\mfa$.
+The fact that we don't assume H\"older-continuity of the kernel $K$ in the first argument allows us to also capture this situation.
+
+We now state another Theorem with a slightly weaker replacement of the assumption \eqref{nontanbound}.
+It implies the Walsh-case of Carleson's theorem.
+For a Borel function $\tQ:X\to \Mf$, and $\mfa \in \Mf$ and $x\in X$ define
+\begin{equation}
+    R_{\tQ}(\mfa,x)=\sup\{r>0:d_{B(x,r)}(\mfa, \tQ(x))<1\}
+\end{equation}
+and define further
+\begin{equation}
+    \label{def-lin-star-op}
+    T_{\tQ}^\mfa f(x):=\sup_{R_1<R_2} \ \sup_{\rho(x,x')<R_1}
+    \left|\int_{R_1< \rho(x',y) < \min\{R_2, R_{\tQ}(\mfa,x')\}} K(x',y) f(y) \, \mathrm{d}\mu(y) \right|
+\end{equation}
+Define further the linearized generalized Carleson operator $T_\tQ$ by
+\begin{equation}
+    \label{def-lin-main-op}
+    T_\tQ f(x):= \sup_{0 < R_1 < R_2}\left| \int_{R_1 < \rho(x,y) < R_2} K(x,y) f(y) e(\tQ(x)(y)) \, \mathrm{d}\mu(y) \right|\, ,
+\end{equation}
+where again $e(r)=e^{ir}$.
+
+\inputleannode{linearized_metric_carleson}
+
+\begin{remark}
+The value of the constant factor $2^{443a^3}$ in Theorems~\ref{metric_carleson}
+and~\ref{linearized_metric_carleson} is by no means sharp.
+One source of non-sharpness is our choice to write for readability most constants in the form $2^{na^3}$ for some explicit constant $n$.
+
+An a posteriori byproduct of the Lean formalization of this document is that Theorems~\ref{metric_carleson}
+and~\ref{linearized_metric_carleson} remain true with $2^{44a^3}$ instead of $2^{443a^3}$. This is obtained by
+changing the parameter $D$ introduced in~\eqref{defineD} from $2^{100a^2}$ to $2^{7a^2}$, checking that exactly the same
+proof goes through, tracking the constants, and getting $2^{44a^3}$ in the end. This value is again by no means sharp.
+In the formalization we define the parameter $D$ as $2^{\mathbb{c}a^2}$
+and the constants in this blueprint are obtained by setting $\mathbb{c} = 100$.
+\end{remark}
+
+\section{Proof of Metric Space Carleson, overview}
+\label{overviewsection}
+
+This section organizes the proof of \Cref{metric_carleson} into sections \ref{thmfromproplinear}, \ref{christsection}, \ref{proptopropprop}, \ref{antichainboundary}, \ref{treesection}, \ref{liphoel}, and \ref{sec-hlm}. These sections are mutually independent except for referring to the statements formulated in the present section. \Cref{thmfromproplinear} proves the main \Cref{metric_carleson}, while sections \ref{christsection}, \ref{proptopropprop}, \ref{antichainboundary}, \ref{treesection}, \ref{liphoel}, and \ref{sec-hlm} each prove one proposition that is stated in the present section. The present section also introduces all definitions used across these sections.
+
+\Cref{global-auxiliary-lemmas} proves some auxiliary lemmas that are used in more than one of the sections 3-9.
+
+Let $a, q$ be given as in \Cref{metric_carleson}.
+
+
+
+
+Define
+\begin{equation}\label{defineD}
+    D:= 2^{100 a^2}\, ,
+\end{equation}
+\begin{equation}\label{definekappa}
+    \kappa:= 2^{-10a}\,,
+\end{equation}
+and
+\begin{equation}
+    \label{defineZ}
+    Z := 2^{12a}\,.
+\end{equation}
+Let
+ $\psi:\R \to \R$ be the unique compactly supported, piece-wise linear, continuous function with corners precisely at $\frac 1{4D}$, $\frac 1{2D}$, $\frac 14$ and $\frac 12$ which satisfies
+ \begin{equation}
+    \label{eq-psisum}
+    \sum_{s\in \mathbb{Z}} \psi(D^{-s}x)=1
+\end{equation}
+for all $x>0$. This function vanishes outside $[\frac1{4D},\frac 12]$, is constant one on
+$[\frac1{2D},\frac 14]$, and is Lipschitz
+with constant $4D$.
+
+
+
+
+Let a doubling metric measure space $(X,\rho,\mu, a)$ be given.
+Let a cancellative compatible collection $\Mf$ of functions on $X$ be given.
+Let $o\in X$ be a point such that $\mfa(o)=0$
+for all $\mfa\in \Mf$.
+
+
+Let a Borel measurable function $\tQ:X\to \Mf$ with finite range be given.
+Let a one-sided Calder\'on--Zygmund kernel $K$ on $X$ be given so that for every $\mfa\in \Mf$ the operator $T_{\tQ}^{\mfa}$ defined in \eqref{def-lin-star-op}
+satisfies \eqref{linnontanbound}.
+
+
+
+For $s\in\mathbb{Z}$, we define
+\begin{equation}\label{defks}
+    K_s(x,y):=K(x,y)\psi(D^{-s}\rho(x,y))\,,
+\end{equation}
+so that for each $x, y \in X$ with $x\neq y$ we have
+$$K(x,y)=\sum_{s\in\mathbb{Z}}K_s(x,y).$$
+
+In \Cref{thmfromproplinear}, we prove \Cref{metric_carleson} and \Cref{linearized_metric_carleson}
+from the finitary version, \Cref{finitary_carleson} below. Recall
+that a function from a measure space to a finite set is measurable if the pre-image of each of the elements in the range is measurable.
+
+
+\inputleannode{finitary_carleson}
+Let measurable functions ${\sigma_1}\leq \sigma_2\colon X\to \mathbb{Z}$ with finite range be given.
+Let bounded Borel sets $F,G$ in $X$ be given.
+Let $S$ be the smallest integer such that the ranges of
+$\sigma_1$ and $\sigma_2$ are contained in $[-S,S]$ and $F$ and $G$ are contained
+in the ball $B(o, \frac{1}{4}D^S)$.
+
+In \Cref{christsection}, we prove \Cref{finitary_carleson} using a
+bound for a dyadic model formulated in \Cref{discrete_carleson} below.
+
+A grid structure $(\mathcal{D}, c, s)$ on $X$ consists of a finite collection $\mathcal{D}$ of pairs $(I, k)$ of Borel
+sets in $X$ and integers $k \in [-S, S]$, the projection $s\colon \mathcal{D}\to [-S, S], (I, k) \mapsto k$ to the second component which is assumed to be surjective and
+called scale function, and a function $c:\mathcal{D}\to X$
+called center function such that the five properties
+\eqref{coverdyadic}, \eqref{dyadicproperty}, \eqref{subsetmaxcube},
+\eqref{eq-vol-sp-cube}, and \eqref{eq-small-boundary} hold. We call the elements of $\mathcal{D}$ dyadic cubes. By abuse of notation, we will usually write just $I$ for the cube $(I,k)$, and we will write $I \subset J$ to mean that for two cubes $(I,k), (J, l) \in \mathcal{D}$ we have $I \subset J$ and $k \le l$.
+
+For each dyadic cube $I$ and each $-S\le k<s(I)$ we have
+\begin{equation}\label{coverdyadic}
+    I\subset \bigcup_{J\in \mathcal {D}: s(J)=k}J\, .
+\end{equation}
+Any two non-disjoint dyadic cubes $I,J$ with $s(I)\le s(J)$ satisfy
+\begin{equation}\label{dyadicproperty}
+    I\subset J.
+\end{equation}
+There exists a $I_0 \in \mathcal{D}$ with $s(I_0) = S$ and $c(I_0) = o$
+%\begin{equation}\label{coverball}
+%    B(o, \frac{1}{4} D^{S}) \subset I\,,
+%\end{equation}
+and for all cubes $J \in \mathcal{D}$, we have
+\begin{equation}\label{subsetmaxcube}
+    J \subset I_0\,.
+\end{equation}
+%changed the above sentence on June 25, CT
+For any dyadic cube $I$,
+\begin{equation}
+    \label{eq-vol-sp-cube}
+    c(I)\in B(c(I), \frac{1}{4} D^{s(I)}) \subset I \subset B(c(I), 4 D^{s(I)})\,.
+\end{equation}
+For any dyadic cube $I$ and any $t$ with $tD^{s(I)} \ge D^{-S}$,
+\begin{equation}
+    \label{eq-small-boundary}
+    \mu(\{x \in I \ : \ \rho(x, X \setminus I) \leq t D^{s(I)}\}) \le 2 t^\kappa \mu(I)\,.
+\end{equation}
+
+
+
+A tile structure $(\fP,\scI,\fc,\fcc,\pc,\ps)$
+for a given grid structure $(\mathcal{D}, c, s)$
+is a finite set $\fP$ of elements called tiles with five maps
+\begin{align*}
+    \scI&\colon \fP\to {\mathcal{D}}\\
+    \fc&\colon \fP\to \mathcal{P}(\Mf) \\
+    \fcc &\colon \fP\to \tQ(X)\\
+    \pc &\colon \fP\to X\\
+    \ps &\colon \fP\to \mathbb{Z}
+\end{align*}
+with $\scI$ surjective and $\mathcal{P}(\Mf)$ denoting the power set of $\Mf$ such that the five properties \eqref{eq-dis-freq-cover}, \eqref{eq-freq-dyadic},
+\eqref{eq-freq-comp-ball}, \eqref{tilecenter}, and
+\eqref{tilescale} hold.
+For each dyadic cube $I$, the restriction of the map $\Omega$ to the set
+\begin{equation}\label{injective}
+    \fP(I)=\{\fp: \scI(\fp) =I\}
+\end{equation}
+is injective
+and we have the disjoint covering property (we use the union symbol with dot on top to denote a disjoint union)
+\begin{equation}\label{eq-dis-freq-cover}
+    \tQ(X)\subset \dot{\bigcup}_{\fp\in \fP(I)}\fc(\fp).
+\end{equation}
+For any tiles $\fp,\fq$ with $\scI(\fp)\subset \scI(\fq)$ and $\fc(\fp) \cap \fc(\fq) \neq \emptyset$ we have
+\begin{equation} \label{eq-freq-dyadic}
+    \fc(\fq)\subset \fc(\fp) .
+\end{equation}
+For each tile $\fp$,
+\begin{equation}\label{eq-freq-comp-ball}
+    \fcc(\fp)\in B_{\fp}(\fcc(\fp), 0.2) \subset \fc(\fp) \subset B_{\fp}(\fcc(\fp),1)\,,
+\end{equation}
+where
+\begin{equation}
+    B_{\fp} (\mfa, R) := \{\mfb \in \Mf \, : \, d_{\fp}(\mfa, \mfb) < R\,\} ,
+\end{equation}
+and
+\begin{equation}\label{defdp}
+    d_{\fp} := d_{B(\pc(\fp),\frac 14 D^{\ps(\fp)})}\, .
+\end{equation}
+We have for each tile $\fp$
+\begin{equation}\label{tilecenter}
+    \pc(\fp)=c(\scI(\fp)),
+\end{equation}
+\begin{equation}\label{tilescale}
+    \ps(\fp)=s(\scI(\fp)).
+\end{equation}
+
+
+\inputleannode{discrete_carleson}
+
+
+
+
+
+
+
+
+
+The proof of \Cref{discrete_carleson} is done in \Cref{proptopropprop}
+by a reduction to two further propositions that we state below.
+
+
+Fix a grid structure $(\mathcal{D}, c, s)$ and a tile structure $(\fP,\scI,\fc,\fcc,\pc,\ps)$
+for this grid structure.
+
+We define the relation
+\begin{equation}\label{straightorder}
+    \fp\le \fp'
+\end{equation}
+ on $\fP\times \fP$ meaning
+$\scI(\fp)\subset \scI(\fp')$ and
+$\Omega(\fp')\subset \Omega(\fp)$.
+We further define for $\lambda,\lambda' >0$
+the relation
+\begin{equation}\label{wiggleorder}
+    \lambda \fp \lesssim \lambda' \fp'
+\end{equation}
+on $\fP\times \fP$ meaning
+$\scI(\fp)\subset \scI(\fp')$ and
+\begin{equation}
+    B_{\fp'}(\fcc(\fp'),\lambda') \subset B_{\fp}(\fcc(\fp),\lambda)\, .
+\end{equation}
+
+
+
+Define for a tile $\fp$ and $\lambda>0$
+\begin{equation}\label{definee1}
+    E_1(\fp):=\{x\in \scI(\fp)\cap G: \tQ(x)\in \fc(\fp)\}\, ,
+\end{equation}
+\begin{equation}\label{definee2}
+    E_2(\lambda, \fp):=\{x\in \scI(\fp)\cap G: \tQ(x)\in B_{\fp}(\fcc(\fp), \lambda)\}\, .
+\end{equation}
+
+
+
+Given a subset $\fP'$ of $\fP$, we define
+$\fP(\fP')$ to be the set of
+all $\fp \in \fP$ such that there exist $\fp' \in \fP'$ with $\scI(\fp)\subset \scI(\fp')$. Define the densities
+\begin{equation}\label{definedens1}
+    {\dens}_1(\fP') := \sup_{\fp'\in \fP'}\sup_{\lambda \geq 2} \lambda^{-a} \sup_{\fp \in \fP(\fP'), \lambda \fp' \lesssim \lambda \fp}
+    \frac{\mu({E}_2(\lambda, \fp))}{\mu(\scI(\fp))}\, ,
+\end{equation}
+\begin{equation}\label{definedens2}
+    {\dens}_2(\fP') := \sup_{\fp'\in \fP'}
+    \sup_{r\ge 4D^{\ps(\fp)}}
+    \frac{\mu(F\cap B(\pc(\fp),r))}{\mu(B(\pc(\fp),r))}\, .
+\end{equation}
+
+
+
+
+
+An antichain is a subset $\mathfrak{A}$
+of $\fP$ such that for any distinct $\fp,\fq\in \mathfrak{A}$ we do not have $\fp\le \fq$.
+
+The following proposition is proved in \Cref{antichainboundary}.
+
+\inputleannode{antichain_operator}
+
+Let $n\ge 0$.
+An $n$-forest is a pair $(\fU, \mathfrak{T})$
+where $\fU$ is a subset of $\fP$
+and $\mathfrak{T}$ is a map assigning to
+each $\fu\in \fU$ a nonempty set $\fT (\fu)\subset \fP$ called tree
+such that the following properties
+\eqref{forest1}, \eqref{forest2},
+\eqref{forest3},
+\eqref{forest4},
+\eqref{forest5}, and
+\eqref{forest6}
+hold.
+
+For each $\fu\in \fU$ and each $\fp\in \fT(\fu)$
+we have $\scI(\fp) \ne \scI(\fu)$ and
+\begin{equation}\label{forest1}
+    4\fp\lesssim \fu.
+\end{equation}
+For each $\fu \in \fU$ and each $\fp,\fp''\in \fT(\fu)$ and $\fp'\in \fP$
+we have
+\begin{equation}\label{forest2}
+    \fp, \fp'' \in \mathfrak{T}(\fu), \fp \leq \fp' \leq \fp'' \implies \fp' \in \mathfrak{T}(\fu).
+\end{equation}
+We have
+\begin{equation}\label{forest3}
+   \|\sum_{\fu\in \fU} \mathbf{1}_{\scI(\fu)}\|_\infty \leq 2^n\,.
+\end{equation}
+We have for every $\fu\in \fU$
+\begin{equation}\label{forest4}
+    \dens_1(\fT(\fu))\le 2^{4a + 1-n}\, .
+\end{equation}
+We have for $\fu, \fu'\in \fU$ with $\fu\neq \fu'$ and $\fp\in \fT(\fu')$ with $\scI(\fp)\subset \scI(\fu)$ that
+\begin{equation}\label{forest5}
+    d_{\fp}(\fcc(\fp), \fcc(\fu))>2^{Z(n+1)}\, .
+\end{equation}
+We have for every $\fu\in \fU$ and $\fp\in \fT(\fu)$ that
+\begin{equation}\label{forest6}
+    B(\pc(\fp), 8D^{\ps(\fp)})\subset \scI(\fu).
+\end{equation}
+
+
+The following proposition is proved in \Cref{treesection}.
+\inputleannode{forest_operator}
+
+\Cref{metric_carleson} is formulated at the level of generality
+for general kernels satisfying the mere H\"older regularity condition \eqref{eqkernel-y-smooth}. On the other hand, the cancellative condition \eqref{eq-vdc-cond} is a testing condition against more regular,
+namely Lipschitz functions. To bridge the gap, we follow \cite{zk-polynomial} to observe a variant of \eqref{eq-vdc-cond} that we formulate
+in the following proposition proved in \Cref{liphoel}.
+
+
+Define
+\begin{equation}
+    \tau:=\frac 1a\, .
+\end{equation}
+Define for any open ball $B$ of radius $R$ in $X$ the $L^\infty$-normalized $\tau$-H\"older norm by
+\begin{equation}
+    \label{eq-Holder-norm}
+    \|\varphi\|_{C^\tau(B)} = \sup_{x \in B} |\varphi(x)| + R^\tau \sup_{x,y \in B, x \neq y} \frac{|\varphi(x) - \varphi(y)|}{\rho(x,y)^\tau}\,.
+\end{equation}
+
+
+\inputleannode{holder_van_der_corput}
+
+We further formulate a classical Vitali covering result
+and maximal function estimate that we need throughout several sections.
+This following proposition will typically be applied to the absolute value of a complex valued function and be proved in \Cref{sec-hlm}. By a ball $B$ we mean a set $B(x,r)$ with $x\in X$
+and $r>0$ as defined in \eqref{eq-define-ball}.
+For a finite collection $\mathcal{B}$ of balls in $X$
+and $1\le p< \infty$ define the measurable function $M_{\mathcal{B},p}u$ on $X$ by
+\begin{equation}\label{def-hlm}
+    M_{\mathcal{B},p}u(x):=\left(\sup_{B\in \mathcal{B}} \frac{\mathbf{1}_{B}(x)}{\mu(B)}\int _{B} |u(y)|^p\, d\mu(y)\right)^\frac 1p\, .
+\end{equation}
+Define further $M_{\mathcal{B}}:=M_{\mathcal{B},1}$.
+
+\inputleannode{Finset.measure_biUnion_le_lintegral}
+
+This completes the overview of the proof of \Cref{metric_carleson}.
+
+\subsection{Auxiliary lemmas}
+\label{global-auxiliary-lemmas}
+We close this section by recording some auxiliary lemmas about the objects defined in \Cref{overviewsection}, which will be used in multiple sections to follow.
+
+First, we record an estimate for the metrical entropy numbers of balls in the space $\Mf$ equipped with any of the metrics $d_B$, following from the doubling property \eqref{thirddb}.
+
+\inputleannode{Θ.finite_and_mk_le_of_le_dist}
+% remark(Floris): weakened the condition $d_{B'}(z,z') \ge r$ to $B_{B'}(z, r) \cap B_{B'}(z', r) = \emptyset$
+% This also fixed an off-by-one error of $k$
+
+
+
+The next lemma concerns monotonicity of the metrics $d_{B(c(I), \frac 14 D^{s(I)})}$ with respect to inclusion of cubes $I$ in a grid.
+
+\inputleannode{Grid.dist_mono}
+
+
+
+We also record the following basic estimates for the kernels $K_s$.
+
+\inputleannode{dist_mem_Icc_of_Ks_ne_zero}
+
+
+
+
+\section{Proof of Metric Space Carleson}
+\label{thmfromproplinear}
+
+In this section we prove \Cref{metric_carleson} and \Cref{linearized_metric_carleson}.
+
+Let $(X, \rho, \mu, a)$ be a doubling metric measure space and $\Theta$ a cancellative, compatible collection of functions on $X$. Let $K$ be a one-sided Calderon-Zygmund kernel.
+
+We begin by proving some continuity properties of the integrand in \eqref{def-main-op}.
+
+\inputleannode{continuous_carlesonOperatorIntegrand}
+
+
+
+We now prove Theorem \ref{metric_carleson} using Theorem \ref{linearized_metric_carleson}.
+
+
+
+We continue with the proof of Theorem \ref{linearized_metric_carleson}, via a series of reductions to simpler lemmas.
+
+Let a measurable function $Q$ with finite range be given.
+
+
+
+\inputleannode{R_truncation}
+
+
+
+\inputleannode{S_truncation}
+
+
+
+\inputleannode{linearized_truncation}
+
+
+
+\section{Proof of Finitary Carleson}
+\label{christsection}
+
+To prove Proposition
+\ref{finitary_carleson}, we already fixed in \Cref{overviewsection}
+measurable functions ${\sigma_1},\sigma_2, \tQ$ and Borel sets $F,G$. We have also
+defined $S$ to be the smallest
+integer such that the ranges of
+$\sigma_1$ and $\sigma_2$ are contained in $[-S,S]$ and $F$ and $G$ are contained
+in the ball $B(o, \frac 14 D^S)$.
+
+
+The proof of the next lemma is done in \Cref{subsecdyadic},
+following the construction of dyadic cubes in \cite[\S 3]{christ1990b}.
+
+\inputleannode{grid_existence}
+
+
+
+
+The next lemma, which we prove in \Cref{subsectiles}, should be compared
+with the construction in \cite[Lemma 2.12]{zk-polynomial}.
+
+\inputleannode{tile_existence}
+
+Choose a grid structure $(\mathcal{D}, c,s)$ with \Cref{grid_existence} and a tile structure for this
+grid structure $(\fP,\scI,\fc,\fcc,\pc,\ps)$ with \Cref{tile_existence}.
+Applying \Cref{discrete_carleson}, we obtain a Borel set $G'$ in $X$ with $2\mu(G')\leq \mu(G)$ such that for all Borel functions $f:X\to \C$ with $|f|\le \mathbf{1}_F$
+we have \eqref{disclesssim}.
+
+\inputleannode{tile_sum_operator}
+
+
+We use this to prove \Cref{finitary_carleson}.
+
+
+
+\subsection{Proof of Grid Existence Lemma}
+\label{subsecdyadic}
+
+We begin with the construction of the centers of the dyadic cubes.
+\inputleannode{counting_balls}
+
+
+
+
+For each $-S\le k\le S$, let $Y_k$ be a set of
+maximal cardinality in $X$ such that $Y=Y_k$ satisfies
+the properties \eqref{ybinb} and \eqref{eq-disj-yballs} and such that $o \in Y_k$.
+By the upper bound of \Cref{counting_balls}, such a set exists.
+
+For each $-S\le k\le S$, choose an enumeration of the points in the finite set $Y_k$ and thus a total
+order $<$ on $Y_{k}$.
+
+\inputleannode{cover_big_ball}
+
+
+
+Define the set
+\begin{equation}
+    \mathcal{C}:= \{(y,k): -S\le k\le S, y\in Y_k\}\,
+\end{equation}
+We totally order the set $\mathcal{C}$ lexicographically by setting
+$(y,k)<(y',k')$ if $k< k'$ or both $k=k'$ and $y<y'$.
+In what follows, we define recursively in the sense of this order a function
+\begin{equation}
+    (I_1,I_2,I_3): \mathcal{C}\to \mathcal{P}(X)\times \mathcal{P}(X)\times \mathcal{P}(X)\, .
+\end{equation}
+
+
+Assume the sets ${I}_j(y',k')$ have already been defined for $j=1,2,3$ if $k'<k$ and if $k=k'$ and $y'<y$.
+
+
+
+
+If $k=-S$, define for $j\in \{1,2\}$ the set
+${I}_j(y,k)$ to be $B(y,jD^{-S})$.
+If $-S<k$, define for $j\in \{1,2\}$
+and $y\in Y_k$ the set ${I}_j(y,k)$ to be
+\begin{equation}\label{defineij}
+\bigcup\{I_3(y',k-1):
+y'\in Y_{k-1}\cap B(y,jD^k)\}.
+\end{equation}
+Define for {$-S\leq k\leq S$} and $y\in Y_k$
+\begin{equation}\label{definei3}
+I_3(y,k):={I_1}(y,k)\cup \left[{I_2}(y,k)\setminus \left[X_k\cup \bigcup\{I_3(y',k):y'\in Y_{k}, y'<y\})\right]\right]
+\end{equation}
+with
+\begin{equation}
+      X_{k}:=\bigcup\{I_1(y', k):y'\in Y_{k}\}.
+\end{equation}
+
+
+\inputleannode{I1_prop_1}
+
+
+
+\inputleannode{cover_by_cubes}
+
+
+\inputleannode{dyadic_property}
+
+
+
+For $-S\le k'\le k\le S$ and $y'\in Y_{k'}$, $y\in Y_k$
+write $(y',k'|y,k)$ if $I_3(y',k')\subset I_3(y,k)$ and
+\begin{equation}\label{bdcond}
+    \inf_{x\in X\setminus I_3(y,k)}\rho(y',x)<6D^{k'}\, .
+\end{equation}
+
+\inputleannode{transitive_boundary}
+
+
+
+
+\inputleannode{small_boundary}
+
+
+
+\inputleannode{smaller_boundary}
+
+
+\inputleannode{boundary_measure}
+
+
+Let $\tilde{\mathcal{D}}$ be the set of all $I_3(y,k)$ with $k\in [-S,S]$ and
+$y\in Y_k$. Define
+\begin{equation}
+s(I_3(y,k)):=k
+\end{equation}
+\begin{equation}
+c(I_3(y,k)):=y\,.
+\end{equation}
+We define $\mathcal{D}$ to be the set of all $I \in \tilde{\mathcal{D}}$ such that $I \subset I_3(o, S)$.
+
+
+
+\subsection{Proof of Tile Structure Lemma}
+\label{subsectiles}
+Choose a grid structure $(\mathcal{D}, c, s)$ with \Cref{grid_existence}
+Let $I \in \mathcal{D}$. Suppose that
+\begin{equation}
+    \label{eq-tile-Z}
+    \mathcal{Z} \subset \tQ(X)
+\end{equation}
+is such that for any $\mfa, \mfb \in \mathcal{Z}$ with $\mfa\ne \mfb$ we have
+\begin{equation}
+    \label{eq-tile-disjoint-Z}
+    B_{I^\circ}(\mfa, 0.3) \cap B_{I^\circ}(\mfb, 0.3) \cap \tQ(X) = \emptyset\,.
+\end{equation}
+Since $\tQ(X)$ is finite, there exists a set $\mathcal{Z}$ satisfying both \eqref{eq-tile-Z} and \eqref{eq-tile-disjoint-Z} of maximal cardinality among all such sets. We pick for each $I \in \mathcal{D}$ such a set $\mathcal{Z}(I)$.
+
+\inputleannode{frequency_ball_cover}
+
+
+
+We define
+$$
+    \fP = \{(I, z) \ : \ I \in \mathcal{D}, z \in \mathcal{Z}(I)\}\,,
+$$
+$$\scI((I, z)) = I\qquad \text{and} \qquad \fcc((I, z)) = z.$$ We further set $$\ps(\fp) = s(\scI(\fp)),\qquad \qquad \pc(\fp) = c(\scI(\fp)).$$ Then \eqref{tilecenter}, \eqref{tilescale} hold by definition.
+
+It remains to construct the map $\Omega$, and verify properties \eqref{eq-dis-freq-cover}, \eqref{eq-freq-dyadic} and
+\eqref{eq-freq-comp-ball}. We first construct an auxiliary map $\Omega_1$. For each $I \in \mathcal{D}$, we pick an enumeration of the finite set $\mathcal{Z}(I)$
+$$
+    \mathcal{Z}(I) = \{z_1, \dotsc, z_M\}\,.
+$$
+We define {$\Omega_1:\fP \mapsto \mathcal{P}(\Mf) $ as below}. Set
+$$
+    \Omega_1((I, z_1)) = B_{I^\circ}(z_1, 0.7) \setminus \bigcup_{z \in \mathcal{Z}(I)\setminus \{z_1\}} B_{I^\circ}(z, 0.3)
+$$
+and then define iteratively
+\begin{equation}
+    \label{eq-def-omega1}
+    \Omega_1((I, z_k)) = B_{I^\circ}(z_k, 0.7) \setminus \bigcup_{z \in \mathcal{Z}(I) \setminus \{z_k\}} B_{I^\circ}(z, 0.3) \setminus \bigcup_{i=1}^{k-1} \Omega_1((I, z_i))\,.
+\end{equation}
+\inputleannode{Construction.disjoint_frequency_cubes}
+
+
+
+\inputleannode{Construction.iUnion_ball_subset_iUnion_Ω₁}
+
+
+
+Now we are ready to define the function $\Omega$. We define for all $\fp \in \fP(I_0)$
+\begin{equation}
+    \label{eq-max-omega}
+    \fc(\fp) = \Omega_1(\fp)\,.
+\end{equation}
+For all other cubes $I \in \mathcal{D}$, $I \ne I_0$, there exists, by \eqref{dyadicproperty} and \eqref{subsetmaxcube}, $J \in \mathcal{D}$ with $I \subset J$ and $I \ne J$. On such $I$ we define $\Omega$ by recursion. We can pick an inclusion minimal $J \in \mathcal{D}$ among the finitely many cubes such that $I \subset J$ and $I \ne J$. This $J$ is unique: Suppose that $J'$ is another inclusion minimal cube with $I \subset J'$ and $I \ne J'$. Without loss of generality, we have that $s(J) \le s(J')$. By \eqref{dyadicproperty}, it follows that $J \subset J'$. Since $J'$ is minimal with respect to inclusion, it follows that $J = J'$. Then we define
+\begin{equation}
+    \label{eq-it-omega}
+    \fc(\fp) = \bigcup_{z \in \mathcal{Z}(J) \cap \Omega_1(\fp)} \Omega((J, z)) \cup B_{\fp}(\fcc(\fp),0.2)\,.
+\end{equation}
+
+We now verify that $(\fP,\scI,\fc,\fcc,\pc,\ps)$ forms a tile structure.
+
+
+\section{Proof of discrete Carleson}
+\label{proptopropprop}
+
+
+
+Let a grid structure $(\mathcal{D}, c, s)$ and a tile structure $(\fP, \scI, \fc, \fcc)$ for this grid structure be given. In \Cref{subsectilesorg}, we decompose the set $\fP$ of tiles into subsets. Each subset will be controlled by one of three methods. The guiding principle of the decomposition is to be able to apply the forest estimate of \Cref{forest_operator} to the final subsets defined in \eqref{defc5}. This application is done in \Cref{subsecforest}. The miscellaneous subsets along the construction of the forests will either be thrown into exceptional sets, which are defined and controlled in \Cref{subsetexcset}, or will be controlled by the antichain estimate of \Cref{antichain_operator}, which is done in \Cref{subsecantichain}. \Cref{subsec-lessim-aux} contains some auxiliary lemmas needed for the proofs in Subsections \ref{subsecforest}-\ref{subsecantichain}.
+
+\subsection{Organisation of the tiles}\label{subsectilesorg}
+
+In the following definitions, $k, n$, and
+$j$ will be nonnegative integers.
+Define
+$\mathcal{C}(G,k)$ to be the set of $I\in \mathcal{D}$
+such that there exists a $J\in \mathcal{D}$ with $I\subset J$
+and
+\begin{equation}\label{muhj1}
+   {\mu(G \cap J)} > 2^{-k-1}{\mu(J)}\, ,
+\end{equation}
+but there does not exist a $J\in \mathcal{D}$ with $I\subset J$ and
+\begin{equation}\label{muhj2}
+   {\mu(G \cap J)} > 2^{-k}{\mu(J)}\,.
+\end{equation}
+Let
+\begin{equation}
+    \label{eq-defPk}
+    \fP(k)=\{\fp\in \fP \ : \ \scI(\fp)\in \mathcal{C}(G,k)\}
+\end{equation}
+Define $ {\mathfrak{M}}(k,n)$ to be the set of $\fp \in \fP(k)$ such that
+ \begin{equation}\label{ebardense}
+    \mu({E_1}(\fp)) > 2^{-n} \mu(\scI(\fp))
+ \end{equation}
+and there does not exist $\fp'\in \fP(k)$ with
+$\fp'\neq \fp$ and $\fp\le \fp'$ such that
+ \begin{equation}\label{mnkmax}
+    \mu({E_1}(\fp')) > 2^{-n} \mu(\scI(\fp')).
+ \end{equation}
+Define for a collection $\fP'\subset \fP(k)$
+\begin{equation}
+    \label{eq-densdef}
+   \dens_k' (\fP'):= \sup_{\fp'\in \fP'}\sup_{\lambda \geq 2} \lambda^{-a} \sup_{\fp \in \fP(k): \lambda \fp' \lesssim \lambda \fp}
+    \frac{\mu({E}_2(\lambda, \fp))}{\mu(\scI(\fp))}\,.
+\end{equation}
+Sorting by density, we define
+\begin{equation}
+    \label{def-cnk}
+    \fC(k,n):=\{\fp\in \fP(k) \ : \
+    2^{4a}2^{-n}< \dens_k'(\{\fp\}) \le
+    2^{4a}2^{-n+1}\}\,.
+\end{equation}
+Following Fefferman \cite{fefferman}, we
+define for $\fp \in \fC(k,n)$
+\begin{equation}\label{defbfp}
+     \mathfrak{B}(\fp) := \{ \mathfrak{m} \in \mathfrak{M}(k,n) \ : \ 100 \fp \lesssim \mathfrak{m}\}
+\end{equation}
+and
+\begin{equation}\label{defcnkj}
+       \fC_1(k,n,j) := \{\fp \in \fC(k,n) \ : \ 2^{j} \leq |\mathfrak{B}(\fp)| < 2^{j+1}\}\,.
+\end{equation}
+and
+\begin{equation}\label{defl0nk}
+       \fL_0(k,n) := \{\fp \in \fC(k,n) \ : \ |\mathfrak{B}(\fp)| <1\}\,.
+\end{equation}
+Together with the following removal of minimal layers, the splitting into $\fC_1(k,n,j)$ will lead to a separation of trees.
+Define recursively for $0\le l\le Z(n+1)$
+\begin{equation}
+    \label{eq-L1-def}
+    \fL_1(k,n,j,l)
+\end{equation}
+to be the set of minimal elements with respect to $\le$ in
+\begin{equation}
+    \fC_1(k,n,j)\setminus \bigcup_{0\le l'<l}
+\fL_1(k,n,j,l')\, .
+\end{equation}
+Define
+\begin{equation}
+    \label{eq-C2-def}
+    \fC_2(k,n,j):= \fC_1(k,n,j)\setminus \bigcup_{0\le l'\le Z(n+1)}
+\fL_1(k,n,j,l')\, .
+\end{equation}
+
+The remaining tile organization will be relative to
+prospective tree tops, which we define now.
+Define
+\begin{equation}\label{defunkj}
+     \fU_1(k,n,j)
+\end{equation}
+to be the set of all
+$\fu \in \fC_1(k,n,j)$ such that
+for all $\fp \in \fC_1(k,n,j)$
+with $\scI(\fu)$ strictly contained in
+$\scI(\fp)$ we have $B_{\fu}(\fcc(\fu), 100) \cap B_{\fp}(\fcc(\fp),100) = \emptyset$.
+
+We first remove the pairs that are outside the immediate reach of any of the prospective tree tops.
+Define
+\begin{equation}
+\label{eq-L2-def}
+\fL_2(k,n,j)
+\end{equation}
+to be the set of all $\fp\in \fC_2(k,n,j)$ such that there
+does not exist
+$\fu\in \fU_1(k,n,j)$
+with $\scI(\fp)\neq \scI(\fu)$ and $2\fp\lesssim \fu$.
+Define
+\begin{equation}
+\label{eq-C3-def}
+\fC_3(k,n,j):=\fC_2(k,n,j)
+  \setminus \fL_2(k,n,j)\, .
+\end{equation}
+
+
+We next remove the maximal layers.
+Define recursively for $0 \le l \le Z(n+1)$
+\begin{equation}
+    \label{eq-L3-def}
+    \fL_3(k,n,j,l)
+\end{equation}
+to be the set of all maximal elements with respect to $\le$ in
+\begin{equation}
+    \fC_3(k,n,j) \setminus \bigcup_{0 \le l' < l} \fL_3(k,n,j,l')\,.
+\end{equation}
+Define
+\begin{equation}
+\label{eq-C4-def}
+\fC_4(k,n,j):=\fC_3(k,n,j)
+  \setminus \bigcup_{0 \le l \le Z(n+1)} \fL_3(k,n,j,l)\,.
+\end{equation}
+
+Finally, we remove the boundary pairs relative to the prospective tree tops. Define
+\begin{equation}
+    \label{eq-L-def}
+    \mathcal{L}(\fu)
+\end{equation}
+to be the set of all $I \in \mathcal{D}$ with $I \subset \scI(\fu)$ and $s(I) = \ps(\fu) - Z(n+1) - 1$ and
+\begin{equation}
+    B(c(I), 8 D^{s(I)})\not \subset \scI(\fu)\, .
+\end{equation}
+Define
+\begin{equation}
+    \label{eq-L4-def}
+    \fL_4(k,n,j)
+\end{equation}
+to be the set of all $\fp\in \fC_4(k,n,j)$ such that there exists
+$\fu\in \fU_1(k,n,j)$
+with $\scI(\fp) \subset \bigcup \mathcal{L}(\fu)$, and define
+\begin{equation}\label{defc5}
+\fC_5(k,n,j):=\fC_4(k,n,j)
+  \setminus \fL_4(k,n,j)\, .
+\end{equation}
+
+
+We define three exceptional sets.
+The first exceptional set $G_1$ takes into account the ratio of the measures of $F$ and $G$.
+Define $\fP_{F,G}$ to be the set of all $\fp\in \fP$
+with
+\begin{equation}
+    \dens_2(\{\fp\})> 2^{2a+5}\frac{\mu(F)}{\mu(G)}\,.
+\end{equation}
+Define
+\begin{equation}\label{definegone}
+    G_1:=\bigcup_{\fp\in \fP_{F,G} }\scI(\fp)\, .
+\end{equation}
+For an integer $\lambda\ge 0$, define $A(\lambda,k,n)$ to be the set
+of all $x\in X$ such that
+\begin{equation}
+    \label{eq-Aoverlap-def}
+    % remark(Georges Gonthier): removed 1+
+    \sum_{\fp \in \mathfrak{M}(k,n)}\mathbf{1}_{\scI(\fp)}(x)>\lambda 2^{n+1}
+\end{equation}
+and define
+\begin{equation}\label{definegone2}
+    G_2:=
+\bigcup_{k\ge 0}\bigcup_{k\le n}
+A(2n+6,k,n)\, .
+\end{equation}
+Define
+    \begin{equation}\label{defineg3}
+        G_3 :=
+        \bigcup_{k\ge 0}\, \bigcup_{n \geq k}\,
+        \bigcup_{0\le j\le 2n+3}
+        \bigcup_{\fp \in \fL_4 (k,n,j)}
+        \scI(\fp)\, .
+     \end{equation}
+Define $G'=G_1\cup G_2 \cup G_3$. The following bound of the measure of $G'$ will be proven in \Cref{subsetexcset}.
+\inputleannode{exceptional_set}
+
+In \Cref{subsecforest}, we identify each set $\fC_5(k,n,j)$ outside $G'$ as forest and use Proposition
+\ref{forest_operator} to prove the following lemma.
+
+\inputleannode{forest_union}
+
+In \Cref{subsecantichain}, we decompose
+the complement of the set of tiles in Lemma
+\ref{forest_union} and apply the antichain estimate of
+\Cref{antichain_operator} to prove the following lemma.
+
+\inputleannode{forest_complement}
+
+
+
+\subsection{Proof of the Exceptional Sets Lemma}
+\label{subsetexcset}
+
+
+We prove separate bounds for $G_1$, $G_2$, and $G_3$
+in Lemmas \ref{first_exception},
+\ref{second_exception}, and \ref{third_exception}. Adding up these bounds proves \Cref{exceptional_set}.
+
+The bound for $G_1$ follows from the Vitali covering lemma, \Cref{Finset.measure_biUnion_le_lintegral}.
+
+\inputleannode{first_exception}
+
+
+
+We turn to the bound of $G_2$, which relies on the Dyadic Covering \Cref{dense_cover} and the
+John-Nirenberg \Cref{john_nirenberg} below.
+
+\inputleannode{dense_cover}
+
+
+\inputleannode{pairwiseDisjoint_E1}
+
+
+
+\inputleannode{dyadic_union}
+
+
+
+\inputleannode{john_nirenberg}
+
+
+\inputleannode{second_exception}
+
+
+
+We turn to the set $G_3$.
+
+\inputleannode{top_tiles}
+
+
+
+\inputleannode{tree_count}
+
+
+
+\inputleannode{boundary_exception}
+
+
+\inputleannode{third_exception}
+
+
+
+
+
+\subsection{Auxiliary lemmas}
+\label{subsec-lessim-aux}
+Before proving \Cref{forest_union} and \Cref{forest_complement}, we collect some useful properties of $\lesssim$.
+
+\inputleannode{smul_mono}
+
+
+
+\inputleannode{smul_C2_1_2}
+
+
+
+\inputleannode{wiggle_order_11_10}
+
+
+
+
+
+We call a collection $\mathfrak{A}$ of tiles convex if
+\begin{equation}
+    \label{eq-convexity}
+    \fp \le \fp' \le \fp'' \ \text{and} \ \fp, \fp'' \in \mathfrak{A} \implies \fp' \in \mathfrak{A}\,.
+\end{equation}
+
+\inputleannode{ordConnected_tilesAt}
+
+
+
+\inputleannode{ordConnected_C}
+
+
+
+\inputleannode{ordConnected_C1}
+
+
+
+\inputleannode{ordConnected_C2}
+
+
+
+\inputleannode{ordConnected_C3}
+
+
+
+\inputleannode{ordConnected_C4}
+
+
+
+\inputleannode{ordConnected_C5}
+
+
+
+\inputleannode{dens1_le_dens'}
+
+
+\inputleannode{dens1_le}
+
+
+
+\subsection{Proof of the Forest Union Lemma}
+\label{subsecforest}
+
+Fix $k,n,j\ge 0$.
+Define
+$$
+    \fC_6(k,n,j)
+$$
+to be the set of all tiles $\fp \in \fC_5(k,n,j)$ such that $\scI(\fp) \not\subset G'$. The following chain of lemmas
+establishes that the set $\fC_6(k,n,j)$ can be written as a union of a small number of $n$-forests.
+
+For $\fu\in \fU_1(k,n,j)$, define
+\begin{equation}
+    \label{eq-T1-def}
+    \mathfrak{T}_1(\fu):= \{\fp \in \fC_1(k,n,j) \ : \scI(\fp)\neq \scI(\fu), \ 2\fp \lesssim \fu\}\,.
+\end{equation}
+Define
+\begin{equation}
+    \label{eq-U2-def}
+    \fU_2(k,n,j) := \{ \fu \in \fU_1(k,n,j) \, : \, \mathfrak{T}_1(\fu) \cap \fC_6(k,n,j) \ne \emptyset\}\,.
+\end{equation}
+
+Define a relation $\sim$ on $\fU_2(k,n,j)$
+by setting $\fu\sim \fu'$
+for $\fu,\fu'\in \fU_2(k,n,j)$
+if $\fu=\fu'$ or there exists $\fp$ in $\mathfrak{T}_1(\fu)$
+with $10 \fp\lesssim \fu'$.
+
+\inputleannode{URel.eq}
+
+
+
+
+\inputleannode{equivalenceOn_urel}
+
+
+
+Choose a set $\fU_3(k,n,j)$ of representatives for the equivalence
+classes of $\sim$ in $\fU_2(k,n,j)$.
+Define for each $\fu\in \fU_3(k,n,j)$
+\begin{equation}\label{definesv}
+\fT_2(\fu):=
+   \bigcup_{\fu\sim \fu'}\mathfrak{T}_1(\fu')\cap \fC_6(k,n,j)\, .
+\end{equation}
+
+\inputleannode{C6_forest}
+
+
+\inputleannode{forest_geometry}
+
+
+\inputleannode{forest_convex}
+
+
+
+\inputleannode{forest_separation}
+
+
+
+\inputleannode{forest_inner}
+
+
+
+
+\inputleannode{forest_stacking}
+
+
+We now turn to the proof of \Cref{forest_union}.
+
+
+\subsection{Proof of the Forest Complement Lemma}
+\label{subsecantichain}
+
+Define $\fP_{G \setminus G'}$ to be the set of all $\fp \in \fP$ such that $\mu(\scI(\fp) \cap (G \setminus  G')) > 0$.
+\inputleannode{antichain_decomposition}
+
+
+
+\inputleannode{iUnion_L0'}
+
+
+
+\inputleannode{antichain_L2}
+
+
+
+\inputleannode{antichain_L1}
+
+
+
+We now turn to the proof of \Cref{forest_complement}.
+
+
+\section{Proof of the Antichain Operator Proposition}
+
+\label{antichainboundary}
+
+Let an antichain $\mathfrak{A}$
+and functions $f$, $g$ as in \Cref{antichain_operator} be given.
+We prove \eqref{eq-antiprop}
+in \Cref{sec-TT*-T*T}
+as the geometric mean of two inequalities,
+each involving one of the two densities.
+One of these two inequalities will need a careful estimate formulated in
+\Cref{Tile.correlation_le} of
+the $TT^*$ correlation between two tile operators.
+\Cref{Tile.correlation_le} will be proven in
+\Cref{sec-tile-operator}.
+
+The summation of the contributions of these individual correlations will require a
+geometric \Cref{Antichain.tile_count} counting the relevant tile pairs.
+\Cref{Antichain.tile_count} will be proven in Subsection
+\ref{subsec-geolem}.
+
+
+
+
+
+
+\subsection{The density arguments}\label{sec-TT*-T*T}
+
+We begin with the following crucial disjointedness property of the sets $E(\fp)$ with $\fp \in \mathfrak{A}$.
+\inputleannode{tile_disjointness}
+
+
+
+
+Let $\mathcal{B}$ be the collection of balls
+\begin{equation}
+    B(\pc(\fp), 8D^{\ps(\fp)})
+\end{equation}
+with $\fp\in \mathfrak{A}$ and recall the definition of
+$M_{\mathcal{B}}$ from Definition \ref{def-hlm}.
+
+\inputleannode{maximal_bound_antichain}
+
+
+
+Set
+\begin{equation}
+    \tilde{q}=\frac {2q}{1+q}\,.
+\end{equation}
+Since $1< q\le 2$, we have $1<\tilde{q}<q\le 2$.
+\inputleannode{dens2_antichain}
+
+
+
+\inputleannode{dens1_antichain}
+
+
+The following basic $TT^*$ estimate will be proved in \Cref{sec-tile-operator}.
+\inputleannode{Tile.correlation_le}
+
+The following lemma will be proved in \Cref{subsec-geolem}.
+\inputleannode{Antichain.tile_count}
+
+From these lemmas it is easy to prove \Cref{antichain_operator}.
+
+
+
+\subsection{Proof of the Tile Correlation Lemma}\label{sec-tile-operator}
+
+The next lemma prepares an application of
+\Cref{holder_van_der_corput}.
+\inputleannode{Tile.correlation}
+
+
+The following auxiliary statement about the support of $T_\fp^*g$ will be
+used repeatedly.
+
+\inputleannode{Tile.range_support}
+
+
+
+The next lemma is a geometric estimate for two tiles.
+\inputleannode{Tile.uncertainty}
+
+
+
+We now prove \Cref{Tile.correlation_le}.
+
+
+
+
+
+\subsection{Proof of the Antichain Tile Count Lemma}
+\label{subsec-geolem}
+
+
+\inputleannode{Antichain.tile_reach}
+
+
+
+For $\mfa \in \Mf$ and $N\ge 0$ define
+\begin{equation}\label{eqantidefap}
+    \mathfrak{A}_{\mfa,N}:=\{\fp\in\mathfrak{A}: 2^{N}\le 1+d_{\fp}(\fcc(\fp), \mfa) < 2^{N+1}\} \, .
+\end{equation}
+
+
+\inputleannode{Antichain.stack_density}
+
+
+
+\inputleannode{Antichain.local_antichain_density}
+
+
+\inputleannode{Antichain.global_antichain_density}
+
+
+
+
+
+
+
+We turn to the proof of \Cref{Antichain.tile_count}.
+
+
+
+\section{Proof of the Forest Operator Proposition}
+
+\label{treesection}
+
+\subsection{The pointwise tree estimate}
+Fix a forest $(\fU, \fT)$. The main result of this subsection is \Cref{TileStructure.Forest.pointwise_tree_estimate}, we begin this section with some definitions necessary to state the lemma.
+
+For $\fu \in \fU$ and $x\in X$, we define
+$$
+    \sigma (\fu, x):=\{\ps(\fp):\fp\in \fT(\fu), x\in E(\fp)\}\,.
+$$
+This is a subset of $\mathbb{Z} \cap [-S, S]$, so has a minimum and a maximum. We set
+$$
+    \overline{\sigma} (\fu, x) := \max \sigma(\fT(\fu), x)
+$$
+$$
+    \underline{\sigma} (\fu, x) := \min\sigma(\fT(\fu), x)\,.
+$$
+\inputleannode{TileStructure.Forest.convex_scales}
+
+
+
+For a nonempty collection of tiles $\mathfrak{S} \subset \fP$ we define
+$$
+    \mathcal{J}_0(\mathfrak{S})
+$$
+to be the collection of all dyadic cubes $J \in \mathcal{D}$ such that $s(J) = -S$ or
+$$
+    \scI(\fp) \not\subset B(c(J), 100D^{s(J) + 1})
+$$
+for all $\fp \in \mathfrak{S}$. We define $\mathcal{J}(\mathfrak{S})$ to be the collection of inclusion maximal cubes in $\mathcal{J}_0(\mathfrak{S})$.
+
+We further define
+$$
+    \mathcal{L}_0(\mathfrak{S})
+$$
+to be the collection of dyadic cubes $L \in \mathcal{D}$ such that $s(L) = -S$, or there exists $\fp \in \mathfrak{S}$ with $L \subset \scI(\fp)$ and there exists no $\fp \in \mathfrak{S}$ with $\scI(\fp) \subset L$. We define $\mathcal{L}(\mathfrak{S})$ to be the collection of inclusion maximal cubes in $\mathcal{L}_0(\mathfrak{S})$.
+
+\inputleannode{TileStructure.Forest.biUnion_𝓙}
+
+
+
+For a finite collection of pairwise disjoint cubes $\mathcal{C}$, define the projection operator
+$$
+    P_{\mathcal{C}}f(x) :=\sum_{J\in\mathcal{C}}\mathbf{1}_J(x) \frac{1}{\mu(J)}\int_J f(y) \, \mathrm{d}\mu(y)\,.
+$$
+Given a scale $-S \le s\le S$ and a point $x \in \bigcup_{I\in \mathcal{D}, s(I) = s} I$, there exists a unique cube in $\mathcal{D}$ of scale $s$ containing $x$ by \eqref{coverdyadic}. We denote it by $I_s(x)$. Define for $\mfa \in \Mf$ the nontangential maximal operator
+\begin{equation}
+    \label{eq-TN-def}
+    T_{\mathcal{N}}^\mfa f(x) := \sup_{-S \le s_1 < S} \sup_{x' \in I_{s_1}(x)} \sup_{\substack{s_1 \le s_2 \le S\\ D^{s_2-1} \le R_Q(\mfa, x')}} \left| \sum_{s = s_1}^{s_2} \int K_s(x',y) f(y) \, \mathrm{d}\mu(y) \right|\,.
+\end{equation}
+Define for each $\fu \in \fU$ the auxiliary operator
+$$
+    S_{1,\fu}f(x)
+$$
+\begin{equation}
+    \label{eq-def-S-op}
+    :=\sum_{I\in\mathcal{D}} \mathbf{1}_{I}(x) \sum_{\substack{J\in \mathcal{J}(\fT(\fu))\\
+    J\subset B(c(I), 16 D^{s(I)})\\ s(J) \le s(I)}} \frac{D^{(s(J) - s(I))/a}}{\mu(B(c(I), 16D^{s(I)}))}\int_J |f(y)| \, \mathrm{d}\mu(y)\,.
+\end{equation}
+%changed definition (2x)
+Define also the collection of balls
+$$
+    \mathcal{B} = \{B(c(I), 2^s D^{s(I)+t}) \ : \ I \in \mathcal{D}\,, 0 \le s \le S + 5\,, 0 \le t \le 2S+3\}\,.
+$$
+%changed definition. (2x) We can increase the 3 further, if desired
+
+The following pointwise estimate for operators associated to sets $\fT(\fu)$ is the main result of this subsection.
+
+\inputleannode{TileStructure.Forest.pointwise_tree_estimate}
+
+
+
+\inputleannode{TileStructure.Forest.first_tree_pointwise}
+
+
+
+\inputleannode{TileStructure.Forest.second_tree_pointwise}
+
+
+
+\inputleannode{TileStructure.Forest.third_tree_pointwise}
+
+
+
+\subsection{An auxiliary \texorpdfstring{$L^2$}{L2} tree estimate}
+
+In this subsection we prove the following estimate on $L^2$ for operators associated to trees.
+
+\inputleannode{TileStructure.Forest.tree_projection_estimate}
+
+Below, we deduce \Cref{TileStructure.Forest.tree_projection_estimate} from \Cref{TileStructure.Forest.pointwise_tree_estimate} and the following estimates for the operators in \Cref{TileStructure.Forest.pointwise_tree_estimate}.
+
+\inputleannode{TileStructure.Forest.nontangential_operator_bound}
+
+\inputleannode{TileStructure.Forest.boundary_operator_bound}
+
+
+
+Now we prove the two auxiliary lemmas. We begin with the nontangential maximal operator $T_{\mathcal{N}}$.
+
+
+
+We need the following lemma to prepare the $L^2$-estimate for the auxiliary operators $S_{1, \fu}$.
+
+\inputleannode{TileStructure.Forest.boundary_overlap}
+
+
+
+Now we can bound the operators $S_{1, \fu}$.
+
+
+
+\subsection{The quantitative \texorpdfstring{$L^2$}{L2} tree estimate}
+
+The main result of this subsection is the following quantitative bound for operators associated to trees, with decay in the densities $\dens_1$ and $\dens_2$.
+
+\inputleannode{TileStructure.Forest.density_tree_bound1}
+
+Below, we deduce this lemma from \Cref{TileStructure.Forest.tree_projection_estimate} and the following two estimates controlling the size of support of the operator and its adjoint.
+
+\inputleannode{TileStructure.Forest.local_dens1_tree_bound}
+
+\inputleannode{TileStructure.Forest.local_dens2_tree_bound}
+
+
+
+Now we prove the two auxiliary estimates.
+
+
+
+
+
+\subsection{Almost orthogonality of separated trees}
+
+The main result of this subsection is the almost orthogonality estimate for operators associated to distinct trees in a forest in \Cref{TileStructure.Forest.correlation_separated_trees} below. We will deduce it from Lemmas \ref{TileStructure.Forest.correlation_distant_tree_parts} and \ref{TileStructure.Forest.correlation_near_tree_parts}, which are proven in Subsections \ref{subsec-big-tiles} and \ref{subsec-rest-tiles}, respectively. Before stating it, we introduce some relevant notation.
+
+The adjoint of the operator $T_{\fp}$ defined in \eqref{definetp} is given by
+\begin{equation}
+    \label{definetp*}
+    T_{\fp}^* g(x) = \int_{E(\fp)} \overline{K_{\ps(\fp)}(y,x)} e(-\tQ(y)(x)+ \tQ(y)(y)) g(y) \, \mathrm{d}\mu(y)\,.
+\end{equation}
+
+\inputleannode{TileStructure.Forest.adjoint_tile_support1}
+
+
+
+\inputleannode{TileStructure.Forest.adjoint_tree_estimate}
+
+
+
+We define
+$$
+    S_{2,\fu}g := \left|\sum_{\fp \in \fT(\fu)} T_{\fp}^*g \right| + M_{\mathcal{B},1}g + |g|\,.
+$$
+\inputleannode{TileStructure.Forest.adjoint_tree_control}
+
+
+
+
+Now we are ready to state the main result of this subsection.
+
+\inputleannode{TileStructure.Forest.correlation_separated_trees}
+
+
+
+\inputleannode{TileStructure.Forest.correlation_distant_tree_parts}
+    \inputleannode{TileStructure.Forest.correlation_near_tree_parts}
+
+In the proofs of both lemmas, we will need the following observation.
+
+\inputleannode{TileStructure.Forest.𝔗_subset_𝔖₀}
+
+
+
+To simplify the notation, we will write at various places throughout the proof of Lemmas \ref{TileStructure.Forest.correlation_distant_tree_parts} and \ref{TileStructure.Forest.correlation_near_tree_parts} for a subset $\fC \subset \fP$
+$$
+    T_{\fC} f := \sum_{\fp \in \fC} T_{\fp} f\,, \quad\quad T_{\fC}^* g := \sum_{\fp\in\fC} T_{\fp}^* g\,.
+$$
+
+\subsection{Proof of the Tiles with large separation Lemma}
+    \label{subsec-big-tiles}
+
+\Cref{TileStructure.Forest.correlation_distant_tree_parts} follows from the van der Corput estimate in \Cref{holder_van_der_corput}. We apply this proposition in \Cref{subsubsec-van-der-corput}. To prepare this application, we first, in \Cref{subsubsec-pao}, construct a suitable partition of unity, and show then, in \Cref{subsubsec-holder-estimates} the H\"older estimates needed to apply \Cref{holder_van_der_corput}.
+
+\subsubsection{A partition of unity}
+\label{subsubsec-pao}
+    Define
+    $$
+        \mathcal{J}' = \{J \in \mathcal{J}(\mathfrak{S}) \ : \ J \subset \scI(\fu_1)\}\,.
+    $$
+
+    \inputleannode{TileStructure.Forest.union_𝓙₅}
+
+
+
+    For cubes $J \in \mathcal{D}$, denote
+    \begin{equation}
+        \label{def-BJ}
+        B(J) := B(c(J), 8D^{s(J)}).
+    \end{equation}
+    The main result of this subsubsection is the following.
+
+    \inputleannode{TileStructure.Forest.sum_χ}
+
+    In the proof, we will use the following auxiliary lemma.
+
+    \inputleannode{TileStructure.Forest.moderate_scale_change}
+
+
+
+
+
+
+\subsubsection{H\"older estimates for adjoint tree operators}
+\label{subsubsec-holder-estimates}
+    Let $g_1, g_2:X \to \mathbb{C}$ be bounded with bounded support.
+    Define for $J \in \mathcal{J}'$
+    \begin{equation}
+        \label{def-hj}
+        h_J(y) := \chi_J(y)\cdot(e(\fcc(\fu_1)(y)) T_{\fT(\fu_1)}^* g_1(y)) \cdot \overline{(e(\fcc(\fu_2)(y)) T_{\fT(\fu_2) \cap \mathfrak{S}}^* g_2(y))}\,.
+    \end{equation}
+    The main result of this subsubsection is the following $\tau$-H\"older estimate for $h_J$, where $\tau = 1/a$.
+
+    \inputleannode{TileStructure.Forest.holder_correlation_tree}
+
+    We will prove this lemma at the end of this section, after establishing several auxiliary results.
+
+    We begin with the following H\"older continuity estimate for adjoints of operators associated to tiles.
+    \inputleannode{TileStructure.Forest.holder_correlation_tile}
+
+
+
+    Recall that
+    \begin{equation*}
+        B(J) := B(c(J), 8D^{s(J)}).
+    \end{equation*}
+    We also denote
+    \begin{equation*}
+     B'(J) := B(c(J), 16D^{s(J)}),
+    \end{equation*}
+    \begin{equation*}
+     B^\circ{}(J) := B(c(J), \frac{1}{8}D^{s(J)})\, .
+    \end{equation*}
+
+
+    \inputleannode{TileStructure.Forest.limited_scale_impact}
+
+
+
+
+    \inputleannode{TileStructure.Forest.local_tree_control}
+
+
+
+    \inputleannode{TileStructure.Forest.scales_impacting_interval}
+
+
+
+    \inputleannode{TileStructure.Forest.global_tree_control1_edist_left}
+
+
+
+    \inputleannode{TileStructure.Forest.global_tree_control2}
+
+
+
+
+
+\subsubsection{The van der Corput estimate}
+\label{subsubsec-van-der-corput}
+    \inputleannode{TileStructure.Forest.lower_oscillation_bound}
+
+
+
+    Now we are ready to prove \Cref{TileStructure.Forest.correlation_distant_tree_parts}.
+
+
+\subsection{Proof of The Remaining Tiles Lemma}
+    \label{subsec-rest-tiles}
+    We define
+    $$
+        \mathcal{J}' = \{J \in \mathcal{J}(\fT(\fu_1)) \, : \, J \subset \scI(\fu_1)\}\,,
+    $$
+    note that this is different from the $\mathcal{J}'$ defined in the previous subsection.
+    \inputleannode{TileStructure.Forest.union_𝓙₆}
+
+
+
+    \Cref{TileStructure.Forest.correlation_near_tree_parts} follows from the following key estimate.
+
+    \inputleannode{TileStructure.Forest.bound_for_tree_projection}
+
+    We prove this lemma below. First, we deduce \Cref{TileStructure.Forest.correlation_near_tree_parts}.
+
+
+
+    We need two more auxiliary lemmas before we prove \Cref{TileStructure.Forest.bound_for_tree_projection}.
+
+    \inputleannode{TileStructure.Forest.thin_scale_impact}
+
+
+
+    \inputleannode{TileStructure.Forest.square_function_count}
+
+
+
+
+
+
+
+
+\subsection{Forests}
+In this subsection, we complete the proof of \Cref{forest_operator} from the results of the previous subsections.
+
+Define an $n$-row to be an $n$-forest $(\fU, \fT)$, i.e. satisfying conditions \eqref{forest1} - \eqref{forest6}, such that in addition the sets $\scI(\fu), \fu \in \fU$ are pairwise disjoint.
+
+\inputleannode{TileStructure.Forest.rowDecomp}
+
+
+
+We pick a decomposition of the forest $(\fU, \fT)$ into $2^n$ $n$-rows
+\begin{equation*}
+(\fU_j, \fT_j) := (\fU_j, \fT|_{\fU_j})
+\end{equation*}
+as in \Cref{TileStructure.Forest.rowDecomp}. To save some space in the proofs of the remaining lemmas in this section we will write
+    $$
+        T_{\fC} = \sum_{\fp \in \fC} T_{\fp},\qquad T_{\fC}^* = \sum_{\fp \in \fC} T_{\fp}^*,
+    $$
+    $$
+        T_{\mathfrak{R}_j} = \sum_{\fu \in \fU_j} T_{\fT(\fu)},\qquad T_{\mathfrak{R}_j}^* = \sum_{\fu \in \fU_j} T_{\fT(\fu)}^*.
+    $$
+\inputleannode{TileStructure.Forest.row_bound}
+
+
+
+Because all involved operators are linear, the inequality
+\eqref{eq-row-bound-2} is also true for uniformly bounded functions $g$
+supported on $G$. This generalization will be needed for
+\Cref{forest_operator}.
+
+\inputleannode{TileStructure.Forest.row_correlation}
+
+
+
+Define for $1 \le j \le 2^n$
+$$
+    E_j := \bigcup_{\fu \in \fU_j} \bigcup_{\fp \in \fT(\fu)} E(\fp)\,.
+$$
+
+\inputleannode{TileStructure.Forest.pairwiseDisjoint_rowSupport}
+
+
+
+Now we prove \Cref{forest_operator}.
+
+
+
+\section{Proof of the H\"older cancellative condition}
+\label{liphoel}
+
+We need the following auxiliary lemma.
+Recall that $\tau = 1/a$.
+
+\inputleannode{support_holderApprox_subset}
+
+
+
+
+
+We turn to the proof of \Cref{holder_van_der_corput}.
+
+
+\section{Proof of Vitali covering and Hardy--Littlewood}
+\label{sec-hlm}
+
+
+We begin with a classical representation of the Lebesgue norm.
+\inputleannode{MeasureTheory.eLpNorm_pow_eq_distribution}
+
+
+The following lemma will be used to define $M$ in the proof of \Cref{Finset.measure_biUnion_le_lintegral}.
+\inputleannode{covering_separable_space}
+
+
+
+We turn to the proof of \Cref{Finset.measure_biUnion_le_lintegral}.
+
+
+\section{Two-sided Metric Space Carleson}
+
+We prove a variant of \Cref{metric_carleson} for a two-sided Calder\'on--Zygmund kernel on the doubling metric measure space $(X,\rho,\mu,a)$, i.e. a one-sided Calder\'on--Zygmund kernel $K$ which additionally satisfies for all $x,x',y\in X$ with $x\neq y$ and $2\rho(x,x') \leq \rho(x,y)$,
+\begin{equation}
+    \label{eqkernel-x-smooth}
+    |K(x,y) - K(x',y)| \leq \left(\frac{\rho(x,x')}{\rho(x,y)}\right)^{\frac{1}{a}}\frac{2^{a^3}}{V(x,y)}.
+\end{equation}
+%fixme: Should it be V(y,x) rather?
+By the additional regularity, we can weaken the assumption \eqref{nontanbound} to a family of operators that is easier to work with in applications.
+Namely, for $r > 0$, $x\in X$, and a bounded, measurable function $f:X\to\C$ supported on a set of finite measure, we define
+\begin{equation}
+\label{def-T-r}
+T_r f(x):= \int_{r\le\rho(x,y)} K(x,y) f(y) \, d\mu(y) = \int_{X\setminus B(x,r)} K(x,y) f(y) \, d\mu(y).
+\end{equation}
+\inputleannode{two_sided_metric_carleson}
+
+For the remainder of this chapter, fix an integer $a\ge 4$, a doubling metric measure space $(X,\rho,\mu,a)$ and a two-sided Calder\'on--Zygmund kernel $K$ as in \Cref{two_sided_metric_carleson}.
+
+The following lemma is proved in \Cref{subsec-cotlar}.
+\inputleannode{nontangential_from_simple}
+
+
+
+The proof of \Cref{nontangential_from_simple} relies on the following auxiliary lemma which is proved in \Cref{subsec-CZD}.
+\inputleannode{czOperator_weak_1_1}
+Throughout \Cref{subsec-CZD} and \Cref{subsec-cotlar}, for any measurable bounded function $w: X \to \C$, let $Mw: X \to [0, \infty)$ denote the corresponding Hardy--Littlewood maximal function defined in \Cref{Finset.measure_biUnion_le_lintegral}.
+Note: In some cases, a stronger formalization of \Cref{Finset.measure_biUnion_le_lintegral} is used, where $w$ is not necessarily bounded. In particular it is applied to $T_rg$.
+Apart from \Cref{Finset.measure_biUnion_le_lintegral}, \Cref{subsec-CZD} and \Cref{subsec-cotlar} have no dependencies in the previous chapters.
+
+
+
+\subsection{Proof of Cotlar's Inequality}
+\label{subsec-cotlar}
+
+\inputleannode{geometric_series_estimate}
+
+
+\inputleannode{estimate_x_shift}
+
+
+\inputleannode{cotlar_control}
+
+
+
+\inputleannode{cotlar_set_F₁}
+
+
+
+\inputleannode{cotlar_estimate}
+
+
+
+
+For the next Lemma, we define the following operation.
+\begin{equation}\label{eq-simple--nontangential}
+    T_{*}^r g(x):=\sup_{r<R}\sup_{x'\in B(x,R)} |T_R(g)(x')| \, .
+\end{equation}
+
+\inputleannode{simple_nontangential_operator}
+
+%fixme: Change location of next argument?
+In order to pass from the one-sided truncation in $T_r$ and $T_{*}^r$ to the two-sided truncation in $T_*$, we show in the following two lemmas that the integral in \eqref{def-tang-unm-op} can be exchanged for an integral over the difference of two balls.
+\inputleannode{small_annulus_right}
+
+
+\inputleannode{nontangential_operator_boundary}
+
+
+
+
+
+
+
+
+\subsection{Calder\'on-Zygmund Decomposition}
+\label{subsec-CZD}
+Calder\'on-Zygmund decomposition is a tool to extend $L^2$ bounds to $L^p$ bounds with $p<2$ or to the so-called weak $(1, 1)$ type endpoint bound.
+It is classical and can be found in \cite{stein-book}.
+
+The following lemma is Theorem 3.1(b) in \cite{stein-book}. The proof uses \Cref{Finset.measure_biUnion_le_lintegral}.
+%fixme: Incorporate this into Hardy-Littlewood?
+\inputleannode{maximal_theorem}
+
+
+\inputleannode{lebesgue_differentiation}
+
+
+% This is in Mathlib.
+\inputleannode{Pairwise.countable_of_isOpen_disjoint}
+
+
+The following lemma corresponds to Lemma 3.2 in \cite{stein-book} with additional proof of the bounded intersection property taken from the proof of Proposition 7.1.
+It uses the following notation, which will be used throughout the rest of this section: whenever $B_j$ denotes a ball $B_j = B(x_j, r_j)$, define
+\begin{equation*}
+    B_{n,j} = B(x_j, nr_j).
+\end{equation*}
+\inputleannode{ball_covering}
+
+
+Most of the next lemma and its proof is taken from Theorem 4.2 in \cite{stein-book}.
+\inputleannode{encard_czBall3_le}
+
+
+
+We use \Cref{encard_czBall3_le} to prove \Cref{czOperator_weak_1_1}. For the remainder of this section, let $f:X\to\C$, $r>0$ and $\alpha>0$ as in \Cref{czOperator_weak_1_1}.
+We define the constant
+\begin{equation} \label{weak-1-1-proof-cz-const}
+    c:= 2^{-a^3-12a-4}
+\end{equation}
+and $\alpha' := c\alpha$. If $\alpha'\le\frac{1}{\mu(X)}\int |f|\,d\mu$, then we directly have
+\begin{equation*}
+    \mu\left(\{x\in X: |T_r f(x)|>\alpha\}\right)\le \mu(X) \le \frac{1}{\alpha'} \int |f(y)|\, d\mu(y)
+    \le \frac{2^{a^3 + 19a}}{\alpha} \int |f(y)|\, d\mu(y),
+\end{equation*}
+which proves \eqref{eq-weak-1-1}.
+So assume from now on that $\alpha'>\frac{1}{\mu(X)}\int |f|\,d\mu$.
+Using \Cref{encard_czBall3_le} for $f$ and $\alpha'$, we obtain the decomposition
+\begin{equation*}
+    f=g+b=g+\sum_j b_j
+\end{equation*}
+such that the properties \eqref{eq-gb-dec}-\eqref{eq-b-L1} are satisfied (with $\alpha'$ replacing $\alpha$). Let
+\begin{equation}
+    \label{eq-Ij-cj}
+    B_{3,j}=B(x_j, 3r_j)
+\end{equation}
+as in the lemma. Then
+\begin{equation}
+    \label{eq-Ij*}
+    B_{6,j}=B(x_j, 6r_j)
+\end{equation}
+is a ball with the same center as $B_{3,j}$ but with
+\begin{equation}
+    \label{eq-Ij*-dim}
+    \mu(B_{6,j})\le 2^{a} \mu(B_{3,j}).
+\end{equation}
+Let
+\begin{equation}
+    \label{eq-omega}
+    \Omega:=\bigcup_j B_{6,j}.
+\end{equation}
+We deal with $T_rg$ and $T_rb$ separately in the following lemmas.
+
+\inputleannode{estimate_good}
+
+
+
+\inputleannode{estimate_bad_partial}
+
+
+
+\inputleannode{distribution_czOperatorBound}
+
+
+
+
+\inputleannode{estimate_bad}
+
+
+
+
+
+
+\section{Proof of The Classical Carleson Theorem}
+
+The convergence of partial Fourier sums is proved in
+\Cref{10classical} in two steps. In the first step,
+we establish convergence on a suitable dense subclass of functions. We choose smooth functions as subclass, the convergence is stated in \Cref{fourierConv_ofTwiceDifferentiable} and proved in \Cref{10smooth}.
+In the second step, one controls the relevant error of approximating a general function by a function in
+the subclass. This is stated in \Cref{control_approximation_effect} and proved
+in \Cref{10difference}.
+The proof relies on a bound on the real Carleson maximal operator stated in \Cref{rcarleson} and proved in \Cref{10carleson}, which involves showing that the real line fits into the setting of \Cref{overviewsection}.
+This latter proof refers to the two-sided variant of the Carleson \Cref{two_sided_metric_carleson}. Two assumptions in \Cref{metric_carleson} require more work. The boundedness of the operator $T_r$ defined in \eqref{def-T-r} is established in \ref{Hilbert_strong_2_2}. This lemma is proved in \Cref{10hilbert}.
+The cancellative property is verified by \Cref{van_der_Corput}, which is proved in \Cref{10vandercorput}.
+Several further auxiliary lemmas are stated and proved in \Cref{10classical}, the proof of one of these auxiliary lemmas, \Cref{spectral_projection_bound}, is done in \Cref{10projection}.
+
+All subsections past \Cref{10classical} are mutually independent.
+
+
+
+\subsection{The classical Carleson theorem}
+\label{10classical}
+
+Let a uniformly continuous $2\pi$-periodic function $f:\R\to \mathbb{C}$ and $\epsilon>0$ be given.
+Let
+\begin{equation}
+    C_{a,q} := \frac{2^{474a^3}}{(q-1)^6}
+\end{equation}
+denote the constant from \Cref{two_sided_metric_carleson}.
+Define
+\begin{equation}
+    \epsilon' := \frac {\epsilon} {4 C_\epsilon} \,,
+\end{equation}
+where
+%fixme: replace by C(\epsilon) ?
+\begin{equation*}
+    C_\epsilon = \left(\frac{8}{\pi\epsilon}\right)^\frac{1}{2} C_{4,2} + \pi \,.
+\end{equation*}
+Since $f$ is continuous and periodic, $f$ is uniformly continuous.
+Thus, there is a $0<\delta<\pi$
+such that for all $x,x' \in \R$ with $|x-x'|\le \delta$
+we have
+\begin{equation}\label{uniconbound}
+|f(x)-f(x')|\le \epsilon' \, .
+\end{equation}
+Define
+\begin{equation}\label{def-fzero}
+f_0:=f \ast \phi_\delta,
+\end{equation}
+where $\phi_\delta$ is a nonnegative smooth bump function with $\supp (\phi_\delta) \subset (-\delta, \delta)$ and $\int _\R \phi_\delta (x) \, dx = 1$.
+
+\inputleannode{close_smooth_approx_periodic}
+
+
+
+We prove in \Cref{10smooth}:
+\inputleannode{fourierConv_ofTwiceDifferentiable}
+
+We prove in \Cref{10difference}:
+\inputleannode{control_approximation_effect}
+
+We are now ready to prove \Cref{classical_carleson}. We first prove a version with explicit exceptional sets.
+
+\inputleannode{exceptional_set_carleson}
+
+
+Now we turn to the proof of the statement of Carleson theorem given in the introduction.
+
+
+Let $\kappa:\R\to \C$ be the function defined by
+$\kappa(0)=0$ and for $0<|x|<1$
+\begin{equation}\label{eq-hilker}
+\kappa(x)=\frac { 1-|x|}{1-e^{ix}}\,
+\end{equation}
+and for $|x|\ge 1$,
+\begin{equation}\label{eq-hilker1}
+\kappa(x)=0\, .
+\end{equation}
+Note that this function is continuous at every point $x$ with $|x|>0$.
+
+The proof of \Cref{control_approximation_effect} will
+use the following \Cref{rcarleson}, which itself is proven
+ in \Cref{10carleson} as an application of
+ \Cref{metric_carleson}.
+\inputleannode{rcarleson}
+
+
+One of the main assumptions of \Cref{two_sided_metric_carleson}, concerning the operator $T_r$ defined in \eqref{def-T-r}, is verified by the following lemma, which is proved in \Cref{10hilbert}.
+\inputleannode{Hilbert_strong_2_2}
+
+The next lemma will be used to verify that the collection $\Mf$ of modulation functions in our application of \Cref{metric_carleson} satisfies the condition \eqref{eq-vdc-cond}.
+It is proved in \Cref{10vandercorput}.
+
+\inputleannode{van_der_Corput}
+
+
+We close this section with five lemmas that are used
+across the following subsections.
+
+\inputleannode{dirichletKernel_eq}
+
+
+
+
+\inputleannode{lower_secant_bound'}
+
+
+The following lemma will be proved in \Cref{10projection}.
+
+\inputleannode{spectral_projection_bound}
+
+\inputleannode{Hilbert_kernel_bound}
+
+
+\inputleannode{Hilbert_kernel_regularity}
+
+
+
+
+
+
+
+
+\subsection{Smooth functions.}
+\label{10smooth}
+\inputleannode{fourierCoeffOn_of_hasDerivAt}
+
+
+\inputleannode{hasSum_fourier_series_of_summable}
+
+
+
+
+
+
+
+
+
+\subsection{The truncated Hilbert transform}
+\label{10hilbert}
+
+
+
+
+
+Let $M_n$ be the modulation operator
+acting on measurable $2\pi$-periodic functions
+defined by
+\begin{equation}
+    M_ng(x)=g(x) e^{inx}\, .
+\end{equation}
+Define the approximate Hilbert transform by
+\begin{equation}
+    L_N g=\frac 1N\sum_{n=0}^{N-1}
+       M_{n+N} S_{N+n}M_{-N-n}g\, .
+\end{equation}
+
+
+\inputleannode{modulated_averaged_projection}
+
+
+\inputleannode{Function.Periodic.intervalIntegral_add_eq}
+
+
+
+
+\inputleannode{young_convolution}
+
+
+For $0<r<1$, Define the kernel $k_r$ to be the $2\pi$-periodic function
+\begin{equation}
+    k_r(x):=\min \left(r^{-1}, 1+\frac r{|1-e^{ix}|^2}\right)\, ,
+\end{equation}
+where the minimum is understood to be $r^{-1}$ in case $1=e^{ix}$.
+\inputleannode{integrable_bump_convolution}
+
+
+
+\inputleannode{continuous_dirichletApprox}
+
+
+
+
+
+We now prove \Cref{Hilbert_strong_2_2}.
+
+
+
+
+
+
+
+
+
+\subsection{The proof of the van der Corput Lemma}
+\label{10vandercorput}
+
+
+
+
+\subsection{Partial sums as orthogonal projections}
+\label{10projection}
+
+This subsection proves \Cref{spectral_projection_bound}
+
+
+
+\subsection{The error bound}
+\label{10difference}
+
+\inputleannode{Dirichlet_Hilbert_diff}
+
+
+
+\inputleannode{partialFourierSum_bound}
+
+
+
+%fixme: Put this somewhere else?
+\inputleannode{carlesonOperatorReal_measurable}
+
+
+
+
+
+
+%fixme: It seems unnecessary to have the extra lemma with this proof that is really only application.
+
+
+
+
+
+\subsection{Carleson on the real line}
+\label{10carleson}
+
+We prove \Cref{rcarleson}.
+
+Consider the standard distance function
+\begin{equation}
+    \rho(x,y)=|x-y|
+\end{equation}
+on the real line $\R$.
+\inputleannode{instProperSpaceReal}
+
+\inputleannode{Real.ball_eq_Ioo}
+
+We consider the Lebesgue measure $\mu$ on $\R$.
+\inputleannode{instIsAddHaarMeasureVolume}
+
+\inputleannode{Real.volume_ball}
+
+
+\inputleannode{MeasureTheory.InnerProductSpace.IsDoubling}
+
+
+
+The preceding four lemmas show that $(\R, \rho, \mu, 4)$ is a doubling metric measure space. Indeed, we even show
+that $(\R, \rho, \mu, 1)$ is a doubling metric measure space, but we may relax the estimate in \Cref{MeasureTheory.InnerProductSpace.IsDoubling} to conclude that $(\R, \rho, \mu, 4)$
+is a doubling metric measure space.
+
+
+For each $n\in \mathbb{Z}$ define
+$\mfa_n:\R\to \R$ by
+\begin{equation}
+    \mfa_n(x)=nx\, .
+\end{equation}
+
+
+Let $\Mf$ be the collection $\{\mfa_n, n\in \mathbb{Z}\}$.
+Note that for every $n\in \mathbb{Z}$ we have $\mfa_n(0)=0$.
+Define
+\begin{equation}
+    \label{eqcarl4}
+    d_{B(x,R)}(\mfa_n, \mfa_m) := 2R|n-m|\,.
+\end{equation}
+
+\inputleannode{instFunctionDistancesReal}
+
+
+
+\inputleannode{oscillation_control}
+
+
+
+\inputleannode{frequency_monotone}
+
+
+
+\inputleannode{frequency_ball_doubling}
+
+
+
+\inputleannode{frequency_ball_growth}
+
+
+
+\inputleannode{integer_ball_cover}
+
+
+
+
+\inputleannode{real_van_der_Corput}
+
+
+
+
+
+\printbibliography
