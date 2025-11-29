@@ -1,3 +1,4 @@
+import Architect
 import Carleson.Classical.Basic
 import Mathlib.Analysis.Calculus.BumpFunction.Convolution
 import Mathlib.Analysis.PSeries
@@ -12,6 +13,18 @@ local notation "S_" => partialFourierSum
 
 open scoped ContDiff
 
+@[blueprint
+  "smooth-approximation"
+  (title := "smooth approximation")
+  (statement := /-- The function $f_0$ is $2\pi$-periodic.
+    The function $f_0$ is smooth (and therefore measurable).
+    The function $f_0$ satisfies for all $x\in \R$:
+    \begin{equation}\label{eq-ffzero}
+    |f(x)-f_0(x)|\le \epsilon' \, ,
+    \end{equation} -/)
+  (proof := /-- Periodicity follows directly from the definitions. The other properties are part of
+    the Lean library. -/)
+  (latexEnv := "lemma")]
 lemma close_smooth_approx_periodic {f : ℝ → ℂ} (unicontf : UniformContinuous f)
   (periodicf : f.Periodic (2 * π)) {ε : ℝ} (εpos : ε > 0) :
     ∃ (f₀ : ℝ → ℂ), ContDiff ℝ ∞ f₀ ∧ f₀.Periodic (2 * π) ∧
@@ -174,6 +187,53 @@ lemma int_sum_nat {β : Type*} [AddCommGroup β] [TopologicalSpace β] [Continuo
     · norm_num
       linarith
 
+attribute [blueprint
+  "fourier-coeff-derivative"
+  (statement := /-- Let $f:\R \to \C$ be $2\pi$-periodic and continuously differentiable, and let $n
+    \in \Z \setminus \{0\}$. Then
+    \begin{equation}
+        \widehat{f}_n = \frac{1}{i n} \widehat{f'}_n.
+    \end{equation} -/)
+  (proof := /-- This is part of the Lean library. -/)
+  (latexEnv := "lemma")]
+  fourierCoeffOn_of_hasDerivAt
+
+attribute [blueprint
+  "convergence-of-coeffs-summable"
+  (statement := /-- Let $f:\R \to \C$ such that
+    \begin{equation}
+        \sum_{n\in \Z} |\widehat{f}_n| < \infty.
+    \end{equation}
+    Then
+    \begin{equation}
+        \sup_{x\in [0,2\pi]} |f(x) - S_Nf(x)| \rightarrow 0
+    \end{equation}
+    as $N \rightarrow \infty$. -/)
+  (proof := /-- This is part of the Lean library. -/)
+  (latexEnv := "lemma")]
+  hasSum_fourier_series_of_summable
+
+@[blueprint
+  "convergence-for-smooth"
+  (title := "convergence for smooth")
+  (statement := /-- % note: we don't formulate this result in Lean separately from
+    \ref{convergence-for-twice-contdiff}
+        There exists some $N_0 \in \N$ such that for all $N>N_0$ and $x\in [0,2\pi]$ we have
+        \begin{equation}
+            |S_N f_0 (x)- f_0(x)|\le \frac \epsilon 4\, .
+        \end{equation} -/)
+  (proof := /-- By \Cref{convergence-of-coeffs-summable}, it suffices to show that the Fourier
+    coefficients $\widehat{f}_n$ are summable.
+    Applying \Cref{fourier-coeff-derivative} twice and using the fact that $f''$ is continuous and
+    thus bounded on $[0,2\pi]$ , we compute
+    \begin{equation*}
+        \sum_{n\in \Z} |\widehat{f}_n| = |\widehat{f}_0| + \sum_{n\in \Z \setminus \{0\}} \frac
+        {1}{n^2} |\widehat{f''}_n|
+        \le |\widehat{f}_0| + \left(\sup_{x\in [0,2\pi]} |f(x)| \right) \cdot \sum_{n\in \Z
+        \setminus \{0\}} \frac {1}{n^2}
+        < \infty.
+    \end{equation*} -/)
+  (latexEnv := "lemma")]
 lemma fourierConv_ofTwiceDifferentiable {f : ℝ → ℂ} (periodicf : f.Periodic (2 * π))
     (fdiff : ContDiff ℝ 2 f) {ε : ℝ} (εpos : ε > 0) :
     ∃ N₀, ∀ N > N₀, ∀ x ∈ Set.Icc 0 (2 * π), ‖f x - S_ N f x‖ ≤ ε := by

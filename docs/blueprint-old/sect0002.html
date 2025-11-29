@@ -1,0 +1,2863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  MathJax = { 
+    tex: {
+		    inlineMath: [['$','$'], ['\\(','\\)']]
+	} }
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<meta name="generator" content="plasTeX" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>A blueprint for the formalization of Carleson’s theorem on convergence of Fourier series: Two-sided Metric Space Carleson</title>
+<link rel="next" href="sect0003.html" title="Proof of The Classical Carleson Theorem" />
+<link rel="prev" href="sec-hlm.html" title="Proof of Vitali covering and Hardy–Littlewood" />
+<link rel="up" href="index.html" title="A blueprint for the formalization of Carleson’s theorem on convergence of Fourier series" />
+<link rel="stylesheet" href="styles/theme-white.css" />
+<link rel="stylesheet" href="styles/amsthm.css" />
+<link rel="stylesheet" href="styles/showmore.css" />
+<link rel="stylesheet" href="styles/blueprint.css" />
+<link rel="stylesheet" href="styles/extra_styles.css" />
+</head>
+
+<body>
+<header>
+<svg  id="toc-toggle" class="icon icon-list-numbered "><use xlink:href="symbol-defs.svg#icon-list-numbered"></use></svg>
+<h1 id="doc_title"><a href="index.html">A blueprint for the formalization of Carleson’s theorem on convergence of Fourier series</a></h1>
+</header>
+
+<div class="wrapper">
+<nav class="toc">
+<ul class="sub-toc-0">
+<li class="">
+  <a href="sect0001.html"><span class="toc_ref">1</span> <span class="toc_entry">Introduction</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0001.html#a0000000006"><span class="toc_ref">1.1</span> <span class="toc_entry">Statement of the metric space Carleson theorems</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="overviewsection.html"><span class="toc_ref">2</span> <span class="toc_entry">Proof of Metric Space Carleson, overview</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="overviewsection.html#global-auxiliary-lemmas"><span class="toc_ref">2.1</span> <span class="toc_entry">Auxiliary lemmas</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="thmfromproplinear.html"><span class="toc_ref">3</span> <span class="toc_entry">Proof of Metric Space Carleson</span></a>
+ </li>
+<li class="">
+  <a href="christsection.html"><span class="toc_ref">4</span> <span class="toc_entry">Proof of Finitary Carleson</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="christsection.html#subsecdyadic"><span class="toc_ref">4.1</span> <span class="toc_entry">Proof of Grid Existence Lemma</span></a>
+ </li>
+<li class="">
+  <a href="christsection.html#subsectiles"><span class="toc_ref">4.2</span> <span class="toc_entry">Proof of Tile Structure Lemma</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="proptopropprop.html"><span class="toc_ref">5</span> <span class="toc_entry">Proof of discrete Carleson</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="proptopropprop.html#subsectilesorg"><span class="toc_ref">5.1</span> <span class="toc_entry">Organisation of the tiles</span></a>
+ </li>
+<li class="">
+  <a href="proptopropprop.html#subsetexcset"><span class="toc_ref">5.2</span> <span class="toc_entry">Proof of the Exceptional Sets Lemma</span></a>
+ </li>
+<li class="">
+  <a href="proptopropprop.html#subsec-lessim-aux"><span class="toc_ref">5.3</span> <span class="toc_entry">Auxiliary lemmas</span></a>
+ </li>
+<li class="">
+  <a href="proptopropprop.html#subsecforest"><span class="toc_ref">5.4</span> <span class="toc_entry">Proof of the Forest Union Lemma</span></a>
+ </li>
+<li class="">
+  <a href="proptopropprop.html#subsecantichain"><span class="toc_ref">5.5</span> <span class="toc_entry">Proof of the Forest Complement Lemma</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="antichainboundary.html"><span class="toc_ref">6</span> <span class="toc_entry">Proof of the Antichain Operator Proposition</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="antichainboundary.html#sec-TT*-T*T"><span class="toc_ref">6.1</span> <span class="toc_entry">The density arguments</span></a>
+ </li>
+<li class="">
+  <a href="antichainboundary.html#sec-tile-operator"><span class="toc_ref">6.2</span> <span class="toc_entry">Proof of the Tile Correlation Lemma</span></a>
+ </li>
+<li class="">
+  <a href="antichainboundary.html#subsec-geolem"><span class="toc_ref">6.3</span> <span class="toc_entry">Proof of the Antichain Tile Count Lemma</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="treesection.html"><span class="toc_ref">7</span> <span class="toc_entry">Proof of the Forest Operator Proposition</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="treesection.html#a0000000014"><span class="toc_ref">7.1</span> <span class="toc_entry">The pointwise tree estimate</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#a0000000015"><span class="toc_ref">7.2</span> <span class="toc_entry">An auxiliary \(L^2\) tree estimate</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#a0000000016"><span class="toc_ref">7.3</span> <span class="toc_entry">The quantitative \(L^2\) tree estimate</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#a0000000017"><span class="toc_ref">7.4</span> <span class="toc_entry">Almost orthogonality of separated trees</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#subsec-big-tiles"><span class="toc_ref">7.5</span> <span class="toc_entry">Proof of the Tiles with large separation Lemma</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#subsec-rest-tiles"><span class="toc_ref">7.6</span> <span class="toc_entry">Proof of The Remaining Tiles Lemma</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#a0000000018"><span class="toc_ref">7.7</span> <span class="toc_entry">Forests</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="liphoel.html"><span class="toc_ref">8</span> <span class="toc_entry">Proof of the Hölder cancellative condition</span></a>
+ </li>
+<li class="">
+  <a href="sec-hlm.html"><span class="toc_ref">9</span> <span class="toc_entry">Proof of Vitali covering and Hardy–Littlewood</span></a>
+ </li>
+<li class=" active current">
+  <a href="sect0002.html"><span class="toc_ref">10</span> <span class="toc_entry">Two-sided Metric Space Carleson</span></a>
+  <span class="expand-toc">▼</span>
+  <ul class="sub-toc-1 active">
+     <li class="">
+  <a href="sect0002.html#subsec-cotlar"><span class="toc_ref">10.1</span> <span class="toc_entry">Proof of Cotlar’s Inequality</span></a>
+ </li>
+<li class="">
+  <a href="sect0002.html#subsec-CZD"><span class="toc_ref">10.2</span> <span class="toc_entry">Calderón-Zygmund Decomposition</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="sect0003.html"><span class="toc_ref">11</span> <span class="toc_entry">Proof of The Classical Carleson Theorem</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0003.html#10classical"><span class="toc_ref">11.1</span> <span class="toc_entry">The classical Carleson theorem</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10smooth"><span class="toc_ref">11.2</span> <span class="toc_entry">Smooth functions.</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10hilbert"><span class="toc_ref">11.3</span> <span class="toc_entry">The truncated Hilbert transform</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10vandercorput"><span class="toc_ref">11.4</span> <span class="toc_entry">The proof of the van der Corput Lemma</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10projection"><span class="toc_ref">11.5</span> <span class="toc_entry">Partial sums as orthogonal projections</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10difference"><span class="toc_ref">11.6</span> <span class="toc_entry">The error bound</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10carleson"><span class="toc_ref">11.7</span> <span class="toc_entry">Carleson on the real line</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li ><a href="dep_graph_document.html">Dependency graph</a></li>
+</ul>
+</nav>
+
+<div class="content">
+<div class="content-wrapper">
+
+
+<div class="main-text">
+<h1 id="a0000000003">10 Two-sided Metric Space Carleson</h1>
+<p>We prove a variant of <a href="sect0001.html#metric-space-Carleson">Theorem 1.1.1</a> for a two-sided Calderón–Zygmund kernel on the doubling metric measure space \((X,\rho ,\mu ,a)\), i.e. a one-sided Calderón–Zygmund kernel \(K\) which additionally satisfies for all \(x,x',y\in X\) with \(x\neq y\) and \(2\rho (x,x') \leq \rho (x,y)\), </p>
+<div class="equation" id="eqkernel-x-smooth">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqkernel-x-smooth} |K(x,y) - K(x',y)| \leq \left(\frac{\rho (x,x')}{\rho (x,y)}\right)^{\frac{1}{a}}\frac{2^{a^3}}{V(x,y)}. \end{equation}
+  </div>
+  <span class="equation_label">10.0.1</span>
+</p>
+</div>
+<p> By the additional regularity, we can weaken the assumption <a href="sect0001.html#nontanbound" class="eqref">1.1.15</a> to a family of operators that is easier to work with in applications. Namely, for \(r {\gt} 0\), \(x\in X\), and a bounded, measurable function \(f:X\to {\mathbb {C}}\) supported on a set of finite measure, we define </p>
+<div class="equation" id="def-T-r">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{def-T-r} T_r f(x):= \int _{r\le \rho (x,y)} K(x,y) f(y) \,  d\mu (y) = \int _{X\setminus B(x,r)} K(x,y) f(y) \,  d\mu (y). \end{equation}
+  </div>
+  <span class="equation_label">10.0.2</span>
+</p>
+</div>
+<div class="theorem_thmwrapper theorem-style-plain" id="two-sided-metric-space-Carleson">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">10.0.1</span>
+    <span class="theorem_thmtitle">two-sided metric space Carleson</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0002.html#two-sided-metric-space-Carleson">#</a>
+    
+    <a class="icon proof" href="sect0002.html#a0000000710"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0001.html#metric-space-Carleson">Theorem 1.1.1</a></li>
+          
+          <li><a href="sect0002.html#nontangential-from-simple">Lemma 10.0.2</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/two_sided_metric_carleson" class="lean_decl">two_sided_metric_carleson</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>    For all integers \(a \ge 4\) and real numbers \(1{\lt}q\le 2\) the following holds. Let \((X,\rho ,\mu ,a)\) be a doubling metric measure space. Let \({\Theta }\) be a cancellative compatible collection of functions and let \(K\) be a two-sided Calderón–Zygmund kernel on \((X,\rho ,\mu ,a)\). Assume that for every bounded measurable function \(g\) on \(X\) supported on a set of finite measure and all \(r{\gt}0\) we have </p>
+<div class="equation" id="two-sided-Hr-bound-assumption">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{two-sided-Hr-bound-assumption} \| T_r g\| _{2} \leq 2^{a^3} \| g\| _2\, . \end{equation}
+  </div>
+  <span class="equation_label">10.0.3</span>
+</p>
+</div>
+<p> Then for all Borel sets \(F\) and \(G\) in \(X\) and all Borel functions \(f:X\to {\mathbb {C}}\) with \(|f|\le \mathbf{1}_F\), we have, with \(T\) defined in <a href="sect0001.html#def-main-op" class="eqref">1.1.14</a>, </p>
+<div class="equation" id="two-sided-resweak">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{two-sided-resweak} \left|\int _{G} T f \,  \mathrm{d}\mu \right| \leq \frac{2^{474a^3}}{(q-1)^6} \mu (G)^{1-\frac{1}{q}} \mu (F)^{\frac{1}{q}}\,  . \end{equation}
+  </div>
+  <span class="equation_label">10.0.4</span>
+</p>
+</div>
+
+  </div>
+</div>
+<p>For the remainder of this chapter, fix an integer \(a\ge 4\), a doubling metric measure space \((X,\rho ,\mu ,a)\) and a two-sided Calderón–Zygmund kernel \(K\) as in <a href="sect0002.html#two-sided-metric-space-Carleson">Theorem 10.0.1</a>. </p>
+<p>The following lemma is proved in <a href="sect0002.html#subsec-cotlar">Section 10.1</a>. </p>
+<div class="lemma_thmwrapper theorem-style-plain" id="nontangential-from-simple">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">10.0.2</span>
+    <span class="lemma_thmtitle">nontangential-from-simple</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0002.html#nontangential-from-simple">#</a>
+    
+    <a class="icon proof" href="sect0002.html#a0000000711"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0002.html#simple-nontangential-operator">Lemma 10.1.6</a></li>
+          
+          <li><a href="sect0002.html#nontangential-operator-boundary">Lemma 10.1.8</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/nontangential_from_simple" class="lean_decl">nontangential_from_simple</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>   Assume <a href="sect0002.html#two-sided-Hr-bound-assumption" class="eqref">10.0.3</a> holds. Then, for every bounded measurable function \(g : X \to {\mathbb {C}}\) supported on a set of finite measure we have </p>
+<div class="equation" id="concretetstarbound">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{concretetstarbound} \| T_*g\| _2\le 2^{3a^3}\| g\| _2. \end{equation}
+  </div>
+  <span class="equation_label">10.0.5</span>
+</p>
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000710">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof of <a href="sect0002.html#two-sided-metric-space-Carleson">Theorem 10.0.1</a>
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>  Let \(1{\lt}q\le 2\) be a real number. Let \(\Theta \) be a cancellative compatible collection of functions. By the assumption <a href="sect0002.html#two-sided-Hr-bound-assumption" class="eqref">10.0.3</a>, we can apply <a href="sect0002.html#nontangential-from-simple">Lemma 10.0.2</a> to obtain for every bounded measurable \(g:X\to {\mathbb {C}}\) supported on a set of finite measure, </p>
+<div class="equation" id="original-operator-assumption">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{original-operator-assumption} \| T_*g\| _2\le 2^{3a^3}\| g\| _2. \end{equation}
+  </div>
+  <span class="equation_label">10.0.6</span>
+</p>
+</div>
+<p> Define </p>
+<div class="displaymath" id="a0000000712">
+  \begin{equation*}  K’(x,y):= 2^{-2a^3} K(x,y) \, . \end{equation*}
+</div>
+<p> Then \(K'\) is a two-sided Calderón–Zygmund kernel on \((X,\rho ,\mu ,a)\). Denote the corresponding maximally truncated non-tangential singular operator by \(T_*'\) and the corresponding generalized Carleson operator by \(T'\). With <a href="sect0002.html#original-operator-assumption" class="eqref">10.0.6</a>, we obtain for \(g\) as above, </p>
+<div class="equation" id="modified-operator-assumption">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{modified-operator-assumption} \| T_*'g\| _2\le 2^{a^3}\| g\| _2. \end{equation}
+  </div>
+  <span class="equation_label">10.0.7</span>
+</p>
+</div>
+<p> Applying <a href="sect0001.html#metric-space-Carleson">Theorem 1.1.1</a> for \(K'\) yields that for all Borel sets \(F\) and \(G\) in \(X\) and all Borel functions \(f:X\to {\mathbb {C}}\) with \(|f|\le \mathbf{1}_F\), we have </p>
+<div class="displaymath" id="a0000000713">
+  \begin{equation*}  \left|\int _{G} T’ f \,  \mathrm{d}\mu \right| \leq \frac{2^{450a^3}}{(q-1)^6} \mu (G)^{1-\frac{1}{q}} \mu (F)^{\frac{1}{q}}\,  . \end{equation*}
+</div>
+<p> This finishes the proof since for all \(x\in X\), </p>
+<div class="displaymath" id="a0000000714">
+  \begin{equation*}  T’f(x) = 2^{-2a^3} Tf(x) \, . \end{equation*}
+</div>
+
+  </div>
+</div>
+<p>The proof of <a href="sect0002.html#nontangential-from-simple">Lemma 10.0.2</a> relies on the following auxiliary lemma which is proved in <a href="sect0002.html#subsec-CZD">Section 10.2</a>. </p>
+<div class="lemma_thmwrapper theorem-style-plain" id="calderon-zygmund-weak-1-1">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">10.0.3</span>
+    <span class="lemma_thmtitle">Calderon-Zygmund Weak (1, 1)</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0002.html#calderon-zygmund-weak-1-1">#</a>
+    
+    <a class="icon proof" href="sect0002.html#a0000000715"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0002.html#Calderon-Zygmund-decomposition">Lemma 10.2.5</a></li>
+          
+          <li><a href="sect0002.html#estimate-bad">Lemma 10.2.9</a></li>
+          
+          <li><a href="sect0002.html#estimate-good">Lemma 10.2.6</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/czOperator_weak_1_1" class="lean_decl">czOperator_weak_1_1</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    Let \(f:X\to {\mathbb {C}}\) be a bounded measurable function supported on a set of finite measure and assume for some \(r{\gt}0\) that for every bounded measurable function \(g:X\to {\mathbb {C}}\) supported on a set of finite measure, </p>
+<div class="equation" id="eq-strong-2-2-assumption">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-strong-2-2-assumption} \| T_rg\| _{2}\le 2^{a^3} \| g\| _2. \end{equation}
+  </div>
+  <span class="equation_label">10.0.8</span>
+</p>
+</div>
+<p> Then for all \(\alpha {\gt}0\), we have </p>
+<div class="equation" id="eq-weak-1-1">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-weak-1-1} \mu \left(\{ x\in X: |T_r f(x)|{\gt}\alpha \} \right)\le \frac{2^{a^3 + 21a}}{\alpha } \int |f(y)|\,  d\mu (y). \end{equation}
+  </div>
+  <span class="equation_label">10.0.9</span>
+</p>
+</div>
+
+  </div>
+</div>
+<p> Throughout <a href="sect0002.html#subsec-CZD">Section 10.2</a> and <a href="sect0002.html#subsec-cotlar">Section 10.1</a>, for any measurable bounded function \(w: X \to {\mathbb {C}}\), let \(Mw: X \to [0, \infty )\) denote the corresponding Hardy–Littlewood maximal function defined in <a href="overviewsection.html#Hardy-Littlewood">Proposition 2.0.6</a>. Note: In some cases, a stronger formalization of <a href="overviewsection.html#Hardy-Littlewood">Proposition 2.0.6</a> is used, where \(w\) is not necessarily bounded. In particular it is applied to \(T_rg\). Apart from <a href="overviewsection.html#Hardy-Littlewood">Proposition 2.0.6</a>, <a href="sect0002.html#subsec-CZD">Section 10.2</a> and <a href="sect0002.html#subsec-cotlar">Section 10.1</a> have no dependencies in the previous chapters. </p>
+<h2 id="subsec-cotlar">10.1 Proof of Cotlar’s Inequality</h2>
+
+<div class="lemma_thmwrapper theorem-style-plain" id="geometric-series-estimate">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">10.1.1</span>
+    <span class="lemma_thmtitle">geometric series estimate</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0002.html#geometric-series-estimate">#</a>
+    
+    <a class="icon proof" href="sect0002.html#a0000000716"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/geometric_series_estimate" class="lean_decl">geometric_series_estimate</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>   For all real numbers \(x\ge 4\), </p>
+<div class="displaymath" id="a0000000717">
+  \begin{equation*}  \sum _{n=0}^\infty 2^{-\frac{n}{x}} \le 2^x. \end{equation*}
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000716">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>By convexity, for all \(0\le \lambda \le 1\) </p>
+<div class="displaymath" id="a0000000718">
+  \begin{equation*}  2^{\lambda (-\frac{1}{4})} \le \lambda 2^{-\frac{1}{4}} + (1-\lambda )2^0. \end{equation*}
+</div>
+<p> For \(\lambda :=\frac{4}{x}\), we obtain </p>
+<div class="displaymath" id="a0000000719">
+  \begin{equation*}  2^{-\frac1x} \le 1 - (1-2^{-\frac14}) \frac{4}{x}. \end{equation*}
+</div>
+<p> We conclude </p>
+<div class="displaymath" id="a0000000720">
+  \begin{equation*}  \sum _{n=0}^\infty 2^{-\frac{n}{x}} = \frac{1}{1-2^{-\frac1x}} \le \frac{1}{4(1-2^{-\frac14})} x \le 2^x. \end{equation*}
+</div>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="estimate-x-shift">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">10.1.2</span>
+    <span class="lemma_thmtitle">estimate x shift</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0002.html#estimate-x-shift">#</a>
+    
+    <a class="icon proof" href="sect0002.html#a0000000721"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0002.html#geometric-series-estimate">Lemma 10.1.1</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/estimate_x_shift" class="lean_decl">estimate_x_shift</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    Let \(0{\lt}r\) and \(x\in X\). Let \(g:X\to {\mathbb {C}}\) be a bounded measurable function supported on a set of finite measure. Then for all \(x'\) with \(\rho (x,x')\le r\). </p>
+<div class="displaymath" id="a0000000722">
+  \begin{equation*}  \left| T_r g(x) - T_r g(x’) \right| \le 2^{a^3 + 2a + 2} Mg(x)\,  . \end{equation*}
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000721">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p> By definition, </p>
+<div class="equation" id="xx'difference">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{xx'difference} \left| T_r g(x) - T_r g(x') \right| =\left|\int _{r\le \rho (x,y)} K(x,y) g(y) \, d\mu (y) -\int _{r\le \rho (x',y)} K(x',y) g(y)\,  d\mu (y) \right| \,  . \end{equation}
+  </div>
+  <span class="equation_label">10.1.1</span>
+</p>
+</div>
+<p> We split the first integral in <a href="sect0002.html#xx'difference" class="eqref">10.1.1</a> into the domains \(r\le \rho (x,y){\lt}2r\) and \(2r\le \rho (x,y)\). The integral over the first domain we estimate by \(\eqref{firstxx'}\) below. For the second domain, we observe with \(\rho (x,x')\le r\) and the triangle inequality that \(r\le \rho (x',y)\). We therefore combine on this domain with the corresponding part of the second integral in <a href="sect0002.html#xx'difference" class="eqref">10.1.1</a> and estimate that by \(\eqref{secondxx'}\) below. The remaining part of the second integral in <a href="sect0002.html#xx'difference" class="eqref">10.1.1</a> we estimate by \(\eqref{thirdxx'}\). Overall, we have estimated <a href="sect0002.html#xx'difference" class="eqref">10.1.1</a> by </p>
+<div class="equation" id="firstxx'">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{firstxx'} \int _{r\le \rho (x,y){\lt} 2r} |K(x,y)| |g(y)| \, d\mu (y) \end{equation}
+  </div>
+  <span class="equation_label">10.1.2</span>
+</p>
+</div>
+<div class="equation" id="secondxx'">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{secondxx'} + \left|\int _{2r\le \rho (x,y)} (K(x,y)-K(x',y)) g(y) \, d\mu (y) \right| \end{equation}
+  </div>
+  <span class="equation_label">10.1.3</span>
+</p>
+</div>
+<div class="equation" id="thirdxx'">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{thirdxx'} +\int _{r\le \rho (x',y), r\le \rho (x,y){\lt}2r} |K(x',y)| |g(y)|\,  d\mu (y)\, . \end{equation}
+  </div>
+  <span class="equation_label">10.1.4</span>
+</p>
+</div>
+<p> Using the bound on \(K\) in <a href="sect0001.html#eqkernel-size" class="eqref">1.1.11</a> and the doubling condition <a href="sect0001.html#doublingx" class="eqref">1.1.2</a>, we estimate <a href="sect0002.html#firstxx'" class="eqref">10.1.2</a> by </p>
+<div class="displaymath" id="a0000000723">
+  \begin{align}  \int _{r\le \rho (x,y){\lt}2r} \frac{2^{a^3}}{V(x,y)} |g(y)| \, d\mu (y)\,  & \le \frac{2^{a^3}}{\mu (B(x,r))} \int _{r\le \rho (x,y){\lt}2r} |g(y)| \,  d\mu (y)\,  \\ \label{firstxx'b} & \le \frac{2^{a^3} \cdot 2^a}{\mu (B(x,2r))} \int _{\rho (x,y){\lt}2r} |g(y)| \,  d\mu (y)\,  . \end{align}
+</div>
+<p> Using the definition of \(Mg\), we estimate <a href="sect0002.html#firstxx'b" class="eqref">10.1.6</a> by </p>
+<div class="equation" id="firstxx'c">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{firstxx'c} \le 2^{a^3 + a} {Mg(x)}\,  . \end{equation}
+  </div>
+  <span class="equation_label">10.1.7</span>
+</p>
+</div>
+<p> Similarly, in the domain of <a href="sect0002.html#thirdxx'" class="eqref">10.1.4</a> we note by the triangle inequality and assumption on \(x'\) that \(\rho (x',y){\lt}3r\) and thus we estimate <a href="sect0002.html#thirdxx'" class="eqref">10.1.4</a> by </p>
+<div class="equation" id="thirdxx'b">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{thirdxx'b} \frac{2^{a^3}}{\mu (B(x',r))} \int _{\rho (x',y){\lt}4r} |g(y)| \,  d\mu (y)\le 2^{a^3 + 2a} Mg(x) \end{equation}
+  </div>
+  <span class="equation_label">10.1.8</span>
+</p>
+</div>
+<p>We turn to the remaining term. Using <a href="sect0002.html#eqkernel-x-smooth" class="eqref">10.0.1</a>, we estimate <a href="sect0002.html#secondxx'" class="eqref">10.1.3</a> by </p>
+<div class="equation" id="secondxx'b">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{secondxx'b} \int _{2r\le \rho (x,y)} \left(\frac{\rho (x,x')}{\rho (x,y)}\right)^{\frac{1}{a}}\frac{2^{a^3}}{V(x,y)} |g(y)| \, d\mu (y) \end{equation}
+  </div>
+  <span class="equation_label">10.1.9</span>
+</p>
+</div>
+<p> We decompose and estimate <a href="sect0002.html#secondxx'" class="eqref">10.1.3</a> with the triangle inequality by </p>
+<div class="displaymath" id="a0000000724">
+  \begin{align} & \sum _{j=1}^\infty \int _{2^jr\le \rho (x,y){\lt} 2^{j+1}r} \left(\frac{\rho (x,x')}{\rho (x,y)}\right)^{\frac{1}{a}}\frac{2^{a^3}}{V(x,y)} |g(y)| \, d\mu (y)\,  \\ \le &  \sum _{j=1}^\infty \left( 2^{-j} \right)^{\frac{1}{a}} \int _{2^jr\le \rho (x,y){\lt} 2^{j+1}r} \frac{2^{a^3}}{\mu (B(x,2^j r))} |g(y)| \, d\mu (y) \\ \le &  \sum _{j=1}^\infty 2^{-\frac{j}{a}} \frac{2^{a^3 + a}}{\mu (B(x,2^{j+1} r))} \int _{\rho (x,y){\lt}2^{j+1}r} |g(y)| \,  d\mu (y) \\ \label{secondxx'c} \le &  2^{a^3 + a} \sum _{j=1}^\infty 2^{-\frac{j}{a}} Mg(x)\, . \end{align}
+</div>
+<p> Using <a href="sect0002.html#geometric-series-estimate">Lemma 10.1.1</a>, we estimate <a href="sect0002.html#secondxx'c" class="eqref">10.1.13</a> by </p>
+<div class="equation" id="secondxx'd">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{secondxx'd} \le 2^{a^3 + 2a} Mg(x) \, . \end{equation}
+  </div>
+  <span class="equation_label">10.1.14</span>
+</p>
+</div>
+<p> Summing the estimates for <a href="sect0002.html#firstxx'" class="eqref">10.1.2</a>, <a href="sect0002.html#secondxx'" class="eqref">10.1.3</a>, and <a href="sect0002.html#thirdxx'" class="eqref">10.1.4</a> proves the lemma. </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="Cotlar-control">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">10.1.3</span>
+    <span class="lemma_thmtitle">Cotlar control</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0002.html#Cotlar-control">#</a>
+    
+    <a class="icon proof" href="sect0002.html#a0000000725"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0002.html#estimate-x-shift">Lemma 10.1.2</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/cotlar_control" class="lean_decl">cotlar_control</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    Let \(0{\lt}r\le R\) and \(x\in X\). Let \(g:X\to {\mathbb {C}}\) be a bounded measurable function supported on a set of finite measure. Then for all \(x'\in X\) with \(\rho (x,x')\le \frac{R}{4}\) we have </p>
+<div class="equation" id="eq-cotlar-control">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{eq-cotlar-control} \left|T_R g(x) \right|\le |T_r(g-g\mathbf{1}_{B(x,\frac{R}2)})(x')| + 2^{a^3 + 4a + 1} Mg(x)\,  . \end{equation}
+  </div>
+  <span class="equation_label">10.1.15</span>
+</p>
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000725">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Let \(x\) and \(x'\) be given with \(\rho (x,x')\le \frac{R}{4}\). By <a href="sect0002.html#estimate-x-shift">Lemma 10.1.2</a>, we estimate the left-hand-side of <a href="sect0002.html#eq-cotlar-control" class="eqref">10.1.15</a> by </p>
+<div class="equation" id="eqcotlar0">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{eqcotlar0} |T_R(g)(x')|+ 2^{a^3 + 2a + 2} Mg(x)\, . \end{equation}
+  </div>
+  <span class="equation_label">10.1.16</span>
+</p>
+</div>
+<p> We have </p>
+<div class="equation" id="eqcotlar-1">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqcotlar-1} T_R(g)(x')= \int _{R\le \rho (x',y)} K(x',y) g(y) \,  d\mu (y)\,  . \end{equation}
+  </div>
+  <span class="equation_label">10.1.17</span>
+</p>
+</div>
+<p> On the domain \(R\le \rho (x',y)\), we have \(\frac{R}2\le \rho (x,y)\). Hence we may write for <a href="sect0002.html#eqcotlar-1" class="eqref">10.1.17</a> </p>
+<div class="displaymath" id="a0000000726">
+  \begin{equation*}  T_R(g)(x’)=\int _{R\le \rho (x',y)} K(x’,y) (g-g\mathbf{1}_{B(x,\frac{R}2)})(y) \, d\mu (y) \end{equation*}
+</div>
+<div class="equation" id="eqcotlar1">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{eqcotlar1} =T_R(g-g\mathbf{1}_{B(x,\frac{R}2)})(x')\,  . \end{equation}
+  </div>
+  <span class="equation_label">10.1.18</span>
+</p>
+</div>
+<p> Combining the estimate <a href="sect0002.html#eqcotlar0" class="eqref">10.1.16</a> with the identification <a href="sect0002.html#eqcotlar1" class="eqref">10.1.18</a>, we obtain </p>
+<div class="equation" id="eqcotlar5">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{eqcotlar5} \left|T_R g(x) \right|\le |T_R(g-g\mathbf{1}_{B(x,\frac{R}2)})(x')|+ 2^{a^3 + 2a + 2} Mg(x)\,  . \end{equation}
+  </div>
+  <span class="equation_label">10.1.19</span>
+</p>
+</div>
+<p> We have </p>
+<div class="displaymath" id="a0000000727">
+  \begin{equation*}  (T_r-T_R)(g-g\mathbf{1}_{B(x,\frac{R}2)})(x’) \end{equation*}
+</div>
+<div class="displaymath" id="a0000000728">
+  \begin{equation*}  = \int _{B(x',R)\setminus B(x',r)} K(x’,y) (g-g\mathbf{1}_{B(x,\frac{R}2)})(y) \, d\mu (y) \end{equation*}
+</div>
+<div class="equation" id="eqcotlar2">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{eqcotlar2} = \int _{B(x',R)\setminus (B(x',r) \cup B(x,\frac{R}{2}))} K(x',y) g(y) \, d\mu (y) \end{equation}
+  </div>
+  <span class="equation_label">10.1.20</span>
+</p>
+</div>
+<p> As \(\frac{R}{2}\le \rho (x,y)\) together with \(\rho (x,x')\le \frac{R}{4}\) implies \(\frac{R}{4}\le \rho (x',y)\), we can estimate the absolute value of <a href="sect0002.html#eqcotlar2" class="eqref">10.1.20</a> with <a href="sect0001.html#eqkernel-size" class="eqref">1.1.11</a> by </p>
+<div class="displaymath" id="a0000000729">
+  \begin{align*}  \le & \frac{2^{a^3}}{\mu (B(x',\frac{R}{4}))} \int _{B(x,2R)\setminus B(x',\frac{R}{4})} |g(y)|\,  d\mu (y) \\ \le & \frac{2^{a^3+a}}{\mu (B(x',\frac{R}{2}))} \int _{B(x,2R)} |g(y)|\,  d\mu (y) \\ \le & 2^{a^3+a} \frac{\mu (B(x,2R))}{\mu (B(x,\frac{R}{4}))} Mg(x) \le 2^{a^3 + 4a} Mg(x)\,  . \end{align*}
+</div>
+<p>By the triangle inequality, <a href="sect0002.html#eq-cotlar-control" class="eqref">10.1.15</a> follows now from <a href="sect0002.html#eqcotlar5" class="eqref">10.1.19</a> and the estimate for <a href="sect0002.html#eqcotlar2" class="eqref">10.1.20</a>. </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="Cotlar-sets">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">10.1.4</span>
+    <span class="lemma_thmtitle">Cotlar sets</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0002.html#Cotlar-sets">#</a>
+    
+    <a class="icon proof" href="sect0002.html#a0000000730"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0002.html#calderon-zygmund-weak-1-1">Lemma 10.0.3</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/cotlar_set_F₁" class="lean_decl">cotlar_set_F₁</a></li>
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/cotlar_set_F₂" class="lean_decl">cotlar_set_F₂</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    Assume that <a href="sect0002.html#two-sided-Hr-bound-assumption" class="eqref">10.0.3</a> holds. Let \(0{\lt}r\le R\) and \(x\in X\). Let \(g:X\to {\mathbb {C}}\) be a bounded measurable function supported on a set of finite measure. Then the measure \(|F_1|\) of the set \(F_1\) of all \(x'\in B(x,\frac{R}4)\) such that </p>
+<div class="equation" id="first-cotlar-exception">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{first-cotlar-exception} |T_rg(x')|{\gt} 4 M(T_rg)(x) \end{equation}
+  </div>
+  <span class="equation_label">10.1.21</span>
+</p>
+</div>
+<p> is less than or equal to \(\mu (B(x,\frac{R}{4}))/4\). Moreover, the measure \(|F_2|\) of the set \(F_2\) of all \(x'\in B(x,\frac{R}4)\) such that </p>
+<div class="equation" id="second-cotlar-exception">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{second-cotlar-exception} |T_r(g\mathbf{1}_{B(x,\frac{R}2)})(x')| {\gt} 2^{a^3 + 22a + 2} Mg(x) \end{equation}
+  </div>
+  <span class="equation_label">10.1.22</span>
+</p>
+</div>
+<p> is less than or equal to \(\mu (B(x,\frac{R}{4}))/4\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000730">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Let \(r\), \(R\), \(x\) and \(g\) be given. If \(M(T_rg)(x)=0\), then \(T_rg\) is zero almost everywhere and the estimate on \(|F_1|\) is trivial. Assume \(M(T_rg)(x){\gt}0\). We have with <a href="sect0002.html#first-cotlar-exception" class="eqref">10.1.21</a> </p>
+<div class="equation" id="a0000000731">
+<p>
+  <div class="equation_content">
+    \begin{equation}  M(T_rg)(x)\ge \frac1{\mu (B(x,\frac{R}{4}))}\int _{B(x,\frac{R}{4})}|T_rg(x')|\,  dx' \end{equation}
+  </div>
+  <span class="equation_label">10.1.23</span>
+</p>
+</div>
+<div class="equation" id="a0000000732">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \ge \frac1{\mu (B(x,\frac{R}{4}))}\int _{F_1} 4 M(T_rg)(x)\,  dx' \, . \end{equation}
+  </div>
+  <span class="equation_label">10.1.24</span>
+</p>
+</div>
+<p> Dividing by \(M(T_rg)(x)\) gives </p>
+<div class="equation" id="a0000000733">
+<p>
+  <div class="equation_content">
+    \begin{equation}  1\ge \frac{4}{\mu (B(x,\frac{R}{4}))} |F_1|\,  . \end{equation}
+  </div>
+  <span class="equation_label">10.1.25</span>
+</p>
+</div>
+<p> This gives the desired bound for the measure of \(F_1\). We turn to the set \(F_2\). Similarly as above we may assume \(Mg(x){\gt}0\). The set \(F_2\) is then estimated with <a href="sect0002.html#calderon-zygmund-weak-1-1">Lemma 10.0.3</a> by </p>
+<div class="equation" id="a0000000734">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \frac{2^{a^3+21a}}{2^{a^3 + 22a + 2}Mg(x)}\int |g\mathbf{1}_{B(x,\frac{R}2)}|(y)\,  d\mu (y) \end{equation}
+  </div>
+  <span class="equation_label">10.1.26</span>
+</p>
+</div>
+<div class="equation" id="a0000000735">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \le \frac{1}{2^{a+2} Mg(x)}\mu (B(x,\frac{R}{2})) Mg(x) \le \frac{\mu (B(x,\frac{R}{4}))}{4} \, . \end{equation}
+  </div>
+  <span class="equation_label">10.1.27</span>
+</p>
+</div>
+<p> This gives the desired bound for the measure of \(F_2\). </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="Cotlar-estimate">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">10.1.5</span>
+    <span class="lemma_thmtitle">Cotlar estimate</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0002.html#Cotlar-estimate">#</a>
+    
+    <a class="icon proof" href="sect0002.html#a0000000736"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0002.html#Cotlar-control">Lemma 10.1.3</a></li>
+          
+          <li><a href="sect0002.html#Cotlar-sets">Lemma 10.1.4</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/cotlar_estimate" class="lean_decl">cotlar_estimate</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    Assume that <a href="sect0002.html#two-sided-Hr-bound-assumption" class="eqref">10.0.3</a> holds. Let \(0{\lt}r\le R\) and \(x\in X\). Let \(g:X\to {\mathbb {C}}\) be a bounded measurable function supported on a set of finite measure. Then </p>
+<div class="equation" id="eq-cotlar-estimate">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{eq-cotlar-estimate} |T_Rg(x)| \le 2^{2}M(T_rg)(x)+ 2^{a^3+22a+3} Mg(x) \,  . \end{equation}
+  </div>
+  <span class="equation_label">10.1.28</span>
+</p>
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000736">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>By <a href="sect0002.html#Cotlar-sets">Lemma 10.1.4</a>, the set of all \(x'\in B(x,\frac{R}4)\) such that at least one of the conditions <a href="sect0002.html#first-cotlar-exception" class="eqref">10.1.21</a> and <a href="sect0002.html#second-cotlar-exception" class="eqref">10.1.22</a> is satisfied has measure less than or equal to \(\mu (B(x,\frac{R}{4}))/2\) and hence is not all of \(B(x,\frac{R}4)\). Pick an \(x'\in B(x,\frac{R}4)\) such that both conditions are not satisfied. Applying <a href="sect0002.html#Cotlar-control">Lemma 10.1.3</a> for this \(x'\) and using the triangle inequality estimates the left-hand side of <a href="sect0002.html#eq-cotlar-estimate" class="eqref">10.1.28</a> by </p>
+<div class="equation" id="a0000000737">
+<p>
+  <div class="equation_content">
+    \begin{equation}  4 M(T_rg)(x) + 2^{a^3 + 22a + 2} Mg(x) + 2^{a^3 + 4a + 1} Mg(x)\,  . \end{equation}
+  </div>
+  <span class="equation_label">10.1.29</span>
+</p>
+</div>
+<p> This proves the lemma. </p>
+
+  </div>
+</div>
+<p>For the next Lemma, we define the following operation. </p>
+<div class="equation" id="eq-simple--nontangential">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{eq-simple--nontangential} T_{*}^r g(x):=\sup _{r{\lt}R}\sup _{x'\in B(x,R)} |T_R(g)(x')| \,  . \end{equation}
+  </div>
+  <span class="equation_label">10.1.30</span>
+</p>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="simple-nontangential-operator">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">10.1.6</span>
+    <span class="lemma_thmtitle">simple nontangential operator</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0002.html#simple-nontangential-operator">#</a>
+    
+    <a class="icon proof" href="sect0002.html#a0000000738"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="overviewsection.html#Hardy-Littlewood">Proposition 2.0.6</a></li>
+          
+          <li><a href="sect0002.html#Cotlar-estimate">Lemma 10.1.5</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/simple_nontangential_operator" class="lean_decl">simple_nontangential_operator</a></li>
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/lowerSemicontinuous_simpleNontangentialOperator" class="lean_decl">lowerSemicontinuous_simpleNontangentialOperator</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>   Assume that <a href="sect0002.html#two-sided-Hr-bound-assumption" class="eqref">10.0.3</a> holds. For every \(r{\gt}0\) and every bounded measurable function \(g\) supported on a set of finite measure the function \(T_{*}^r g\) is lower-semicontinuous and we have </p>
+<div class="equation" id="trzerobound">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{trzerobound} \| T_{*}^rg\| _2\le 2^{a^3+26a+6}\| g\| _2, \end{equation}
+  </div>
+  <span class="equation_label">10.1.31</span>
+</p>
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000738">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>For a fixed \(\lambda \) we note that (rewriting \(x'\in B(x,R)\) as \(x\in B(x',R)\)): </p>
+<div class="equation" id="a0000000739">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \{ x : T_{*}^r g(x) {\gt} \lambda \}  = \bigcup _{r{\lt}R}\bigcup _{\{ x':|T_R(g)(x')|{\gt}\lambda \} } B(x',R) \end{equation}
+  </div>
+  <span class="equation_label">10.1.32</span>
+</p>
+</div>
+<p> The right-hand side is open, hence \(T_{*}^r g\) is lower-semicontinuous by definition. </p>
+<p>For the second part, with <a href="sect0002.html#estimate-x-shift">Lemma 10.1.2</a> and the triangle inequality, we estimate for every \(x\in X\) </p>
+<div class="equation" id="a0000000740">
+<p>
+  <div class="equation_content">
+    \begin{equation}  T_{*}^r g(x) \le 2^{a^3 + 2a + 2} Mg(x)+\sup _{r{\lt}R} |T_R(g)(x)|\,  . \end{equation}
+  </div>
+  <span class="equation_label">10.1.33</span>
+</p>
+</div>
+<p> Using further <a href="sect0002.html#Cotlar-estimate">Lemma 10.1.5</a>, we estimate </p>
+<div class="equation" id="a0000000741">
+<p>
+  <div class="equation_content">
+    \begin{equation}  T_{*}^r g(x) \le 2^{a^3+2a+2}Mg(x) + 2^{a^3+22a+3}Mg(x) + 2^{2}M(T_rg)(x)\,  . \end{equation}
+  </div>
+  <span class="equation_label">10.1.34</span>
+</p>
+</div>
+<p> Taking the \(L^2\) norm and using <a href="overviewsection.html#Hardy-Littlewood">Proposition 2.0.6</a> with \(a=4\) and \(p_2=2\) and \(p_1=1\) , we obtain </p>
+<div class="equation" id="a0000000742">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \| T_{*}^r g\| _2 \le 2^{a^3+22a+4} \| Mg\| _2 + 2^{2}\| M(T_rg)\| _2 \end{equation}
+  </div>
+  <span class="equation_label">10.1.35</span>
+</p>
+</div>
+<div class="equation" id="a0000000743">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \le 2^{a^3+26a+5} \| g\| _2 + 2^{4a+3}\| T_r g\| _2\,  . \end{equation}
+  </div>
+  <span class="equation_label">10.1.36</span>
+</p>
+</div>
+<p> Applying <a href="sect0002.html#two-sided-Hr-bound-assumption" class="eqref">10.0.3</a> gives </p>
+<div class="equation" id="a0000000744">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \| T_{*}^r g\| _2\le 2^{a^3+26a+5}\| g\| _2 + 2^{a^3+4a+3}\| g\| _2\,  . \end{equation}
+  </div>
+  <span class="equation_label">10.1.37</span>
+</p>
+</div>
+<p> This shows <a href="sect0002.html#trzerobound" class="eqref">10.1.31</a> and completes the proof of the inequality. </p>
+
+  </div>
+</div>
+<p> In order to pass from the one-sided truncation in \(T_r\) and \(T_{*}^r\) to the two-sided truncation in \(T_*\), we show in the following two lemmas that the integral in <a href="sect0001.html#def-tang-unm-op" class="eqref">1.1.13</a> can be exchanged for an integral over the difference of two balls. </p>
+<div class="lemma_thmwrapper theorem-style-plain" id="small-annulus">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">10.1.7</span>
+    <span class="lemma_thmtitle">small annulus</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0002.html#small-annulus">#</a>
+    
+    <a class="icon proof" href="sect0002.html#a0000000745"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/small_annulus_right" class="lean_decl">small_annulus_right</a></li>
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/small_annulus_left" class="lean_decl">small_annulus_left</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>   Let \(f:X\to {\mathbb {C}}\) be a bounded measurable function supported on a set of finite measure. Let \(x\in X\) and \(R{\gt}0\). Then, for all \(\epsilon {\gt}0\), there exists some \(\delta {\gt}0\) such that </p>
+<div class="equation" id="a0000000746">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \left| \int _{R{\lt}\rho (x,y){\lt}R+\delta } K(x,y) f(y) \,  d\mu (y) \right| \le \epsilon \end{equation}
+  </div>
+  <span class="equation_label">10.1.38</span>
+</p>
+</div>
+<p> and </p>
+<div class="equation" id="a0000000747">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \left| \int _{R-\delta {\lt}\rho (x,y){\lt}R} K(x,y) f(y) \,  d\mu (y) \right| \le \epsilon \, . \end{equation}
+  </div>
+  <span class="equation_label">10.1.39</span>
+</p>
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000745">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>We only prove the second inequality, the first one is analogous. Note that the integrand is bounded in \(X\setminus B(x,\frac{R}{2})\). So for \(0{\lt}\delta \le \frac{R}{2}\), </p>
+<div class="displaymath" id="a0000000748">
+  \begin{align*} & \left| \int _{R-\delta {\lt}\rho (x,y){\lt}R} K(x,y) f(y) \,  d\mu (y) \right| \\ \le & \frac{2^{a^3}}{\mu (B(x,\frac{R}{2}))} \,  \sup _{y\in X}|f(x)| \cdot \mu (\{ y\in X: R-\delta {\lt}\rho (x,y){\lt}R\} ). \end{align*}
+</div>
+<p> By continuity from above of \(\mu \), the right factor becomes arbitrarily small as \(\delta \rightarrow 0\). Thus, for small enough \(\delta \), the whole expression is \(\le \epsilon \). </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="nontangential-operator-boundary">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">10.1.8</span>
+    <span class="lemma_thmtitle">nontangential operator boundary</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0002.html#nontangential-operator-boundary">#</a>
+    
+    <a class="icon proof" href="sect0002.html#a0000000749"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0002.html#small-annulus">Lemma 10.1.7</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/nontangential_operator_boundary" class="lean_decl">nontangential_operator_boundary</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    Let \(f:X\to {\mathbb {C}}\) be a bounded measurable function supported on a set of finite measure. For all \(x\in X\), </p>
+<div class="equation" id="tang-unm-op-eq">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{tang-unm-op-eq} T_*f(x) = \sup _{R_1 {\lt} R_2} \sup _{x'\in B(x,R_1)} \left|\int _{B(x',R_2)\setminus B(x',R_1)} K(x',y) f(y) \,  \mathrm{d}\mu (y) \right| \end{equation}
+  </div>
+  <span class="equation_label">10.1.40</span>
+</p>
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000749">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>We show two inequalities. Let \(\epsilon {\gt}0\). Let \(R_1{\lt}R_2\) and \(x'\in B(x,R_1)\). Then for small enough \(\delta {\gt}0\), </p>
+<div class="displaymath" id="eq-without-suprema-1">
+  \begin{alignat}{3} \label{eq-without-suprema-1} & & & \left|\int _{R_1{\lt}\rho (x',y){\lt}R_2} K(x’,y) f(y) \,  \mathrm{d}\mu (y) \right| \\ \label{eq-diff-small-1} \le & & & \left|\int _{R_1{\lt}\rho (x',y){\lt}R_1+\delta } K(x’,y) f(y) \,  \mathrm{d}\mu (y) \right| \\ \label{eq-other-1} & +& & \left|\int _{R_1+\delta \le \rho (x',y){\lt}R_2} K(x’,y) f(y) \,  \mathrm{d}\mu (y) \right| . \end{alignat}
+</div>
+<p> By <a href="sect0002.html#small-annulus">Lemma 10.1.7</a>, we can choose \(\delta \) such that <a href="sect0002.html#eq-diff-small-1" class="eqref">10.1.42</a> is bounded by \(\epsilon \). Without loss of generality, we can assume \(R_1+\delta {\lt}R_2\). Then <a href="sect0002.html#eq-other-1" class="eqref">10.1.43</a> is bounded by the right hand side of <a href="sect0002.html#tang-unm-op-eq" class="eqref">10.1.40</a> and we obtain </p>
+<div class="displaymath" id="a0000000750">
+  \begin{equation*}  \le \epsilon + \sup _{R_1 {\lt} R_2} \sup _{x'\in B(x,R_1)} \left|\int _{B(x',R_2)\setminus B(x',R_1)} K(x’,y) f(y) \,  \mathrm{d}\mu (y) \right| . \end{equation*}
+</div>
+<p> The inequality still holds when taking the suprema over \(R_1{\lt}R_2\) and \(\rho (x,x'){\lt}R_1\) in <a href="sect0002.html#eq-without-suprema-1" class="eqref">10.1.41</a>. Since \(\epsilon {\gt}0\) was arbitrary, this proves the first inequality. </p>
+<p>The other direction is similar. Let \(\epsilon {\gt}0\). Let \(R_1{\lt}R_2\) and \(x'\in B(x,R_1)\). Then for \(\delta {\gt}0\), </p>
+<div class="displaymath" id="eq-without-suprema-2">
+  \begin{alignat}{3} \label{eq-without-suprema-2} & & & \left|\int _{B(x',R_2)\setminus B(x',R_1)} K(x’,y) f(y) \,  \mathrm{d}\mu (y) \right| \\ \label{eq-diff-small-2} \le & & & \left|\int _{R_1-\delta {\lt}\rho (x',y){\lt} R_1} K(x’,y) f(y) \,  \mathrm{d}\mu (y) \right| \\ \label{eq-other-2} & +& & \left|\int _{R_1-\delta {\lt}\rho (x',y){\lt}R_2} K(x’,y) f(y) \,  \mathrm{d}\mu (y) \right| . \end{alignat}
+</div>
+<p>By <a href="sect0002.html#small-annulus">Lemma 10.1.7</a>, we can choose \(\delta \) such that <a href="sect0002.html#eq-diff-small-2" class="eqref">10.1.45</a> is bounded by \(\epsilon \). Without loss of generality, we can assume \(\rho (x,x'){\lt}R_1-\delta \). Then <a href="sect0002.html#eq-other-2" class="eqref">10.1.46</a> is bounded by the left hand side of <a href="sect0002.html#tang-unm-op-eq" class="eqref">10.1.40</a> and we obtain </p>
+<div class="displaymath" id="a0000000751">
+  \begin{equation*}  \le \epsilon + \sup _{R_1 {\lt} R_2} \sup _{x'\in B(x,R_1)} \left|\int _{R_1{\lt}\rho (x',y){\lt}R_2} K(x’,y) f(y) \,  \mathrm{d}\mu (y) \right| . \end{equation*}
+</div>
+<p> The inequality still holds when taking the suprema over \(R_1{\lt}R_2\) and \(\rho (x,x'){\lt}R_1\) in <a href="sect0002.html#eq-without-suprema-1" class="eqref">10.1.41</a>. Since \(\epsilon {\gt}0\) was arbitrary, this proves the second inequality. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000711">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof of <a href="sect0002.html#nontangential-from-simple">Lemma 10.0.2</a>
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>  Fix \(g\) as in the Lemma. Applying <a href="sect0002.html#simple-nontangential-operator">Lemma 10.1.6</a> with a sequence of \(r\) tending to \(0\) and using Lebesgue monotone convergence shows </p>
+<div class="equation" id="tzerobound">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{tzerobound} \| T_*^{0}g\| _2\le 2^{a^3+26a+6}\| g\| _2, \end{equation}
+  </div>
+  <span class="equation_label">10.1.47</span>
+</p>
+</div>
+<p> where </p>
+<div class="equation" id="concretetstartriangle">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{eq-simpler--nontangential} T_*^{0} g(x):=\sup _{0{\lt}R}\sup _{x'\in B(x,R)} \left|\int _{X\setminus B(x',R)} K(x',y) g(y)\,  d\mu (y)\right|\,  . \end{equation}
+  </div>
+  <span class="equation_label">10.1.48</span>
+</p>
+</div>
+<p> We now write using <a href="sect0002.html#nontangential-operator-boundary">Lemma 10.1.8</a> and the triangle inequality, </p>
+<div class="displaymath" id="a0000000752">
+  \begin{alignat*}{3}\label{concretetstartriangle} T_* g(x)\le & & & \sup _{0{\lt}R_1{\lt}R_2}\sup _{x'\in B(x,R_1)} \left|\int _{X\setminus B(x',R_1)}K(x’,y) g(y)\,  d\mu (y)\right| \\ & +& & \sup _{0{\lt}R_1{\lt}R_2}\sup _{x'\in B(x,R_1)} \left|\int _{X\setminus B(x',R_2)} K(x’,y) g(y)\,  d\mu (y)\right|\,  . \end{alignat*}
+</div>
+<p> Noting that the first integral does not depend on \(R_2\) and estimating the second summand by the larger supremum over all \(x'\in B(x,R_2)\), at which time the integral does not depend on \(R_1\), we estimate further </p>
+<div class="displaymath" id="a0000000753">
+  \begin{alignat*}{3} \le & & & \sup _{0{\lt}R_1}\sup _{x'\in B(x,R_1)} \left|\int _{X\setminus B(x',R_1)}K(x’,y) g(y)\,  d\mu (y)\right| \\ & + & & \sup _{0{\lt}R_2}\sup _{x'\in B(x,R_2)} \left|\int _{X\setminus B(x',R_2)} K(x’,y) g(y)\,  d\mu (y)\right|\,  . \end{alignat*}
+</div>
+<p> Applying the triangle inequality on the left-hand side of <a href="sect0002.html#concretetstarbound" class="eqref">10.0.5</a> and applying <a href="sect0002.html#tzerobound" class="eqref">10.1.47</a> twice proves <a href="sect0002.html#concretetstarbound" class="eqref">10.0.5</a>. This completes the proof of <a href="sect0002.html#nontangential-from-simple">Lemma 10.0.2</a>. </p>
+
+  </div>
+</div>
+<h2 id="subsec-CZD">10.2 Calderón-Zygmund Decomposition</h2>
+<p>  Calderón-Zygmund decomposition is a tool to extend \(L^2\) bounds to \(L^p\) bounds with \(p{\lt}2\) or to the so-called weak \((1, 1)\) type endpoint bound. It is classical and can be found in <span class="cite">
+	[
+</span>. </p>
+<p>The following lemma is Theorem 3.1(b) in <span class="cite">
+	[
+</span>. The proof uses <a href="overviewsection.html#Hardy-Littlewood">Proposition 2.0.6</a>. </p>
+<div class="lemma_thmwrapper theorem-style-plain" id="maximal-theorem">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">10.2.1</span>
+    <span class="lemma_thmtitle">Maximal theorem</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0002.html#maximal-theorem">#</a>
+    
+    <a class="icon proof" href="sect0002.html#a0000000754"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="overviewsection.html#Hardy-Littlewood">Proposition 2.0.6</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/maximal_theorem" class="lean_decl">maximal_theorem</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    Let \(f: X \to {\mathbb {C}}\) be bounded, measurable, supported on a set of finite measure, and let \(\alpha {\gt} 0\). Then </p>
+<div class="equation" id="maximal-theorem-equation">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{maximal-theorem-equation} \mu (\{ x\in X : Mf(x) {\gt} \alpha \} ) \le \frac{2^{2a}}{\alpha } \int |f(y)|\,  d\mu (y). \end{equation}
+  </div>
+  <span class="equation_label">10.2.1</span>
+</p>
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000754">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>By definition, for each \(x\in X\) with \(Mf(x) {\gt} \alpha \), there exists a ball \(B_x\) such that \(x\in B_x\) and </p>
+<div class="equation" id="maximal-theorem-a">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{maximal-theorem-a} \alpha \mu (B_x) {\lt} \int _{B_x} |f(y)|\,  d\mu (y). \end{equation}
+  </div>
+  <span class="equation_label">10.2.2</span>
+</p>
+</div>
+<p> Since \(\{ x\in X : Mf(x) {\gt} \alpha \} \) is open and \(\mu \) is inner regular on open sets, it suffices to show that </p>
+<div class="displaymath" id="a0000000755">
+  \begin{equation*}  \mu (E) \le \frac{2^{2a}}{\alpha } \int |f(y)|\,  d\mu (y) \end{equation*}
+</div>
+<p> for every compact \(E\subset \{ x\in X : Mf(x) {\gt} \alpha \} \). For such an \(E\), by compactness, we can select a finite subcollection \(\mathcal{B} \subset \{ B_x: x\in E\} \) that covers \(E\). By <a href="overviewsection.html#eq-besico" class="eqref">2.0.43</a> applied to <a href="sect0002.html#maximal-theorem-a" class="eqref">10.2.2</a>, </p>
+<div class="equation" id="a0000000756">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \alpha \mu (\bigcup \mathcal{B}) \le 2^{2a} \int |f(y)|\, d\mu (y) \end{equation}
+  </div>
+  <span class="equation_label">10.2.3</span>
+</p>
+</div>
+<p> and hence </p>
+<div class="displaymath" id="a0000000757">
+  \begin{equation*}  \mu (E) \le \mu (\bigcup \mathcal{B}) \le \frac{2^{2a}}{\alpha } \int |f(y)|\, d\mu (y). \end{equation*}
+</div>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="Lebesgue-differentiation">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">10.2.2</span>
+    <span class="lemma_thmtitle">Lebesgue differentiation</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0002.html#Lebesgue-differentiation">#</a>
+    
+    <a class="icon proof" href="sect0002.html#a0000000758"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/lebesgue_differentiation" class="lean_decl">lebesgue_differentiation</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>   Let \(f\) be a bounded measurable function supported on a set of finite measure. Then for \(\mu \) almost every \(x\), we have </p>
+<div class="displaymath" id="a0000000759">
+  \[ \lim _{n\to \infty } \frac{1}{\mu (B_n)}\int _{B_n} f(y)\,  dy= f(x), \]
+</div>
+<p> where \(\{ B_n\} _{n\geq 1}\) is a sequence of balls with radii \(r_n{\gt}0\) such that \(x\in B_n\) for each \(n\geq 1\) and </p>
+<div class="displaymath" id="a0000000760">
+  \begin{equation*}  \lim _{n\to \infty } r_n=0 \, . \end{equation*}
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000758">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>This follows from the Lebesgue differentiation theorem, which is already formalized in Lean. </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="disjoint-family-countable">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">10.2.3</span>
+    <span class="lemma_thmtitle">Disjoint family countable</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0002.html#disjoint-family-countable">#</a>
+    
+    <a class="icon proof" href="sect0002.html#a0000000761"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/Pairwise.countable_of_isOpen_disjoint" class="lean_decl">Pairwise.countable_of_isOpen_disjoint</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>   In a doubling metric measure space \((X,\rho ,\mu , a)\), every disjoint family of balls \(B_j = B(x_j, r_j)\), \(j\in J\), is countable. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000761">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Choose an arbitrary \(x\in X\) as reference point. For \(q, Q\in {\mathbb {Q}}_+\), let \(J_{q,Q}\) denote the set of all \(j\in J\) such that \(B_j\subset B(x, Q)\) and \(r_j \ge q\). It suffices to show that all the \(J_{q,Q}\) are finite. Indeed, for all \(j\in J_{q,Q}\), </p>
+<div class="displaymath" id="a0000000762">
+  \begin{equation*}  \mu (B(x, Q)) \le \mu (B(x_j, 2Q)) = \mu (B(x_j, \frac{2 Q}{r_j} r_j)) \le 2^{a\log _2{\lceil \frac{2 Q}{r_j}\rceil }} \mu (B_j). \end{equation*}
+</div>
+<p> Since the \(B_j\) are disjoint, </p>
+<div class="equation" id="a0000000763">
+<p>
+  <div class="equation_content">
+    \begin{equation}  |J_{q,Q}| \mu (B(x, Q)) \le 2^{a\log _2{\lceil \frac{2Q}{q}\rceil }} \sum _{j\in J_{q,Q}} \mu (B_j) \le 2^{a\log _2{\lceil \frac{2Q}{q}\rceil }} \mu (B(x,Q)) \end{equation}
+  </div>
+  <span class="equation_label">10.2.4</span>
+</p>
+</div>
+<p> and hence \(|J_{q,Q}| \le 2^{a\log _2{\lceil \frac{2Q}{q}\rceil }}\). </p>
+
+  </div>
+</div>
+<p>The following lemma corresponds to Lemma 3.2 in <span class="cite">
+	[
+</span> with additional proof of the bounded intersection property taken from the proof of Proposition 7.1. It uses the following notation, which will be used throughout the rest of this section: whenever \(B_j\) denotes a ball \(B_j = B(x_j, r_j)\), define </p>
+<div class="displaymath" id="a0000000764">
+  \begin{equation*}  B_{n,j} = B(x_j, nr_j). \end{equation*}
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="ball-covering">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">10.2.4</span>
+    <span class="lemma_thmtitle">Ball covering</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0002.html#ball-covering">#</a>
+    
+    <a class="icon proof" href="sect0002.html#a0000000765"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0002.html#disjoint-family-countable">Lemma 10.2.3</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/ball_covering" class="lean_decl">ball_covering</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    Given an open set \(O\ne X\), there exists a countable family of balls \(B_j = B(x_j, r_j)\) such that </p>
+<div class="equation" id="balls-disjoint">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{balls-disjoint} B_j \cap B_{j'} = \emptyset \quad \text{ for } j \ne j', \end{equation}
+  </div>
+  <span class="equation_label">10.2.5</span>
+</p>
+</div>
+<p> and </p>
+<div class="equation" id="balls-covering">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{balls-covering} \bigcup _j B_{3,j} = O, \end{equation}
+  </div>
+  <span class="equation_label">10.2.6</span>
+</p>
+</div>
+<p> and </p>
+<div class="equation" id="enlarged-balls-intersect-complement">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{enlarged-balls-intersect-complement} B_{7,j} \cap (X \setminus O) \ne \emptyset \quad \text{ for all } j \end{equation}
+  </div>
+  <span class="equation_label">10.2.7</span>
+</p>
+</div>
+<p> and we have the bounded intersection property that each \(x\in O\) is contained in at most \(2^{6a}\) of the \(B_{3,j}\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000765">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Define for \(x\in O\), </p>
+<div class="equation" id="a0000000766">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \delta (x):= \sup \{ \delta \in {\mathbb {R}}: B(x,\delta )\subset O\} . \end{equation}
+  </div>
+  <span class="equation_label">10.2.8</span>
+</p>
+</div>
+<p> Since \(O\) is open, and \(O\ne X\), we have </p>
+<div class="equation" id="a0000000767">
+<p>
+  <div class="equation_content">
+    \begin{equation}  0 {\lt} \delta (x) {\lt} \infty \, . \end{equation}
+  </div>
+  <span class="equation_label">10.2.9</span>
+</p>
+</div>
+<p> Using Zorn’s Lemma, we select a maximal disjoint subfamily of \(\{ B(x,\frac{\delta (x)}{6}) : x \in O\} \). We obtain a (by <a href="sect0002.html#disjoint-family-countable">Lemma 10.2.3</a> countable) family of balls \(B_j = B(x_j, \frac{\delta (x_j)}{6}), j \in J\) such that <a href="sect0002.html#balls-disjoint" class="eqref">10.2.5</a>, <a href="sect0002.html#enlarged-balls-intersect-complement" class="eqref">10.2.7</a>, and \(\bigcup _j B_{3,j} \subset O\) are also immediate. For the other inclusion, first observe that for \(x,y\in X\), if \(B(x,\frac{\delta (x)}{6}) \cap B(y,\frac{\delta (y)}{6}) \ne \emptyset \), then </p>
+<div class="displaymath" id="a0000000768">
+  \begin{equation*}  \delta (x) \le \rho (x,y) + \delta (y) \le (\frac{\delta (x)}{6} + \frac{\delta (y)}{6}) + \delta (y) = \frac{\delta (x)}{6} + \frac{7\delta (y)}{6}, \end{equation*}
+</div>
+<p> so </p>
+<div class="equation" id="control-distance-growth">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{control-distance-growth} \delta (x) \le 2 \delta (y). \end{equation}
+  </div>
+  <span class="equation_label">10.2.10</span>
+</p>
+</div>
+<p> Now let \(z\in O\). By maximality, there exists some \(j\in J\) with \(B(z,\frac{\delta (z)}{6}) \cap B_j \ne \emptyset \). By <a href="sect0002.html#control-distance-growth" class="eqref">10.2.10</a>, </p>
+<div class="displaymath" id="a0000000769">
+  \begin{equation*}  \rho (z,x_j){\lt} \frac{\delta (z)}{6} + \frac{\delta (x_j)}{6} \le \frac{3\delta (x_j)}{6} = 3r_j \end{equation*}
+</div>
+<p> and thus \(z\in B_{3,j}\). </p>
+<p>We now turn to the bounded intersection property. Assume that for some \(j_1,\dots ,j_N\), </p>
+<div class="equation" id="a0000000770">
+<p>
+  <div class="equation_content">
+    \begin{equation}  z\in \bigcap _{k=1}^N B_{3,j_k}. \end{equation}
+  </div>
+  <span class="equation_label">10.2.11</span>
+</p>
+</div>
+<p> Similarly as above, observe for \(1\le k \le N\), </p>
+<div class="equation" id="control-distance-growth-b">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{control-distance-growth-b} \delta (z) \le \rho (z,x_{j_k}) + \delta (x_{j_k}) \le \frac{\delta (x_{j_k})}{2} + \delta (x_{j_k}) = \frac{3\delta (x_{j_k})}{2} \end{equation}
+  </div>
+  <span class="equation_label">10.2.12</span>
+</p>
+</div>
+<p> and </p>
+<div class="displaymath" id="a0000000771">
+  \begin{equation*}  \delta (x_{j_k}) \le \rho (x_{j_k},z) + \delta (z) \le \frac{\delta (x_{j_k})}{2} + \delta (z), \end{equation*}
+</div>
+<p> so </p>
+<div class="equation" id="control-distance-growth-c">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{control-distance-growth-c} \delta (x_{j_k}) \le 2 \delta (z). \end{equation}
+  </div>
+  <span class="equation_label">10.2.13</span>
+</p>
+</div>
+<p>By <a href="sect0002.html#control-distance-growth-b" class="eqref">10.2.12</a> and <a href="sect0002.html#control-distance-growth-c" class="eqref">10.2.13</a>, for all \(1\le k \le N\), \(B(z,\frac{\delta (z)}{6}) \subset B(x_{j_k}, 5r_{j_k})\) and \(B_{j_k} \subset B(z,\frac{8\delta (z)}{6})\). Using this and <a href="sect0002.html#balls-disjoint" class="eqref">10.2.5</a>, we obtain </p>
+<div class="displaymath" id="a0000000772">
+  \begin{align}  N \mu (B(z,\frac{\delta (z)}{6})) & \le \sum _{k=1}^N \mu (B(x_{j_k}, 5r_j)) \le 2^{3a} \sum _{k=1}^N \mu (B_{j_k}) \\ & = 2^{3a} \mu (\bigcup _{k=1}^N B_{j_k}) \le 2^{3a} \mu (B(z,\frac{8\delta (z)}{6})) \le 2^{6a} \mu (B(z,\frac{\delta (z)}{6})) \end{align}
+</div>
+<p> and conclude \(N\le 2^{6a}\). </p>
+
+  </div>
+</div>
+<p>Most of the next lemma and its proof is taken from Theorem 4.2 in <span class="cite">
+	[
+</span>. </p>
+<div class="lemma_thmwrapper theorem-style-plain" id="Calderon-Zygmund-decomposition">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">10.2.5</span>
+    <span class="lemma_thmtitle">Calderon Zygmund decomposition</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0002.html#Calderon-Zygmund-decomposition">#</a>
+    
+    <a class="icon proof" href="sect0002.html#a0000000773"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0002.html#ball-covering">Lemma 10.2.4</a></li>
+          
+          <li><a href="sect0002.html#Lebesgue-differentiation">Lemma 10.2.2</a></li>
+          
+          <li><a href="sect0002.html#maximal-theorem">Lemma 10.2.1</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/encard_czBall3_le" class="lean_decl">encard_czBall3_le</a></li>
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/tsum_czRemainder'" class="lean_decl">tsum_czRemainder'</a></li>
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/aemeasurable_czApproximation" class="lean_decl">aemeasurable_czApproximation</a></li>
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/czApproximation_add_czRemainder" class="lean_decl">czApproximation_add_czRemainder</a></li>
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/enorm_czApproximation_le" class="lean_decl">enorm_czApproximation_le</a></li>
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/enorm_czApproximation_le_infinite" class="lean_decl">enorm_czApproximation_le_infinite</a></li>
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/eLpNorm_czApproximation_le" class="lean_decl">eLpNorm_czApproximation_le</a></li>
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/support_czRemainder'_subset" class="lean_decl">support_czRemainder'_subset</a></li>
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/integral_czRemainder'" class="lean_decl">integral_czRemainder'</a></li>
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/integral_czRemainder" class="lean_decl">integral_czRemainder</a></li>
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/eLpNorm_czRemainder'_le" class="lean_decl">eLpNorm_czRemainder'_le</a></li>
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/eLpNorm_czRemainder_le" class="lean_decl">eLpNorm_czRemainder_le</a></li>
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/tsum_volume_czBall3_le" class="lean_decl">tsum_volume_czBall3_le</a></li>
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/volume_univ_le" class="lean_decl">volume_univ_le</a></li>
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/tsum_eLpNorm_czRemainder'_le" class="lean_decl">tsum_eLpNorm_czRemainder'_le</a></li>
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/tsum_eLpNorm_czRemainder_le" class="lean_decl">tsum_eLpNorm_czRemainder_le</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    Let \(f\) be a bounded, a.e. measurable function supported on a set of finite measure and let \(\alpha {\gt}\frac{1}{\mu (X)}\int |f|\, d\mu \). Then there exists a bounded a.e. measurable function \(g\) supported on a set of finite measure, a countable family of balls \(B_{3,j}\) (where we allow \(B_{3,1} = X\) in the special case that \(\mu (X){\lt}\infty \)) such that each \(x\in X\) is contained in at most \(2^{6a}\) of the \(B_{3,j}\), and a countable family of a.e. measurable functions \(\{ b_j\} _{j\in J}\) such that for all \(x \in X\) </p>
+<div class="equation" id="eq-gb-dec">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-gb-dec} f(x)= g(x) + \sum _{j} b_j(x) \end{equation}
+  </div>
+  <span class="equation_label">10.2.16</span>
+</p>
+</div>
+<p> and such that the following holds. For almost every \(x\in X\), </p>
+<div class="equation" id="eq-g-max">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-g-max} |g(x)|\leq 2^{3a} \alpha \, . \end{equation}
+  </div>
+  <span class="equation_label">10.2.17</span>
+</p>
+</div>
+<p> We have </p>
+<div class="equation" id="eq-g-L1-norm">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-g-L1-norm} \int |g(y)|\,  d\mu (y)\leq \int |f(y)|\,  d\mu (y). \end{equation}
+  </div>
+  <span class="equation_label">10.2.18</span>
+</p>
+</div>
+<p> For every \(j\) </p>
+<div class="equation" id="eq-supp-bj">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-supp-bj} \operatorname {supp} b_j \subset B_{3,j}\, . \end{equation}
+  </div>
+  <span class="equation_label">10.2.19</span>
+</p>
+</div>
+<p> For every \(j\) </p>
+<div class="equation" id="eq-bad-mean-zero">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-bad-mean-zero} \int _{B_{3,j}} b_j(x)\,  d\mu (x)=0, \end{equation}
+  </div>
+  <span class="equation_label">10.2.20</span>
+</p>
+</div>
+<p> and </p>
+<div class="equation" id="eq-bj-L1">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-bj-L1} \int _{B_{3,j}} |b_j(x)|\,  d\mu (x) \leq 2^{2a+1} \alpha \mu (B_{3,j}). \end{equation}
+  </div>
+  <span class="equation_label">10.2.21</span>
+</p>
+</div>
+<p> We have </p>
+<div class="equation" id="eq-bset-length-sum">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-bset-length-sum} \sum _j \mu (B_{3,j})\leq \frac{2^{6a}}{\alpha }\int |f(y)|\,  d\mu (y) \end{equation}
+  </div>
+  <span class="equation_label">10.2.22</span>
+</p>
+</div>
+<p> and </p>
+<div class="equation" id="eq-b-L1">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-b-L1} \sum _{j}\int _{B_{3,j}} |b_j(y)|\,  d\mu (y)\leq 2 \int |f(y)|\,  d\mu (y)\, . \end{equation}
+  </div>
+  <span class="equation_label">10.2.23</span>
+</p>
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000773">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Let \(E_\alpha :=\{ x\in X: Mf(x){\gt}\alpha \} \). Then \(E_\alpha \) is open. Assume first that \(E_\alpha \ne X\). We apply <a href="sect0002.html#ball-covering">Lemma 10.2.4</a> with \(O=E_\alpha \) to obtain the family \(B_j, j\in J,\). Without loss of generality, we can assume \(J={\mathbb {N}}\). Define inductively </p>
+<div class="equation" id="a0000000774">
+<p>
+  <div class="equation_content">
+    \begin{equation}  Q_j := B_{3,j} \setminus \left(\bigcup _{i{\lt}j} Q_i \cup \bigcup _{i{\gt}j} B_i \right). \end{equation}
+  </div>
+  <span class="equation_label">10.2.24</span>
+</p>
+</div>
+<p> Then \(B_j\subset Q_j\subset B_{3,j}\), the \(Q_j\) are pairwise disjoint and \(\bigcup _j Q_j = E_\alpha \). Define </p>
+<div class="equation" id="eq-g-def">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-g-def} g(x):=\begin{cases}  f(x), &  x\in X\setminus E_\alpha ,\\ \frac{1}{\mu (Q_j)}\int _{Q_j} f(y)\,  d\mu (y), & x\in Q_j, \end{cases} \end{equation}
+  </div>
+  <span class="equation_label">10.2.25</span>
+</p>
+</div>
+<p> and, for each \(j\), </p>
+<div class="equation" id="a0000000775">
+<p>
+  <div class="equation_content">
+    \begin{equation}  b_j(x):= \mathbf{1}_{Q_j}(x) \left(f(x)-\frac{1}{\mu (Q_j)}\int _{Q_j} f(y)\,  d\mu (y) \right). \end{equation}
+  </div>
+  <span class="equation_label">10.2.28</span>
+</p>
+</div>
+<p> Then <a href="sect0002.html#eq-gb-dec" class="eqref">10.2.16</a>, <a href="sect0002.html#eq-supp-bj" class="eqref">10.2.19</a> and <a href="sect0002.html#eq-bad-mean-zero" class="eqref">10.2.20</a> are true by construction. Boundedness of \(g\) is immediate from the definition, as is the fact that \(\operatorname{\operatorname {supp}}g\) is contained within \(\operatorname{\operatorname {supp}}f \cup \bigcup _j Q_j\). Now the fact that \(\operatorname{\operatorname {supp}}g\) has finite measure follows from \(\bigcup _j Q_j = E_\alpha \) and <a href="overviewsection.html#eq-hlm-2" class="eqref">2.0.46</a>. </p>
+<p>For <a href="sect0002.html#eq-g-max" class="eqref">10.2.17</a>, we first do the case \(x\in X\setminus E_\alpha \). By definition of \(Mf\), </p>
+<div class="equation" id="a0000000776">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \frac{1}{\mu (B)}\int _B |f(y)|\, d\mu (y) \le \alpha \end{equation}
+  </div>
+  <span class="equation_label">10.2.29</span>
+</p>
+</div>
+<p> for every ball \(B\subset X\) with \(x\in B\). It follows by <a href="sect0002.html#Lebesgue-differentiation">Lemma 10.2.2</a> that for almost every \(x\in X\setminus E_\alpha \), \(|f(x)|\le \alpha \). In the case \(x\in E_\alpha \), there exists some \(j\in J\) with \(x\in Q_j\) and we have that </p>
+<div class="equation" id="large-ball-estimate">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{large-ball-estimate} \frac{1}{\mu (B_{7,j})} \int _{B_{7,j}} |f(y)| \, d\mu (y) \le \alpha \end{equation}
+  </div>
+  <span class="equation_label">10.2.30</span>
+</p>
+</div>
+<p> because \(B_{7,j}\cap (X\setminus E_\alpha ) \ne \emptyset \). We get </p>
+<div class="equation" id="a0000000777">
+<p>
+  <div class="equation_content">
+    \begin{equation}  |g(x)| \le \frac{1}{\mu (Q_j)}\int _{Q_j} |f(y)|\,  d\mu (y) \le \frac{1}{\mu (B_j)}\int _{B_{7,j}} |f(y)| \,  d\mu (y) \le 2^{3a}\alpha . \end{equation}
+  </div>
+  <span class="equation_label">10.2.31</span>
+</p>
+</div>
+<p>To prove <a href="sect0002.html#eq-g-L1-norm" class="eqref">10.2.18</a>, we estimate </p>
+<div class="displaymath" id="a0000000778">
+  \begin{align*}  \int |g(z)|\,  d\mu (z) & \le \int _{X\setminus E_\alpha } |f(z)|\,  d\mu (z) + \sum _{j} \int _{Q_j}\frac{1}{\mu (Q_j)}\int _{Q_j}|f(y)|\,  d\mu (y)\, d\mu (z) \\ & = \int |f(z)|\, d\mu (z). \end{align*}
+</div>
+<p> Using the triangle inequality, we have that </p>
+<div class="displaymath" id="eq-bj-int">
+  \begin{align}  \label{eq-bj-int} \int _{B_{3,j}} |b_j(y)|\,  dy & \le \int _{Q_j} |f(y)|\,  d\mu (y) + \int _{Q_j} \frac{1}{\mu (Q_j)}\int _{Q_j} |f(x)|\,  d\mu (x)\,  d\mu (y) \\ & = 2 \int _{Q_j} |f(y)|\,  dy. \end{align}
+</div>
+<p> With <a href="sect0002.html#large-ball-estimate" class="eqref">10.2.30</a>, we estimate further </p>
+<div class="equation" id="a0000000779">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \le 2 \int _{B_{7,j}} |f(y)|\,  dy \le 2\mu (B_{7,j})\alpha \le 2^{2a+1} \alpha \mu (B_{3,j}) \end{equation}
+  </div>
+  <span class="equation_label">10.2.34</span>
+</p>
+</div>
+<p> to obtain <a href="sect0002.html#eq-bj-L1" class="eqref">10.2.21</a>. Further, summing up <a href="sect0002.html#eq-bj-int" class="eqref">10.2.32</a> in \(j\) yields <a href="sect0002.html#eq-b-L1" class="eqref">10.2.23</a>. At last, we estimate with <a href="sect0002.html#maximal-theorem">Lemma 10.2.1</a> </p>
+<div class="equation" id="a0000000780">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \sum _j \mu (B_{3,j}) \le 2^{2a} \sum _j \mu (B_j) \le 2^{2a} \mu (E_\alpha ) \le \frac{2^{6a}}{\alpha }\int |f(y)|\,  d\mu (y), \end{equation}
+  </div>
+  <span class="equation_label">10.2.35</span>
+</p>
+</div>
+<p> proving <a href="sect0002.html#eq-bset-length-sum" class="eqref">10.2.22</a>. </p>
+<p>Assume now that \(E_\alpha = X\). It follows from <a href="sect0002.html#maximal-theorem">Lemma 10.2.1</a> that then \(\mu (X){\lt}\infty \). Define </p>
+<div class="displaymath" id="a0000000781">
+  \begin{equation*}  g := \frac{1}{\mu (X)} \int |f(y)|\, d\mu (y) \end{equation*}
+</div>
+<p> and </p>
+<div class="displaymath" id="a0000000782">
+  \begin{equation*}  b_1 := f - g. \end{equation*}
+</div>
+<p> Then \(f = g + b_1\) and \(\operatorname{\operatorname {supp}}b_1 \subset B_{3,1}:=X\) and <a href="sect0002.html#eq-gb-dec" class="eqref">10.2.16</a>, <a href="sect0002.html#eq-g-L1-norm" class="eqref">10.2.18</a>, <a href="sect0002.html#eq-supp-bj" class="eqref">10.2.19</a>, <a href="sect0002.html#eq-bad-mean-zero" class="eqref">10.2.20</a> all hold immediately. By assumption, \(\alpha {\gt}\frac{1}{\mu (X)}\int |f|\, d\mu = g\), so <a href="sect0002.html#eq-g-max" class="eqref">10.2.17</a> holds. We also have, using the definitions and the same assumption, </p>
+<div class="equation" id="a0000000783">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \int |b_1(y)|\,  d\mu (y) \le 2 \int |f(y)|\, d\mu (y) \le 2\alpha \mu (X), \end{equation}
+  </div>
+  <span class="equation_label">10.2.36</span>
+</p>
+</div>
+<p> which verifies both <a href="sect0002.html#eq-b-L1" class="eqref">10.2.23</a> and <a href="sect0002.html#eq-bj-L1" class="eqref">10.2.21</a>. Finally, by <a href="sect0002.html#maximal-theorem">Lemma 10.2.1</a>, </p>
+<div class="displaymath" id="a0000000784">
+  \begin{equation*}  \mu (X) \le \frac{2^{2a}}{\alpha } \int |f(y)|\, d\mu (y), \end{equation*}
+</div>
+<p> which shows <a href="sect0002.html#eq-bset-length-sum" class="eqref">10.2.22</a>. </p>
+
+  </div>
+</div>
+<p>We use <a href="sect0002.html#Calderon-Zygmund-decomposition">Lemma 10.2.5</a> to prove <a href="sect0002.html#calderon-zygmund-weak-1-1">Lemma 10.0.3</a>. For the remainder of this section, let \(f:X\to {\mathbb {C}}\), \(r{\gt}0\) and \(\alpha {\gt}0\) as in <a href="sect0002.html#calderon-zygmund-weak-1-1">Lemma 10.0.3</a>. We define the constant </p>
+<div class="equation" id="weak-1-1-proof-cz-const">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{weak-1-1-proof-cz-const} c:= 2^{-a^3-12a-4} \end{equation}
+  </div>
+  <span class="equation_label">10.2.37</span>
+</p>
+</div>
+<p> and \(\alpha ' := c\alpha \). If \(\alpha '\le \frac{1}{\mu (X)}\int |f|\, d\mu \), then we directly have </p>
+<div class="displaymath" id="a0000000785">
+  \begin{equation*}  \mu \left(\{ x\in X: |T_r f(x)|{\gt}\alpha \} \right)\le \mu (X) \le \frac{1}{\alpha '} \int |f(y)|\,  d\mu (y) \le \frac{2^{a^3 + 19a}}{\alpha } \int |f(y)|\,  d\mu (y), \end{equation*}
+</div>
+<p> which proves <a href="sect0002.html#eq-weak-1-1" class="eqref">10.0.9</a>. So assume from now on that \(\alpha '{\gt}\frac{1}{\mu (X)}\int |f|\, d\mu \). Using <a href="sect0002.html#Calderon-Zygmund-decomposition">Lemma 10.2.5</a> for \(f\) and \(\alpha '\), we obtain the decomposition </p>
+<div class="displaymath" id="a0000000786">
+  \begin{equation*}  f=g+b=g+\sum _j b_j \end{equation*}
+</div>
+<p> such that the properties <a href="sect0002.html#eq-gb-dec" class="eqref">10.2.16</a>-<a href="sect0002.html#eq-b-L1" class="eqref">10.2.23</a> are satisfied (with \(\alpha '\) replacing \(\alpha \)). Let </p>
+<div class="equation" id="eq-Ij-cj">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-Ij-cj} B_{3,j}=B(x_j, 3r_j) \end{equation}
+  </div>
+  <span class="equation_label">10.2.38</span>
+</p>
+</div>
+<p> as in the lemma. Then </p>
+<div class="equation" id="eq-Ij*">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-Ij*} B_{6,j}=B(x_j, 6r_j) \end{equation}
+  </div>
+  <span class="equation_label">10.2.39</span>
+</p>
+</div>
+<p> is a ball with the same center as \(B_{3,j}\) but with </p>
+<div class="equation" id="eq-Ij*-dim">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-Ij*-dim} \mu (B_{6,j})\le 2^{a} \mu (B_{3,j}). \end{equation}
+  </div>
+  <span class="equation_label">10.2.40</span>
+</p>
+</div>
+<p> Let </p>
+<div class="equation" id="eq-omega">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-omega} \Omega :=\bigcup _j B_{6,j}. \end{equation}
+  </div>
+  <span class="equation_label">10.2.41</span>
+</p>
+</div>
+<p> We deal with \(T_rg\) and \(T_rb\) separately in the following lemmas. </p>
+<div class="lemma_thmwrapper theorem-style-plain" id="estimate-good">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">10.2.6</span>
+    <span class="lemma_thmtitle">Estimate good</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0002.html#estimate-good">#</a>
+    
+    <a class="icon proof" href="sect0002.html#a0000000787"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0002.html#Calderon-Zygmund-decomposition">Lemma 10.2.5</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/estimate_good" class="lean_decl">estimate_good</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  
+<div class="displaymath" id="a0000000788">
+  \begin{equation*}  \mu \left(\{ x\in X: |T_r g(x)|{\gt}{\alpha }/2\} \right) \le \frac{2^{2a^3+3a+2}c}{\alpha } \int |f(y)|\,  d\mu (y). \end{equation*}
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000787">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>We estimate using monotonicity of the integral </p>
+<div class="displaymath" id="a0000000789">
+  \begin{equation*}  \mu \left(\{ x\in X: |T_r g(x)|{\gt}{\alpha }/2\} \right)\leq \frac{4}{\alpha ^2} \int |T_r g(y)|^2\,  d\mu (y). \end{equation*}
+</div>
+<p> Using <a href="sect0002.html#eq-strong-2-2-assumption" class="eqref">10.0.8</a> followed by <a href="sect0002.html#eq-g-max" class="eqref">10.2.17</a> and <a href="sect0002.html#eq-g-L1-norm" class="eqref">10.2.18</a>, we estimate the right hand side above by </p>
+<div class="equation" id="eq-Hr-g">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-Hr-g} \leq \frac{4\cdot 2^{2a^3}}{\alpha ^2} \int |g(y)|^2\,  d\mu (y)\leq \frac{2^{2a^3+3a+2}c}{\alpha } \int |g(y)|\,  dy \le \frac{2^{2a^3+3a+2}c}{\alpha } \int |f(y)|\,  d\mu (y). \end{equation}
+  </div>
+  <span class="equation_label">10.2.42</span>
+</p>
+</div>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="estimate-bad-partial">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">10.2.7</span>
+    <span class="lemma_thmtitle">Estimate bad partial</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0002.html#estimate-bad-partial">#</a>
+    
+    <a class="icon proof" href="sect0002.html#a0000000790"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0002.html#Calderon-Zygmund-decomposition">Lemma 10.2.5</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/estimate_bad_partial" class="lean_decl">estimate_bad_partial</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    Let \(x\in X\setminus \Omega \). Then </p>
+<div class="displaymath" id="a0000000791">
+  \begin{equation*}  |T_rb(x)| \le 3F(x)+\alpha /8, \end{equation*}
+</div>
+<p> where </p>
+<div class="displaymath" id="a0000000792">
+  \begin{equation*}  F(x) := 2^{a^3+2a+1} c\alpha \sum _{j\in J} \left(\frac{3r_j}{\rho (x,x_j)}\right)^{\frac{1}{a}}\frac{\mu (B_{3,j})}{V(x,x_j)}. \end{equation*}
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000790">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>We decompose the index set \(J\) into the following disjoint sets: </p>
+<div class="displaymath" id="a0000000793">
+  \begin{align*}  \mathcal{J}_1(x)& :=\{ j\, : r+3r_j \le \rho (x,x_j) \} ,\\ \mathcal{J}_2(x)& :=\{ j\, : r-3r_j \le \rho (x,x_j) {\lt} r+3r_j\} ,\\ \mathcal{J}_3(x)& :=\{ j\, : \rho (x,x_j) {\lt} r-3r_j\} . \end{align*}
+</div>
+<p> Then </p>
+<div class="displaymath" id="eq-b-dec-1">
+  \begin{alignat}{3} \label{eq-b-dec-1} |T_r b(x)|\le & & & \sum _{j\in \mathcal{J}_1(x)} |T_rb_j(x)| \\ \label{eq-b-dec-2} & +& & \sum _{j\in \mathcal{J}_2(x)} |T_rb_j(x)| \\ \label{eq-b-dec-3} & +& & \sum _{j\in \mathcal{J}_3(x)} |T_rb_j(x)|. \end{alignat}
+</div>
+<p> For all \(j\in \mathcal{J}_3(x)\), \(\operatorname{\operatorname {supp}}b_j\subset B_{3,j}\subset B(x,r)\), and thus \(T_rb_j(x)=0\), so \(\eqref{eq-b-dec-3} = 0\). </p>
+<p>Next, for \(j\in \mathcal{J}_1(x)\), \(\operatorname{\operatorname {supp}}b_j\subset B_{3,j}\subset X \setminus B(x,r)\), and we have </p>
+<div class="displaymath" id="a0000000794">
+  \begin{equation*}  T_rb_j(x)=\int _{X\setminus B(x,r)} K(x,y) b_j(y)\, d\mu (y)=\int _{B_{3,j}} K(x,y) b_j(y)\, d\mu (y)\, . \end{equation*}
+</div>
+<p>Using <a href="sect0002.html#eq-bad-mean-zero" class="eqref">10.2.20</a>, the above is equal to </p>
+<div class="displaymath" id="a0000000795">
+  \begin{equation*}  \int _{{3,j}} (K(x,y)-K(x,x_j)) b_j(y)\, d\mu (y)\, . \end{equation*}
+</div>
+<p> Since \(x\in X\setminus \Omega \), we have for each \(y\in B_{3,j}\) that </p>
+<div class="equation" id="eq-Om-cj">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-Om-cj} \rho (x,x_j)\ge 6r_j {\gt} 2\rho (x_j,y), \end{equation}
+  </div>
+  <span class="equation_label">10.2.46</span>
+</p>
+</div>
+<p> so we can apply <a href="sect0001.html#eqkernel-y-smooth" class="eqref">1.1.12</a> to estimate </p>
+<div class="displaymath" id="a0000000796">
+  \begin{equation*}  \eqref{eq-b-dec-1} \le \sum _{j\in \mathcal{J}_1(x)}\int _{B_{3,j}}\left(\frac{\rho (x_j,y)}{\rho (x,x_j)}\right)^{\frac{1}{a}}\frac{2^{a^3}}{V(x,x_j)} |b_j(y)|\,  d\mu (y) \end{equation*}
+</div>
+<div class="equation" id="a0000000797">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \le 2^{a^3} \sum _{j} \left(\frac{3r_j}{\rho (x,x_j)}\right)^{\frac{1}{a}}\frac{1}{V(x,x_j)}\int _{B_{3,j}} |b_j(y)|\,  dy \end{equation}
+  </div>
+  <span class="equation_label">10.2.47</span>
+</p>
+</div>
+<p> and by <a href="sect0002.html#eq-bj-L1" class="eqref">10.2.21</a>, </p>
+<div class="equation" id="eq-J1-diff-est">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-J1-diff-est} \le 2^{a^3+2a+1} c\alpha \sum _{j} \left(\frac{3r_j}{\rho (x,x_j)}\right)^{\frac{1}{a}}\frac{\mu (B_{3,j})}{V(x,x_j)} = F(x). \end{equation}
+  </div>
+  <span class="equation_label">10.2.48</span>
+</p>
+</div>
+<p> Next, we estimate <a href="sect0002.html#eq-b-dec-2" class="eqref">10.2.44</a>. For each \(j\in \mathcal{J}_2(x)\), set </p>
+<div class="displaymath" id="a0000000798">
+  \begin{equation*}  d_j:=\frac{1}{\mu (B_{3,j})}\int _{B_{3,j}} \mathbf{1}_{X\setminus B(x,r)}(y) b_j(y)\,  dy. \end{equation*}
+</div>
+<p> Then by <a href="sect0002.html#eq-bj-L1" class="eqref">10.2.21</a> </p>
+<div class="equation" id="eq-dj-est">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-dj-est} |d_j|\le 2^{2a+1} c\alpha . \end{equation}
+  </div>
+  <span class="equation_label">10.2.49</span>
+</p>
+</div>
+<p> For each \(j\in \mathcal{J}_2(x)\), we have </p>
+<div class="displaymath" id="a0000000799">
+  \begin{align*}  T_r b_j(x)& =\int _{B_{3,j}} K(x,y) (\mathbf{1}_{X\setminus B(x,r)}(y)b_j(y)-d_j)\,  dy + \int _{B_{3,j}} d_j K(x,y) \,  dy \\ & = \int _{B_{3,j}} (K(x,y)-K(x,x_j)) (\mathbf{1}_{X\setminus B(x,r)}(y)b_j(y)-d_j)\,  dy + \int _{B_{3,j}} d_j K(x,y) \,  dy. \end{align*}
+</div>
+<p> Thus, using the triangle inequality, the equation above and <a href="sect0002.html#eq-dj-est" class="eqref">10.2.49</a>, we obtain </p>
+<div class="displaymath" id="a0000000800">
+  \begin{equation*}  |T_r b_j(x)|\le \end{equation*}
+</div>
+<div class="equation" id="eq-J2-diff-est">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-J2-diff-est} \int _{B_{3,j}} |K(x,y)-K(x,x_j)| \left(|b_j(y)|+2^{2a+1} c\alpha \right)\,  dy +2^{2a+1} c\alpha \int _{B_{3,j}} |K(x,y)| \,  dy. \end{equation}
+  </div>
+  <span class="equation_label">10.2.50</span>
+</p>
+</div>
+<p> By <a href="sect0002.html#eq-Om-cj" class="eqref">10.2.46</a>, we can apply <a href="sect0001.html#eqkernel-y-smooth" class="eqref">1.1.12</a> and arguing as in <a href="sect0002.html#eq-J1-diff-est" class="eqref">10.2.48</a>, we get that </p>
+<div class="equation" id="eq-J2-diff-est-2">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-J2-diff-est-2} \eqref{eq-b-dec-2} \le 2F(x) + 2^{2a+1}c\alpha \sum _{j\in \mathcal{J}_2(x)} \int _{B_{3,j}} |K(x,y)|\, d\mu (y), \end{equation}
+  </div>
+  <span class="equation_label">10.2.51</span>
+</p>
+</div>
+<p> with \(F\) as in <a href="sect0002.html#eq-J1-diff-est" class="eqref">10.2.48</a>. Define </p>
+<div class="displaymath" id="a0000000801">
+  \begin{equation*}  A := \bigcup _{j \in \mathcal{J}_2(x)} B_{3,j}. \end{equation*}
+</div>
+<p> We claim that </p>
+<div class="equation" id="eq-J2-union-subset">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-J2-union-subset} A\subset B(x,3r) \setminus B(x,\frac{r}{3}). \end{equation}
+  </div>
+  <span class="equation_label">10.2.52</span>
+</p>
+</div>
+<p> Indeed, for each \(j\in \mathcal{J}_2(x)\) and \(y\in B_{3,j}\), using again <a href="sect0002.html#eq-Om-cj" class="eqref">10.2.46</a>, </p>
+<div class="displaymath" id="a0000000802">
+  \begin{equation*}  \rho (x,x_j) {\lt} r+r_{3,j} \le r + \frac{1}{2} \rho (x,x_j) \implies \rho (x,x_j) {\lt} 2r \end{equation*}
+</div>
+<p> and hence </p>
+<div class="displaymath" id="a0000000803">
+  \begin{equation*}  \rho (x,y) \le \rho (x,x_j) + \rho (x_j,y) {\lt} 2r + 3r_j \le 2r + \frac{1}{2}\rho (x,x_j) {\lt} 3r. \end{equation*}
+</div>
+<p> For the lower bound, we observe </p>
+<div class="displaymath" id="a0000000804">
+  \begin{equation*}  \rho (x,x_j) \ge r-3r_j \ge r - \frac{1}{2} \rho (x,x_j) \implies \rho (x,x_j) \ge \frac{2}{3}r, \end{equation*}
+</div>
+<p> and conclude </p>
+<div class="displaymath" id="a0000000805">
+  \begin{equation*}  \rho (x,y) \ge \rho (x,x_j) - \rho (y,x_j) \ge \rho (x,x_j) - 3r_j \ge \rho (x,x_j) - \frac{1}{2}\rho (x,x_j) \ge \frac{1}{3} r. \end{equation*}
+</div>
+<p>Using the bounded intersection property of the \(B_{3,j}\), <a href="sect0002.html#eq-J2-union-subset" class="eqref">10.2.52</a> and <a href="sect0001.html#eqkernel-size" class="eqref">1.1.11</a>, we get </p>
+<div class="displaymath" id="a0000000806">
+  \begin{align}  \sum _{j\in \mathcal{J}_2(x)} \int _{B_{3,j}} |K(x,y)|\, d\mu (y) & \le 2^{6a} \int _{A} |K(x,y)|\, d\mu (y) \\ & \le 2^{6a} \int _{B(x,3r) \setminus B(x,\frac{r}{3})} |K(x,y)|\, d\mu (y) \\ & \le 2^{6a} \int _{B(x,3r) \setminus B(x,\frac{r}{3})} \frac{2^{a^3}}{V(x,y)} \, d\mu (y) \\ & \le 2^{a^3+6a} \int _{B(x,3r) \setminus B(x,\frac{r}{3})} \frac{1}{\mu (B(x,\frac{r}{3}))} \, d\mu (y) \\ & \le 2^{a^3+6a} \frac{\mu (B(x,3r))}{\mu (B(x,\frac{r}{3}))} \\ \label{eq-J2-diff-est-4} & \le 2^{a^3+10a}. \end{align}
+</div>
+<p>Combining the estimates <a href="sect0002.html#eq-J1-diff-est" class="eqref">10.2.48</a> for <a href="sect0002.html#eq-b-dec-1" class="eqref">10.2.43</a>, <a href="sect0002.html#eq-J2-diff-est-2" class="eqref">10.2.51</a> for <a href="sect0002.html#eq-b-dec-2" class="eqref">10.2.44</a>, and <a href="sect0002.html#eq-J2-diff-est-4" class="eqref">10.2.58</a>, we get </p>
+<div class="displaymath" id="a0000000807">
+  \begin{equation*}  |T_rb(x)|\leq 3F(x)+2^{a^3+12a+1}c\alpha . \end{equation*}
+</div>
+<p> By the definition <a href="sect0002.html#weak-1-1-proof-cz-const" class="eqref">10.2.37</a> of \(c\), this equals </p>
+<div class="displaymath" id="a0000000808">
+  \begin{equation*}  3F(x)+\alpha /8. \end{equation*}
+</div>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="estimate-F-set">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">10.2.8</span>
+    <span class="lemma_thmtitle">Estimate F set</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0002.html#estimate-F-set">#</a>
+    
+    <a class="icon proof" href="sect0002.html#a0000000809"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0002.html#Calderon-Zygmund-decomposition">Lemma 10.2.5</a></li>
+          
+          <li><a href="sect0002.html#geometric-series-estimate">Lemma 10.1.1</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/distribution_czOperatorBound" class="lean_decl">distribution_czOperatorBound</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    For \(F\) as defined in <a href="sect0002.html#estimate-bad-partial">Lemma 10.2.7</a>, we have </p>
+<div class="equation" id="eq-F-X-minus-Omega">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-F-X-minus-Omega} \mu (\{ x\in X\setminus \Omega : F(x){\gt}\alpha /8\} ) \le \frac{2^{a^3+11a+4}}{\alpha } \int |f(y)|\, d\mu (y)\, . \end{equation}
+  </div>
+  <span class="equation_label">10.2.59</span>
+</p>
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000809">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>We estimate </p>
+<div class="displaymath" id="a0000000810">
+  \begin{align}  \mu (\{ x\in X\setminus \Omega & : F(x){\gt} \alpha /8\} ) \le \frac{8}{\alpha } \int _{X\setminus \Omega } F(x)\, d\mu (x) \\ & \le \frac{8}{\alpha } \int _{X\setminus \Omega } 2^{a^3+2a+1} c\alpha \sum _{j} \left(\frac{3r_j}{\rho (x,x_j)}\right)^{\frac{1}{a}}\frac{\mu (B_{3,j})}{V(x,x_j)}\, d\mu (x) \\ \label{eq-F-est-1} & \le 2^{a^3+2a+4} c \sum _{j} \mu (B_{3,j}) \int _{X\setminus B_{6,j}} \left(\frac{3r_j}{\rho (x,x_j)}\right)^{\frac{1}{a}}\frac{1}{V(x,x_j)}\, d\mu (x) \end{align}
+</div>
+<p> Using </p>
+<div class="displaymath" id="a0000000811">
+  \begin{equation*}  V(x,x_j) = \mu (B(x,\rho (x,x_j))) \ge 2^{-a}\mu (B(x,2\rho (x,x_j))) \ge 2^{-a} \mu (B(x_j,\rho (x_j,x))), \end{equation*}
+</div>
+<p> we have for all \(j\in J\), </p>
+<div class="displaymath" id="a0000000812">
+  \begin{align*} & \int _{X\setminus B_{6,j}} \left(\frac{3r_j}{\rho (x,x_j)}\right)^{\frac{1}{a}}\frac{1}{V(x,x_j)}\, d\mu (x) \\ \le &  2^a \int _{X\setminus B_{6,j}} \left(\frac{3r_j}{\rho (x,x_j)}\right)^{\frac{1}{a}}\frac{1}{\mu (B(x_j,\rho (x_j,x)))}\, d\mu (x) \\ \le & 2^a \sum _{n=1}^\infty \int _{B(x_j,2^{n+1}\cdot 3r_j)\setminus B(x_j,2^n\cdot 3r_j)} \left(\frac{3r_j}{2^n \cdot 3r_j}\right)^{\frac{1}{a}}\frac{1}{\mu (B(x_j,2^n \cdot 3r_j))}\, d\mu (x) \\ \le & 2^a \sum _{n=1}^\infty 2^{-\frac{n}{a}} \frac{\mu (B(x_j,2^{n+1}\cdot 3r_j))}{\mu (B(x_j,2^n \cdot 3r_j))} \\ \le & 2^{3a}, \end{align*}
+</div>
+<p> where we used <a href="sect0002.html#geometric-series-estimate">Lemma 10.1.1</a> in the last step. Plugging this into <a href="sect0002.html#eq-F-est-1" class="eqref">10.2.62</a> and using <a href="sect0002.html#eq-bset-length-sum" class="eqref">10.2.22</a>, we conclude that </p>
+<div class="displaymath" id="a0000000813">
+  \begin{equation*}  \mu (\{ x\in X\setminus \Omega : F(x){\gt} \alpha /8\} ) \le \frac{2^{a^3+11a+4}}{\alpha } \int |f(y)|\, d\mu (y)\, . \end{equation*}
+</div>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="estimate-bad">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">10.2.9</span>
+    <span class="lemma_thmtitle">Estimate bad</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0002.html#estimate-bad">#</a>
+    
+    <a class="icon proof" href="sect0002.html#a0000000814"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0002.html#Calderon-Zygmund-decomposition">Lemma 10.2.5</a></li>
+          
+          <li><a href="sect0002.html#estimate-bad-partial">Lemma 10.2.7</a></li>
+          
+          <li><a href="sect0002.html#estimate-F-set">Lemma 10.2.8</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/estimate_bad" class="lean_decl">estimate_bad</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    We have </p>
+<div class="displaymath" id="a0000000815">
+  \begin{equation*}  \mu \left({\{ x\in X: |T_r b(x)|{\gt}\alpha /2\} }\right) \le \frac{\frac{2^{7a}}{c} + 2^{a^3+11a+4}}{\alpha } \int |f(y)|\, d\mu (y) \, . \end{equation*}
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000814">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>We estimate </p>
+<div class="displaymath" id="a0000000816">
+  \begin{equation*}  \mu \left(\{ x\in X: |T_r b(x)|{\gt}\alpha /2\} \right) \end{equation*}
+</div>
+<div class="equation" id="eq-set-dec-2">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-set-dec-2} \le \mu (\Omega ) + \mu \left(\{ x\in X\setminus \Omega : |T_r b(x)|{\gt}{\alpha }/2\} \right)\, . \end{equation}
+  </div>
+  <span class="equation_label">10.2.63</span>
+</p>
+</div>
+<p> Using <a href="sect0002.html#eq-Ij*-dim" class="eqref">10.2.40</a> and <a href="sect0002.html#eq-bset-length-sum" class="eqref">10.2.22</a>, we conclude that </p>
+<div class="equation" id="eq-omega-bd">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-omega-bd} \mu (\Omega ) \le \sum _{j} \mu (B_{6,j}) \le 2^a \sum _j \mu (B_{3,j}) \le \frac{2^{7a}}{c\alpha } \int |f(y)|\,  d\mu (y)\, . \end{equation}
+  </div>
+  <span class="equation_label">10.2.64</span>
+</p>
+</div>
+<p> It follows from <a href="sect0002.html#estimate-bad-partial">Lemma 10.2.7</a> and the triangle inequality that </p>
+<div class="equation" id="eq-set-dec-1">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-set-dec-3} \mu ({\{ x\in X\setminus \Omega : |T_r b(x)|{\gt}\alpha /2\} }) \le \mu (\{ x\in X\setminus \Omega : F(x){\gt} \alpha /8\} )\, . \end{equation}
+  </div>
+  <span class="equation_label">10.2.65</span>
+</p>
+</div>
+<p> The claim now follows from <a href="sect0002.html#estimate-F-set">Lemma 10.2.8</a>. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000715">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof of <a href="sect0002.html#calderon-zygmund-weak-1-1">Lemma 10.0.3</a>
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>  It follows by the triangle inequality and subadditivity of \(\mu \) that </p>
+<div class="displaymath" id="a0000000817">
+  \begin{equation*}  \mu \left(\{ x\in X: |T_r f(x)|{\gt}\alpha \} \right) \end{equation*}
+</div>
+<div class="displaymath" id="a0000000818">
+  \begin{equation*}  \label{eq-set-dec-1} \le \mu \left(\{ x\in X: |T_r g(x)|{\gt}{\alpha }/2\} \right) + \mu \left(\{ x\in X: |T_r b(x)|{\gt}{\alpha }/2\} \right). \end{equation*}
+</div>
+<p> Using <a href="sect0002.html#estimate-good">Lemma 10.2.6</a>, <a href="sect0002.html#estimate-bad">Lemma 10.2.9</a> and the definition <a href="sect0002.html#weak-1-1-proof-cz-const" class="eqref">10.2.37</a> of \(c\), we get </p>
+<div class="displaymath" id="a0000000819">
+  \begin{align*}  \le &  \frac{2^{2a^3+3a+2}c + \frac{2^{7a}}{c} + 2^{a^3+11a+4}}{\alpha } \int |f(y)|\,  d\mu (y) \\ =&  \frac{2^{a^3-9a-2} + 2^{a^3+19a+4} + 2^{a^3+11a+4}}{\alpha } \int |f(y)|\,  d\mu (y) \\ \le &  \frac{2^{a^3 + 21a}}{\alpha } \int |f(y)|\,  d\mu (y). \end{align*}
+</div>
+
+  </div>
+</div>
+
+</div> <!--main-text -->
+</div> <!-- content-wrapper -->
+</div> <!-- content -->
+</div> <!-- wrapper -->
+
+<nav class="prev_up_next">
+  <svg  id="showmore-minus" class="icon icon-eye-minus showmore"><use xlink:href="symbol-defs.svg#icon-eye-minus"></use></svg>
+
+  <svg  id="showmore-plus" class="icon icon-eye-plus showmore"><use xlink:href="symbol-defs.svg#icon-eye-plus"></use></svg>
+
+  <a href="sec-hlm.html" title="Proof of Vitali covering and Hardy–Littlewood"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+</a>
+  <a href="index.html" title="A blueprint for the formalization of Carleson’s theorem on convergence of Fourier series"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+</a>
+  <a href="sect0003.html" title="Proof of The Classical Carleson Theorem"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+</a>
+</nav>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/plastex.js"></script>
+<script type="text/javascript" src="js/svgxuse.js"></script>
+<script type="text/javascript" src="js/js.cookie.min.js"></script>
+<script type="text/javascript" src="js/showmore.js"></script>
+</body>
+</html>

@@ -1,3 +1,4 @@
+import Architect
 import Carleson.ToMathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap
 import Carleson.ToMathlib.MeasureTheory.Integral.Lebesgue
 import Carleson.ToMathlib.MeasureTheory.Function.LpSeminorm.Basic
@@ -253,6 +254,114 @@ lemma estimate_10_1_4 {g : X → ℂ} (hg : BoundedFiniteSupport g) (hr : 0 < r)
   ring
 
 /-- Lemma 10.1.2 -/
+@[blueprint
+  "estimate-x-shift"
+  (title := "estimate x shift")
+  (statement := /-- Let $0<r$ and  $x\in X$. Let $g:X\to\C$ be a bounded measurable function
+    supported on a set of finite measure.
+    Then for all $x'$ with $\rho(x,x')\le r$.
+    \begin{equation*}
+    \left| T_r g(x) - T_r g(x') \right|
+    \le 2^{a^3 + 2a + 2} Mg(x)\, .
+    \end{equation*} -/)
+  (proof := /-- By definition,
+    \begin{equation}
+    \label{xx'difference}
+    \left| T_r g(x) - T_r g(x') \right|
+    =\left|\int_{r\le\rho(x,y)} K(x,y) g(y) \,d\mu(y)
+    -\int_{r\le\rho(x',y)}
+    K(x',y) g(y)\, d\mu(y)
+    \right| \, .
+    \end{equation}
+    We split the first integral in \eqref{xx'difference}
+    into the domains $r\le\rho(x,y)<2r$
+    and $2r\le\rho(x,y)$. The integral over the first domain we estimate
+    by $\eqref{firstxx'}$ below.
+    For the second domain, we
+    observe with $\rho(x,x')\le r$ and the triangle inequality that $r\le\rho(x',y)$. We therefore
+    combine on this domain with the
+    corresponding part of the second integral in \eqref{xx'difference} and estimate that by
+    $\eqref{secondxx'}$
+    below. The remaining part of the second integral in
+    \eqref{xx'difference} we estimate by $\eqref{thirdxx'}$.
+    Overall, we have estimated \eqref{xx'difference} by
+    \begin{equation}
+    \label{firstxx'}
+    \int_{r\le\rho(x,y)< 2r} |K(x,y)| |g(y)| \,d\mu(y)
+    \end{equation}
+    \begin{equation}
+    \label{secondxx'}
+      +  \left|\int_{2r\le\rho(x,y)} (K(x,y)-K(x',y)) g(y) \,d\mu(y)
+    \right|
+    \end{equation}
+    \begin{equation}
+    \label{thirdxx'}
+      +\int_{r\le\rho(x',y), r\le\rho(x,y)<2r}
+    |K(x',y)| |g(y)|\, d\mu(y)\,.
+    \end{equation}
+    Using the bound on $K$ in \eqref{eqkernel-size} and the doubling condition \eqref{doublingx}, we
+    estimate \eqref{firstxx'} by
+    \begin{align}
+     \int_{r\le\rho(x,y)<2r} \frac{2^{a^3}}{V(x,y)} |g(y)| \,d\mu(y)\,
+    &\le
+    \frac{2^{a^3}}{\mu(B(x,r))} \int_{r\le\rho(x,y)<2r}
+    |g(y)| \, d\mu(y)\, \\
+    \label{firstxx'b}
+    &\le
+    \frac{2^{a^3} \cdot 2^a}{\mu(B(x,2r))} \int_{\rho(x,y)<2r}
+    |g(y)| \, d\mu(y)\,
+    .
+    \end{align}
+    Using the definition of $Mg$, we estimate
+    \eqref{firstxx'b} by
+    \begin{equation}
+    \label{firstxx'c}
+     \le 2^{a^3 + a} {Mg(x)}\, .
+    \end{equation}
+    Similarly, in the domain of \eqref{thirdxx'}
+    we note by the triangle inequality
+    and assumption on $x'$ that $\rho(x',y)<3r$ and thus we estimate
+    \eqref{thirdxx'}
+    by
+    \begin{equation}
+    \label{thirdxx'b}
+    \frac{2^{a^3}}{\mu(B(x',r))} \int_{\rho(x',y)<4r}
+    |g(y)| \, d\mu(y)\le 2^{a^3 + 2a} Mg(x)
+    \end{equation}
+    
+    We turn to the remaining term. Using \eqref{eqkernel-x-smooth}, we estimate \eqref{secondxx'} by
+    \begin{equation}\label{secondxx'b}
+     \int_{2r\le\rho(x,y)}
+     \left(\frac{\rho(x,x')}{\rho(x,y)}\right)^{\frac{1}{a}}\frac{2^{a^3}}{V(x,y)} |g(y)| \,d\mu(y)
+    \end{equation}
+    We decompose and estimate
+    \eqref{secondxx'}
+    with the triangle inequality by
+    \begin{align}
+     &\sum_{j=1}^\infty  \int_{2^jr\le\rho(x,y)< 2^{j+1}r}
+     \left(\frac{\rho(x,x')}{\rho(x,y)}\right)^{\frac{1}{a}}\frac{2^{a^3}}{V(x,y)} |g(y)|
+     \,d\mu(y)\, \\
+     \le&
+     \sum_{j=1}^\infty \left( 2^{-j} \right)^{\frac{1}{a}} \int_{2^jr\le\rho(x,y)< 2^{j+1}r}
+     \frac{2^{a^3}}{\mu(B(x,2^j r))} |g(y)| \,d\mu(y) \\
+     \le&
+    \sum_{j=1}^\infty 2^{-\frac{j}{a}} \frac{2^{a^3 + a}}{\mu(B(x,2^{j+1} r))}
+    \int_{\rho(x,y)<2^{j+1}r}
+    |g(y)| \, d\mu(y) \\
+    \label{secondxx'c}
+    \le& 2^{a^3 + a} \sum_{j=1}^\infty 2^{-\frac{j}{a}} Mg(x)\,.
+    \end{align}
+    Using \Cref{geometric-series-estimate}, we estimate
+    \eqref{secondxx'c} by
+    \begin{equation}\label{secondxx'd}
+    \le 2^{a^3 + 2a} Mg(x) \,.
+    \end{equation}
+    Summing the estimates
+    for \eqref{firstxx'},
+    \eqref{secondxx'}, and
+    \eqref{thirdxx'}
+    proves the lemma. -/)
+  (latexEnv := "lemma")]
 theorem estimate_x_shift (ha : 4 ≤ a)
     {g : X → ℂ} (hg : BoundedFiniteSupport g) (hr : 0 < r) (hx : dist x x' ≤ r) :
     edist (czOperator K r g x) (czOperator K r g x') ≤
@@ -503,6 +612,71 @@ lemma cut_out_ball {g : X → ℂ} (hr : r ∈ Ioc 0 R) (hx : dist x x' ≤ R / 
   · measurability
 
 /-- Lemma 10.1.3 -/
+@[blueprint
+  "Cotlar-control"
+  (title := "Cotlar control")
+  (statement := /-- Let $0<r\le R$ and  $x\in X$. Let $g:X\to\C$ be a bounded measurable function
+    supported on a set of finite measure.
+    Then for all $x'\in X$ with $\rho(x,x')\le\frac {R}{4}$ we have
+    \begin{equation}\label{eq-cotlar-control}
+    \left|T_R g(x)
+    \right|\le
+    |T_r(g-g\mathbf{1}_{B(x,\frac {R} 2)})(x')| +
+    2^{a^3 + 4a + 1} Mg(x)\, .
+    \end{equation} -/)
+  (proof := /-- Let $x$ and $x'$ be given with $\rho(x,x')\le\frac {R}{4}$.
+    By \Cref{estimate-x-shift}, we estimate
+    the left-hand-side of
+    \eqref{eq-cotlar-control} by
+    \begin{equation}\label{eqcotlar0}
+    |T_R(g)(x')|+
+    2^{a^3 + 2a + 2} Mg(x)\,.
+    \end{equation}
+    We  have
+    \begin{equation}
+    \label{eqcotlar-1}
+    T_R(g)(x')=
+    \int_{R\le\rho(x',y)} K(x',y) g(y) \, d\mu(y)\, .
+    \end{equation}
+    On the domain $R\le\rho(x',y)$, we have $\frac {R}2\le\rho(x,y)$. Hence we may write
+    for \eqref{eqcotlar-1}
+    \begin{equation*}
+    T_R(g)(x')=\int_{R\le\rho(x',y)} K(x',y) (g-g\mathbf{1}_{B(x,\frac {R} 2)})(y) \,d\mu(y)
+    \end{equation*}
+    \begin{equation}\label{eqcotlar1}
+    =T_R(g-g\mathbf{1}_{B(x,\frac {R} 2)})(x')\, .
+    \end{equation}
+    Combining the estimate \eqref{eqcotlar0} with the identification \eqref{eqcotlar1}, we obtain
+    \begin{equation}\label{eqcotlar5}
+    \left|T_R g(x)
+    \right|\le
+    |T_R(g-g\mathbf{1}_{B(x,\frac {R} 2)})(x')|+
+    2^{a^3 + 2a + 2} Mg(x)\, .
+    \end{equation}
+    We  have
+    \begin{equation*}
+    (T_r-T_R)(g-g\mathbf{1}_{B(x,\frac {R} 2)})(x')
+    \end{equation*}
+    \begin{equation*}
+    = \int_{B(x',R)\setminus B(x',r)} K(x',y) (g-g\mathbf{1}_{B(x,\frac {R} 2)})(y) \,d\mu(y)
+    \end{equation*}
+    \begin{equation}\label{eqcotlar2}
+    = \int_{B(x',R)\setminus (B(x',r) \cup B(x,\frac{R}{2}))} K(x',y) g(y) \,d\mu(y)
+    \end{equation}
+    As $\frac{R}{2}\le\rho(x,y)$ together with $\rho(x,x')\le\frac {R}{4}$ implies
+    $\frac {R}{4}\le\rho(x',y)$, we can estimate the absolute value of \eqref{eqcotlar2} with
+    \eqref{eqkernel-size} by
+    \begin{align*}
+    \le &\frac{2^{a^3}}{\mu(B(x',\frac{R}{4}))} \int_{B(x,2R)\setminus B(x',\frac{R}{4})}
+    |g(y)|\, d\mu(y) \\
+    \le &\frac{2^{a^3+a}}{\mu(B(x',\frac{R}{2}))} \int_{B(x,2R)}
+    |g(y)|\, d\mu(y) \\
+    \le &2^{a^3+a} \frac{\mu(B(x,2R))}{\mu(B(x,\frac{R}{4}))} Mg(x) \le 2^{a^3 + 4a} Mg(x)\, .
+    \end{align*}
+    
+    By the triangle inequality, \eqref{eq-cotlar-control} follows now from \eqref{eqcotlar5} and the
+    estimate for \eqref{eqcotlar2}. -/)
+  (latexEnv := "lemma")]
 theorem cotlar_control (ha : 4 ≤ a) {g : X → ℂ} (hg : BoundedFiniteSupport g) (hr : r ∈ Ioc 0 R)
     (hx : dist x x' ≤ R / 4) :
     ‖czOperator K R g x‖ₑ ≤ ‖czOperator K r ((ball x (R / 2))ᶜ.indicator g) x'‖ₑ +
@@ -564,6 +738,52 @@ lemma globalMaximalFunction_zero_enorm_ae_zero (hR : 0 < R) {f : X → ℂ} (hf 
   · simp [hR]
 
 /-- Part 1 of Lemma 10.1.4 about `F₁`. -/
+@[blueprint
+  "Cotlar-sets"
+  (title := "Cotlar sets")
+  (statement := /-- Assume that \eqref{two-sided-Hr-bound-assumption} holds. Let $0<r\le R$ and 
+    $x\in X$. Let $g:X\to\C$ be a bounded measurable function supported on a set of finite measure.
+    Then the measure $|F_1|$ of the set $F_1$ of all $x'\in B(x,\frac {R} 4)$ such that
+    \begin{equation}
+    \label{first-cotlar-exception}
+        |T_rg(x')|> 4 M(T_rg)(x)
+    \end{equation}
+    is less than or equal to $\mu(B(x,\frac{R}{4}))/4$.
+    Moreover,  the measure $|F_2|$ of the set $F_2$ of all $x'\in
+    B(x,\frac {R} 4)$ such that
+    \begin{equation}
+    \label{second-cotlar-exception}
+        |T_r(g\mathbf{1}_{B(x,\frac {R} 2)})(x')| > 2^{a^3 + 22a + 2} Mg(x)
+    \end{equation}
+    is less than or equal to  $\mu(B(x,\frac{R}{4}))/4$. -/)
+  (proof := /-- Let $r$, $R$, $x$ and $g$ be given.
+    If $M(T_rg)(x)=0$, then $T_rg$ is zero almost everywhere and the estimate on $|F_1|$ is trivial.
+    Assume $M(T_rg)(x)>0$.
+    We have with \eqref{first-cotlar-exception}
+    \begin{equation}
+        M(T_rg)(x)\ge
+        \frac 1{\mu(B(x,\frac{R}{4}))}\int_{B(x,\frac{R}{4})}|T_rg(x')|\, dx'
+    \end{equation}
+    \begin{equation}
+        \ge
+        \frac 1{\mu(B(x,\frac{R}{4}))}\int_{F_1} 4 M(T_rg)(x)\, dx' \,.
+    \end{equation}
+    Dividing by $M(T_rg)(x)$ gives
+    \begin{equation}
+        1\ge \frac{4}{\mu(B(x,\frac{R}{4}))} |F_1|\, .
+    \end{equation}
+    This gives the desired bound for the measure of $F_1$.
+    We turn to the set $F_2$. Similarly as above we may assume $Mg(x)>0$.
+    The set $F_2$ is then estimated with \Cref{calderon-zygmund-weak-1-1} by
+    \begin{equation}
+       \frac {2^{a^3+21a}}{2^{a^3 + 22a + 2}Mg(x)}\int |g\mathbf{1}_{B(x,\frac {R}2)}|(y)\, d\mu(y)
+    \end{equation}
+    \begin{equation}
+       \le \frac {1}{2^{a+2} Mg(x)}\mu(B(x,\frac {R}{2})) Mg(x) \le \frac{\mu(B(x,\frac {R}{4}))}{4}
+       \,.
+    \end{equation}
+    This gives the desired bound for the measure of $F_2$. -/)
+  (latexEnv := "lemma")]
 theorem cotlar_set_F₁ (hr : 0 < r) (hR : r ≤ R) {g : X → ℂ} (hg : BoundedFiniteSupport g) :
     volume.restrict (ball x (R / 4))
       {x' | 4 * globalMaximalFunction volume 1 (czOperator K r g) x < ‖czOperator K r g x'‖ₑ } ≤
@@ -603,6 +823,52 @@ theorem cotlar_set_F₁ (hr : 0 < r) (hR : r ≤ R) {g : X → ℂ} (hg : Bounde
   simp [(lt_of_lt_of_le hr hR)]
 
 /-- Part 2 of Lemma 10.1.4 about `F₂`. -/
+@[blueprint
+  "Cotlar-sets"
+  (title := "Cotlar sets")
+  (statement := /-- Assume that \eqref{two-sided-Hr-bound-assumption} holds. Let $0<r\le R$ and 
+    $x\in X$. Let $g:X\to\C$ be a bounded measurable function supported on a set of finite measure.
+    Then the measure $|F_1|$ of the set $F_1$ of all $x'\in B(x,\frac {R} 4)$ such that
+    \begin{equation}
+    \label{first-cotlar-exception}
+        |T_rg(x')|> 4 M(T_rg)(x)
+    \end{equation}
+    is less than or equal to $\mu(B(x,\frac{R}{4}))/4$.
+    Moreover,  the measure $|F_2|$ of the set $F_2$ of all $x'\in
+    B(x,\frac {R} 4)$ such that
+    \begin{equation}
+    \label{second-cotlar-exception}
+        |T_r(g\mathbf{1}_{B(x,\frac {R} 2)})(x')| > 2^{a^3 + 22a + 2} Mg(x)
+    \end{equation}
+    is less than or equal to  $\mu(B(x,\frac{R}{4}))/4$. -/)
+  (proof := /-- Let $r$, $R$, $x$ and $g$ be given.
+    If $M(T_rg)(x)=0$, then $T_rg$ is zero almost everywhere and the estimate on $|F_1|$ is trivial.
+    Assume $M(T_rg)(x)>0$.
+    We have with \eqref{first-cotlar-exception}
+    \begin{equation}
+        M(T_rg)(x)\ge
+        \frac 1{\mu(B(x,\frac{R}{4}))}\int_{B(x,\frac{R}{4})}|T_rg(x')|\, dx'
+    \end{equation}
+    \begin{equation}
+        \ge
+        \frac 1{\mu(B(x,\frac{R}{4}))}\int_{F_1} 4 M(T_rg)(x)\, dx' \,.
+    \end{equation}
+    Dividing by $M(T_rg)(x)$ gives
+    \begin{equation}
+        1\ge \frac{4}{\mu(B(x,\frac{R}{4}))} |F_1|\, .
+    \end{equation}
+    This gives the desired bound for the measure of $F_1$.
+    We turn to the set $F_2$. Similarly as above we may assume $Mg(x)>0$.
+    The set $F_2$ is then estimated with \Cref{calderon-zygmund-weak-1-1} by
+    \begin{equation}
+       \frac {2^{a^3+21a}}{2^{a^3 + 22a + 2}Mg(x)}\int |g\mathbf{1}_{B(x,\frac {R}2)}|(y)\, d\mu(y)
+    \end{equation}
+    \begin{equation}
+       \le \frac {1}{2^{a+2} Mg(x)}\mu(B(x,\frac {R}{2})) Mg(x) \le \frac{\mu(B(x,\frac {R}{4}))}{4}
+       \,.
+    \end{equation}
+    This gives the desired bound for the measure of $F_2$. -/)
+  (latexEnv := "lemma")]
 theorem cotlar_set_F₂ (ha : 4 ≤ a) (hr : 0 < r) (hR : r ≤ R)
     (hT : ∀ r > 0, HasBoundedStrongType (czOperator K r) 2 2 volume volume (C_Ts a))
     {g : X → ℂ} (hg : BoundedFiniteSupport g) :
@@ -680,6 +946,30 @@ theorem cotlar_set_F₂ (ha : 4 ≤ a) (hr : 0 < r) (hR : r ≤ R)
 irreducible_def C10_1_5 (a : ℕ) : ℝ≥0 := 2 ^ (a ^ 3 + 22 * a + 3)
 
 /-- Lemma 10.1.5 -/
+@[blueprint
+  "Cotlar-estimate"
+  (title := "Cotlar estimate")
+  (statement := /-- Assume that \eqref{two-sided-Hr-bound-assumption} holds.
+    Let $0<r\le R$ and  $x\in X$. Let $g:X\to\C$ be a bounded measurable function supported on a set
+    of finite measure. Then
+    \begin{equation}\label{eq-cotlar-estimate}
+    |T_Rg(x)| \le 2^{2}M(T_rg)(x)+ 2^{a^3+22a+3} Mg(x)
+    \, .
+    \end{equation} -/)
+  (proof := /-- By \Cref{Cotlar-sets}, the set of all $x'\in B(x,\frac {R} 4)$
+    such that at least one of the conditions
+    \eqref{first-cotlar-exception} and
+    \eqref{second-cotlar-exception} is satisfied has measure less than or equal to
+    $\mu(B(x,\frac{R}{4}))/2$ and hence is not all of $B(x,\frac {R} 4)$.
+    Pick an $x'\in B(x,\frac {R} 4)$ such that both conditions are not satisfied.
+    Applying \Cref{Cotlar-control} for this $x'$ and using the triangle inequality
+    estimates the left-hand side of \eqref{eq-cotlar-estimate}
+    by
+    \begin{equation}
+        4 M(T_rg)(x) + 2^{a^3 + 22a + 2} Mg(x) + 2^{a^3 + 4a + 1} Mg(x)\, .
+    \end{equation}
+    This proves the lemma. -/)
+  (latexEnv := "lemma")]
 theorem cotlar_estimate (ha : 4 ≤ a)
     (hT : ∀ r > 0, HasBoundedStrongType (czOperator K r) 2 2 volume volume (C_Ts a))
     {g : X → ℂ} (hg : BoundedFiniteSupport g) (hr : r ∈ Ioc 0 R) :
@@ -735,6 +1025,47 @@ theorem cotlar_estimate (ha : 4 ≤ a)
 
 omit [IsTwoSidedKernel a K] in
 /-- Part of Lemma 10.1.6. -/
+@[blueprint
+  "simple-nontangential-operator"
+  (title := "simple nontangential operator")
+  (statement := /-- Assume that \eqref{two-sided-Hr-bound-assumption} holds.
+    For every $r>0$ and every bounded measurable function $g$ supported on a set of finite measure
+    the function $T_{*}^r g$ is lower-semicontinuous and we have
+    \begin{equation}\label{trzerobound}
+        \|T_{*}^rg\|_2\le 2^{a^3+26a+6}\|g\|_2,
+    \end{equation} -/)
+  (proof := /-- For a fixed $\lambda$ we note that (rewriting $x'\in B(x,R)$ as $x\in B(x',R)$):
+    \begin{equation}
+        \{x : T_{*}^r g(x) > \lambda\} = \bigcup_{r<R}\bigcup_{\{x':|T_R(g)(x')|>\lambda\}} B(x',R)
+    \end{equation}
+    The right-hand side is open, hence $T_{*}^r g$ is lower-semicontinuous by definition.
+    
+    For the second part, with \Cref{estimate-x-shift} and the triangle inequality, we estimate for
+    every $x\in X$
+    \begin{equation}
+         T_{*}^r g(x)
+         \le 2^{a^3 + 2a + 2} Mg(x)+\sup_{r<R} |T_R(g)(x)|\, .
+    \end{equation}
+    Using further \Cref{Cotlar-estimate}, we estimate
+    \begin{equation}
+          T_{*}^r g(x)
+         \le 2^{a^3+2a+2}Mg(x) + 2^{a^3+22a+3}Mg(x) + 2^{2}M(T_rg)(x)\, .
+    \end{equation}
+    Taking the $L^2$ norm and using \Cref{Hardy-Littlewood} with $a=4$  and $p_2=2$ and $p_1=1$ , we
+    obtain
+    \begin{equation}
+          \|T_{*}^r g\|_2
+         \le 2^{a^3+22a+4} \|Mg\|_2 + 2^{2}\|M(T_rg)\|_2
+    \end{equation}
+    \begin{equation}
+         \le 2^{a^3+26a+5} \|g\|_2 + 2^{4a+3}\|T_r g\|_2\, .
+    \end{equation}
+    Applying \eqref{two-sided-Hr-bound-assumption} gives
+    \begin{equation}
+          \|T_{*}^r g\|_2\le 2^{a^3+26a+5}\|g\|_2 + 2^{a^3+4a+3}\|g\|_2\, .
+    \end{equation}
+    This shows \eqref{trzerobound} and completes the proof of the inequality. -/)
+  (latexEnv := "lemma")]
 lemma lowerSemicontinuous_simpleNontangentialOperator {g : X → ℂ} :
     LowerSemicontinuous (simpleNontangentialOperator K r g) := by
   unfold simpleNontangentialOperator
@@ -759,6 +1090,47 @@ irreducible_def C10_1_6 (a : ℕ) : ℝ≥0 := 2 ^ (a ^ 3 + 26 * a + 6)
 
 /-- Lemma 10.1.6. The formal statement includes the measurability of the operator.
 See also `simple_nontangential_operator_le` -/
+@[blueprint
+  "simple-nontangential-operator"
+  (title := "simple nontangential operator")
+  (statement := /-- Assume that \eqref{two-sided-Hr-bound-assumption} holds.
+    For every $r>0$ and every bounded measurable function $g$ supported on a set of finite measure
+    the function $T_{*}^r g$ is lower-semicontinuous and we have
+    \begin{equation}\label{trzerobound}
+        \|T_{*}^rg\|_2\le 2^{a^3+26a+6}\|g\|_2,
+    \end{equation} -/)
+  (proof := /-- For a fixed $\lambda$ we note that (rewriting $x'\in B(x,R)$ as $x\in B(x',R)$):
+    \begin{equation}
+        \{x : T_{*}^r g(x) > \lambda\} = \bigcup_{r<R}\bigcup_{\{x':|T_R(g)(x')|>\lambda\}} B(x',R)
+    \end{equation}
+    The right-hand side is open, hence $T_{*}^r g$ is lower-semicontinuous by definition.
+    
+    For the second part, with \Cref{estimate-x-shift} and the triangle inequality, we estimate for
+    every $x\in X$
+    \begin{equation}
+         T_{*}^r g(x)
+         \le 2^{a^3 + 2a + 2} Mg(x)+\sup_{r<R} |T_R(g)(x)|\, .
+    \end{equation}
+    Using further \Cref{Cotlar-estimate}, we estimate
+    \begin{equation}
+          T_{*}^r g(x)
+         \le 2^{a^3+2a+2}Mg(x) + 2^{a^3+22a+3}Mg(x) + 2^{2}M(T_rg)(x)\, .
+    \end{equation}
+    Taking the $L^2$ norm and using \Cref{Hardy-Littlewood} with $a=4$  and $p_2=2$ and $p_1=1$ , we
+    obtain
+    \begin{equation}
+          \|T_{*}^r g\|_2
+         \le 2^{a^3+22a+4} \|Mg\|_2 + 2^{2}\|M(T_rg)\|_2
+    \end{equation}
+    \begin{equation}
+         \le 2^{a^3+26a+5} \|g\|_2 + 2^{4a+3}\|T_r g\|_2\, .
+    \end{equation}
+    Applying \eqref{two-sided-Hr-bound-assumption} gives
+    \begin{equation}
+          \|T_{*}^r g\|_2\le 2^{a^3+26a+5}\|g\|_2 + 2^{a^3+4a+3}\|g\|_2\, .
+    \end{equation}
+    This shows \eqref{trzerobound} and completes the proof of the inequality. -/)
+  (latexEnv := "lemma")]
 theorem simple_nontangential_operator (ha : 4 ≤ a)
     (hT : ∀ r > 0, HasBoundedStrongType (czOperator K r) 2 2 volume volume (C_Ts a)) (hr : 0 < r) :
     HasBoundedStrongType (simpleNontangentialOperator K r) 2 2 volume volume (C10_1_6 a) := by
@@ -868,6 +1240,32 @@ theorem simple_nontangential_operator_le (ha : 4 ≤ a)
   apply simple_nontangential_operator ha hT (by positivity) g hg |>.2
 
 /-- Part of Lemma 10.1.7, reformulated. -/
+@[blueprint
+  "small-annulus"
+  (title := "small annulus")
+  (statement := /-- Let $f:X\to\C$ be a bounded measurable function supported on a set of finite
+    measure.
+    Let $x\in X$ and $R>0$.
+    Then, for all $\epsilon>0$, there exists some $\delta>0$ such that
+    \begin{equation}
+        \left| \int_{R<\rho(x,y)<R+\delta} K(x,y) f(y) \, d\mu(y) \right| \le \epsilon
+    \end{equation}
+    and
+    \begin{equation}
+        \left| \int_{R-\delta<\rho(x,y)<R} K(x,y) f(y) \, d\mu(y) \right| \le \epsilon \,.
+    \end{equation} -/)
+  (proof := /-- We only prove the second inequality, the first one is analogous.
+    Note that the integrand is bounded in $X\setminus B(x,\frac{R}{2})$. So for
+    $0<\delta\le\frac{R}{2}$,
+    \begin{align*}
+        &\left| \int_{R-\delta<\rho(x,y)<R} K(x,y) f(y) \, d\mu(y) \right| \\
+        \le &\frac{2^{a^3}}{\mu(B(x,\frac{R}{2}))} \, \sup_{y\in X}|f(x)| \cdot \mu(\{y\in X:
+        R-\delta<\rho(x,y)<R\}).
+    \end{align*}
+    By continuity from above of $\mu$, the right factor becomes arbitrarily small as
+    $\delta\rightarrow 0$. Thus, for small enough $\delta$, the whole expression is $\le\epsilon$.
+    -/)
+  (latexEnv := "lemma")]
 theorem small_annulus_right {g : X → ℂ} (hg : BoundedFiniteSupport g) {R₁ R₂ : ℝ} (hR₁ : 0 < R₁) :
     ContinuousWithinAt (fun R₂ ↦ ∫ y in Annulus.oo x R₁ R₂, K x y * g y) (Ioo R₁ R₂) R₁ := by
   by_cases hR1R2 : R₁ < R₂
@@ -925,6 +1323,32 @@ theorem small_annulus_right {g : X → ℂ} (hg : BoundedFiniteSupport g) {R₁ 
     simpa [indicator_of_notMem hr] using hs
 
 /-- Part of Lemma 10.1.7, reformulated -/
+@[blueprint
+  "small-annulus"
+  (title := "small annulus")
+  (statement := /-- Let $f:X\to\C$ be a bounded measurable function supported on a set of finite
+    measure.
+    Let $x\in X$ and $R>0$.
+    Then, for all $\epsilon>0$, there exists some $\delta>0$ such that
+    \begin{equation}
+        \left| \int_{R<\rho(x,y)<R+\delta} K(x,y) f(y) \, d\mu(y) \right| \le \epsilon
+    \end{equation}
+    and
+    \begin{equation}
+        \left| \int_{R-\delta<\rho(x,y)<R} K(x,y) f(y) \, d\mu(y) \right| \le \epsilon \,.
+    \end{equation} -/)
+  (proof := /-- We only prove the second inequality, the first one is analogous.
+    Note that the integrand is bounded in $X\setminus B(x,\frac{R}{2})$. So for
+    $0<\delta\le\frac{R}{2}$,
+    \begin{align*}
+        &\left| \int_{R-\delta<\rho(x,y)<R} K(x,y) f(y) \, d\mu(y) \right| \\
+        \le &\frac{2^{a^3}}{\mu(B(x,\frac{R}{2}))} \, \sup_{y\in X}|f(x)| \cdot \mu(\{y\in X:
+        R-\delta<\rho(x,y)<R\}).
+    \end{align*}
+    By continuity from above of $\mu$, the right factor becomes arbitrarily small as
+    $\delta\rightarrow 0$. Thus, for small enough $\delta$, the whole expression is $\le\epsilon$.
+    -/)
+  (latexEnv := "lemma")]
 theorem small_annulus_left {g : X → ℂ} (hg : BoundedFiniteSupport g) {R₁ R₂ : ℝ} (hR₁ : 0 ≤ R₁) :
     ContinuousWithinAt (fun R ↦ ∫ y in Annulus.oo x R R₂, K x y * g y) (Ioo R₁ R₂) R₂ := by
   by_cases hR1R2 : R₁ < R₂
@@ -982,6 +1406,60 @@ theorem small_annulus_left {g : X → ℂ} (hg : BoundedFiniteSupport g) {R₁ R
     simpa [indicator_of_notMem hr] using hs
 
 /-- Lemma 10.1.8. -/
+@[blueprint
+  "nontangential-operator-boundary"
+  (title := "nontangential operator boundary")
+  (statement := /-- Let $f:X\to\C$ be a bounded measurable function supported on a set of finite
+    measure.
+    For all $x\in X$,
+    \begin{equation}
+    \label{tang-unm-op-eq}
+        T_*f(x) = \sup_{R_1 < R_2} \sup_{x'\in B(x,R_1)} \left|\int_{B(x',R_2)\setminus B(x',R_1)}
+        K(x',y) f(y) \, \mathrm{d}\mu(y) \right|
+    \end{equation} -/)
+  (proof := /-- We show two inequalities. Let $\epsilon>0$.
+    Let $R_1<R_2$ and $x'\in B(x,R_1)$. Then for small enough $\delta>0$,
+    \begin{alignat}{3}
+        \label{eq-without-suprema-1}
+        &&&\left|\int_{R_1<\rho(x',y)<R_2} K(x',y) f(y) \, \mathrm{d}\mu(y) \right| \\
+        \label{eq-diff-small-1}
+        \le &&&\left|\int_{R_1<\rho(x',y)<R_1+\delta} K(x',y) f(y) \, \mathrm{d}\mu(y) \right| \\
+        \label{eq-other-1}
+        &+&&\left|\int_{R_1+\delta\le\rho(x',y)<R_2} K(x',y) f(y) \, \mathrm{d}\mu(y) \right| .
+    \end{alignat}
+    By \Cref{small-annulus}, we can choose $\delta$ such that \eqref{eq-diff-small-1} is bounded by
+    $\epsilon$. Without loss of generality, we can assume $R_1+\delta<R_2$. Then \eqref{eq-other-1}
+    is bounded by the right hand side of \eqref{tang-unm-op-eq} and we obtain
+    \begin{equation*}
+        \le \epsilon + \sup_{R_1 < R_2} \sup_{x'\in B(x,R_1)} \left|\int_{B(x',R_2)\setminus
+        B(x',R_1)} K(x',y) f(y) \, \mathrm{d}\mu(y) \right| .
+    \end{equation*}
+    The inequality still holds when taking the suprema over $R_1<R_2$ and $\rho(x,x')<R_1$ in
+    \eqref{eq-without-suprema-1}. Since $\epsilon>0$ was arbitrary, this proves the first
+    inequality.
+    
+    The other direction is similar. Let $\epsilon>0$.
+    Let $R_1<R_2$ and $x'\in B(x,R_1)$. Then for $\delta>0$,
+    \begin{alignat}{3}
+        \label{eq-without-suprema-2}
+        &&&\left|\int_{B(x',R_2)\setminus B(x',R_1)} K(x',y) f(y) \, \mathrm{d}\mu(y) \right| \\
+        \label{eq-diff-small-2}
+        \le &&&\left|\int_{R_1-\delta<\rho(x',y)< R_1} K(x',y) f(y) \, \mathrm{d}\mu(y) \right| \\
+        \label{eq-other-2}
+        &+&&\left|\int_{R_1-\delta<\rho(x',y)<R_2} K(x',y) f(y) \, \mathrm{d}\mu(y) \right| .
+    \end{alignat}
+    
+    By \Cref{small-annulus}, we can choose $\delta$ such that \eqref{eq-diff-small-2} is bounded by
+    $\epsilon$. Without loss of generality, we can assume $\rho(x,x')<R_1-\delta$. Then
+    \eqref{eq-other-2} is bounded by the left hand side of \eqref{tang-unm-op-eq} and we obtain
+    \begin{equation*}
+        \le \epsilon + \sup_{R_1 < R_2} \sup_{x'\in B(x,R_1)} \left|\int_{R_1<\rho(x',y)<R_2}
+        K(x',y) f(y) \, \mathrm{d}\mu(y) \right| .
+    \end{equation*}
+    The inequality still holds when taking the suprema over $R_1<R_2$ and $\rho(x,x')<R_1$ in
+    \eqref{eq-without-suprema-1}. Since $\epsilon>0$ was arbitrary, this proves the second
+    inequality. -/)
+  (latexEnv := "lemma")]
 theorem nontangential_operator_boundary {f : X → ℂ} (hf : BoundedFiniteSupport f) :
     nontangentialOperator K f x =
     ⨆ (R₂ : ℝ) (R₁ ∈ Ioo 0 R₂) (x' ∈ ball x R₁),
@@ -1076,6 +1554,51 @@ lemma aestronglyMeasurable_nontangentialOperator {g : X → ℂ} :
 irreducible_def C10_0_2 (a : ℕ) : ℝ≥0 := 2 ^ (3 * a ^ 3)
 
 /-- Lemma 10.0.2. The formal statement includes the measurability of the operator. -/
+@[blueprint
+  "nontangential-from-simple"
+  (title := "nontangential-from-simple")
+  (statement := /-- Assume \eqref{two-sided-Hr-bound-assumption} holds.
+    Then, for every bounded measurable function $g : X \to \C$ supported on a set of finite measure
+    we have
+    \begin{equation}\label{concretetstarbound}
+        \|T_*g\|_2\le 2^{3a^3}\|g\|_2.
+    \end{equation} -/)
+  (proof := /-- [Proof of \Cref{nontangential-from-simple}]
+    
+    
+    Fix $g$ as in the Lemma.
+    Applying \Cref{simple-nontangential-operator} with a
+    sequence of $r$ tending to $0$ and using Lebesgue monotone convergence shows
+    \begin{equation}\label{tzerobound}
+        \|T_*^{0}g\|_2\le 2^{a^3+26a+6}\|g\|_2,
+    \end{equation}
+    where
+    \begin{equation}\label{eq-simpler--nontangential}
+        T_*^{0} g(x):=\sup_{0<R}\sup_{x'\in B(x,R)} \left|\int_{X\setminus B(x',R)}
+    K(x',y) g(y)\, d\mu(y)\right|\, .
+    \end{equation}
+    We now write using \Cref{nontangential-operator-boundary} and the triangle inequality,
+    \begin{alignat*}{3}\label{concretetstartriangle}
+        T_* g(x)\le&&&\sup_{0<R_1<R_2}\sup_{x'\in B(x,R_1)} \left|\int_{X\setminus B(x',R_1)}K(x',y)
+        g(y)\, d\mu(y)\right| \\
+    &+&&\sup_{0<R_1<R_2}\sup_{x'\in B(x,R_1)} \left|\int_{X\setminus B(x',R_2)} K(x',y) g(y)\,
+    d\mu(y)\right|\, .
+    \end{alignat*}
+    Noting that the first integral does not depend on $R_2$ and
+    estimating the second summand by the larger supremum over all
+    $x'\in B(x,R_2)$, at which time the integral does not depend on $R_1$, we estimate further
+    \begin{alignat*}{3}
+        \le&&&\sup_{0<R_1}\sup_{x'\in B(x,R_1)} \left|\int_{X\setminus B(x',R_1)}K(x',y) g(y)\,
+        d\mu(y)\right| \\
+        &+  &&\sup_{0<R_2}\sup_{x'\in B(x,R_2)} \left|\int_{X\setminus B(x',R_2)} K(x',y) g(y)\,
+        d\mu(y)\right|\, .
+    \end{alignat*}
+        Applying the triangle inequality on the left-hand side
+        of \eqref{concretetstarbound} and applying
+         \eqref{tzerobound} twice
+        proves \eqref{concretetstarbound}.
+        This completes the proof of \Cref{nontangential-from-simple}. -/)
+  (latexEnv := "lemma")]
 theorem nontangential_from_simple (ha : 4 ≤ a)
     (hT : ∀ r > 0, HasBoundedStrongType (czOperator K r) 2 2 volume volume (C_Ts a)) :
     HasBoundedStrongType (nontangentialOperator K) 2 2 volume volume (C10_0_2 a) := by

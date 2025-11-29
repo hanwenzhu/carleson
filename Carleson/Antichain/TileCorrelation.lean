@@ -1,3 +1,4 @@
+import Architect
 import Carleson.Calculations
 import Carleson.HolderVanDerCorput
 import Carleson.Operators
@@ -32,12 +33,112 @@ variable {X : Type*} {a : ℕ} {q : ℝ} {K : X → X → ℂ} {σ₁ σ₂ : X 
   [ProofData a q K σ₁ σ₂ F G]
 
 /-- Def 6.2.1 (from Lemma 6.2.1), denoted by `φ(y)` in the blueprint. -/
+@[blueprint
+  "correlation-kernel-bound"
+  (title := "correlation kernel bound")
+  (statement := /-- Let $-S\le s_1\le s_2\le S$ and let $x_1,x_2\in X$.
+    Define \begin{equation}
+     \varphi(y) := \overline{K_{s_1}(x_1, y)}
+     K_{s_2}(x_2, y) \, .
+    \end{equation}
+    If $\varphi(y)\neq 0$, then
+    \begin{equation}\label{eqt10}
+        y\in B(x_1, D^{s_1})\, .
+    \end{equation}
+    Moreover, we have with $\tau = 1/a$
+    \begin{equation}\label{eqt11}
+      \|\varphi\|_{C^\tau(B(x_1, 2 D^{s_1}))}\le
+    \frac{2^{231 a^3}}{\mu(B(x_1, D^{s_1}))\mu(B(x_2, D^{s_2}))}
+          \, .
+    \end{equation} -/)
+  (proof := /-- If $\varphi(y)$ is not zero, then $K_{s_1}(x_1, y)$ is not zero and thus
+    \eqref{supp-Ks} gives \eqref{eqt10}.
+    
+    We next have for $y$ with \eqref{eq-Ks-size}
+    \begin{equation}\label{suppart}
+        |\varphi(y)|\le
+        \frac{2^{204 a^3}}{\mu(B(x_1, D^{s_1}))\mu(B(x_2, D^{s_2}))}
+    \end{equation}
+    and for $y'\neq y$ additionally with \eqref{eq-Ks-smooth}
+    \begin{equation}
+        |\varphi(y)-\varphi(y')|
+     \end{equation}
+     \begin{equation}
+     \le
+     |K_{s_1}(x_1,y)-K_{s_1}(x_1,y'))||
+     K_{s_2}(x_2, y)|
+    \end{equation}
+     \begin{equation}+|K_{s_1}(x_1, y')|
+     |K_{s_2}(x_2, y) - K_{s_2}(x_2, y'))|
+    \end{equation}
+    \begin{equation}
+          \le \frac{2^{229 a^3}}{\mu(B(x_1, D^{s_1}))\mu(B(x_2, D^{s_2}))}
+           \left(\left(\frac{ \rho(y,y')}{D^{s_1}}\right)^{1/a}+
+           \left(\frac{ \rho(y,y')}{D^{s_2}}\right)^{1/a}\right)
+    \end{equation}
+    \begin{equation}\label{holderpart}
+          \le \frac{2^{230 a^3}}{\mu(B(x_1, D^{s_1}))\mu(B(x_2, D^{s_2}))}
+           \left(\frac{ \rho(y,y')}{D^{s_1}}\right)^{1/a}\,.
+    \end{equation}
+    Adding the estimates \eqref{suppart} and \eqref{holderpart} gives \eqref{eqt11}.
+    This proves the lemma. -/)
+  (latexEnv := "lemma")]
 def correlation (s₁ s₂ : ℤ) (x₁ x₂ y : X) : ℂ := conj (Ks s₁ x₁ y) * Ks s₂ x₂ y
 
 @[fun_prop]
 lemma measurable_correlation : Measurable (correlation (X := X)) := by fun_prop
 
 /-- First part of Lemma 6.2.1 (eq. 6.2.2). -/
+@[blueprint
+  "correlation-kernel-bound"
+  (title := "correlation kernel bound")
+  (statement := /-- Let $-S\le s_1\le s_2\le S$ and let $x_1,x_2\in X$.
+    Define \begin{equation}
+     \varphi(y) := \overline{K_{s_1}(x_1, y)}
+     K_{s_2}(x_2, y) \, .
+    \end{equation}
+    If $\varphi(y)\neq 0$, then
+    \begin{equation}\label{eqt10}
+        y\in B(x_1, D^{s_1})\, .
+    \end{equation}
+    Moreover, we have with $\tau = 1/a$
+    \begin{equation}\label{eqt11}
+      \|\varphi\|_{C^\tau(B(x_1, 2 D^{s_1}))}\le
+    \frac{2^{231 a^3}}{\mu(B(x_1, D^{s_1}))\mu(B(x_2, D^{s_2}))}
+          \, .
+    \end{equation} -/)
+  (proof := /-- If $\varphi(y)$ is not zero, then $K_{s_1}(x_1, y)$ is not zero and thus
+    \eqref{supp-Ks} gives \eqref{eqt10}.
+    
+    We next have for $y$ with \eqref{eq-Ks-size}
+    \begin{equation}\label{suppart}
+        |\varphi(y)|\le
+        \frac{2^{204 a^3}}{\mu(B(x_1, D^{s_1}))\mu(B(x_2, D^{s_2}))}
+    \end{equation}
+    and for $y'\neq y$ additionally with \eqref{eq-Ks-smooth}
+    \begin{equation}
+        |\varphi(y)-\varphi(y')|
+     \end{equation}
+     \begin{equation}
+     \le
+     |K_{s_1}(x_1,y)-K_{s_1}(x_1,y'))||
+     K_{s_2}(x_2, y)|
+    \end{equation}
+     \begin{equation}+|K_{s_1}(x_1, y')|
+     |K_{s_2}(x_2, y) - K_{s_2}(x_2, y'))|
+    \end{equation}
+    \begin{equation}
+          \le \frac{2^{229 a^3}}{\mu(B(x_1, D^{s_1}))\mu(B(x_2, D^{s_2}))}
+           \left(\left(\frac{ \rho(y,y')}{D^{s_1}}\right)^{1/a}+
+           \left(\frac{ \rho(y,y')}{D^{s_2}}\right)^{1/a}\right)
+    \end{equation}
+    \begin{equation}\label{holderpart}
+          \le \frac{2^{230 a^3}}{\mu(B(x_1, D^{s_1}))\mu(B(x_2, D^{s_2}))}
+           \left(\frac{ \rho(y,y')}{D^{s_1}}\right)^{1/a}\,.
+    \end{equation}
+    Adding the estimates \eqref{suppart} and \eqref{holderpart} gives \eqref{eqt11}.
+    This proves the lemma. -/)
+  (latexEnv := "lemma")]
 lemma mem_ball_of_correlation_ne_zero {s₁ s₂ : ℤ} {x₁ x₂ y : X}
     (hy : correlation s₁ s₂ x₁ x₂ y ≠ 0) : y ∈ ball x₁ (D ^ s₁) := by
   have hKs : Ks s₁ x₁ y ≠ 0 := by
@@ -125,6 +226,56 @@ private lemma e625 {s₁ s₂ : ℤ} {x₁ x₂ y y' : X} (hy' : y ≠ y') (hs :
     _ = _ := by rw [← ENNReal.mul_comm_div]
 
 /-- Second part of Lemma 6.2.1 (eq. 6.2.3). -/
+@[blueprint
+  "correlation-kernel-bound"
+  (title := "correlation kernel bound")
+  (statement := /-- Let $-S\le s_1\le s_2\le S$ and let $x_1,x_2\in X$.
+    Define \begin{equation}
+     \varphi(y) := \overline{K_{s_1}(x_1, y)}
+     K_{s_2}(x_2, y) \, .
+    \end{equation}
+    If $\varphi(y)\neq 0$, then
+    \begin{equation}\label{eqt10}
+        y\in B(x_1, D^{s_1})\, .
+    \end{equation}
+    Moreover, we have with $\tau = 1/a$
+    \begin{equation}\label{eqt11}
+      \|\varphi\|_{C^\tau(B(x_1, 2 D^{s_1}))}\le
+    \frac{2^{231 a^3}}{\mu(B(x_1, D^{s_1}))\mu(B(x_2, D^{s_2}))}
+          \, .
+    \end{equation} -/)
+  (proof := /-- If $\varphi(y)$ is not zero, then $K_{s_1}(x_1, y)$ is not zero and thus
+    \eqref{supp-Ks} gives \eqref{eqt10}.
+    
+    We next have for $y$ with \eqref{eq-Ks-size}
+    \begin{equation}\label{suppart}
+        |\varphi(y)|\le
+        \frac{2^{204 a^3}}{\mu(B(x_1, D^{s_1}))\mu(B(x_2, D^{s_2}))}
+    \end{equation}
+    and for $y'\neq y$ additionally with \eqref{eq-Ks-smooth}
+    \begin{equation}
+        |\varphi(y)-\varphi(y')|
+     \end{equation}
+     \begin{equation}
+     \le
+     |K_{s_1}(x_1,y)-K_{s_1}(x_1,y'))||
+     K_{s_2}(x_2, y)|
+    \end{equation}
+     \begin{equation}+|K_{s_1}(x_1, y')|
+     |K_{s_2}(x_2, y) - K_{s_2}(x_2, y'))|
+    \end{equation}
+    \begin{equation}
+          \le \frac{2^{229 a^3}}{\mu(B(x_1, D^{s_1}))\mu(B(x_2, D^{s_2}))}
+           \left(\left(\frac{ \rho(y,y')}{D^{s_1}}\right)^{1/a}+
+           \left(\frac{ \rho(y,y')}{D^{s_2}}\right)^{1/a}\right)
+    \end{equation}
+    \begin{equation}\label{holderpart}
+          \le \frac{2^{230 a^3}}{\mu(B(x_1, D^{s_1}))\mu(B(x_2, D^{s_2}))}
+           \left(\frac{ \rho(y,y')}{D^{s_1}}\right)^{1/a}\,.
+    \end{equation}
+    Adding the estimates \eqref{suppart} and \eqref{holderpart} gives \eqref{eqt11}.
+    This proves the lemma. -/)
+  (latexEnv := "lemma")]
 lemma correlation_kernel_bound {s₁ s₂ : ℤ} {x₁ x₂ : X} (hs : s₁ ≤ s₂) :
     iHolENorm (correlation s₁ s₂ x₁ x₂) x₁ (2 * D ^ s₁) τ ≤
     C6_2_1 a / (volume (ball x₁ (D ^ s₁)) * volume (ball x₂ (D ^ s₂))) := by
@@ -162,6 +313,35 @@ lemma correlation_kernel_bound {s₁ s₂ : ℤ} {x₁ x₂ : X} (hs : s₁ ≤ 
 variable [TileStructure Q D κ S o]
 
 /-- Lemma 6.2.2. -/
+@[blueprint
+  "tile-range-support"
+  (title := "tile range support")
+  (statement := /-- For each $\fp\in \fP$, and each $y\in X$, we have that
+    \begin{equation}\label{tstargnot0}
+         T_{\fp}^* g(y)\neq 0
+    \end{equation}
+       implies
+    \begin{equation}\label{ynotfar}
+        y\in B(\pc(\fp),5D^{\ps(\fp)})\, .
+    \end{equation} -/)
+  (proof := /-- Fix $\fp$ and $y$ with \eqref{tstargnot0}.
+    Then there exists $x\in E(\fp)$ with
+    \begin{equation}
+       \overline{K_{\ps(\fp)}(x,y)}e(-\tQ(x)(y)
+        +\tQ(x)(x))g(x) \neq 0\, .
+    \end{equation}
+    As $E(\fp)\subset \scI(\fp)$ and by the squeezing property
+    \eqref{eq-vol-sp-cube}, we have
+    \begin{equation}
+        \rho(x,\pc(\fp)) < 4D^{\ps(\fp)}\, .
+    \end{equation}
+    As $K_{\ps(\fp)}(x,y)\neq 0$, we have by \eqref{supp-Ks}
+    that
+    \begin{equation}
+    \rho(x,y)\le \frac 12 D^{\ps(\fp)}\, .
+    \end{equation}
+    Now \eqref{ynotfar} follows by the triangle inequality. -/)
+  (latexEnv := "lemma")]
 lemma range_support {p : 𝔓 X} {g : X → ℂ} {y : X} (hpy : adjointCarleson p g y ≠ 0) :
     y ∈ ball (𝔠 p) (5 * D ^ 𝔰 p) := by
   simp only [adjointCarleson] at hpy
@@ -287,6 +467,54 @@ lemma uncertainty' (ha : 1 ≤ a) {p₁ p₂ : 𝔓 X} (hle : 𝔰 p₁ ≤ 𝔰
       gcongr
 
 /-- Lemma 6.2.3 (edist version). -/
+@[blueprint
+  "tile-uncertainty"
+  (statement := /-- Let $\fp_1, \fp_2\in \fP$ with
+        $B(\pc(\fp_1),5D^{\ps(\fp_1)}) \cap B(\pc(\fp_2),5D^{\ps(\fp_2)}) \ne \emptyset$ and
+    $\ps({\fp_1})\leq \ps({\fp_2})$. For each $x_1\in E(\fp_1)$ and
+    $x_2\in E(\fp_2)$ we have
+    \begin{equation}\label{tgeo}
+      1+d_{\fp_1}(\fcc(\fp_1), \fcc(\fp_2))\le
+        2^{8a}(1 + d_{B(x_1, D^{\ps(\fp_1)})}(\tQ(x_1),\tQ(x_2)))\, .
+    \end{equation} -/)
+  (proof := /-- Let $i\in \{1,2\}$.
+    By Definition \eqref{defineep} of $E$,
+    we have $\tQ(x_i)\in \fc(\fp_i)$
+    With \eqref{eq-freq-comp-ball} we then conclude
+    \begin{equation}\label{dponetwo}
+        d_{\fp_i}(\tQ(x_i),\fcc(\fp_i)) < 1\, .
+    \end{equation}
+    We have by the triangle inequality and \eqref{eq-vol-sp-cube} that $\scI(\fp_1) \subset
+    B(\pc(\fp_2),14D^{\ps(\fp_2)})$.
+    Thus, using again \eqref{eq-vol-sp-cube} and the doubling property \eqref{firstdb}
+    \begin{equation}\label{tgeo0.5}
+        d_{\fp_1}(\tQ(x_2), \fcc(\fp_2)) \le 2^{6a} d_{\fp_2}(\tQ(x_2), \fcc(\fp_2)) \le 2^{6a}\,.
+    \end{equation}
+    By the triangle inequality, we obtain from \eqref{dponetwo} and
+    \eqref{tgeo0.5}
+    \begin{equation}\label{tgeo1}
+         1+d_{\fp_1}(\fcc(\fp_1), \fcc(\fp_2))\le 2 + 2^{6a} +d_{\fp_1}(\tQ(x_1), \tQ(x_2))\, .
+    \end{equation}
+    As $x_1\in \scI(\fp_1)$ by Definition \eqref{defineep} of $E$, we have by the squeezing property
+    \eqref{eq-vol-sp-cube}
+    \begin{equation}
+        d(x_1,\pc(\fp_1))\le 4D^{\ps(\fp_1)}
+    \end{equation}
+    and thus by \eqref{eq-vol-sp-cube} again and the triangle inequality
+    \begin{equation}
+        \scI(\fp_1)\subset B(x_1,8D^{\ps(\fp_1)})\, .
+    \end{equation}
+    We thus estimate the right-hand side of \eqref{tgeo1} with monotonicity \eqref{monotonedb} of
+    the metrics $d_B$ by
+    \begin{equation}\label{tgeo1.5}
+        \le 2 + 2^{6a} + d_{B(x_1,8D^{\ps(\fp_1)})}(\tQ(x_1), \tQ(x_2))\, .
+    \end{equation}
+    This is further estimated by applying the doubling property \eqref{firstdb} three times by
+    \begin{equation}\label{tgeo2}
+        \le 2 + 2^{6a} +2^{3a}d_{B_1(x_1, D^{\ps(\fp_1)})}(\tQ(x_1), \tQ(x_2))\, .
+    \end{equation}
+    Now \eqref{tgeo} follows with $a\ge 4$. -/)
+  (latexEnv := "lemma")]
 lemma uncertainty (ha : 1 ≤ a) {p₁ p₂ : 𝔓 X} (hle : 𝔰 p₁ ≤ 𝔰 p₂)
     (hinter : (ball (𝔠 p₁) (5 * D ^ 𝔰 p₁) ∩ ball (𝔠 p₂) (5 * D ^ 𝔰 p₂)).Nonempty) {x₁ x₂ : X}
     (hx₁ : x₁ ∈ E p₁) (hx₂ : x₂ ∈ E p₂) :
@@ -673,6 +901,114 @@ lemma correlation_le_of_empty_inter {p p' : 𝔓 X} {g : X → ℂ}
     simp [hp'0, map_zero, mul_zero]
 
 /-- Part 1 of Lemma 6.1.5 (eq. 6.1.43). -/
+@[blueprint
+  "tile-correlation"
+  (title := "tile correlation")
+  (statement := /-- Let $\fp, \fp'\in \fP$ with
+    $\ps({\fp'})\leq \ps({\fp})$.
+    Then
+    \begin{equation}
+        \label{eq-basic-TT*-est}
+        \left|\int T^*_{\fp'}g\overline{T^*_{\fp}g}\right|
+    \end{equation}
+    \begin{equation}
+        \le 2^{232a^3}\frac{(1+d_{\fp'}(\fcc(\fp'),
+        \fcc(\fp))^{-1/(2a^2+a^3)}}{\mu(\scI(\fp))}\int_{E(\fp')}|g|\int_{E(\fp)}|g|\,.
+    \end{equation}
+    Moreover, the term \eqref{eq-basic-TT*-est} vanishes unless
+    \begin{equation}
+        \scI(\fp') \subset B(\pc(\fp), 14D^{\ps(\fp)})\, .
+    \end{equation} -/)
+  (proof := /-- [Proof of \Cref{tile-correlation}]
+    
+    
+    We begin with \eqref{eq-basic-TT*-est}.
+    By Lemma \ref{tile-range-support}, the left-hand side of \eqref{eq-basic-TT*-est} vanishes if
+    $B(\pc(\fp'),5D^{\ps(\fp')}) \cap B(\pc(\fp),5D^{\ps(\fp)}) = \emptyset$.
+    Thus we can assume for the remainder of the proof that
+    \begin{equation}
+            \label{intersec5B}
+            B(\pc(\fp'),5D^{\ps(\fp')}) \cap B(\pc(\fp),5D^{\ps(\fp)}) \neq \emptyset\,.
+    \end{equation}
+    We expand the left-hand side of \eqref{eq-basic-TT*-est} as
+    \begin{equation}\label{tstartstar}
+    \left|\int \int_{E(\fp')} \overline{K_{\ps(\fp')}(x_1,y)}e(-\tQ(x_1)(y)+
+        \tQ(x_1)(x_1))g(x_1)\, d\mu(x_1) \right.
+    \end{equation}
+    \begin{equation}\label{tstartstar'}
+     \times \left.\int_{E(\fp)} {K_{\ps(\fp)}(x_2,y)}e(\tQ(x_2)(y)
+        -\tQ(x_2)(x_2))\overline{g(x_2)}\, d\mu(x_2)\, d\mu(y)\right|\, .
+    \end{equation}
+    By Fubini and the triangle inequality and
+    the fact $|e(\tQ(x_i)(x_i))|=1$ for $i=1,2$, we can estimate
+    \eqref{tstartstar} and \eqref{tstartstar'} from above by
+    \begin{equation}\label{eqa1}
+        \int_{E(\fp')} \int_{E(\fp)} {\bf I}(x_1, x_2)\, d\mu(x_1)d\mu(x_2)\,.
+    \end{equation}
+    with
+    \begin{equation}
+        {\bf I}(x_1, x_2):=
+        \left|\int
+        e(-\tQ(x_1)(y)+\tQ(x_2)(y))\varphi_{x_1,x_2}(y)
+        d\mu(y) \, g(x_1)g(x_2)\right|
+    \end{equation}
+    
+    
+    We estimate for fixed $x_1\in E(\fp')$ and
+    $x_2\in E(\fp)$ the inner integral of \eqref{eqa1} with
+    \Cref{Holder-van-der-Corput}. The function
+    $\varphi:=\varphi_{x_1,x_2}$ satisfies the assumptions of
+    \Cref{Holder-van-der-Corput} with $z = x_1$ and $R = D^{s_1}$ by
+    \Cref{correlation-kernel-bound}.
+    We obtain with $B':= B(x_1, D^{\ps(\fp')})$,
+    \begin{equation*}
+     {\bf I}(x_1, x_2) \le 2^{8a} \mu(B') \|{\varphi}\|_{C^\tau(B')}
+           (1 + d_{B'}(\tQ(x_1),\tQ(x_2)))^{-1/(2a^2+a^3)}|g(x_1)g(x_2)|
+    \end{equation*}
+    \begin{equation}
+    \label{eqa1.5}
+     \le \frac{2^{231a^3+8a}}
+     {\mu(B(x_2, D^{\ps(\fp)}))}
+           (1 + d_{B'}(\tQ(x_1),\tQ(x_2)))^{-1/(2a^2+a^3)}\,.
+    \end{equation}
+    Using \eqref{intersec5B}, \Cref{tile-uncertainty} and $a\ge 1$ estimates \eqref{eqa1.5} by
+    \begin{equation}\label{eqa2}
+     \le \frac{2^{231a^3 + 8a + 1}}
+     {\mu(B(x_2, D^{\ps(\fp)}))}
+           (1+d_{\fp'}(\fcc(\fp'), \fcc(\fp)))^{-1/(2a^2+a^3)}|g(x_1)g(x_2)|\,.
+    \end{equation}
+    As $x_2\in \scI(\fp)$ by Definition \eqref{defineep} of $E$, we have by \eqref{eq-vol-sp-cube}
+    \begin{equation}
+        \rho(x_2,\pc(\fp)) < 4D^{\ps(\fp)}
+    \end{equation}
+    and thus by \eqref{eq-vol-sp-cube} again and the triangle inequality
+    \begin{equation}
+        \scI(\fp)\subset B(x_2,8D^{\ps(\fp)})\, .
+    \end{equation}
+    Using three iterations of the doubling property \eqref{doublingx} give
+    \begin{equation}
+        \mu(\scI(\fp))\le 2^{3a}\mu(B(x_2,D^{\ps(\fp)}))\, .
+    \end{equation}
+    With $a\ge 4$ and \eqref{eqa2} we conclude \eqref{eq-basic-TT*-est}.
+    
+    
+    Now assume the left-hand side of \eqref{eq-basic-TT*-est} is not zero.
+    There is a $y\in X$ with
+    \begin{equation}
+        T^*_{\fp'}g(y)\overline{T^*_{\fp}g(y)}\neq 0
+    \end{equation}
+    By the triangle inequality and \Cref{tile-range-support}, we conclude
+    \begin{equation}
+       \rho(\pc(\fp),\pc(\fp'))\le \rho(\pc(\fp),y) +\rho(\pc(\fp'),y)
+       \le 5D^{\ps(\fp)}+5D^{\ps(\fp')}\le 10 D^{\ps(\fp)}\, .
+    \end{equation}
+    By the squeezing property \eqref{eq-vol-sp-cube} and the triangle inequality,
+    we conclude
+    \begin{equation}
+        \scI(\fp') \subset B(\pc(\fp), 14D^{\ps(\fp)})\, .
+    \end{equation}
+       This completes the proof of Lemma \ref{tile-correlation}. -/)
+  (latexEnv := "lemma")]
 lemma correlation_le {p p' : 𝔓 X} (hle : 𝔰 p' ≤ 𝔰 p) {g : X → ℂ}
     (hg : Measurable g) (hg1 : ∀ x, ‖g x‖ ≤ G.indicator 1 x) :
     ‖∫ y, adjointCarleson p' g y * conj (adjointCarleson p g y)‖ₑ ≤
@@ -683,6 +1019,114 @@ lemma correlation_le {p p' : 𝔓 X} (hle : 𝔰 p' ≤ 𝔰 p) {g : X → ℂ}
   · exact correlation_le_of_empty_inter hinter
 
 /-- Part 2 of Lemma 6.1.5 (claim 6.1.44). -/
+@[blueprint
+  "tile-correlation"
+  (title := "tile correlation")
+  (statement := /-- Let $\fp, \fp'\in \fP$ with
+    $\ps({\fp'})\leq \ps({\fp})$.
+    Then
+    \begin{equation}
+        \label{eq-basic-TT*-est}
+        \left|\int T^*_{\fp'}g\overline{T^*_{\fp}g}\right|
+    \end{equation}
+    \begin{equation}
+        \le 2^{232a^3}\frac{(1+d_{\fp'}(\fcc(\fp'),
+        \fcc(\fp))^{-1/(2a^2+a^3)}}{\mu(\scI(\fp))}\int_{E(\fp')}|g|\int_{E(\fp)}|g|\,.
+    \end{equation}
+    Moreover, the term \eqref{eq-basic-TT*-est} vanishes unless
+    \begin{equation}
+        \scI(\fp') \subset B(\pc(\fp), 14D^{\ps(\fp)})\, .
+    \end{equation} -/)
+  (proof := /-- [Proof of \Cref{tile-correlation}]
+    
+    
+    We begin with \eqref{eq-basic-TT*-est}.
+    By Lemma \ref{tile-range-support}, the left-hand side of \eqref{eq-basic-TT*-est} vanishes if
+    $B(\pc(\fp'),5D^{\ps(\fp')}) \cap B(\pc(\fp),5D^{\ps(\fp)}) = \emptyset$.
+    Thus we can assume for the remainder of the proof that
+    \begin{equation}
+            \label{intersec5B}
+            B(\pc(\fp'),5D^{\ps(\fp')}) \cap B(\pc(\fp),5D^{\ps(\fp)}) \neq \emptyset\,.
+    \end{equation}
+    We expand the left-hand side of \eqref{eq-basic-TT*-est} as
+    \begin{equation}\label{tstartstar}
+    \left|\int \int_{E(\fp')} \overline{K_{\ps(\fp')}(x_1,y)}e(-\tQ(x_1)(y)+
+        \tQ(x_1)(x_1))g(x_1)\, d\mu(x_1) \right.
+    \end{equation}
+    \begin{equation}\label{tstartstar'}
+     \times \left.\int_{E(\fp)} {K_{\ps(\fp)}(x_2,y)}e(\tQ(x_2)(y)
+        -\tQ(x_2)(x_2))\overline{g(x_2)}\, d\mu(x_2)\, d\mu(y)\right|\, .
+    \end{equation}
+    By Fubini and the triangle inequality and
+    the fact $|e(\tQ(x_i)(x_i))|=1$ for $i=1,2$, we can estimate
+    \eqref{tstartstar} and \eqref{tstartstar'} from above by
+    \begin{equation}\label{eqa1}
+        \int_{E(\fp')} \int_{E(\fp)} {\bf I}(x_1, x_2)\, d\mu(x_1)d\mu(x_2)\,.
+    \end{equation}
+    with
+    \begin{equation}
+        {\bf I}(x_1, x_2):=
+        \left|\int
+        e(-\tQ(x_1)(y)+\tQ(x_2)(y))\varphi_{x_1,x_2}(y)
+        d\mu(y) \, g(x_1)g(x_2)\right|
+    \end{equation}
+    
+    
+    We estimate for fixed $x_1\in E(\fp')$ and
+    $x_2\in E(\fp)$ the inner integral of \eqref{eqa1} with
+    \Cref{Holder-van-der-Corput}. The function
+    $\varphi:=\varphi_{x_1,x_2}$ satisfies the assumptions of
+    \Cref{Holder-van-der-Corput} with $z = x_1$ and $R = D^{s_1}$ by
+    \Cref{correlation-kernel-bound}.
+    We obtain with $B':= B(x_1, D^{\ps(\fp')})$,
+    \begin{equation*}
+     {\bf I}(x_1, x_2) \le 2^{8a} \mu(B') \|{\varphi}\|_{C^\tau(B')}
+           (1 + d_{B'}(\tQ(x_1),\tQ(x_2)))^{-1/(2a^2+a^3)}|g(x_1)g(x_2)|
+    \end{equation*}
+    \begin{equation}
+    \label{eqa1.5}
+     \le \frac{2^{231a^3+8a}}
+     {\mu(B(x_2, D^{\ps(\fp)}))}
+           (1 + d_{B'}(\tQ(x_1),\tQ(x_2)))^{-1/(2a^2+a^3)}\,.
+    \end{equation}
+    Using \eqref{intersec5B}, \Cref{tile-uncertainty} and $a\ge 1$ estimates \eqref{eqa1.5} by
+    \begin{equation}\label{eqa2}
+     \le \frac{2^{231a^3 + 8a + 1}}
+     {\mu(B(x_2, D^{\ps(\fp)}))}
+           (1+d_{\fp'}(\fcc(\fp'), \fcc(\fp)))^{-1/(2a^2+a^3)}|g(x_1)g(x_2)|\,.
+    \end{equation}
+    As $x_2\in \scI(\fp)$ by Definition \eqref{defineep} of $E$, we have by \eqref{eq-vol-sp-cube}
+    \begin{equation}
+        \rho(x_2,\pc(\fp)) < 4D^{\ps(\fp)}
+    \end{equation}
+    and thus by \eqref{eq-vol-sp-cube} again and the triangle inequality
+    \begin{equation}
+        \scI(\fp)\subset B(x_2,8D^{\ps(\fp)})\, .
+    \end{equation}
+    Using three iterations of the doubling property \eqref{doublingx} give
+    \begin{equation}
+        \mu(\scI(\fp))\le 2^{3a}\mu(B(x_2,D^{\ps(\fp)}))\, .
+    \end{equation}
+    With $a\ge 4$ and \eqref{eqa2} we conclude \eqref{eq-basic-TT*-est}.
+    
+    
+    Now assume the left-hand side of \eqref{eq-basic-TT*-est} is not zero.
+    There is a $y\in X$ with
+    \begin{equation}
+        T^*_{\fp'}g(y)\overline{T^*_{\fp}g(y)}\neq 0
+    \end{equation}
+    By the triangle inequality and \Cref{tile-range-support}, we conclude
+    \begin{equation}
+       \rho(\pc(\fp),\pc(\fp'))\le \rho(\pc(\fp),y) +\rho(\pc(\fp'),y)
+       \le 5D^{\ps(\fp)}+5D^{\ps(\fp')}\le 10 D^{\ps(\fp)}\, .
+    \end{equation}
+    By the squeezing property \eqref{eq-vol-sp-cube} and the triangle inequality,
+    we conclude
+    \begin{equation}
+        \scI(\fp') \subset B(\pc(\fp), 14D^{\ps(\fp)})\, .
+    \end{equation}
+       This completes the proof of Lemma \ref{tile-correlation}. -/)
+  (latexEnv := "lemma")]
 lemma correlation_zero_of_ne_subset {p p' : 𝔓 X} (hle : 𝔰 p' ≤ 𝔰 p) {g : X → ℂ}
     (hp : ¬(𝓘 p' : Set X) ⊆ ball (𝔠 p) (14 * D ^ 𝔰 p)) :
     ‖∫ y, adjointCarleson p' g y * conj (adjointCarleson p g y)‖ₑ = 0 := by

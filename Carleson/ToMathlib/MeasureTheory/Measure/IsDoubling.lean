@@ -1,3 +1,4 @@
+import Architect
 import Carleson.ToMathlib.Misc
 import Carleson.ToMathlib.CoveredByBalls
 import Mathlib.Data.Real.StarOrdered
@@ -416,6 +417,49 @@ lemma Subsingleton.ball_eq {α} [PseudoMetricSpace α] [Subsingleton α] {x : α
     ball x r = if r > 0 then {x} else ∅ := by
   ext y; cases Subsingleton.elim x y; simp
 
+attribute [blueprint
+  "real-line-ball"
+  (title := "real line ball")
+  (statement := /-- For $x\in R$ and $R>0$, the ball $B(x,R)$ is the interval $(x-R,x+R)$ -/)
+  (proof := /-- Let $x'\in B(x,R)$. By definition of the ball,
+    $|x'-x|<R$. It follows that $x'-x<R$ and $x-x'<R$.
+    It follows $x'<x+R$ and $x'>x-R$. This implies
+    $x'\in (x-R,x+R)$.
+    Conversely, let $x'\in (x-R,x+R)$. Then
+    $x'<x+R$ and $x'>x-R$. It follows that
+    $x'-x<R$ and $x-x'<R$. It follows that $|x'-x|<R$,
+    hence $x'\in B(x,R)$.
+    This proves the lemma. -/)
+  (latexEnv := "lemma")]
+  Real.ball_eq_Ioo
+
+attribute [blueprint
+  "real-line-ball-measure"
+  (title := "real line ball measure")
+  (statement := /-- We have for every $x\in \R$ and $R>0$
+    \begin{equation}
+        \mu(B(x,R))=2R\, .
+    \end{equation} -/)
+  (proof := /-- We have with \Cref{real-line-ball}
+    \begin{equation}
+        \mu(B(x,R))=\mu((x-R,x+R))=2R\, .
+    \end{equation} -/)
+  (latexEnv := "lemma")]
+  Real.volume_ball
+
+@[blueprint
+  "real-line-doubling"
+  (title := "real line doubling")
+  (statement := /-- We have for every $x\in \R$ and $R>0$
+    \begin{equation}
+        \mu(B(x,2R))=2\mu(B(x,R))\, .
+    \end{equation} -/)
+  (proof := /-- We have with \Cref{real-line-ball-measure}
+    \begin{equation}
+        \mu(B(x,2R)=4R=2\mu(B(x,R))\, .
+    \end{equation}
+    This proves the lemma. -/)
+  (latexEnv := "lemma")]
 instance InnerProductSpace.IsDoubling {E : Type*} [NormedAddCommGroup E]
     [InnerProductSpace ℝ E] [MeasurableSpace E] [BorelSpace E] [FiniteDimensional ℝ E] :
     IsDoubling (volume : Measure E) (2 ^ finrank ℝ E) where

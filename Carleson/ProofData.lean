@@ -1,3 +1,4 @@
+import Architect
 import Carleson.DoublingMeasure
 
 open MeasureTheory Measure Metric Complex Set TopologicalSpace Bornology Function
@@ -199,6 +200,22 @@ lemma volume_G_ne_top : volume G ≠ ⊤ := volume_G_lt_top.ne
 
 def C2_1_1 (k : ℕ) (a : ℕ) : ℕ := 2 ^ (k * a)
 
+@[blueprint
+  "ball-metric-entropy"
+  (title := "ball metric entropy")
+  (statement := /-- Let $B' \subset X$ be a ball. Let $r > 0$, $\mfa \in \Mf$ and $k \in
+    \mathbb{N}$. Suppose that $\mathcal{Z} \subset B_{B'}(\mfa, r2^k)$ satisfies that
+    $\{B_{B'}(z,r)\mid z \in \mathcal{Z}\}$ is a collection of pairwise disjoint sets. Then
+    $$ |\mathcal{Z}| \le 2^{ka}\,. $$ -/)
+  (proof := /-- By applying property \eqref{thirddb} $k$ times, we obtain a collection $\mathcal{Z}'
+    \subset \Mf$ with $|\mathcal{Z}'| = 2^{ka}$ and
+    $$
+        B_{B'}(\mfa,r2^k) \subset \bigcup_{z' \in \mathcal{Z}'} B_{B'}(z', \frac{r}{2})\,.
+    $$
+    Then each $z \in \mathcal{Z}$ is contained in one of the balls $B(z', \frac{r}{2})$, but by the
+    separation assumption no such ball contains more than one element of $\mathcal{Z}$. Thus
+    $|\mathcal{Z}| \le |\mathcal{Z}'| = 2^{ka}$. -/)
+  (latexEnv := "lemma")]
 lemma Θ.finite_and_mk_le_of_le_dist {x₀ : X} {r R : ℝ} {f : Θ X} {k : ℕ}
     {𝓩 : Set (Θ X)} (h𝓩 : 𝓩 ⊆ ball_{x₀, R} f (r * 2 ^ k))
     (h2𝓩 : 𝓩.PairwiseDisjoint (ball_{x₀, R} · r)) :

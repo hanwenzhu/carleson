@@ -1,3 +1,4 @@
+import Architect
 import Carleson.ForestOperator.LargeSeparation
 import Carleson.ForestOperator.RemainingTiles
 import Carleson.ToMathlib.MeasureTheory.Function.L1Integrable
@@ -127,6 +128,38 @@ lemma cst_disjoint (hd : Disjoint (𝓘 u₁ : Set X) (𝓘 u₂)) (hu₁ : u₁
     ← inter_indicator_mul, hd, indicator_empty]
 
 /-- Lemma 7.4.4 -/
+@[blueprint
+  "correlation-separated-trees"
+  (title := "correlation separated trees")
+  (statement := /-- For any $\fu_1 \ne \fu_2 \in \fU$ and all bounded $g_1, g_2$ with bounded
+    support, we have
+    \begin{equation}
+        \label{eq-lhs-sep-tree}
+        \left| \int_X \sum_{\fp_1 \in \fT(\fu_1)} \sum_{\fp_2 \in \fT(\fu_2)} T^*_{\fp_1}g_1
+        \overline{T^*_{\fp_2}g_2 }\,\mathrm{d}\mu \right|
+    \end{equation}
+    \begin{equation}
+        \label{eq-rhs-sep-tree}
+        \le 2^{512a^3-4n} \prod_{j =1}^2 \| S_{2, \fu_j} g_j\|_{L^2(\scI(\fu_1) \cap
+        \scI(\fu_2))}\,.
+    \end{equation} -/)
+  (proof := /-- [Proof of \Cref{correlation-separated-trees}]
+    
+    
+        By \Cref{adjoint-tile-support} and \eqref{dyadicproperty}, the left hand side
+        \eqref{eq-lhs-sep-tree} is $0$ unless $\scI(\fu_1) \subset \scI(\fu_2)$ or $\scI(\fu_2)
+        \subset \scI(\fu_1)$. Without loss of generality we assume that $\scI(\fu_1) \subset
+        \scI(\fu_2)$.
+    
+        Define
+        \begin{equation}
+            \label{def-Tree-S-set}
+             \mathfrak{S} := \{\fp \in \fT(\fu_1) \cup \fT(\fu_2) \ : \ d_{\fp}(\fcc(\fu_1),
+             \fcc(\fu_2)) \ge 2^{Zn/2}\,\}.
+        \end{equation}
+        \Cref{correlation-separated-trees} follows by combining the definition \eqref{defineZ} of
+        $Z$ with the following two lemmas. -/)
+  (latexEnv := "lemma")]
 lemma correlation_separated_trees (hu₁ : u₁ ∈ t) (hu₂ : u₂ ∈ t) (hu : u₁ ≠ u₂)
     (hg₁ : BoundedCompactSupport g₁) (hg₂ : BoundedCompactSupport g₂) :
     ‖∫ x, adjointCarlesonSum (t u₁) g₁ x * conj (adjointCarlesonSum (t u₂) g₂ x)‖ₑ ≤
@@ -205,6 +238,33 @@ lemma rowDecomp_𝔘_subset_forest (t : Forest X n) (j : ℕ) :
 
 /-- The row-decomposition of a tree, defined in the proof of Lemma 7.7.1.
 The indexing is off-by-one compared to the blueprint. -/
+@[blueprint
+  "forest-row-decomposition"
+  (title := "forest row decomposition")
+  (statement := /-- Let $(\fU, \fT)$ be an $n$-forest. Then there exists a decomposition
+    $$
+        \fU = \dot{\bigcup_{1 \le j \le 2^n}} \fU_j
+    $$
+    such that for all $j = 1, \dotsc, 2^n$ the pair $(\fU_j, \fT|_{\fU_j})$ is an $n$-row. -/)
+  (proof := /-- Define recursively $\fU_j$ to be a maximal disjoint set of tiles $\fu$ in
+    $$
+        \fU \setminus \bigcup_{j' < j} \fU_{j'}
+    $$
+    with inclusion maximal $\scI(\fu)$. Properties \eqref{forest1}, -\eqref{forest6} for $(\fU_j,
+    \fT|_{\fU_k})$ follow immediately from the corresponding properties for $(\fU, \fT)$, and the
+    cubes $\scI(\fu), \fu \in \fU_j$ are disjoint by definition. The collections $\fU_j$ are also
+    disjoint by definition.
+    
+    Now we show by induction on $j$ that each point is contained in at most $2^n - j$ cubes
+    $\scI(\fu)$ with $\fu \in \fU \setminus \bigcup_{j' \le j} \fU_{j'}$. This implies that
+    $\bigcup_{j = 1}^{2^n} \fU_j = \fU$, which completes the proof of the Lemma. For $j = 0$ each
+    point is contained in at most $2^n$ cubes by \eqref{forest3}. For larger $j$, if $x$ is
+    contained in any cube $\scI(\fu)$ with $\fu \in \fU \setminus \bigcup_{j' < j} \fU_{j'}$, then
+    it is contained in a maximal such cube. Thus it is contained in a cube in $\scI(\fu)$ with $\fu
+    \in \fU_j$. Thus the number $\fu \in \fU \setminus \bigcup_{j' \le j} \fU_{j'}$ with $x\in
+    \scI(\fu)$ is zero, or is less than the number of $\fu \in \fU \setminus \bigcup_{j' \le j-1}
+    \fU_{j'}$ with $x \in \scI(\fu)$ by at least one. -/)
+  (latexEnv := "lemma")]
 def rowDecomp (t : Forest X n) (j : ℕ) : Row X n where
   𝔘 := rowDecomp_𝔘 t j
   𝔗 := t
@@ -305,7 +365,33 @@ lemma remainder_stackSize_le (t : Forest X n) (j : ℕ) :
         exact zero_le _
 
 /-- Part of Lemma 7.7.1 -/
-@[simp]
+@[simp, blueprint
+  "forest-row-decomposition"
+  (title := "forest row decomposition")
+  (statement := /-- Let $(\fU, \fT)$ be an $n$-forest. Then there exists a decomposition
+    $$
+        \fU = \dot{\bigcup_{1 \le j \le 2^n}} \fU_j
+    $$
+    such that for all $j = 1, \dotsc, 2^n$ the pair $(\fU_j, \fT|_{\fU_j})$ is an $n$-row. -/)
+  (proof := /-- Define recursively $\fU_j$ to be a maximal disjoint set of tiles $\fu$ in
+    $$
+        \fU \setminus \bigcup_{j' < j} \fU_{j'}
+    $$
+    with inclusion maximal $\scI(\fu)$. Properties \eqref{forest1}, -\eqref{forest6} for $(\fU_j,
+    \fT|_{\fU_k})$ follow immediately from the corresponding properties for $(\fU, \fT)$, and the
+    cubes $\scI(\fu), \fu \in \fU_j$ are disjoint by definition. The collections $\fU_j$ are also
+    disjoint by definition.
+    
+    Now we show by induction on $j$ that each point is contained in at most $2^n - j$ cubes
+    $\scI(\fu)$ with $\fu \in \fU \setminus \bigcup_{j' \le j} \fU_{j'}$. This implies that
+    $\bigcup_{j = 1}^{2^n} \fU_j = \fU$, which completes the proof of the Lemma. For $j = 0$ each
+    point is contained in at most $2^n$ cubes by \eqref{forest3}. For larger $j$, if $x$ is
+    contained in any cube $\scI(\fu)$ with $\fu \in \fU \setminus \bigcup_{j' < j} \fU_{j'}$, then
+    it is contained in a maximal such cube. Thus it is contained in a cube in $\scI(\fu)$ with $\fu
+    \in \fU_j$. Thus the number $\fu \in \fU \setminus \bigcup_{j' \le j} \fU_{j'}$ with $x\in
+    \scI(\fu)$ is zero, or is less than the number of $\fu \in \fU \setminus \bigcup_{j' \le j-1}
+    \fU_{j'}$ with $x \in \scI(\fu)$ by at least one. -/)
+  (latexEnv := "lemma")]
 lemma biUnion_rowDecomp : ⋃ j < 2 ^ n, t.rowDecomp j = (t : Set (𝔓 X)) := by
   apply subset_antisymm
   · simp_rw [iUnion_subset_iff,rowDecomp_𝔘_eq]
@@ -315,6 +401,33 @@ lemma biUnion_rowDecomp : ⋃ j < 2 ^ n, t.rowDecomp j = (t : Set (𝔓 X)) := b
       Nat.eq_zero_of_le_zero ((Nat.sub_self _).symm ▸ remainder_stackSize_le t (2 ^ n) x)
 
 /-- Part of Lemma 7.7.1 -/
+@[blueprint
+  "forest-row-decomposition"
+  (title := "forest row decomposition")
+  (statement := /-- Let $(\fU, \fT)$ be an $n$-forest. Then there exists a decomposition
+    $$
+        \fU = \dot{\bigcup_{1 \le j \le 2^n}} \fU_j
+    $$
+    such that for all $j = 1, \dotsc, 2^n$ the pair $(\fU_j, \fT|_{\fU_j})$ is an $n$-row. -/)
+  (proof := /-- Define recursively $\fU_j$ to be a maximal disjoint set of tiles $\fu$ in
+    $$
+        \fU \setminus \bigcup_{j' < j} \fU_{j'}
+    $$
+    with inclusion maximal $\scI(\fu)$. Properties \eqref{forest1}, -\eqref{forest6} for $(\fU_j,
+    \fT|_{\fU_k})$ follow immediately from the corresponding properties for $(\fU, \fT)$, and the
+    cubes $\scI(\fu), \fu \in \fU_j$ are disjoint by definition. The collections $\fU_j$ are also
+    disjoint by definition.
+    
+    Now we show by induction on $j$ that each point is contained in at most $2^n - j$ cubes
+    $\scI(\fu)$ with $\fu \in \fU \setminus \bigcup_{j' \le j} \fU_{j'}$. This implies that
+    $\bigcup_{j = 1}^{2^n} \fU_j = \fU$, which completes the proof of the Lemma. For $j = 0$ each
+    point is contained in at most $2^n$ cubes by \eqref{forest3}. For larger $j$, if $x$ is
+    contained in any cube $\scI(\fu)$ with $\fu \in \fU \setminus \bigcup_{j' < j} \fU_{j'}$, then
+    it is contained in a maximal such cube. Thus it is contained in a cube in $\scI(\fu)$ with $\fu
+    \in \fU_j$. Thus the number $\fu \in \fU \setminus \bigcup_{j' \le j} \fU_{j'}$ with $x\in
+    \scI(\fu)$ is zero, or is less than the number of $\fu \in \fU \setminus \bigcup_{j' \le j-1}
+    \fU_{j'}$ with $x \in \scI(\fu)$ by at least one. -/)
+  (latexEnv := "lemma")]
 lemma pairwiseDisjoint_rowDecomp :
     (Iio (2 ^ n)).PairwiseDisjoint (rowDecomp t · : ℕ → Set (𝔓 X)) := by
   intro i hi j hj hne
@@ -458,6 +571,47 @@ lemma le_C7_7_2_2 (a4 : 4 ≤ a) :
       _ ≤ a * a * a := by gcongr; linarith
       _ = _ := by ring
 
+@[blueprint
+  "row-bound"
+  (title := "row bound")
+  (statement := /-- For each $1 \le j \le 2^n$ and each bounded $g$ supported on $G$ we have
+    \begin{equation}
+        \label{eq-row-bound-1}
+        \left\| T_{\mathfrak{R}_j}^*g \right\|_2 \le 2^{182a^3} 2^{-n/2} \|g\|_2
+    \end{equation}
+    and
+    \begin{equation}
+        \label{eq-row-bound-2}
+        \left\| \mathbf{1}_F T_{\mathfrak{R}_j}^*g \right\|_2 \le 2^{283a^3} 2^{-n/2}
+        \dens_2(\bigcup_{\fu\in \fU}\fT(\fu))^{1/2} \|g\|_2\,.
+    \end{equation} -/)
+  (proof := /-- Since for each $j$ the top cubes $\scI(\fu)$, $\fu \in \fU_j$ are disjoint, we have
+    for all bounded $g$ supported on $G$ by \Cref{adjoint-tile-support}
+    $$
+        \left\|\mathbf{1}_F \sum_{\fu \in \fU_j} \sum_{\fp \in \fT(\fu)} T_{\fp}^* g\right\|_2^2 =
+        \left\|\mathbf{1}_F \sum_{\fu \in \fU_j} \sum_{\fp \in \fT(\fu)} \mathbf{1}_{\scI(\fu)}
+        T_{\fp}^* \mathbf{1}_{\scI(\fu)} g\right\|_2^2
+    $$
+    $$
+        = \sum_{\fu \in \fU_j} \int_{\scI(\fu)} \left| \mathbf{1}_F \sum_{\fp \in \fT(\fu)}
+        T_{\fp}^* \mathbf{1}_{\scI(\fu)} g\right|^2 \, \mathrm{d}\mu
+        \le \sum_{\fu \in \fU_j} \left\|\mathbf{1}_F \sum_{\fp \in \fT(\fu)} T_{\fp}^* \mathbf{1}_G
+        \mathbf{1}_{\scI(\fu)}  g\right\|_2^2\,.
+    $$
+    Applying \Cref{adjoint-tree-estimate} and the density assumption \eqref{forest4}, then taking
+    square roots, we obtain
+    $$
+        \left\| \mathbf{1}_F T_{\mathfrak{R}_j}^*g \right\|_2 \le 2^{282a^3} 2^{(4a+1-n)/2}
+        \dens_2(\bigcup_{\fu\in \fU}\fT(\fu))^{1/2} \left( \sum_{\fu \in \fU_j} \left\|
+        \mathbf{1}_{\scI(\fu)} g\right\|_2^2 \right)^{1/2}\,.
+    $$
+    Again by disjointedness of the cubes $\scI(\fu)$, this is estimated by
+    $$
+        2^{282a^3} 2^{(4a+1-n)/2} \dens_2(\bigcup_{\fu\in \fU}\fT(\fu))^{1/2} \|g\|_2\,.
+    $$
+    Thus \eqref{eq-row-bound-2} follows, since $a \ge 4$. The proof of \eqref{eq-row-bound-1} is the
+    same up to replacing $F$ by $X$. -/)
+  (latexEnv := "lemma")]
 lemma row_bound (hg : BoundedCompactSupport g) (h2g : support g ⊆ G) :
     eLpNorm (adjointCarlesonRowSum t j g) 2 volume ≤ C7_7_2_1 a n * eLpNorm g 2 volume := by
   rw [← indicator_univ (t.adjointCarlesonRowSum j g)]
@@ -477,6 +631,47 @@ lemma row_bound (hg : BoundedCompactSupport g) (h2g : support g ⊆ G) :
         ← ENNReal.coe_rpow_of_nonneg _ (by norm_num), ← ENNReal.coe_mul, ENNReal.coe_le_coe]
       exact le_C7_7_2_1 (four_le_a X)
 
+@[blueprint
+  "row-bound"
+  (title := "row bound")
+  (statement := /-- For each $1 \le j \le 2^n$ and each bounded $g$ supported on $G$ we have
+    \begin{equation}
+        \label{eq-row-bound-1}
+        \left\| T_{\mathfrak{R}_j}^*g \right\|_2 \le 2^{182a^3} 2^{-n/2} \|g\|_2
+    \end{equation}
+    and
+    \begin{equation}
+        \label{eq-row-bound-2}
+        \left\| \mathbf{1}_F T_{\mathfrak{R}_j}^*g \right\|_2 \le 2^{283a^3} 2^{-n/2}
+        \dens_2(\bigcup_{\fu\in \fU}\fT(\fu))^{1/2} \|g\|_2\,.
+    \end{equation} -/)
+  (proof := /-- Since for each $j$ the top cubes $\scI(\fu)$, $\fu \in \fU_j$ are disjoint, we have
+    for all bounded $g$ supported on $G$ by \Cref{adjoint-tile-support}
+    $$
+        \left\|\mathbf{1}_F \sum_{\fu \in \fU_j} \sum_{\fp \in \fT(\fu)} T_{\fp}^* g\right\|_2^2 =
+        \left\|\mathbf{1}_F \sum_{\fu \in \fU_j} \sum_{\fp \in \fT(\fu)} \mathbf{1}_{\scI(\fu)}
+        T_{\fp}^* \mathbf{1}_{\scI(\fu)} g\right\|_2^2
+    $$
+    $$
+        = \sum_{\fu \in \fU_j} \int_{\scI(\fu)} \left| \mathbf{1}_F \sum_{\fp \in \fT(\fu)}
+        T_{\fp}^* \mathbf{1}_{\scI(\fu)} g\right|^2 \, \mathrm{d}\mu
+        \le \sum_{\fu \in \fU_j} \left\|\mathbf{1}_F \sum_{\fp \in \fT(\fu)} T_{\fp}^* \mathbf{1}_G
+        \mathbf{1}_{\scI(\fu)}  g\right\|_2^2\,.
+    $$
+    Applying \Cref{adjoint-tree-estimate} and the density assumption \eqref{forest4}, then taking
+    square roots, we obtain
+    $$
+        \left\| \mathbf{1}_F T_{\mathfrak{R}_j}^*g \right\|_2 \le 2^{282a^3} 2^{(4a+1-n)/2}
+        \dens_2(\bigcup_{\fu\in \fU}\fT(\fu))^{1/2} \left( \sum_{\fu \in \fU_j} \left\|
+        \mathbf{1}_{\scI(\fu)} g\right\|_2^2 \right)^{1/2}\,.
+    $$
+    Again by disjointedness of the cubes $\scI(\fu)$, this is estimated by
+    $$
+        2^{282a^3} 2^{(4a+1-n)/2} \dens_2(\bigcup_{\fu\in \fU}\fT(\fu))^{1/2} \|g\|_2\,.
+    $$
+    Thus \eqref{eq-row-bound-2} follows, since $a \ge 4$. The proof of \eqref{eq-row-bound-1} is the
+    same up to replacing $F$ by $X$. -/)
+  (latexEnv := "lemma")]
 lemma indicator_row_bound (hg : BoundedCompactSupport g) (h2g : support g ⊆ G) :
     eLpNorm (F.indicator (adjointCarlesonRowSum t j g)) 2 volume ≤
     C7_7_2_2 a n * dens₂ (⋃ u ∈ t, t u) ^ (2 : ℝ)⁻¹ * eLpNorm g 2 volume := by
@@ -550,6 +745,73 @@ Has value `2 ^ (876 * a ^ 3 - 4 * n)` in the blueprint. -/
 irreducible_def C7_7_3 (a n : ℕ) : ℝ≥0 := C7_4_3 a ^ 2 * C7_4_4 a n
 
 /-- Lemma 7.7.3. -/
+@[blueprint
+  "row-correlation"
+  (title := "row correlation")
+  (statement := /-- For all $1 \le j,j' \le 2^n$ with $j\ne j'$ and for all bounded $g_1, g_2$
+    supported on $G$, it holds that
+    $$
+        \left| \int T_{\mathfrak{R}_j}^*g_1 \overline{T_{\mathfrak{R}_{j'}}^*g_2} \, \mathrm{d}\mu
+        \right| \le
+        2^{876a^3-4n}\|g_1\|_2 \|g_2\|_2\,.
+    $$ -/)
+  (proof := /-- We have by \Cref{adjoint-tile-support} and the triangle inequality that
+    $$
+        \left| \int T_{\mathfrak{R}_j}^*g_1 \overline{T_{\mathfrak{R}_{j'}}^*g_2} \, \mathrm{d}\mu
+        \right|
+    $$
+    $$
+        \le \sum_{\fu \in \fU_j} \sum_{\fu' \in \fU_{j'}} \left| \int T^*_{\fT_j(\fu)}
+        (\mathbf{1}_{\scI(\fu)} g_1) \overline{T^*_{\fT_{j'}(\fu')} (\mathbf{1}_{\scI(\fu')} g_2)}
+        \, \mathrm{d}\mu \right|\,.
+    $$
+    By \Cref{correlation-separated-trees}, this is bounded by
+    \begin{equation}
+        \label{eq-S2uu'}
+         2^{512a^3-4n} \sum_{\fu \in \fU_j} \sum_{\fu' \in \fU_{j'}} \|S_{2,\fu}
+         (\mathbf{1}_{\scI(\fu)}g_1)\|_{L^2(\scI(\fu')\cap \scI(\fu)} \|S_{2, \fu'}
+         (\mathbf{1}_{\scI(\fu')}g_2)\|_{L^2(\scI(\fu')\cap\scI(\fu))}\,.
+    \end{equation}
+    We apply the Cauchy-Schwarz inequality in the form
+    \begin{equation*}
+        \sum_{i \in M} a_i b_i \le (\sum_{i \in M} a_i^2 )^{1/2}(\sum_{i \in M} b_i^2 )^{1/2}
+    \end{equation*} to the outer two sums:
+    $$
+        \le 2^{512a^3-4n} \left(\sum_{\fu \in \fU_j} \sum_{\fu' \in \fU_{j'}} \|S_{2,\fu}
+        (\mathbf{1}_{\scI(\fu)}g_1)\|_{L^2(\scI(\fu')\cap \scI(\fu))}^2 \right)^{1/2}
+    $$
+    $$
+        \left(\sum_{\fu \in \fU_j} \sum_{\fu' \in \fU_{j'}} \|S_{2,\fu'}
+        (\mathbf{1}_{\scI(\fu')}g_2)\|_{L^2(\scI(\fu')\cap\scI(\fu))}^2 \right)^{1/2}\,.
+    $$
+    We can now estimate the factor involving $g_1$ as follows:
+    \begin{multline*}
+        \sum_{\fu \in \fU_j}\sum_{\fu' \in \fU_{j'}} \|S_{2,\fu}
+        (\mathbf{1}_{\scI(\fu)}g_1)\|_{L^2(\scI(\fu')\cap \scI(\fu))}^2
+        \\ = \sum_{\fu \in \fU_j}\sum_{\fu' \in \fU_{j'}} \int_{\scI(\fu) \cap \scI(\fu')}
+        |S_{2,\fu} (\mathbf{1}_{\scI(\fu)}(y)g_1(y))|^2 \, \mathrm{d}\mu(y)
+    \end{multline*}
+    By pairwise disjointedness of the sets $\scI(\fu')$ for $\fu' \in \fU_{j'}$, we have
+    $$
+        \le \sum_{\fu \in \fU_j}\int_{\scI(\fu)} |S_{2,\fu} (\mathbf{1}_{\scI(\fu)}(y)g_1(y))|^2 \,
+        \mathrm{d}\mu(y)
+        \le \sum_{\fu \in \fU_j}\int_{X} |S_{2,\fu} (\mathbf{1}_{\scI(\fu)}(y)g_1(y))|^2 \,
+        \mathrm{d}\mu(y)
+    $$
+    $$
+       = \sum_{\fu \in \fU_j}\|S_{2,\fu} (\mathbf{1}_{\scI(\fu)}g_1)\|_2^2
+    $$
+    By \Cref{adjoint-tree-control} we now estimate:
+    $$
+        \le \sum_{\fu \in \fU_j}(2^{182a^3})^2 \|\mathbf{1}_{\scI(\fu)}g_1\|_2^2
+    $$
+    By pairwise disjointedness of the sets $\scI(\fu)$ for $\fu \in \fU_j$ (and writing out the
+    definition of $L^2$-norms), we have
+    $$
+        \le (2^{182a^3})^2 \|g_1\|_2^2
+    $$
+    Arguing similarly for $g_2$, we obtain the desired inequality. -/)
+  (latexEnv := "lemma")]
 lemma row_correlation (lj : j < 2 ^ n) (lj' : j' < 2 ^ n) (hn : j ≠ j')
     (hf₁ : BoundedCompactSupport f₁) (nf₁ : f₁.support ⊆ G)
     (hf₂ : BoundedCompactSupport f₂) (nf₂ : f₂.support ⊆ G) :
@@ -661,6 +923,30 @@ lemma measurableSet_rowSupport : MeasurableSet (rowSupport t j) :=
     (t v).toFinite.measurableSet_biUnion fun _ _ ↦ measurableSet_E
 
 /-- Lemma 7.7.4 -/
+@[blueprint
+  "disjoint-row-support"
+  (title := "disjoint row support")
+  (statement := /-- The sets $E_j$, $1 \le j \le 2^n$ are pairwise disjoint. -/)
+  (proof := /-- Suppose that $\fp \in \fT(\fu)$ and $\fp' \in \fT(\fu')$ with $\fu \ne \fu'$ and $x
+    \in E(\fp) \cap E(\fp')$. Suppose without loss of generality that $\ps(\fp) \le \ps(\fp')$. Then
+    $x \in \scI(\fp) \cap \scI(\fp') \subset \scI(\fu')$. By \eqref{dyadicproperty} it follows that
+    $\scI(\fp) \subset \scI(\fu')$. By \eqref{forest5}, it follows that
+    $$
+        d_{\fp}(\fcc(\fp), \fcc(\fu')) > 2^{Z(n+1)}\,.
+    $$
+    By the triangle inequality. \Cref{monotone-cube-metrics} and \eqref{forest1} it follows that
+    \begin{align*}
+        d_{\fp}(\fcc(\fp), \fcc(\fp')) &\ge d_{\fp}(\fcc(\fp), \fcc(\fu')) - d_{\fp}(\fcc(\fp'),
+        \fcc(\fu'))\\
+        &> 2^{Z(n+1)} - d_{\fp'}(\fcc(\fp'), \fcc(\fu'))\\
+        &\ge 2^{Z(n+1)} - 4\,.
+    \end{align*}
+    Since $Z \ge 3$ by \eqref{defineZ}, it follows that $\fcc(\fp') \notin B_{\fp}(\fcc(\fp), 1)$,
+    so $\Omega(\fp') \not\subset \Omega(\fp)$ by \eqref{eq-freq-comp-ball}. Hence, by
+    \eqref{eq-freq-dyadic}, $\Omega(\fp) \cap \Omega(\fp') = \emptyset$. But if $x \in E(\fp) \cap
+    E(\fp')$ then $Q(x) \in \Omega(\fp) \cap \Omega(\fp')$. This is a contradiction, and the lemma
+    follows. -/)
+  (latexEnv := "lemma")]
 lemma pairwiseDisjoint_rowSupport : (Iio (2 ^ n)).PairwiseDisjoint (rowSupport t) := by
   intro i hi j hj hne
   have rowDecomp_disjoint : Disjoint (α := Set (𝔓 X)) (t.rowDecomp i) (t.rowDecomp j) := by
@@ -1003,6 +1289,100 @@ Has value `2 ^ (440 * a ^ 3 - (q - 1) / q * n)` in the blueprint. -/
 irreducible_def C2_0_4 (a : ℕ) (q : ℝ) (n : ℕ) : ℝ≥0 := C2_0_4_base a * 2 ^ (-(q - 1) / q * n)
 
 open scoped Classical in
+@[blueprint
+  "forest-operator"
+  (title := "forest operator")
+  (statement := /-- For any $n\ge 0$ and any $n$-forest $(\fU,\fT)$ we have for all $f,g: X \to
+    \mathbb{C}$ with $|f| \le \mathbf{1}_F$ and $|g| \le \mathbf{1}_G$
+    $$
+        | \int \overline{g(x)} \sum_{\fu\in \fU} \sum_{\fp\in \fT(\fu)} T_{\fp} f(x) \,
+        \mathrm{d}\mu(x)|
+    $$
+    $$
+        \le
+        2^{440a^3}2^{-\frac{q-1}{q} n} \dens_2\left(\bigcup_{\fu\in
+        \fU}\fT(\fu)\right)^{\frac{1}{q}-\frac{1}{2}} \|f\|_2 \|g\|_2 \,.
+    $$ -/)
+  (proof := /-- [Proof of \Cref{forest-operator}]
+    
+    
+        By \eqref{definetp*}, we have for each $j$
+        $$
+            T_{\mathfrak{R}_j}^*g = \sum_{\fu \in \fU_j} \sum_{\fp \in \fT(\fu)} T_{\fp}^* g =
+            \sum_{\fu \in \fU_j} \sum_{\fp \in \fT(\fu)} T_{\fp}^* \mathbf{1}_{E_j} g =
+            T_{\mathfrak{R}_j}^* \mathbf{1}_{E_j} g\,.
+        $$
+        Hence, by \Cref{forest-row-decomposition} and the triangle inequality,
+        $$
+            \left\|\sum_{\fu \in \fU} \sum_{\fp \in \fT(\fu)} T^*_{\fp} g\right\|_2^2 =
+            \left\|\sum_{j = 1}^{2^n} T^*_{\mathfrak{R}_{j}} g\right\|_2^2 = \left\|\sum_{j=1}^{2^n}
+            T^*_{\mathfrak{R}_{j}} \mathbf{1}_{E_j} g\right\|_2^2
+        $$
+        $$
+            = \int_X \left|\sum_{j=1}^{2^n} T^*_{\mathfrak{R}_{j}} \mathbf{1}_{E_j} g\right|^2 \,
+            \mathrm{d}\mu
+        $$
+        $$
+            \le \sum_{j=1}^{2^n} \|T_{\mathfrak{R}_j}^* \mathbf{1}_{E_j} g\|_2^2 + \sum_{j =1}^{2^n}
+            \sum_{\substack{j' = 1\\j' \ne j}}^{2^n} \left| \int_X \overline{ T_{\mathfrak{R}_j}^*
+            \mathbf{1}_{E_j} g} T_{\mathfrak{R}_{j'}}^* \mathbf{1}_{E_{j'}} g \right| \,
+            \mathrm{d}\mu\,.
+        $$
+        We use \Cref{row-bound} to estimate each term in the first sum, and \Cref{row-correlation}
+        to bound each term in the second sum:
+        $$
+            \le 2^{566a^3-n} \sum_{j = 1}^{2^n} \|\mathbf{1}_{E_j} g\|_2^2 +
+            2^{876a^3-4n}\sum_{j=1}^{2^n}\sum_{j' = 1}^{2^n} \|\mathbf{1}_{E_j} g\|_2
+            \|\mathbf{1}_{E_{j'}}g\|_2\,.
+        $$
+        By Cauchy-Schwarz in the second two sums, this is at most
+        $$
+            2^{876a^3} (2^{-n} + 2^{n}2^{-4n}) \sum_{j = 1}^n \|\mathbf{1}_{E_j} g\|_2^2\,,
+        $$
+        and by disjointedness of the sets $E_j$, this is at most
+        $$
+            2^{877a^3 - n} \|g\|_2^2\,.
+        $$
+        Taking square roots, it follows that for all $g$
+        \begin{equation}
+            \label{eq-forest-bound-1}
+            \left\|\sum_{\fu \in \fU} \sum_{\fp \in \fT(\fu)} T_{\fp}^* g\right\|_2 \le
+            2^{439a^3-\frac{n}{2}} \|g\|_2\,.
+        \end{equation}
+        On the other hand, we have by disjointedness of the sets $E_j$ from
+        \Cref{disjoint-row-support} and the triangle inequality
+        $$
+            \left\|\mathbf{1}_G \sum_{\fu \in \fU} \sum_{\fp \in \fT(\fu)} T_{\fp} f\right\|_2^2 =
+            \left\|\sum_{j=1}^{2^n} \mathbf{1}_{E_j} \mathbf{1}_G T_{\mathfrak{R}_{j}} f\right\|_2^2
+            \le \sum_{j = 1}^{2^n} \|\mathbf{1}_{E_j} \mathbf{1}_G T_{\mathfrak{R}_{j}} f\|_2^2 \le
+            \sum_{j = 1}^{2^n} \|\mathbf{1}_G T_{\mathfrak{R}_{j}} f\|_2^2\,.
+        $$
+        Now with $|f| \le \mathbf{1}_F$ and \Cref{row-bound} we obtain
+        $$
+            \| \mathbf{1}_G T_{\mathfrak{R}_j} f \|_2^2 = \left| \int_X \overline{\mathbf{1}_G
+            T_{\mathfrak{R}_j} f} T_{\mathfrak{R}_j} f \right| = \left| \int_X
+            \overline{T_{\mathfrak{R}_j}^* \mathbf{1}_G T_{\mathfrak{R}_j} f} \mathbf{1}_F f \right|
+        $$
+        $$
+            \le \|f\|_2 \| \mathbf{1}_F T_{\mathfrak{R}_j}^* \mathbf{1}_G T_{\mathfrak{R}_j} f \|_2
+            \le 2^{283a^3-n/2} \dens_2(\bigcup_{\fu\in \fU}\fT(\fu))^{1/2} \| \mathbf{1}_G
+            T_{\mathfrak{R}_j} f \|_2 \|f\|_2.
+        $$
+        Dividing this last inequality by the finite $\| \mathbf{1}_G T_{\mathfrak{R}_j} f \|_2$,
+        substituting back and taking square roots we get
+        $$
+            \left\|\mathbf{1}_G \sum_{\fu \in \fU} \sum_{\fp \in \fT(\fu)} T_{\fp} f\right\|_2 \le
+            2^{283a^3} \dens_2(\bigcup_{\fu\in \fU}\fT(\fu))^{\frac{1}{2}} 2^{-\frac{n}{2}} (\sum_{j
+            = 1}^{2^n} \|f\|_2^2)^{\frac{1}{2}}
+        $$
+        \begin{equation}
+            \label{eq-forest-bound-2}
+            = 2^{283a^3} \dens_2(\bigcup_{\fu\in \fU}\fT(\fu))^{\frac{1}{2}} \|f\|_2\,.
+        \end{equation}
+        \Cref{forest-operator} follows by taking the product of the $(2 - \frac{2}{q})$-th power of
+        \eqref{eq-forest-bound-1} and the $(\frac{2}{q} - 1)$-st power of \eqref{eq-forest-bound-2}.
+        -/)
+  (latexEnv := "proposition")]
 theorem forest_operator {n : ℕ} (𝔉 : Forest X n) {f g : X → ℂ}
     (hf : Measurable f) (h2f : ∀ x, ‖f x‖ ≤ F.indicator 1 x)
     (hg : Measurable g) (h2g : ∀ x, ‖g x‖ ≤ G.indicator 1 x) :

@@ -1,3 +1,4 @@
+import Architect
 import Carleson.Classical.Basic
 import Mathlib.Analysis.Real.Pi.Bounds
 
@@ -39,6 +40,26 @@ lemma Hilbert_kernel_measurable : Measurable (Function.uncurry K) :=
   k_measurable.comp measurable_sub
 
 /- Lemma 11.1.11 (Hilbert kernel bound) -/
+@[blueprint
+  "Hilbert-kernel-bound"
+  (title := "Hilbert kernel bound")
+  (statement := /-- For $x,y\in \R$ with $x\neq y$ we have
+    \begin{equation}\label{eqcarl30}
+        |\kappa(x-y)|\le 2^2(2|x-y|)^{-1}\, .
+    \end{equation} -/)
+  (proof := /-- Fix $x\neq y$. If $\kappa(x-y)$ is zero, then \eqref{eqcarl30} is evident. Assume
+        $\kappa(x-y)$ is not zero, then $0<|x-y|<1$.
+        We have
+    \begin{equation}\label{eqcarl31}
+    |\kappa(x-y)|=\left|\frac {1-|x-y|}{1-e^{i(x-y)}}\right|\, .
+    \end{equation}
+    We estimate
+    with \Cref{lower-secant-bound}
+    \begin{equation}\label{eqcarl311}
+    |\kappa(x-y)|\le \frac {1}{|1-e^{i(x-y)}|}\le \frac 2{|x-y|}\, .
+    \end{equation}
+    This proves \eqref{eqcarl30} in the given case and completes the proof of the lemma. -/)
+  (latexEnv := "lemma")]
 lemma Hilbert_kernel_bound {x y : ℝ} : ‖K x y‖ ≤ 2 ^ (2 : ℝ) / (2 * |x - y|) := by
   by_cases h : 0 < |x - y| ∧ |x - y| < 1
   · calc ‖K x y‖
@@ -203,6 +224,59 @@ lemma Hilbert_kernel_regularity_main_part {y y' : ℝ} (yy'nonneg : 0 ≤ y ∧ 
   · rwa [abs_neg, _root_.abs_of_nonneg yy'nonneg.1]
 
 /- Lemma 11.1.12 (Hilbert kernel regularity) -/
+@[blueprint
+  "Hilbert-kernel-regularity"
+  (title := "Hilbert kernel regularity")
+  (statement := /-- For $x,y,y'\in \R$ with $x\neq y,y'$ and
+    \begin{equation}
+        \label{eq-close-hoelder}
+        2|y-y'|\le |x-y|\, ,
+    \end{equation}
+    we have
+    \begin{equation}\label{eqcarl301}
+        |\kappa(x-y) - \kappa(x-y')|\le 2^{8}\frac{1}{|x-y|} \frac{|y-y'|}{|x-y|}\, .
+    \end{equation} -/)
+  (proof := /-- Upon replacing $y$ by $y-x$ and $y'$ by $y'-x$ on the left-hand side of
+    \eqref{eq-close-hoelder}, we can assume that $x = 0$. Then the assumption
+    \eqref{eq-close-hoelder} implies that $y$ and $y'$ have the same sign. Since $\kappa(y) = \bar
+    \kappa(-y)$ we can assume that they are both positive. Then it follows from
+    \eqref{eq-close-hoelder} that
+    $$
+        \frac{y}{2} \le y' \,.
+    $$
+    We distinguish four cases. If $y, y' \le 1$, then we have
+    $$
+        |\kappa(-y) - \kappa(-y')| = \left| \frac{1 - y}{1- e^{-iy}} - \frac{1 - y'}{1-
+        e^{-iy'}}\right|
+    $$
+    and by the fundamental theorem of calculus
+    $$
+        = \left| \int_{y'}^{y} \frac{-1 + e^{-it} + i(1-t)e^{it}}{(1 - e^{-it})^2} \,dt \right|\,.
+    $$
+    Using $y' \ge \frac{y}{2}$ and \Cref{lower-secant-bound}, we bound this by
+    $$
+        \le |y - y'| \sup_{\frac{y}{2} \le t \le 1} \frac{3}{|1 - e^{-it}|^2} \le 3 |y-y'| (2
+        \frac{2}{y})^2 \le 2^{6} \frac{|y-y'|}{|y|^2}\,.
+    $$
+    If $y \le 1$ and $y' > 1$, then $\kappa(-y') = 0$ and we have from the first case
+    $$
+        |\kappa(-y) - \kappa(-y')| = |\kappa(-y) - \kappa(-1)| \le 2^{6} \frac{|y-1|}{|y|^2} \le
+        2^{6} \frac{|y-y'|}{|y|^2}\,.
+    $$
+    Similarly, if $y > 1$ and $y' \le 1$, then $\kappa(-y) = 0$ and we have from the first case
+    $$
+        |\kappa(-y) - \kappa(-y')| = |\kappa(-y') - \kappa(-1)| \le 2^{6} \frac{|y'-1|}{|y'|^2} \le
+        2^{6} \frac{|y-y'|}{|y'|^2}\,.
+    $$
+    Using again $y' \ge \frac{y}{2}$, we bound this by
+    $$
+        \le 2^{6} \frac{|y-y'|}{|y / 2|^2} = 2^{8} \frac{|y-y'|}{|y|^2}
+    $$
+    Finally, if $y, y' > 1$ then
+    $$
+        |\kappa(-y) - \kappa(-y')| = 0 \le 2^{8} \frac{|y-y'|}{|y|^2}\,.
+    $$ -/)
+  (latexEnv := "lemma")]
 lemma Hilbert_kernel_regularity {x y y' : ℝ} :
     2 * |y - y'| ≤ |x - y| → ‖K x y - K x y'‖ ≤ 2 ^ 8 * (1 / |x - y|) * (|y - y'| / |x - y|)  := by
   rw [K, K]

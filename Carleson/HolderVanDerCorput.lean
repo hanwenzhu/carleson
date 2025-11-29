@@ -1,3 +1,4 @@
+import Architect
 import Carleson.TileStructure
 import Carleson.HolderNorm
 
@@ -158,6 +159,163 @@ lemma support_holderApprox_subset_aux {z : X} {R R' t : ℝ} (hR : 0 < R)
     _ < R + R' := add_lt_add h (hφ (right_ne_zero_of_mul hy))
 
 /-- Part of Lemma 8.0.1. -/
+@[blueprint
+  "Lipschitz-Holder-approximation"
+  (title := "Lipschitz Holder approximation")
+  (statement := /-- Let $z\in X$ and $R>0$. Let $\varphi: X \to \mathbb{C}$ be a function supported
+     in the ball
+     $B:=B(z,R)$ with finite norm $\|\varphi\|_{C^\tau(B(z, 2R))}$.
+     Let $0<t \leq 1$. There exists a function $\tilde \varphi : X \to \mathbb{C}$, supported in
+     $B(z,2R)$, such that for every $x\in X$
+     \begin{equation}\label{eq-firstt}
+         |\varphi(x) - \tilde \varphi(x)| \leq (t/2)^{\tau} \|\varphi\|_{C^\tau(B(z,2R))}
+     \end{equation}and
+    \begin{equation}\label{eq-secondt}
+        \|\tilde \varphi\|_{\Lip(B(z,2R))} \leq 2^{4a}t^{-1-a} \|\varphi\|_{C^{\tau}(B(z,2R))}\, .
+    \end{equation} -/)
+  (proof := /-- Define for $x,y\in X$ the Lipschitz and thus measurable function
+        \begin{equation}
+            L(x,y) := \max\{0, 1 - \frac{\rho(x,y)}{tR}\}\, .
+        \end{equation}
+    We have that $L(x,y)\neq 0$ implies
+    \begin{equation}\label{eql01}
+        y\in B(x, tR)\, .
+    \end{equation}
+    We have for $y\in B(x, 2^{-1}tR)$ that
+    \begin{equation}\label{eql30}
+        |L(x,y)|\ge 2^{-1} \ .
+    \end{equation}
+    Hence
+    \begin{equation}
+        \int L(x,y) \, \mathrm{d}\mu(y)\ge 2^{-1}\mu(B(x, 2^{-1}tR))\, .
+    \end{equation}
+     Let $n$ be the smallest integer so that
+     \begin{equation}\label{2nt1}
+        2^n t\ge 1\, .
+     \end{equation}
+     Iterating $n+2$ times the doubling condition \eqref{doublingx}, we obtain
+     \begin{equation}\label{eql32}
+        \int L(x,y) \, \mathrm{d}\mu(y)\ge 2^{-1-a(n+2)}\mu(B(x, 2R))\, .
+     \end{equation}
+    
+    Now define
+        $$
+            \tilde \varphi(x) := \left(\int L(x,y) \, \mathrm{d}\mu(y)\right)^{-1}\int L(x,y)
+            \varphi(y) \, \mathrm{d}\mu(y)\, .
+        $$
+    Using that $\varphi$ is supported in $B(z,R)$ and
+    \eqref{eql01}, we have that $\tilde{\varphi}$ is supported in $B(z,2R)$.
+    
+    We prove \eqref{eq-firstt}.
+     For any $x\in X$, using that $L$ is nonnegative,
+       \begin{equation}\label{eql1}
+        \left(\int L(x,y) \, \mathrm{d}\mu(y)\right)
+            |\varphi(x) - \tilde \varphi(x)|
+        \end{equation}
+     \begin{equation}\label{eql2}
+     = \left| \int L(x,y)(\varphi(x) - \varphi(y)) \, \mathrm{d}\mu(y)\right|\, .
+        \end{equation}
+    Using \eqref{eql01}, we estimate the last display by
+     \begin{equation}\label{eql3}
+             \le \int_{B(x, tR)} L(x,y)|\varphi(x) - \varphi(y)| \, \mathrm{d}\mu(y)\,
+             .\end{equation}
+    We claim that in this integral, $|\varphi(x) - \varphi(y)|\le \rho(x,y)^\tau
+    \|\varphi\|_{C^\tau(B(z, 2R))}(2R)^{-\tau}$.
+    Indeed, if $x$ or $y$ does not belong to $B(z, 2R)$, then the other point is not in $B(z,R)$ as
+    $\rho(x,y)\le tR \le R$. Therefore,
+    $\varphi(x)=\varphi(y)=0$ since $\varphi$ is supported in $B (z, R)$. Otherwise, both points are
+    in $B(z, 2R)$, and the inequality
+    follows from the definition of $\|\varphi\|_{C^\tau(B(z, 2R))}$.
+    
+    Therefore, we can estimate the last display further by
+           \begin{equation}\label{eql4}
+             \le \left(\int_{B(x, tR)} L(x,y)
+              \rho(x,y)^\tau \, \mathrm{d}\mu(y) \right)\|\varphi\|_{C^\tau(B(z, 2R))}(2R)^{-\tau}\,
+              .
+        \end{equation}
+    
+      Using the condition on the domain of integration to estimate $\rho(x,y)$ by $tR$ and then
+      expanding the domain by positivity of the integrand, we estimate this further by
+    
+       \begin{equation}\label{eql5}
+             \le \left(\int L(x,y) \, \mathrm{d}\mu(y)\right)
+             \|\varphi\|_{C^\tau(B(z, 2R))} (t/2)^{\tau} \, .
+        \end{equation}
+     Dividing the string of inequalities from \eqref{eql1} to
+    \eqref{eql5} by the positive integral of $L$ proves \eqref{eq-firstt}.
+    
+    
+    We turn to \eqref{eq-secondt}. For every $x\in X$, we have
+    \begin{equation}
+        \left|\int L(x,y) \, \mathrm{d}\mu(y)\right||\tilde{\varphi}(x)|
+        =\left|\int L(x,y) {\varphi}(y)\, \mathrm{d}\mu(y)\right|
+    \end{equation}
+     \begin{equation}
+        \le \left|\int L(x,y) \, \mathrm{d}\mu(y)\right| \sup_{x'\in X}
+        |{\varphi}(x')|\ .
+    \end{equation}
+    As $\varphi$ is supported on $B$, dividing by the integral of $L$, we obtain
+    \begin{equation}\label{eql42}
+     |\tilde{\varphi}(x)|\le \sup_{x'\in B}
+        |{\varphi}(x')|\le \|\varphi\|_{C^\tau(B(z, 2R))}\ .
+    \end{equation}
+    If $\rho(x,x')\ge R$, then we have by the triangle inequality
+      \begin{equation}\label{eql52}
+     R\frac{|\tilde{\varphi}(x') - \tilde \varphi(x)|}{\rho(x,x')} \le
+     2\sup_{x''\in X} |\tilde{\varphi}(x'')|\le 2\|\varphi\|_{C^\tau(B(z, 2R))}\, .
+    \end{equation}
+    Now assume $\rho(x,x')< R$. For $y\in X$ we have by the triangle inequality and a two fold case
+    distinction
+    for the maximum in the definition of $L$,
+    \begin{equation}\label{eql10}
+       |L(x,y) - L(x',y)| \le \frac{\rho(x,x')}{tR}.
+    \end{equation}
+    We compute with \eqref{eql10}, first adding and subtracting a term in the integral,
+    \begin{equation}
+        \left(\int L(x,y) \, \mathrm{d}\mu(y)\right)
+        |\tilde{\varphi}(x') - \tilde \varphi(x)|=
+    \end{equation}
+    \begin{equation}
+        \left|\int L(x,y) \tilde{\varphi}(x')
+        -L(x,y) \tilde{\varphi}(x)
+        +L(x',y) \tilde{\varphi}(x')-
+         L(x',y) \tilde{\varphi}(x')
+        \, \mathrm{d}\mu(y)\right|\,.
+    \end{equation}
+    Grouping the second and third and the first and fourth term, we obtain using the definition of
+    $\tilde \varphi$ and Fubini,
+    \begin{equation}\label{eql21}
+        \le \left| \int (L(x',y)-L(x,y)) \varphi(y) \, \mathrm{d}\mu(y)\right|
+    \end{equation}
+    \begin{equation}\label{eql22}
+        + \left| \int L(x,y) \, \mathrm{d}\mu(y)-\int L(x',y) \,
+        \mathrm{d}\mu(y)\right||\tilde{\varphi}(x')|
+    \end{equation}
+    \begin{equation}\label{eql23}
+        \le 2 \int |L(x,y) -L(x',y)| \, \mathrm{d}\mu(y)
+        \|\varphi\|_{C^\tau(B(z, 2R))}\, ,
+    \end{equation}
+    where in the last inequality we have used \eqref{eql42}.
+    Using further \eqref{eql10} and the support of $L$, we estimate the last display by
+    \begin{equation}\label{eql224}\le 2 \frac{\rho(x,x')} {tR}\mu(B(x,tR)\cup B(x',tR))
+    \|\varphi\|_{C^\tau(B(z, 2R))}\, .
+        \end{equation}
+      Using $\rho(x,x')<R$ and the triangle inequality, we estimate the last display by
+    \begin{equation}\label{eql225}\le 2
+    \frac{\rho(x,x')} {tR}
+    \mu(B(x,2R))
+    \|\varphi\|_{C^\tau(B(z, 2R))}\, .
+        \end{equation}
+    Dividing by the integral over $L$ and using \eqref{eql32} and \eqref{2nt1}, we obtain
+    \begin{equation}\label{eql226}
+     \frac {R |\tilde{\varphi}(x') - \tilde \varphi(x)|}{\rho(x,x')}
+     \le 2^{2+a(n+2)}t^{-1}\|\varphi\|_{C^\tau(B(z, 2R))} \le
+     2^{2+3a} t^{-1-a} \|\varphi\|_{C^\tau(B(z, 2R))}\, .
+    \end{equation}
+    Combining \eqref{eql52} and \eqref{eql226} using $a\ge 4$ and $t\le 1$ and
+    adding \eqref{eql42} proves \eqref{eq-secondt} and completes the proof
+    of \Cref{Lipschitz-Holder-approximation}. -/)
+  (latexEnv := "lemma")]
 lemma support_holderApprox_subset {z : X} {R t : ℝ} (hR : 0 < R)
     {φ : X → ℂ} (hφ : φ.support ⊆ ball z R) (ht : t ∈ Ioc (0 : ℝ) 1) :
     support (holderApprox R t φ) ⊆ ball z (2 * R) := by
@@ -235,6 +393,163 @@ lemma dist_holderApprox_le {z : X} {R t : ℝ} (hR : 0 < R) {C : ℝ≥0} (ht : 
     · positivity
     · positivity
 
+@[blueprint
+  "Lipschitz-Holder-approximation"
+  (title := "Lipschitz Holder approximation")
+  (statement := /-- Let $z\in X$ and $R>0$. Let $\varphi: X \to \mathbb{C}$ be a function supported
+     in the ball
+     $B:=B(z,R)$ with finite norm $\|\varphi\|_{C^\tau(B(z, 2R))}$.
+     Let $0<t \leq 1$. There exists a function $\tilde \varphi : X \to \mathbb{C}$, supported in
+     $B(z,2R)$, such that for every $x\in X$
+     \begin{equation}\label{eq-firstt}
+         |\varphi(x) - \tilde \varphi(x)| \leq (t/2)^{\tau} \|\varphi\|_{C^\tau(B(z,2R))}
+     \end{equation}and
+    \begin{equation}\label{eq-secondt}
+        \|\tilde \varphi\|_{\Lip(B(z,2R))} \leq 2^{4a}t^{-1-a} \|\varphi\|_{C^{\tau}(B(z,2R))}\, .
+    \end{equation} -/)
+  (proof := /-- Define for $x,y\in X$ the Lipschitz and thus measurable function
+        \begin{equation}
+            L(x,y) := \max\{0, 1 - \frac{\rho(x,y)}{tR}\}\, .
+        \end{equation}
+    We have that $L(x,y)\neq 0$ implies
+    \begin{equation}\label{eql01}
+        y\in B(x, tR)\, .
+    \end{equation}
+    We have for $y\in B(x, 2^{-1}tR)$ that
+    \begin{equation}\label{eql30}
+        |L(x,y)|\ge 2^{-1} \ .
+    \end{equation}
+    Hence
+    \begin{equation}
+        \int L(x,y) \, \mathrm{d}\mu(y)\ge 2^{-1}\mu(B(x, 2^{-1}tR))\, .
+    \end{equation}
+     Let $n$ be the smallest integer so that
+     \begin{equation}\label{2nt1}
+        2^n t\ge 1\, .
+     \end{equation}
+     Iterating $n+2$ times the doubling condition \eqref{doublingx}, we obtain
+     \begin{equation}\label{eql32}
+        \int L(x,y) \, \mathrm{d}\mu(y)\ge 2^{-1-a(n+2)}\mu(B(x, 2R))\, .
+     \end{equation}
+    
+    Now define
+        $$
+            \tilde \varphi(x) := \left(\int L(x,y) \, \mathrm{d}\mu(y)\right)^{-1}\int L(x,y)
+            \varphi(y) \, \mathrm{d}\mu(y)\, .
+        $$
+    Using that $\varphi$ is supported in $B(z,R)$ and
+    \eqref{eql01}, we have that $\tilde{\varphi}$ is supported in $B(z,2R)$.
+    
+    We prove \eqref{eq-firstt}.
+     For any $x\in X$, using that $L$ is nonnegative,
+       \begin{equation}\label{eql1}
+        \left(\int L(x,y) \, \mathrm{d}\mu(y)\right)
+            |\varphi(x) - \tilde \varphi(x)|
+        \end{equation}
+     \begin{equation}\label{eql2}
+     = \left| \int L(x,y)(\varphi(x) - \varphi(y)) \, \mathrm{d}\mu(y)\right|\, .
+        \end{equation}
+    Using \eqref{eql01}, we estimate the last display by
+     \begin{equation}\label{eql3}
+             \le \int_{B(x, tR)} L(x,y)|\varphi(x) - \varphi(y)| \, \mathrm{d}\mu(y)\,
+             .\end{equation}
+    We claim that in this integral, $|\varphi(x) - \varphi(y)|\le \rho(x,y)^\tau
+    \|\varphi\|_{C^\tau(B(z, 2R))}(2R)^{-\tau}$.
+    Indeed, if $x$ or $y$ does not belong to $B(z, 2R)$, then the other point is not in $B(z,R)$ as
+    $\rho(x,y)\le tR \le R$. Therefore,
+    $\varphi(x)=\varphi(y)=0$ since $\varphi$ is supported in $B (z, R)$. Otherwise, both points are
+    in $B(z, 2R)$, and the inequality
+    follows from the definition of $\|\varphi\|_{C^\tau(B(z, 2R))}$.
+    
+    Therefore, we can estimate the last display further by
+           \begin{equation}\label{eql4}
+             \le \left(\int_{B(x, tR)} L(x,y)
+              \rho(x,y)^\tau \, \mathrm{d}\mu(y) \right)\|\varphi\|_{C^\tau(B(z, 2R))}(2R)^{-\tau}\,
+              .
+        \end{equation}
+    
+      Using the condition on the domain of integration to estimate $\rho(x,y)$ by $tR$ and then
+      expanding the domain by positivity of the integrand, we estimate this further by
+    
+       \begin{equation}\label{eql5}
+             \le \left(\int L(x,y) \, \mathrm{d}\mu(y)\right)
+             \|\varphi\|_{C^\tau(B(z, 2R))} (t/2)^{\tau} \, .
+        \end{equation}
+     Dividing the string of inequalities from \eqref{eql1} to
+    \eqref{eql5} by the positive integral of $L$ proves \eqref{eq-firstt}.
+    
+    
+    We turn to \eqref{eq-secondt}. For every $x\in X$, we have
+    \begin{equation}
+        \left|\int L(x,y) \, \mathrm{d}\mu(y)\right||\tilde{\varphi}(x)|
+        =\left|\int L(x,y) {\varphi}(y)\, \mathrm{d}\mu(y)\right|
+    \end{equation}
+     \begin{equation}
+        \le \left|\int L(x,y) \, \mathrm{d}\mu(y)\right| \sup_{x'\in X}
+        |{\varphi}(x')|\ .
+    \end{equation}
+    As $\varphi$ is supported on $B$, dividing by the integral of $L$, we obtain
+    \begin{equation}\label{eql42}
+     |\tilde{\varphi}(x)|\le \sup_{x'\in B}
+        |{\varphi}(x')|\le \|\varphi\|_{C^\tau(B(z, 2R))}\ .
+    \end{equation}
+    If $\rho(x,x')\ge R$, then we have by the triangle inequality
+      \begin{equation}\label{eql52}
+     R\frac{|\tilde{\varphi}(x') - \tilde \varphi(x)|}{\rho(x,x')} \le
+     2\sup_{x''\in X} |\tilde{\varphi}(x'')|\le 2\|\varphi\|_{C^\tau(B(z, 2R))}\, .
+    \end{equation}
+    Now assume $\rho(x,x')< R$. For $y\in X$ we have by the triangle inequality and a two fold case
+    distinction
+    for the maximum in the definition of $L$,
+    \begin{equation}\label{eql10}
+       |L(x,y) - L(x',y)| \le \frac{\rho(x,x')}{tR}.
+    \end{equation}
+    We compute with \eqref{eql10}, first adding and subtracting a term in the integral,
+    \begin{equation}
+        \left(\int L(x,y) \, \mathrm{d}\mu(y)\right)
+        |\tilde{\varphi}(x') - \tilde \varphi(x)|=
+    \end{equation}
+    \begin{equation}
+        \left|\int L(x,y) \tilde{\varphi}(x')
+        -L(x,y) \tilde{\varphi}(x)
+        +L(x',y) \tilde{\varphi}(x')-
+         L(x',y) \tilde{\varphi}(x')
+        \, \mathrm{d}\mu(y)\right|\,.
+    \end{equation}
+    Grouping the second and third and the first and fourth term, we obtain using the definition of
+    $\tilde \varphi$ and Fubini,
+    \begin{equation}\label{eql21}
+        \le \left| \int (L(x',y)-L(x,y)) \varphi(y) \, \mathrm{d}\mu(y)\right|
+    \end{equation}
+    \begin{equation}\label{eql22}
+        + \left| \int L(x,y) \, \mathrm{d}\mu(y)-\int L(x',y) \,
+        \mathrm{d}\mu(y)\right||\tilde{\varphi}(x')|
+    \end{equation}
+    \begin{equation}\label{eql23}
+        \le 2 \int |L(x,y) -L(x',y)| \, \mathrm{d}\mu(y)
+        \|\varphi\|_{C^\tau(B(z, 2R))}\, ,
+    \end{equation}
+    where in the last inequality we have used \eqref{eql42}.
+    Using further \eqref{eql10} and the support of $L$, we estimate the last display by
+    \begin{equation}\label{eql224}\le 2 \frac{\rho(x,x')} {tR}\mu(B(x,tR)\cup B(x',tR))
+    \|\varphi\|_{C^\tau(B(z, 2R))}\, .
+        \end{equation}
+      Using $\rho(x,x')<R$ and the triangle inequality, we estimate the last display by
+    \begin{equation}\label{eql225}\le 2
+    \frac{\rho(x,x')} {tR}
+    \mu(B(x,2R))
+    \|\varphi\|_{C^\tau(B(z, 2R))}\, .
+        \end{equation}
+    Dividing by the integral over $L$ and using \eqref{eql32} and \eqref{2nt1}, we obtain
+    \begin{equation}\label{eql226}
+     \frac {R |\tilde{\varphi}(x') - \tilde \varphi(x)|}{\rho(x,x')}
+     \le 2^{2+a(n+2)}t^{-1}\|\varphi\|_{C^\tau(B(z, 2R))} \le
+     2^{2+3a} t^{-1-a} \|\varphi\|_{C^\tau(B(z, 2R))}\, .
+    \end{equation}
+    Combining \eqref{eql52} and \eqref{eql226} using $a\ge 4$ and $t\le 1$ and
+    adding \eqref{eql42} proves \eqref{eq-secondt} and completes the proof
+    of \Cref{Lipschitz-Holder-approximation}. -/)
+  (latexEnv := "lemma")]
 lemma enorm_holderApprox_sub_le {z : X} {R t : ℝ} (hR : 0 < R) (ht : 0 < t) (h't : t ≤ 1)
     {φ : X → ℂ} (hφ : support φ ⊆ ball z R) (x : X) :
     ‖φ x - holderApprox R t φ x‖ₑ ≤ ENNReal.ofReal (t/2) ^ τ * iHolENorm φ z (2 * R) τ := by
@@ -471,6 +786,163 @@ lemma iLipENorm_holderApprox' {z : X} {R t : ℝ} (ht : 0 < t) (h't : t ≤ 1)
       Real.coe_toNNReal', ht.le, sup_of_le_left, ← mul_assoc, C']
     exact norm_holderApprox_sub_le hR ht h't hc hφ hC
 
+@[blueprint
+  "Lipschitz-Holder-approximation"
+  (title := "Lipschitz Holder approximation")
+  (statement := /-- Let $z\in X$ and $R>0$. Let $\varphi: X \to \mathbb{C}$ be a function supported
+     in the ball
+     $B:=B(z,R)$ with finite norm $\|\varphi\|_{C^\tau(B(z, 2R))}$.
+     Let $0<t \leq 1$. There exists a function $\tilde \varphi : X \to \mathbb{C}$, supported in
+     $B(z,2R)$, such that for every $x\in X$
+     \begin{equation}\label{eq-firstt}
+         |\varphi(x) - \tilde \varphi(x)| \leq (t/2)^{\tau} \|\varphi\|_{C^\tau(B(z,2R))}
+     \end{equation}and
+    \begin{equation}\label{eq-secondt}
+        \|\tilde \varphi\|_{\Lip(B(z,2R))} \leq 2^{4a}t^{-1-a} \|\varphi\|_{C^{\tau}(B(z,2R))}\, .
+    \end{equation} -/)
+  (proof := /-- Define for $x,y\in X$ the Lipschitz and thus measurable function
+        \begin{equation}
+            L(x,y) := \max\{0, 1 - \frac{\rho(x,y)}{tR}\}\, .
+        \end{equation}
+    We have that $L(x,y)\neq 0$ implies
+    \begin{equation}\label{eql01}
+        y\in B(x, tR)\, .
+    \end{equation}
+    We have for $y\in B(x, 2^{-1}tR)$ that
+    \begin{equation}\label{eql30}
+        |L(x,y)|\ge 2^{-1} \ .
+    \end{equation}
+    Hence
+    \begin{equation}
+        \int L(x,y) \, \mathrm{d}\mu(y)\ge 2^{-1}\mu(B(x, 2^{-1}tR))\, .
+    \end{equation}
+     Let $n$ be the smallest integer so that
+     \begin{equation}\label{2nt1}
+        2^n t\ge 1\, .
+     \end{equation}
+     Iterating $n+2$ times the doubling condition \eqref{doublingx}, we obtain
+     \begin{equation}\label{eql32}
+        \int L(x,y) \, \mathrm{d}\mu(y)\ge 2^{-1-a(n+2)}\mu(B(x, 2R))\, .
+     \end{equation}
+    
+    Now define
+        $$
+            \tilde \varphi(x) := \left(\int L(x,y) \, \mathrm{d}\mu(y)\right)^{-1}\int L(x,y)
+            \varphi(y) \, \mathrm{d}\mu(y)\, .
+        $$
+    Using that $\varphi$ is supported in $B(z,R)$ and
+    \eqref{eql01}, we have that $\tilde{\varphi}$ is supported in $B(z,2R)$.
+    
+    We prove \eqref{eq-firstt}.
+     For any $x\in X$, using that $L$ is nonnegative,
+       \begin{equation}\label{eql1}
+        \left(\int L(x,y) \, \mathrm{d}\mu(y)\right)
+            |\varphi(x) - \tilde \varphi(x)|
+        \end{equation}
+     \begin{equation}\label{eql2}
+     = \left| \int L(x,y)(\varphi(x) - \varphi(y)) \, \mathrm{d}\mu(y)\right|\, .
+        \end{equation}
+    Using \eqref{eql01}, we estimate the last display by
+     \begin{equation}\label{eql3}
+             \le \int_{B(x, tR)} L(x,y)|\varphi(x) - \varphi(y)| \, \mathrm{d}\mu(y)\,
+             .\end{equation}
+    We claim that in this integral, $|\varphi(x) - \varphi(y)|\le \rho(x,y)^\tau
+    \|\varphi\|_{C^\tau(B(z, 2R))}(2R)^{-\tau}$.
+    Indeed, if $x$ or $y$ does not belong to $B(z, 2R)$, then the other point is not in $B(z,R)$ as
+    $\rho(x,y)\le tR \le R$. Therefore,
+    $\varphi(x)=\varphi(y)=0$ since $\varphi$ is supported in $B (z, R)$. Otherwise, both points are
+    in $B(z, 2R)$, and the inequality
+    follows from the definition of $\|\varphi\|_{C^\tau(B(z, 2R))}$.
+    
+    Therefore, we can estimate the last display further by
+           \begin{equation}\label{eql4}
+             \le \left(\int_{B(x, tR)} L(x,y)
+              \rho(x,y)^\tau \, \mathrm{d}\mu(y) \right)\|\varphi\|_{C^\tau(B(z, 2R))}(2R)^{-\tau}\,
+              .
+        \end{equation}
+    
+      Using the condition on the domain of integration to estimate $\rho(x,y)$ by $tR$ and then
+      expanding the domain by positivity of the integrand, we estimate this further by
+    
+       \begin{equation}\label{eql5}
+             \le \left(\int L(x,y) \, \mathrm{d}\mu(y)\right)
+             \|\varphi\|_{C^\tau(B(z, 2R))} (t/2)^{\tau} \, .
+        \end{equation}
+     Dividing the string of inequalities from \eqref{eql1} to
+    \eqref{eql5} by the positive integral of $L$ proves \eqref{eq-firstt}.
+    
+    
+    We turn to \eqref{eq-secondt}. For every $x\in X$, we have
+    \begin{equation}
+        \left|\int L(x,y) \, \mathrm{d}\mu(y)\right||\tilde{\varphi}(x)|
+        =\left|\int L(x,y) {\varphi}(y)\, \mathrm{d}\mu(y)\right|
+    \end{equation}
+     \begin{equation}
+        \le \left|\int L(x,y) \, \mathrm{d}\mu(y)\right| \sup_{x'\in X}
+        |{\varphi}(x')|\ .
+    \end{equation}
+    As $\varphi$ is supported on $B$, dividing by the integral of $L$, we obtain
+    \begin{equation}\label{eql42}
+     |\tilde{\varphi}(x)|\le \sup_{x'\in B}
+        |{\varphi}(x')|\le \|\varphi\|_{C^\tau(B(z, 2R))}\ .
+    \end{equation}
+    If $\rho(x,x')\ge R$, then we have by the triangle inequality
+      \begin{equation}\label{eql52}
+     R\frac{|\tilde{\varphi}(x') - \tilde \varphi(x)|}{\rho(x,x')} \le
+     2\sup_{x''\in X} |\tilde{\varphi}(x'')|\le 2\|\varphi\|_{C^\tau(B(z, 2R))}\, .
+    \end{equation}
+    Now assume $\rho(x,x')< R$. For $y\in X$ we have by the triangle inequality and a two fold case
+    distinction
+    for the maximum in the definition of $L$,
+    \begin{equation}\label{eql10}
+       |L(x,y) - L(x',y)| \le \frac{\rho(x,x')}{tR}.
+    \end{equation}
+    We compute with \eqref{eql10}, first adding and subtracting a term in the integral,
+    \begin{equation}
+        \left(\int L(x,y) \, \mathrm{d}\mu(y)\right)
+        |\tilde{\varphi}(x') - \tilde \varphi(x)|=
+    \end{equation}
+    \begin{equation}
+        \left|\int L(x,y) \tilde{\varphi}(x')
+        -L(x,y) \tilde{\varphi}(x)
+        +L(x',y) \tilde{\varphi}(x')-
+         L(x',y) \tilde{\varphi}(x')
+        \, \mathrm{d}\mu(y)\right|\,.
+    \end{equation}
+    Grouping the second and third and the first and fourth term, we obtain using the definition of
+    $\tilde \varphi$ and Fubini,
+    \begin{equation}\label{eql21}
+        \le \left| \int (L(x',y)-L(x,y)) \varphi(y) \, \mathrm{d}\mu(y)\right|
+    \end{equation}
+    \begin{equation}\label{eql22}
+        + \left| \int L(x,y) \, \mathrm{d}\mu(y)-\int L(x',y) \,
+        \mathrm{d}\mu(y)\right||\tilde{\varphi}(x')|
+    \end{equation}
+    \begin{equation}\label{eql23}
+        \le 2 \int |L(x,y) -L(x',y)| \, \mathrm{d}\mu(y)
+        \|\varphi\|_{C^\tau(B(z, 2R))}\, ,
+    \end{equation}
+    where in the last inequality we have used \eqref{eql42}.
+    Using further \eqref{eql10} and the support of $L$, we estimate the last display by
+    \begin{equation}\label{eql224}\le 2 \frac{\rho(x,x')} {tR}\mu(B(x,tR)\cup B(x',tR))
+    \|\varphi\|_{C^\tau(B(z, 2R))}\, .
+        \end{equation}
+      Using $\rho(x,x')<R$ and the triangle inequality, we estimate the last display by
+    \begin{equation}\label{eql225}\le 2
+    \frac{\rho(x,x')} {tR}
+    \mu(B(x,2R))
+    \|\varphi\|_{C^\tau(B(z, 2R))}\, .
+        \end{equation}
+    Dividing by the integral over $L$ and using \eqref{eql32} and \eqref{2nt1}, we obtain
+    \begin{equation}\label{eql226}
+     \frac {R |\tilde{\varphi}(x') - \tilde \varphi(x)|}{\rho(x,x')}
+     \le 2^{2+a(n+2)}t^{-1}\|\varphi\|_{C^\tau(B(z, 2R))} \le
+     2^{2+3a} t^{-1-a} \|\varphi\|_{C^\tau(B(z, 2R))}\, .
+    \end{equation}
+    Combining \eqref{eql52} and \eqref{eql226} using $a\ge 4$ and $t\le 1$ and
+    adding \eqref{eql42} proves \eqref{eq-secondt} and completes the proof
+    of \Cref{Lipschitz-Holder-approximation}. -/)
+  (latexEnv := "lemma")]
 lemma iLipENorm_holderApprox_le {z : X} {R t : ℝ} (ht : 0 < t) (h't : t ≤ 1)
     {φ : X → ℂ} (hφ : support φ ⊆ ball z R) :
     iLipENorm (holderApprox R t φ) z (2 * R) ≤
@@ -496,6 +968,88 @@ def C2_0_5 (a : ℝ) : ℝ≥0 := 2 ^ (7 * a)
 
 --NOTE (MI) : there was a missing minus sign in the exponent.
 /-- Proposition 2.0.5. -/
+@[blueprint
+  "Holder-van-der-Corput"
+  (title := "Holder van der Corput")
+  (statement := /-- Let $z\in X$ and $R>0$ and set $B=B(z,R)$.
+     Let $\varphi: X \to \mathbb{C}$ be
+     supported on $B$ and satisfy $\|{\varphi}\|_{C^\tau(B(z, 2R))}<\infty$.
+     Let $\mfa, \mfb \in \Mf$. Then
+    \begin{equation}
+        \label{eq-vdc-cond-tau-2}
+        |\int e(\mfa(x)-{\mfb(x)})\varphi(x) dx|\le
+         2^{7a} \mu(B) \|{\varphi}\|_{C^\tau(B(z, 2R))}
+       (1 + d_{B}(\mfa,\mfb))^{-\frac{1}{2a^2+a^3}}
+    \,.
+    \end{equation} -/)
+  (proof := /-- [Proof of \Cref{Holder-van-der-Corput}]
+    
+    Let $z\in X$ and $R>0$ and set $B=B(z,R)$. Let $\varphi$
+    be given as in \Cref{Holder-van-der-Corput}.
+    Set
+    \begin{equation}\label{eql69}
+        t:=(1+d_B(\mfa,\mfb))^{-\frac{\tau}{2+a}}
+    \end{equation}
+    and define $\tilde{\varphi}$ as in \Cref{Lipschitz-Holder-approximation}. Let $\mfa$ and $\mfb$
+    be in $\Mf$.
+    Then
+       \begin{equation}\label{eql60}
+           \left|\int e(\mfa(x)-{\mfb(x)}) \varphi (x)\, \mathrm{d}\mu(x)\right|
+       \end{equation}
+        \begin{equation}\label{eql61}
+       \le \left|\int e(\mfa(x)-{\mfb(x)}) \tilde{\varphi} (x)\, \mathrm{d}\mu(x)\right|
+       \end{equation}
+             \begin{equation}\label{eql62}
+         + \left|\int e(\mfa(x)-{\mfb(x)}) (\varphi (x)-\tilde{\varphi}(x))\,
+         \mathrm{d}\mu(x)\right|
+       \end{equation}
+    Using the cancellative condition \eqref{eq-vdc-cond} of $\Mf$ on the ball $B(z,2R)$, the term
+    \eqref{eql61} is bounded above by
+     \begin{equation}\label{eql63}
+           2^a \mu(B(z,2R)) \|\tilde{\varphi}\|_{\Lip(B(z,2R))} (1 + d_{B(z,2R)}(\mfa,\mfb))^{-\tau}
+           \, .
+     \end{equation}
+    
+    
+    
+    Using the doubling condition \eqref{doublingx},
+    the inequality \eqref{eq-secondt}, and the estimate
+    $d_B\le d_{B(z,2R)}$ from the definition,
+    we estimate \eqref{eql63} from above by
+    \begin{equation}\label{eql64}
+           2^{6a}t^{-1-a} \mu(B) \|{\varphi}\|_{C^\tau(B)}
+           (1 + d_{B}(\mfa,\mfb))^{-\tau} \, .
+     \end{equation}
+    
+    The term \eqref{eql62} we estimate using
+    \eqref{eq-firstt} and that
+    $\mfa$ and $\mfb$ are real and thus $e(\mfa)$ and
+    $e(\mfb)$ bounded in absolute value by $1$.
+    We obtain for \eqref{eql62} with \eqref{doublingx}
+    the upper bound
+      \begin{equation}\label{eql65}
+          \mu(B(z,2R)) (t/2)^{\tau} \|\varphi\|_{C^\tau(B)}
+          \le 2^a \mu(B) t^{\tau} \|\varphi\|_{C^\tau(B)}
+          \,.
+     \end{equation}
+    Using the definition \eqref{eql69} of $t$ and adding
+    \eqref{eql64} and \eqref{eql65} estimates
+    \eqref{eql60} from above by
+    \begin{equation}
+           2^{6a} \mu(B) \|{\varphi}\|_{C^\tau(B)}
+           (1 + d_{B}(\mfa,\mfb))^{-\frac{\tau}{2+a}}
+           \end{equation}
+    \begin{equation} +
+            2^a \mu(B) \|{\varphi}\|_{C^\tau(B)}
+           (1 + d_{B}(\mfa,\mfb))^{-\frac{\tau^2}{2+a}}\, .
+     \end{equation}
+    \begin{equation}\label{eql66}
+          \le 2^{1+6a} \mu(B) \|{\varphi}\|_{C^\tau(B)}
+           (1 + d_{B}(\mfa,\mfb))^{-\frac{\tau^2}{2+a}} \, ,
+     \end{equation}
+    where we used $\tau\le 1$.
+    This completes the proof of \Cref{Holder-van-der-Corput}. -/)
+  (latexEnv := "proposition")]
 theorem holder_van_der_corput {z : X} {R : ℝ} {φ : X → ℂ}
     (φ_supp : support φ ⊆ ball z R) {f g : Θ X} :
     ‖∫ x, exp (I * (f x - g x)) * φ x‖ₑ ≤

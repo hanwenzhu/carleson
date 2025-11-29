@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  MathJax = { 
+    tex: {
+		    inlineMath: [['$','$'], ['\\(','\\)']]
+	} }
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<meta name="generator" content="plasTeX" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>A blueprint for the formalization of Carleson’s theorem on convergence of Fourier series</title>
+<link rel="next" href="sect0001.html" title="Introduction" />
+<link rel="stylesheet" href="styles/theme-white.css" />
+<link rel="stylesheet" href="styles/amsthm.css" />
+<link rel="stylesheet" href="styles/showmore.css" />
+<link rel="stylesheet" href="styles/blueprint.css" />
+<link rel="stylesheet" href="styles/extra_styles.css" />
+</head>
+
+<body>
+<header>
+<svg  id="toc-toggle" class="icon icon-list-numbered "><use xlink:href="symbol-defs.svg#icon-list-numbered"></use></svg>
+</header>
+
+<div class="wrapper">
+<nav class="toc">
+<ul class="sub-toc-0">
+<li class="">
+  <a href="sect0001.html"><span class="toc_ref">1</span> <span class="toc_entry">Introduction</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0001.html#a0000000006"><span class="toc_ref">1.1</span> <span class="toc_entry">Statement of the metric space Carleson theorems</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="overviewsection.html"><span class="toc_ref">2</span> <span class="toc_entry">Proof of Metric Space Carleson, overview</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="overviewsection.html#global-auxiliary-lemmas"><span class="toc_ref">2.1</span> <span class="toc_entry">Auxiliary lemmas</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="thmfromproplinear.html"><span class="toc_ref">3</span> <span class="toc_entry">Proof of Metric Space Carleson</span></a>
+ </li>
+<li class="">
+  <a href="christsection.html"><span class="toc_ref">4</span> <span class="toc_entry">Proof of Finitary Carleson</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="christsection.html#subsecdyadic"><span class="toc_ref">4.1</span> <span class="toc_entry">Proof of Grid Existence Lemma</span></a>
+ </li>
+<li class="">
+  <a href="christsection.html#subsectiles"><span class="toc_ref">4.2</span> <span class="toc_entry">Proof of Tile Structure Lemma</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="proptopropprop.html"><span class="toc_ref">5</span> <span class="toc_entry">Proof of discrete Carleson</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="proptopropprop.html#subsectilesorg"><span class="toc_ref">5.1</span> <span class="toc_entry">Organisation of the tiles</span></a>
+ </li>
+<li class="">
+  <a href="proptopropprop.html#subsetexcset"><span class="toc_ref">5.2</span> <span class="toc_entry">Proof of the Exceptional Sets Lemma</span></a>
+ </li>
+<li class="">
+  <a href="proptopropprop.html#subsec-lessim-aux"><span class="toc_ref">5.3</span> <span class="toc_entry">Auxiliary lemmas</span></a>
+ </li>
+<li class="">
+  <a href="proptopropprop.html#subsecforest"><span class="toc_ref">5.4</span> <span class="toc_entry">Proof of the Forest Union Lemma</span></a>
+ </li>
+<li class="">
+  <a href="proptopropprop.html#subsecantichain"><span class="toc_ref">5.5</span> <span class="toc_entry">Proof of the Forest Complement Lemma</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="antichainboundary.html"><span class="toc_ref">6</span> <span class="toc_entry">Proof of the Antichain Operator Proposition</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="antichainboundary.html#sec-TT*-T*T"><span class="toc_ref">6.1</span> <span class="toc_entry">The density arguments</span></a>
+ </li>
+<li class="">
+  <a href="antichainboundary.html#sec-tile-operator"><span class="toc_ref">6.2</span> <span class="toc_entry">Proof of the Tile Correlation Lemma</span></a>
+ </li>
+<li class="">
+  <a href="antichainboundary.html#subsec-geolem"><span class="toc_ref">6.3</span> <span class="toc_entry">Proof of the Antichain Tile Count Lemma</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="treesection.html"><span class="toc_ref">7</span> <span class="toc_entry">Proof of the Forest Operator Proposition</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="treesection.html#a0000000014"><span class="toc_ref">7.1</span> <span class="toc_entry">The pointwise tree estimate</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#a0000000015"><span class="toc_ref">7.2</span> <span class="toc_entry">An auxiliary \(L^2\) tree estimate</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#a0000000016"><span class="toc_ref">7.3</span> <span class="toc_entry">The quantitative \(L^2\) tree estimate</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#a0000000017"><span class="toc_ref">7.4</span> <span class="toc_entry">Almost orthogonality of separated trees</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#subsec-big-tiles"><span class="toc_ref">7.5</span> <span class="toc_entry">Proof of the Tiles with large separation Lemma</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#subsec-rest-tiles"><span class="toc_ref">7.6</span> <span class="toc_entry">Proof of The Remaining Tiles Lemma</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#a0000000018"><span class="toc_ref">7.7</span> <span class="toc_entry">Forests</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="liphoel.html"><span class="toc_ref">8</span> <span class="toc_entry">Proof of the Hölder cancellative condition</span></a>
+ </li>
+<li class="">
+  <a href="sec-hlm.html"><span class="toc_ref">9</span> <span class="toc_entry">Proof of Vitali covering and Hardy–Littlewood</span></a>
+ </li>
+<li class="">
+  <a href="sect0002.html"><span class="toc_ref">10</span> <span class="toc_entry">Two-sided Metric Space Carleson</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0002.html#subsec-cotlar"><span class="toc_ref">10.1</span> <span class="toc_entry">Proof of Cotlar’s Inequality</span></a>
+ </li>
+<li class="">
+  <a href="sect0002.html#subsec-CZD"><span class="toc_ref">10.2</span> <span class="toc_entry">Calderón-Zygmund Decomposition</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="sect0003.html"><span class="toc_ref">11</span> <span class="toc_entry">Proof of The Classical Carleson Theorem</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0003.html#10classical"><span class="toc_ref">11.1</span> <span class="toc_entry">The classical Carleson theorem</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10smooth"><span class="toc_ref">11.2</span> <span class="toc_entry">Smooth functions.</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10hilbert"><span class="toc_ref">11.3</span> <span class="toc_entry">The truncated Hilbert transform</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10vandercorput"><span class="toc_ref">11.4</span> <span class="toc_entry">The proof of the van der Corput Lemma</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10projection"><span class="toc_ref">11.5</span> <span class="toc_entry">Partial sums as orthogonal projections</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10difference"><span class="toc_ref">11.6</span> <span class="toc_entry">The error bound</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10carleson"><span class="toc_ref">11.7</span> <span class="toc_entry">Carleson on the real line</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li ><a href="dep_graph_document.html">Dependency graph</a></li>
+</ul>
+</nav>
+
+<div class="content">
+<div class="content-wrapper">
+
+
+<div class="main-text">
+
+
+<div class="abstract"> This paper is the blueprint underlying the Lean formalization of the proof of Carleson’s classical result <span class="cite">
+	[
+</span> asserting almost everywhere convergence of Fourier series of continuous functions. We break up the proof into two steps, a reduction of the classical result to a new theorem that appears in the sibling communication <span class="cite">
+	[
+</span> and a proof of this new theorem, which is also detailed as blueprint in this paper. An early version of this blueprint was used to initiate the Lean formalization. During the formalization, many contributors elaborated the blueprint with minor corrections, modifications and extensions. The final version is presented here as a guide through the accompanying Lean code. </div>
+<div class="titlepage">
+<h1>A blueprint for the formalization of Carleson’s theorem on convergence of Fourier series</h1>
+<p class="authors">
+<span class="author">Lars Becker, María Inés de Frutos-Fernández, Leo Diedering, Floris van Doorn, Sébastien Gouëzel, Asgar Jamneshan, Evgenia Karunus, Edward van de Meent, Pietro Monticone, Jasper Mulder-Sohn, Jim Portegies, Joris Roos, Michael Rothgang, Rajula Srivastava, James Sundstrom, Jeremy Tan, Christoph Thiele</span>
+</p>
+<p class="date">November 29, 2025</p>
+</div>
+
+
+</div> <!--main-text -->
+<nav class=local_toc>
+<ul>
+  <li>	
+  <a href="sect0001.html"><span class="toc_ref">1</span> <span class="toc_entry">Introduction</span></a>
+	<ul>
+		   <li>	
+  <a href="sect0001.html#a0000000006"><span class="toc_ref">1.1</span> <span class="toc_entry">Statement of the metric space Carleson theorems</span></a>
+  </li>
+
+	</ul>
+  </li>
+  <li>	
+  <a href="overviewsection.html"><span class="toc_ref">2</span> <span class="toc_entry">Proof of Metric Space Carleson, overview</span></a>
+	<ul>
+		   <li>	
+  <a href="overviewsection.html#global-auxiliary-lemmas"><span class="toc_ref">2.1</span> <span class="toc_entry">Auxiliary lemmas</span></a>
+  </li>
+
+	</ul>
+  </li>
+  <li>	
+  <a href="thmfromproplinear.html"><span class="toc_ref">3</span> <span class="toc_entry">Proof of Metric Space Carleson</span></a>
+  </li>
+  <li>	
+  <a href="christsection.html"><span class="toc_ref">4</span> <span class="toc_entry">Proof of Finitary Carleson</span></a>
+	<ul>
+		   <li>	
+  <a href="christsection.html#subsecdyadic"><span class="toc_ref">4.1</span> <span class="toc_entry">Proof of Grid Existence Lemma</span></a>
+  </li>
+  <li>	
+  <a href="christsection.html#subsectiles"><span class="toc_ref">4.2</span> <span class="toc_entry">Proof of Tile Structure Lemma</span></a>
+  </li>
+
+	</ul>
+  </li>
+  <li>	
+  <a href="proptopropprop.html"><span class="toc_ref">5</span> <span class="toc_entry">Proof of discrete Carleson</span></a>
+	<ul>
+		   <li>	
+  <a href="proptopropprop.html#subsectilesorg"><span class="toc_ref">5.1</span> <span class="toc_entry">Organisation of the tiles</span></a>
+  </li>
+  <li>	
+  <a href="proptopropprop.html#subsetexcset"><span class="toc_ref">5.2</span> <span class="toc_entry">Proof of the Exceptional Sets Lemma</span></a>
+  </li>
+  <li>	
+  <a href="proptopropprop.html#subsec-lessim-aux"><span class="toc_ref">5.3</span> <span class="toc_entry">Auxiliary lemmas</span></a>
+  </li>
+  <li>	
+  <a href="proptopropprop.html#subsecforest"><span class="toc_ref">5.4</span> <span class="toc_entry">Proof of the Forest Union Lemma</span></a>
+  </li>
+  <li>	
+  <a href="proptopropprop.html#subsecantichain"><span class="toc_ref">5.5</span> <span class="toc_entry">Proof of the Forest Complement Lemma</span></a>
+  </li>
+
+	</ul>
+  </li>
+  <li>	
+  <a href="antichainboundary.html"><span class="toc_ref">6</span> <span class="toc_entry">Proof of the Antichain Operator Proposition</span></a>
+	<ul>
+		   <li>	
+  <a href="antichainboundary.html#sec-TT*-T*T"><span class="toc_ref">6.1</span> <span class="toc_entry">The density arguments</span></a>
+  </li>
+  <li>	
+  <a href="antichainboundary.html#sec-tile-operator"><span class="toc_ref">6.2</span> <span class="toc_entry">Proof of the Tile Correlation Lemma</span></a>
+  </li>
+  <li>	
+  <a href="antichainboundary.html#subsec-geolem"><span class="toc_ref">6.3</span> <span class="toc_entry">Proof of the Antichain Tile Count Lemma</span></a>
+  </li>
+
+	</ul>
+  </li>
+  <li>	
+  <a href="treesection.html"><span class="toc_ref">7</span> <span class="toc_entry">Proof of the Forest Operator Proposition</span></a>
+	<ul>
+		   <li>	
+  <a href="treesection.html#a0000000014"><span class="toc_ref">7.1</span> <span class="toc_entry">The pointwise tree estimate</span></a>
+  </li>
+  <li>	
+  <a href="treesection.html#a0000000015"><span class="toc_ref">7.2</span> <span class="toc_entry">An auxiliary \(L^2\) tree estimate</span></a>
+  </li>
+  <li>	
+  <a href="treesection.html#a0000000016"><span class="toc_ref">7.3</span> <span class="toc_entry">The quantitative \(L^2\) tree estimate</span></a>
+  </li>
+  <li>	
+  <a href="treesection.html#a0000000017"><span class="toc_ref">7.4</span> <span class="toc_entry">Almost orthogonality of separated trees</span></a>
+  </li>
+  <li>	
+  <a href="treesection.html#subsec-big-tiles"><span class="toc_ref">7.5</span> <span class="toc_entry">Proof of the Tiles with large separation Lemma</span></a>
+  </li>
+  <li>	
+  <a href="treesection.html#subsec-rest-tiles"><span class="toc_ref">7.6</span> <span class="toc_entry">Proof of The Remaining Tiles Lemma</span></a>
+  </li>
+  <li>	
+  <a href="treesection.html#a0000000018"><span class="toc_ref">7.7</span> <span class="toc_entry">Forests</span></a>
+  </li>
+
+	</ul>
+  </li>
+  <li>	
+  <a href="liphoel.html"><span class="toc_ref">8</span> <span class="toc_entry">Proof of the Hölder cancellative condition</span></a>
+  </li>
+  <li>	
+  <a href="sec-hlm.html"><span class="toc_ref">9</span> <span class="toc_entry">Proof of Vitali covering and Hardy–Littlewood</span></a>
+  </li>
+  <li>	
+  <a href="sect0002.html"><span class="toc_ref">10</span> <span class="toc_entry">Two-sided Metric Space Carleson</span></a>
+	<ul>
+		   <li>	
+  <a href="sect0002.html#subsec-cotlar"><span class="toc_ref">10.1</span> <span class="toc_entry">Proof of Cotlar’s Inequality</span></a>
+  </li>
+  <li>	
+  <a href="sect0002.html#subsec-CZD"><span class="toc_ref">10.2</span> <span class="toc_entry">Calderón-Zygmund Decomposition</span></a>
+  </li>
+
+	</ul>
+  </li>
+  <li>	
+  <a href="sect0003.html"><span class="toc_ref">11</span> <span class="toc_entry">Proof of The Classical Carleson Theorem</span></a>
+	<ul>
+		   <li>	
+  <a href="sect0003.html#10classical"><span class="toc_ref">11.1</span> <span class="toc_entry">The classical Carleson theorem</span></a>
+  </li>
+  <li>	
+  <a href="sect0003.html#10smooth"><span class="toc_ref">11.2</span> <span class="toc_entry">Smooth functions.</span></a>
+  </li>
+  <li>	
+  <a href="sect0003.html#10hilbert"><span class="toc_ref">11.3</span> <span class="toc_entry">The truncated Hilbert transform</span></a>
+  </li>
+  <li>	
+  <a href="sect0003.html#10vandercorput"><span class="toc_ref">11.4</span> <span class="toc_entry">The proof of the van der Corput Lemma</span></a>
+  </li>
+  <li>	
+  <a href="sect0003.html#10projection"><span class="toc_ref">11.5</span> <span class="toc_entry">Partial sums as orthogonal projections</span></a>
+  </li>
+  <li>	
+  <a href="sect0003.html#10difference"><span class="toc_ref">11.6</span> <span class="toc_entry">The error bound</span></a>
+  </li>
+  <li>	
+  <a href="sect0003.html#10carleson"><span class="toc_ref">11.7</span> <span class="toc_entry">Carleson on the real line</span></a>
+  </li>
+
+	</ul>
+  </li>
+</ul>
+</nav>
+</div> <!-- content-wrapper -->
+</div> <!-- content -->
+</div> <!-- wrapper -->
+
+<nav class="prev_up_next">
+  <svg  id="showmore-minus" class="icon icon-eye-minus showmore"><use xlink:href="symbol-defs.svg#icon-eye-minus"></use></svg>
+
+  <svg  id="showmore-plus" class="icon icon-eye-plus showmore"><use xlink:href="symbol-defs.svg#icon-eye-plus"></use></svg>
+
+  <a href="sect0001.html" title="Introduction"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+</a>
+</nav>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/plastex.js"></script>
+<script type="text/javascript" src="js/svgxuse.js"></script>
+<script type="text/javascript" src="js/js.cookie.min.js"></script>
+<script type="text/javascript" src="js/showmore.js"></script>
+</body>
+</html>

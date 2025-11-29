@@ -1,3 +1,4 @@
+import Architect
 import Carleson.MetricCarleson.Basic
 import Carleson.MetricCarleson.Truncation
 
@@ -102,6 +103,44 @@ lemma measurable_lcoConvergent {n : ℕ} (mf : Measurable f) (nf : (‖f ·‖) 
     use R₁, ⟨bR₁, bR₂.trans bR₃⟩, R₂, ⟨bR₂, bR₃⟩
 
 /-- Theorem 1.1.2 -/
+@[blueprint
+  "linearised-metric-Carleson"
+  (title := "linearised metric Carleson")
+  (statement := /-- For all integers $a \ge 4$ and real numbers $1<q\le 2$ the following holds.
+    Let $(X,\rho,\mu,a)$ be a doubling metric measure space. Let $\Mf$ be a
+    cancellative compatible collection of functions.
+    Let $\tQ:X\to \Mf$ be a Borel function with finite range.
+    Let $K$ be a one-sided Calder\'on--Zygmund kernel on $(X,\rho,\mu,a)$. Assume that for every
+    $\mfa\in \Mf$ and every bounded measurable function $g$ on $X$ supported on a set of finite
+    measure we have
+    \begin{equation}\label{linnontanbound}
+        \|T_{\tQ}^\mfa g\|_{2} \leq 2^{a^3} \|g\|_2\,,
+    \end{equation}
+    where $T_{\tQ}^\mfa$ is defined in \eqref{def-lin-star-op}.
+    Then for all Borel sets $F$ and $G$ in $X$ and all Borel functions $f:X\to \C$ with
+    $|f|\le \mathbf{1}_F$, we have, with $T_\tQ$ defined in \eqref{def-lin-main-op},
+    \begin{equation}
+        \label{linresweak}
+        \left|\int_{G} T_\tQ f \, \mathrm{d}\mu\right| \le \frac{2^{443a^3}}{(q-1)^6}
+        \mu(G)^{1-\frac{1}{q}} \mu(F)^{\frac{1}{q}}\, .
+    \end{equation} -/)
+  (proof := /-- [Proof of \Cref{linearised-metric-Carleson}]
+    
+    
+    Let Borel sets $F$, $G$ in $X$ with finite measure be given. Let a Borel function $f: X \to
+    \mathbb{C}$ with $f \le \mathbf{1}_F$ be given.
+    
+    For each $0 < R_1,R_2,R$, we define $T_{R_1,R_2,R}f$ as in \eqref{TRR}.
+    By Lemma \ref{int-continuous},
+    $T_{R_1,R_2,R}f$
+    is measurable and bounded, and we clearly have for each $x \in X$
+    \[
+        T_Q f(x) = \lim_{n \to \infty} \sup_{2^{-n} < R_1 < R_2 < 2^n} T_{R_1, R_2, 2^n}f(x).
+    \]
+    For each $x$ and all $f$, the functions $\sup_{2^{-n} < R_1 < R_2 < 2^n} T_{R_1, R_2, 2^n} f(x)$
+    are measurable by Lemma \ref{int-continuous} and form an increasing sequence in $n$. By the
+    monotone convergence theorem, the claimed estimate \eqref{linresweak} then follows from Lemma
+    \ref{R-truncation}. -/)]
 theorem linearized_metric_carleson [IsCancellative X (defaultτ a)]
     (hq : q ∈ Ioc 1 2) (hqq' : q.HolderConjugate q') (mF : MeasurableSet F) (mG : MeasurableSet G)
     (mf : Measurable f) (nf : (‖f ·‖) ≤ F.indicator 1)

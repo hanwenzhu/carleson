@@ -1,3 +1,4 @@
+import Architect
 import Carleson.Classical.HilbertKernel
 import Mathlib.MeasureTheory.Integral.Prod
 
@@ -70,6 +71,36 @@ private lemma Qᵣ_countable : Countable Qᵣ :=
 
 local notation "T" => carlesonOperatorReal K
 
+@[blueprint
+  "real-Carleson-operator-measurable"
+  (title := "real Carleson operator measurable")
+  (statement := /-- Let $f$ be a bounded measurable function on $\R$. Then $Tf$ as defined in
+    \eqref{define-T-carleson} is measurable. -/)
+  (proof := /-- Since a countable supremum of measurable functions is measurable, it suffices to
+    show that for every $n\in\Z$,
+    \begin{equation*}
+        x \mapsto \sup_{r>0}\left|\int_{r<|x-y|<1} f(y)\kappa(x-y) e^{iny}\, dy\right|
+    \end{equation*}
+    is measurable. So let $n\in\Z$.
+    Note that for each $x\in\R$, the function
+    \begin{equation*}
+        r \mapsto \left|\int_{r<|x-y|<1} f(y)\kappa(x-y) e^{iny}\, dy\right|
+    \end{equation*}
+    is continuous on $(0,\infty)$ since the integrand is locally bounded on the domain $0<|x-y|<1$
+    by the assumptions on $f$ and \Cref{Hilbert-kernel-bound}.
+    Thus, for each $x\in\R$,
+    \begin{equation*}
+        \sup_{r>0}\left|\int_{r<|x-y|<1} f(y)\kappa(x-y) e^{iny}\, dy\right|
+        =\sup_{r\in\Q_{>0}}\left|\int_{r<|x-y|<1} f(y)\kappa(x-y) e^{iny}\, dy\right|
+    \end{equation*}
+    The right hand side is again a countable supremum so it remains to show that for every
+    $r\in\Q_{>0}$,
+    \begin{equation*}
+        x \mapsto \left|\int_{r<|x-y|<1} f(y)\kappa(x-y) e^{iny}\, dy\right| = \left|\int
+        \mathbf{1}_{\{r<|x-\cdot|<1\}}(y) f(y)\kappa(x-y) e^{iny}\, dy\right|
+    \end{equation*}
+    is measurable, which follows from the fact that the integrand is measurable in $(x,y)$. -/)
+  (latexEnv := "lemma")]
 lemma carlesonOperatorReal_measurable {f : ℝ → ℂ} (f_measurable : Measurable f)
     {B : ℝ} (f_bounded : ∀ x, ‖f x‖ ≤ B) :
     Measurable (T f) := by

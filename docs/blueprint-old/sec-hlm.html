@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  MathJax = { 
+    tex: {
+		    inlineMath: [['$','$'], ['\\(','\\)']]
+	} }
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<meta name="generator" content="plasTeX" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>A blueprint for the formalization of Carleson’s theorem on convergence of Fourier series: Proof of Vitali covering and Hardy–Littlewood</title>
+<link rel="next" href="sect0002.html" title="Two-sided Metric Space Carleson" />
+<link rel="prev" href="liphoel.html" title="Proof of the Hölder cancellative condition" />
+<link rel="up" href="index.html" title="A blueprint for the formalization of Carleson’s theorem on convergence of Fourier series" />
+<link rel="stylesheet" href="styles/theme-white.css" />
+<link rel="stylesheet" href="styles/amsthm.css" />
+<link rel="stylesheet" href="styles/showmore.css" />
+<link rel="stylesheet" href="styles/blueprint.css" />
+<link rel="stylesheet" href="styles/extra_styles.css" />
+</head>
+
+<body>
+<header>
+<svg  id="toc-toggle" class="icon icon-list-numbered "><use xlink:href="symbol-defs.svg#icon-list-numbered"></use></svg>
+<h1 id="doc_title"><a href="index.html">A blueprint for the formalization of Carleson’s theorem on convergence of Fourier series</a></h1>
+</header>
+
+<div class="wrapper">
+<nav class="toc">
+<ul class="sub-toc-0">
+<li class="">
+  <a href="sect0001.html"><span class="toc_ref">1</span> <span class="toc_entry">Introduction</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0001.html#a0000000006"><span class="toc_ref">1.1</span> <span class="toc_entry">Statement of the metric space Carleson theorems</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="overviewsection.html"><span class="toc_ref">2</span> <span class="toc_entry">Proof of Metric Space Carleson, overview</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="overviewsection.html#global-auxiliary-lemmas"><span class="toc_ref">2.1</span> <span class="toc_entry">Auxiliary lemmas</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="thmfromproplinear.html"><span class="toc_ref">3</span> <span class="toc_entry">Proof of Metric Space Carleson</span></a>
+ </li>
+<li class="">
+  <a href="christsection.html"><span class="toc_ref">4</span> <span class="toc_entry">Proof of Finitary Carleson</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="christsection.html#subsecdyadic"><span class="toc_ref">4.1</span> <span class="toc_entry">Proof of Grid Existence Lemma</span></a>
+ </li>
+<li class="">
+  <a href="christsection.html#subsectiles"><span class="toc_ref">4.2</span> <span class="toc_entry">Proof of Tile Structure Lemma</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="proptopropprop.html"><span class="toc_ref">5</span> <span class="toc_entry">Proof of discrete Carleson</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="proptopropprop.html#subsectilesorg"><span class="toc_ref">5.1</span> <span class="toc_entry">Organisation of the tiles</span></a>
+ </li>
+<li class="">
+  <a href="proptopropprop.html#subsetexcset"><span class="toc_ref">5.2</span> <span class="toc_entry">Proof of the Exceptional Sets Lemma</span></a>
+ </li>
+<li class="">
+  <a href="proptopropprop.html#subsec-lessim-aux"><span class="toc_ref">5.3</span> <span class="toc_entry">Auxiliary lemmas</span></a>
+ </li>
+<li class="">
+  <a href="proptopropprop.html#subsecforest"><span class="toc_ref">5.4</span> <span class="toc_entry">Proof of the Forest Union Lemma</span></a>
+ </li>
+<li class="">
+  <a href="proptopropprop.html#subsecantichain"><span class="toc_ref">5.5</span> <span class="toc_entry">Proof of the Forest Complement Lemma</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="antichainboundary.html"><span class="toc_ref">6</span> <span class="toc_entry">Proof of the Antichain Operator Proposition</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="antichainboundary.html#sec-TT*-T*T"><span class="toc_ref">6.1</span> <span class="toc_entry">The density arguments</span></a>
+ </li>
+<li class="">
+  <a href="antichainboundary.html#sec-tile-operator"><span class="toc_ref">6.2</span> <span class="toc_entry">Proof of the Tile Correlation Lemma</span></a>
+ </li>
+<li class="">
+  <a href="antichainboundary.html#subsec-geolem"><span class="toc_ref">6.3</span> <span class="toc_entry">Proof of the Antichain Tile Count Lemma</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="treesection.html"><span class="toc_ref">7</span> <span class="toc_entry">Proof of the Forest Operator Proposition</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="treesection.html#a0000000014"><span class="toc_ref">7.1</span> <span class="toc_entry">The pointwise tree estimate</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#a0000000015"><span class="toc_ref">7.2</span> <span class="toc_entry">An auxiliary \(L^2\) tree estimate</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#a0000000016"><span class="toc_ref">7.3</span> <span class="toc_entry">The quantitative \(L^2\) tree estimate</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#a0000000017"><span class="toc_ref">7.4</span> <span class="toc_entry">Almost orthogonality of separated trees</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#subsec-big-tiles"><span class="toc_ref">7.5</span> <span class="toc_entry">Proof of the Tiles with large separation Lemma</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#subsec-rest-tiles"><span class="toc_ref">7.6</span> <span class="toc_entry">Proof of The Remaining Tiles Lemma</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#a0000000018"><span class="toc_ref">7.7</span> <span class="toc_entry">Forests</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="liphoel.html"><span class="toc_ref">8</span> <span class="toc_entry">Proof of the Hölder cancellative condition</span></a>
+ </li>
+<li class=" active current">
+  <a href="sec-hlm.html"><span class="toc_ref">9</span> <span class="toc_entry">Proof of Vitali covering and Hardy–Littlewood</span></a>
+ </li>
+<li class="">
+  <a href="sect0002.html"><span class="toc_ref">10</span> <span class="toc_entry">Two-sided Metric Space Carleson</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0002.html#subsec-cotlar"><span class="toc_ref">10.1</span> <span class="toc_entry">Proof of Cotlar’s Inequality</span></a>
+ </li>
+<li class="">
+  <a href="sect0002.html#subsec-CZD"><span class="toc_ref">10.2</span> <span class="toc_entry">Calderón-Zygmund Decomposition</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="sect0003.html"><span class="toc_ref">11</span> <span class="toc_entry">Proof of The Classical Carleson Theorem</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0003.html#10classical"><span class="toc_ref">11.1</span> <span class="toc_entry">The classical Carleson theorem</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10smooth"><span class="toc_ref">11.2</span> <span class="toc_entry">Smooth functions.</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10hilbert"><span class="toc_ref">11.3</span> <span class="toc_entry">The truncated Hilbert transform</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10vandercorput"><span class="toc_ref">11.4</span> <span class="toc_entry">The proof of the van der Corput Lemma</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10projection"><span class="toc_ref">11.5</span> <span class="toc_entry">Partial sums as orthogonal projections</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10difference"><span class="toc_ref">11.6</span> <span class="toc_entry">The error bound</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10carleson"><span class="toc_ref">11.7</span> <span class="toc_entry">Carleson on the real line</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li ><a href="dep_graph_document.html">Dependency graph</a></li>
+</ul>
+</nav>
+
+<div class="content">
+<div class="content-wrapper">
+
+
+<div class="main-text">
+<h1 id="sec-hlm">9 Proof of Vitali covering and Hardy–Littlewood</h1>
+
+<p>We begin with a classical representation of the Lebesgue norm. </p>
+<div class="lemma_thmwrapper theorem-style-plain" id="layer-cake-representation">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">9.0.1</span>
+    <span class="lemma_thmtitle">layer cake representation</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sec-hlm.html#layer-cake-representation">#</a>
+    
+    <a class="icon proof" href="sec-hlm.html#a0000000674"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/MeasureTheory.eLpNorm_pow_eq_distribution" class="lean_decl">MeasureTheory.eLpNorm_pow_eq_distribution</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>  Let \(1\le p{\lt} \infty \). Then for any measurable function \(u:X\to [0,\infty )\) on the measure space \(X\) relative to the measure \(\mu \) we have </p>
+<div class="equation" id="eq-layercake">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{eq-layercake} \| u\| _p^p=p\int _0^\infty \lambda ^{p-1}\mu (\{ x: u(x)\ge \lambda \} )\,  d\lambda \,  . \end{equation}
+  </div>
+  <span class="equation_label">9.0.1</span>
+</p>
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000674">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>The left-hand side of <a href="sec-hlm.html#eq-layercake" class="eqref">9.0.1</a> is by definition </p>
+<div class="equation" id="a0000000675">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \int _X u(x)^p \,  d\mu (x)\,  .\end{equation}
+  </div>
+  <span class="equation_label">9.0.2</span>
+</p>
+</div>
+<p> Writing \(u(x)\) as an elementary integral in \(\lambda \) and then using Fubini, we write for the last display </p>
+<div class="equation" id="a0000000676">
+<p>
+  <div class="equation_content">
+    \begin{equation}  =\int _X \int _0^{u(x)} p \lambda ^{p-1} d\lambda \,  d\mu (x) \end{equation}
+  </div>
+  <span class="equation_label">9.0.3</span>
+</p>
+</div>
+<div class="equation" id="a0000000677">
+<p>
+  <div class="equation_content">
+    \begin{equation}  =p\int _0^{\infty } \lambda ^{p-1} \mu (\{ x: u(x)\ge \lambda \} ) d\lambda \,  . \end{equation}
+  </div>
+  <span class="equation_label">9.0.4</span>
+</p>
+</div>
+<p> This proves the lemma. </p>
+
+  </div>
+</div>
+<p>The following lemma will be used to define \(M\) in the proof of <a href="overviewsection.html#Hardy-Littlewood">Proposition 2.0.6</a>. </p>
+<div class="lemma_thmwrapper theorem-style-plain" id="covering-separable-space">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">9.0.2</span>
+    <span class="lemma_thmtitle">covering separable space</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sec-hlm.html#covering-separable-space">#</a>
+    
+    <a class="icon proof" href="sec-hlm.html#a0000000678"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/covering_separable_space" class="lean_decl">covering_separable_space</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>   For each \(r {\gt} 0\), there exists a countable collection \(C(r) \subset X\) of points such that </p>
+<div class="displaymath" id="a0000000679">
+  \[  X \subset \bigcup _{c \in C(r)} B(c, r)\, .  \]
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000678">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>It clearly suffices to construct finite collections \(C(r,k)\) such that </p>
+<div class="displaymath" id="a0000000680">
+  \[  B(o, r2^k) \subset \bigcup _{c \in C(r,k)} B(c,r)\, ,  \]
+</div>
+<p> since then the collection \(C(r) = \bigcup _{k \in \mathbb {N}} C(r,k)\) has the desired property. </p>
+<p>Suppose that \(Y \subset B(o, r2^k)\) is a collection of points such that for all \(y, y' \in Y\) with \(y \ne y'\), we have \(\rho (y,y') \ge r\). Then the balls \(B(y, r/2)\) are pairwise disjoint and contained in \(B(o, r2^{k+1})\). If \(y \in B(o, r)\), then \(B(o, r2^{k+1}) \subset B(y, r2^{k+2})\). Thus, by the doubling property <a href="sect0001.html#doublingx" class="eqref">1.1.2</a>, </p>
+<div class="displaymath" id="a0000000681">
+  \[  \mu (B(y, \frac{r}{2})) \ge 2^{-(k+2)a} \mu (B(o, r2^{k+1}))\, .  \]
+</div>
+<p> Thus, we have </p>
+<div class="displaymath" id="a0000000682">
+  \[  \mu (B(o, r2^{k+1})) \ge \sum _{y \in Y} \mu (B(y, \frac{r}{2})) \ge |Y| 2^{-(k+2)a} \mu (B(o, r2^{k+1}))\, .  \]
+</div>
+<p> We conclude that \(|Y| \le 2^{(k+2)a}\). In particular, there exists a set \(Y\) of maximal cardinality. Define \(C(r,k)\) to be such a set. </p>
+<p>If \(x \in B(o, r2^k)\) and \(x \notin C(r,k)\), then there must exist \(y \in C(r,k)\) with \(\rho (x,y) {\lt} r\). Thus \(C(r,k)\) has the desired property. </p>
+
+  </div>
+</div>
+<p>We turn to the proof of <a href="overviewsection.html#Hardy-Littlewood">Proposition 2.0.6</a>. </p>
+<div class="proof_wrapper" id="a0000000034">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof of <a href="overviewsection.html#Hardy-Littlewood">Proposition 2.0.6</a>
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>  Let the collection \(\mathcal{B}\) be given. We first show <a href="overviewsection.html#eq-besico" class="eqref">2.0.43</a>. </p>
+<p>We recursively choose a finite sequence \(B_i\in \mathcal{B}\) for \(i\ge 0\) as follows. Assume \(B_{i'}\) is already chosen for \(0\le i'{\lt}i\). If there exists a ball \(B_{i}\in \mathcal{B}\) so that \(B_{i}\) is disjoint from all \(B_{i'}\) with \(0\le i'{\lt}i\), then choose such a ball \(B_i=B(x_i,r_i)\) with maximal \(r_i\). </p>
+<p>If there is no such ball, stop the selection and set \(i'':=i\). </p>
+<p>By disjointedness of the chosen balls and since \(0 \le u\), we have </p>
+<div class="equation" id="a0000000683">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \sum _{0\le i{\lt}i''}\int _{B_i} u(x)\,  d\mu (x) \le \int _X u(x)\,  d\mu (x)\,  . \end{equation}
+  </div>
+  <span class="equation_label">9.0.5</span>
+</p>
+</div>
+<p> By <a href="overviewsection.html#eq-ball-assumption" class="eqref">2.0.42</a>, we conclude </p>
+<div class="equation" id="eqbes1">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{eqbes1} \lambda \sum _{0\le i{\lt}i''}\mu (B_i) \le \int _X u(x)\,  d\mu (x)\,  . \end{equation}
+  </div>
+  <span class="equation_label">9.0.6</span>
+</p>
+</div>
+<p> Let \(x\in \bigcup \mathcal{B}\). Choose a ball \(B'=B(x',r')\in \mathcal{B}\) such that \(x\in B'\). If \(B'\) is one of the selected balls, then </p>
+<div class="equation" id="3rone">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{3rone} x\in \bigcup _{0\le i{\lt} i''}B_i\subset \bigcup _{0\le i{\lt} i''}B(x_i,3r_i)\,  . \end{equation}
+  </div>
+  <span class="equation_label">9.0.7</span>
+</p>
+</div>
+<p> If \(B'\) is not one of the selected balls, then as it is not selected at time \(i''\), there is a selected ball \(B_i\) with \(B'\cap B_i\neq \emptyset \). Choose such \(B_i\) with minimal index \(i\). As \(B'\) is therefore disjoint from all balls \(B_{i'}\) with \(i'{\lt}i\) and as it was not selected in place of \(B_i\), we have \(r_i\ge r'\). </p>
+<p>Using a point \(y\) in the intersection of \(B_i\) and \(B'\), we conclude by the triangle inequality </p>
+<div class="equation" id="a0000000684">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \rho (x_i,x')\le \rho (x_i,y)+\rho (x',y)\le r_i+r'\le 2r_i \,  . \end{equation}
+  </div>
+  <span class="equation_label">9.0.8</span>
+</p>
+</div>
+<p> By the triangle inequality again, we further conclude </p>
+<div class="equation" id="a0000000685">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \rho (x_i,x)\le \rho (x_i,x')+\rho (x',x)\le 2r_i+r'\le 3r_i \,  . \end{equation}
+  </div>
+  <span class="equation_label">9.0.9</span>
+</p>
+</div>
+<p> It follows that </p>
+<div class="equation" id="3rtwo">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{3rtwo} x\in \bigcup _{0\le i{\lt} i''}B(x_i,3r_i)\,  . \end{equation}
+  </div>
+  <span class="equation_label">9.0.10</span>
+</p>
+</div>
+<p> With <a href="sec-hlm.html#3rone" class="eqref">9.0.7</a> and <a href="sec-hlm.html#3rtwo" class="eqref">9.0.10</a>, we conclude </p>
+<div class="equation" id="a0000000686">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \bigcup \mathcal{B}\subset \bigcup _{0\le i{\lt} i''}B(x_i,3r_i)\,  . \end{equation}
+  </div>
+  <span class="equation_label">9.0.11</span>
+</p>
+</div>
+<p> With the doubling property <a href="sect0001.html#doublingx" class="eqref">1.1.2</a> applied twice, we conclude </p>
+<div class="equation" id="eqbes2">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{eqbes2} \mu (\bigcup {\mathcal{B}}) \le \sum _{0\le i{\lt} i''}\mu (B(x_i,3r_i)) \le 2^{2a}\sum _{0\le i{\lt} i''}\mu (B_i)\,  . \end{equation}
+  </div>
+  <span class="equation_label">9.0.12</span>
+</p>
+</div>
+<p> With <a href="sec-hlm.html#eqbes1" class="eqref">9.0.6</a> and <a href="sec-hlm.html#eqbes2" class="eqref">9.0.12</a> we conclude <a href="overviewsection.html#eq-besico" class="eqref">2.0.43</a>. </p>
+<p>We turn to the proof of <a href="overviewsection.html#eq-hlm" class="eqref">2.0.44</a>. We first consider the case \(p_1=1\) and recall \(M_{\mathcal{B}}=M_{\mathcal{B},1}\). We write for the \(p_2\)-th power of left-hand side of <a href="overviewsection.html#eq-hlm" class="eqref">2.0.44</a> with <a href="sec-hlm.html#layer-cake-representation">Lemma 9.0.1</a> and a change of variables </p>
+<div class="equation" id="a0000000687">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \| M_{\mathcal{B}}u(x)\| _{p_2}^{p_2} =p_2\int _0^{\infty } \lambda ^{p_2-1} \mu (\{ x: M_{\mathcal{B}}u(x)\ge \lambda \} ) d\lambda \,  \end{equation}
+  </div>
+  <span class="equation_label">9.0.13</span>
+</p>
+</div>
+<div class="equation" id="eqbesi11">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eqbesi11} =2^{p_2} p_2\int _0^{\infty } \lambda ^{p_2-1} \mu (\{ x: M_{\mathcal{B}}u(x)\ge 2\lambda \} ) d\lambda \,  . \end{equation}
+  </div>
+  <span class="equation_label">9.0.14</span>
+</p>
+</div>
+<p> Fix \(\lambda \ge 0\) and let \(x\in X\) satisfy \(M_{\mathcal{B}}u(x)\ge 2\lambda \). By definition of \(M_{\mathcal{B}}\), there is a ball \(B'\in \mathcal{B}\) such that \(x\in B'\) and </p>
+<div class="equation" id="eqbesi10">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{eqbesi10} \int _{B'} u(y)\,  d\mu (y)\ge 2\lambda \mu ({B’}) \,  . \end{equation}
+  </div>
+  <span class="equation_label">9.0.15</span>
+</p>
+</div>
+<p> Define \(u_\lambda (y):=0\) if \(|u(y)|{\lt}\lambda \) and \(u_\lambda (y):=u(y)\) if \(|u(y)|\ge \lambda \). Then with <a href="sec-hlm.html#eqbesi10" class="eqref">9.0.15</a> </p>
+<div class="equation" id="a0000000688">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \int _{B'} u_\lambda (y)\,  d\mu (y) =\int _{B'} u (y)\,  d\mu (y)- \int _{B'} (u-u_\lambda ) (y) d\mu (y)\,  \end{equation}
+  </div>
+  <span class="equation_label">9.0.16</span>
+</p>
+</div>
+<div class="equation" id="a0000000689">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \ge 2\lambda \mu ({B’})- \int _{B'} (u-u_\lambda ) (y) d\mu (y)\,  . \end{equation}
+  </div>
+  <span class="equation_label">9.0.17</span>
+</p>
+</div>
+<p> As \((u-u_\lambda )(y)\le \lambda \) by definition, we can estimate the last display by </p>
+<div class="equation" id="a0000000690">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \ge 2\lambda \mu ({B’})- \int _{B'} \lambda \,  d\mu (y) =\lambda \mu ({B’})\,  . \end{equation}
+  </div>
+  <span class="equation_label">9.0.18</span>
+</p>
+</div>
+<p> Hence \(x\) is contained in \(\bigcup (\mathcal{B}_\lambda )\), where \(\mathcal{B}_\lambda \) is the collection of balls \(B''\) in \(\mathcal{B}\) such that </p>
+<div class="equation" id="a0000000691">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \int _{B''} u_\lambda (y)\,  d\mu (y)\ge \lambda \mu (B'')\,  . \end{equation}
+  </div>
+  <span class="equation_label">9.0.19</span>
+</p>
+</div>
+<p> We have thus seen </p>
+<div class="equation" id="a0000000692">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \{ x: M_{\mathcal{B}}u(x)\ge 2\lambda \} \subset \bigcup \mathcal{B}_\lambda \,  . \end{equation}
+  </div>
+  <span class="equation_label">9.0.20</span>
+</p>
+</div>
+<p> Applying <a href="overviewsection.html#eq-besico" class="eqref">2.0.43</a> to the collection \(\mathcal{B}_\lambda \) gives </p>
+<div class="equation" id="a0000000693">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \lambda \mu (\{ x: M_{\mathcal{B}}u(x)\ge 2\lambda \} )\le 2^{2a} \int u_\lambda (x)\,  dx\,  . \end{equation}
+  </div>
+  <span class="equation_label">9.0.21</span>
+</p>
+</div>
+<p> With <a href="sec-hlm.html#layer-cake-representation">Lemma 9.0.1</a>, </p>
+<div class="equation" id="eqbesi12">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{eqbesi12} \lambda \mu (\{ x: M_{\mathcal{B}}u(x)\ge 2\lambda \} )\le 2^{2a} \int _0^\infty \mu (\{ x: |u_\lambda (x)|\ge \lambda '\} )\,  d\lambda '\,  . \end{equation}
+  </div>
+  <span class="equation_label">9.0.22</span>
+</p>
+</div>
+<p> By definition of \(u_\lambda \), making a case distinction between \(\lambda \ge \lambda '\) and \(\lambda {\lt}\lambda '\), we see that </p>
+<div class="equation" id="eqbesi13">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{eqbesi13} \mu (\{ x: |u_\lambda (x)|\ge \lambda '\} ) \le \mu (\{ x: |u (x)|\ge \max (\lambda ,\lambda ')\} )\,  . \end{equation}
+  </div>
+  <span class="equation_label">9.0.23</span>
+</p>
+</div>
+<p> We obtain with <a href="sec-hlm.html#eqbesi11" class="eqref">9.0.14</a>, <a href="sec-hlm.html#eqbesi12" class="eqref">9.0.22</a>, and <a href="sec-hlm.html#eqbesi13" class="eqref">9.0.23</a> </p>
+<div class="equation" id="a0000000694">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \| M_{\mathcal{B}}u(x)\| _{p_2}^{p_2} \end{equation}
+  </div>
+  <span class="equation_label">9.0.24</span>
+</p>
+</div>
+<div class="equation" id="a0000000695">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \le 2^{p_2+2a} p_2 \int _0^\infty \lambda ^{p_2-2} \int _0^\infty \mu (\{ x: |u (x)|\ge \max (\lambda ,\lambda ')\} ) \,  d\lambda 'd\lambda \,  . \end{equation}
+  </div>
+  <span class="equation_label">9.0.25</span>
+</p>
+</div>
+<p> We split the integral into \(\lambda \ge \lambda '\) and \(\lambda {\lt}\lambda '\) and resolve the maximum correspondingly. We have for \(\lambda \ge \lambda '\) with <a href="sec-hlm.html#layer-cake-representation">Lemma 9.0.1</a> </p>
+<div class="equation" id="a0000000696">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \int _0^\infty \lambda ^{p_2-2} \int _0^\lambda \mu (\{ x: |u (x)|\ge \lambda \} ) \,  d\lambda 'd\lambda \end{equation}
+  </div>
+  <span class="equation_label">9.0.26</span>
+</p>
+</div>
+<div class="equation" id="a0000000697">
+<p>
+  <div class="equation_content">
+    \begin{equation}  =\int _0^\infty \lambda ^{p_2-1} \mu (\{ x: |u (x)|\ge \lambda \} ) d\lambda . \end{equation}
+  </div>
+  <span class="equation_label">9.0.27</span>
+</p>
+</div>
+<div class="equation" id="eqbesi14">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{eqbesi14} =p_2^{-1} \| u\| _{p_2}^{p_2}\,  . \end{equation}
+  </div>
+  <span class="equation_label">9.0.28</span>
+</p>
+</div>
+<p> We have for \(\lambda {\lt} \lambda '\) with Fubini and <a href="sec-hlm.html#layer-cake-representation">Lemma 9.0.1</a> </p>
+<div class="equation" id="a0000000698">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \int _0^\infty \lambda ^{p_2-2} \int _\lambda ^\infty \mu (\{ x: |u(x)|\ge \lambda '\} ) \,  d\lambda 'd\lambda . \end{equation}
+  </div>
+  <span class="equation_label">9.0.29</span>
+</p>
+</div>
+<div class="equation" id="a0000000699">
+<p>
+  <div class="equation_content">
+    \begin{equation}  =\int _0^\infty \int _0^{\lambda '}\lambda ^{p_2-2} \mu (\{ x: |u (x)|\ge \lambda '\} ) d\lambda d\lambda '. \end{equation}
+  </div>
+  <span class="equation_label">9.0.30</span>
+</p>
+</div>
+<div class="equation" id="a0000000700">
+<p>
+  <div class="equation_content">
+    \begin{equation}  =(p_2-1)^{-1}\int _0^\infty (\lambda ')^{p_2-1} \mu (\{ x: |u(x)|\ge \lambda '\} ) d\lambda '. \end{equation}
+  </div>
+  <span class="equation_label">9.0.31</span>
+</p>
+</div>
+<div class="equation" id="eqbesi15">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{eqbesi15} =(p_2-1)^{-1} p_2^{-1}\| u\| _{p_2}^{p_2}\,  . \end{equation}
+  </div>
+  <span class="equation_label">9.0.32</span>
+</p>
+</div>
+<p> Adding the two estimates <a href="sec-hlm.html#eqbesi14" class="eqref">9.0.28</a> and <a href="sec-hlm.html#eqbesi15" class="eqref">9.0.32</a> gives </p>
+<div class="equation" id="a0000000701">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \| M_{\mathcal{B}}u(x)\| _{p_2}^{p_2} \le 2^{p_2+2a} (1+(p_2-1)^{-1})\| u\| _{p_2}^{p_2} = 2^{p_2+2a} p_2(p_2-1)^{-1}\| u\| _{p_2}^{p_2} \,  . \end{equation}
+  </div>
+  <span class="equation_label">9.0.33</span>
+</p>
+</div>
+<p> With \(a\ge 1\) and \(p_2{\gt}1\), taking the \(p_2\)-th root, we obtain <a href="overviewsection.html#eq-hlm" class="eqref">2.0.44</a>. We turn to the case of general \(1\le p_1{\lt}p_2\). We have </p>
+<div class="equation" id="a0000000702">
+<p>
+  <div class="equation_content">
+    \begin{equation}  M_{\mathcal{B},p_1}u=(M_{\mathcal{B}} (|u|^{p_1}))^{\frac1{p_1}}\,  . \end{equation}
+  </div>
+  <span class="equation_label">9.0.34</span>
+</p>
+</div>
+<p> Applying the special case of <a href="overviewsection.html#eq-hlm" class="eqref">2.0.44</a> for \(M_{\mathcal{B}}\) gives </p>
+<div class="equation" id="a0000000703">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \| M_{\mathcal{B},p_1}u\| _{p_2}= \| M_{\mathcal{B}} (|u|^{p_1})\| _{p_2/p_1}^{\frac1{p_1}} \end{equation}
+  </div>
+  <span class="equation_label">9.0.35</span>
+</p>
+</div>
+<div class="equation" id="a0000000704">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \le 2^{2a} (p_2/p_1) (p_2/p_1-1)^{-1} \| (|u|^{p_1})\| _{p_2/p_1}^{\frac1{p_1}} =2^{2a} p_2(p_2-p_1)^{-1}\| u\| _{p_2}\,  . \end{equation}
+  </div>
+  <span class="equation_label">9.0.36</span>
+</p>
+</div>
+<p> This proves <a href="overviewsection.html#eq-hlm" class="eqref">2.0.44</a> in general. </p>
+<p>Now we construct the operator \(M\) satisfying <a href="overviewsection.html#eq-ball-av" class="eqref">2.0.45</a> and <a href="overviewsection.html#eq-hlm-2" class="eqref">2.0.46</a>. For each \(k \in \mathbb {Z}\) we choose a countable set \(C(2^k)\) as in <a href="sec-hlm.html#covering-separable-space">Lemma 9.0.2</a>. Define </p>
+<div class="displaymath" id="a0000000705">
+  \[  \mathcal{B}_\infty = \{ B(c, 2^k) \  : \  c \in C(2^k), k \in \mathbb {Z}\} \, .  \]
+</div>
+<p> By <a href="sec-hlm.html#covering-separable-space">Lemma 9.0.2</a>, this is a countable collection of balls. We choose an enumeration \(\mathcal{B}_\infty = \{ B_1, \dotsc \} \) and define </p>
+<div class="displaymath" id="a0000000706">
+  \[  \mathcal{B}_n = \{ B_1, \dotsc , B_n\} \, .  \]
+</div>
+<p> We define </p>
+<div class="displaymath" id="a0000000707">
+  \[  Mw := 2^{2a}\sup _{n \in \mathbb {N}} M_{\mathcal{B}_n}w\, .  \]
+</div>
+<p> This function is measurable for each measurable \(w\), since it is a countable supremum of measurable functions. Estimate <a href="overviewsection.html#eq-hlm-2" class="eqref">2.0.46</a> follows immediately from <a href="overviewsection.html#eq-hlm" class="eqref">2.0.44</a> and the monotone convergence theorem. </p>
+<p>It remains to show <a href="overviewsection.html#eq-ball-av" class="eqref">2.0.45</a>. Let \(B = B(x, r) \subset X\). Let \(k\) be the smallest integer such that \(2^k \ge r\), in particular we have \(2^k {\lt} 2r\). By definition of \(C(2^k)\), there exists \(c \in C(2^k)\) with \(x \in B(c, 2^k)\). By the triangle inequality, we have \(B(c, 2^k) \subset B(x, 4r)\), and hence by the doubling property <a href="sect0001.html#doublingx" class="eqref">1.1.2</a> </p>
+<div class="displaymath" id="a0000000708">
+  \[  \mu (B(c, 2^k)) \le 2^{2a} \mu (B(x,r))\, .  \]
+</div>
+<p> It follows that for each \(z \in B(x,r)\) </p>
+<div class="displaymath" id="a0000000709">
+  \begin{align*}  \frac{1}{\mu (B(x,r))}\int _{B(x,r)} |w(y)| \,  \mathrm{d}\mu (y) & \le \frac{2^{2a}}{\mu (B(c,2^k))}\int _{B(c,2^k)} |w(y)| \,  \mathrm{d}\mu (y) \\ & \le Mw(z)\, . \end{align*}
+</div>
+<p> This completes the proof. </p>
+
+  </div>
+</div>
+
+</div> <!--main-text -->
+</div> <!-- content-wrapper -->
+</div> <!-- content -->
+</div> <!-- wrapper -->
+
+<nav class="prev_up_next">
+  <svg  id="showmore-minus" class="icon icon-eye-minus showmore"><use xlink:href="symbol-defs.svg#icon-eye-minus"></use></svg>
+
+  <svg  id="showmore-plus" class="icon icon-eye-plus showmore"><use xlink:href="symbol-defs.svg#icon-eye-plus"></use></svg>
+
+  <a href="liphoel.html" title="Proof of the Hölder cancellative condition"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+</a>
+  <a href="index.html" title="A blueprint for the formalization of Carleson’s theorem on convergence of Fourier series"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+</a>
+  <a href="sect0002.html" title="Two-sided Metric Space Carleson"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+</a>
+</nav>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/plastex.js"></script>
+<script type="text/javascript" src="js/svgxuse.js"></script>
+<script type="text/javascript" src="js/js.cookie.min.js"></script>
+<script type="text/javascript" src="js/showmore.js"></script>
+</body>
+</html>

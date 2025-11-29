@@ -1,3 +1,4 @@
+import Architect
 import Carleson.Discrete.Defs
 import Carleson.ToMathlib.HardyLittlewood
 
@@ -120,6 +121,37 @@ lemma first_exception' : volume (G₁ : Set X) ≤ 2 ^ (- 5 : ℤ) * volume G :=
     norm_cast
   · exact ENNReal.inv_mul_cancel hG volume_G_ne_top |>.symm
 
+@[blueprint
+  "first-exception"
+  (title := "first exception")
+  (statement := /-- We have
+    \begin{equation}
+        \mu(G_1)\le 2^{-5}\mu(G)\, .
+    \end{equation} -/)
+  (proof := /-- Let
+    $$
+        K = 2^{2a+5}\frac{\mu(F)}{\mu(G)}\,.
+    $$
+    For each $\fp\in \fP_{F,G}$ pick a
+    $r(\fp)>4D^{\ps(\fp)}$ with
+    $$
+    {\mu(F\cap B(\pc(\fp),r(\fp)))}\ge K{\mu(B(\pc(\fp),r(\fp)))}\, .
+    $$
+    This ball exists by definition of $\fP_{F,G}$
+    and $\dens_2$. By applying \Cref{Hardy-Littlewood} to the collection of balls
+    $$
+        \mathcal{B} = \{B(\pc(\fp),r(\fp)) \ : \ \fp \in \fP_{F,G}\}
+    $$
+    and the function $u = \mathbf{1}_F$, we obtain
+    $$
+        \mu(\bigcup \mathcal{B}) \le 2^{2a} K^{-1} \mu(F)\,.
+    $$
+    We conclude with \eqref{eq-vol-sp-cube} and $r(\fp)>4D^{\ps(\fp)}$
+    $$
+        \mu(G_1)= \mu(\bigcup_{\fp\in \fP_{F,G}} \scI(\fp))
+        \le \mu(\bigcup \mathcal{B})\le 2^{2a} K^{-1} \mu (F) = 2^{-5}\mu(G)\,.
+    $$ -/)
+  (latexEnv := "lemma")]
 lemma first_exception : volume (G₁ : Set X) ≤ 2 ^ (- 4 : ℤ) * volume G := by
   calc volume G₁ ≤ 2 ^ (-5 : ℤ) * volume G := first_exception'
     _ ≤ 2 ^ (-4 : ℤ) * volume G := by gcongr <;> norm_num
@@ -127,6 +159,33 @@ lemma first_exception : volume (G₁ : Set X) ≤ 2 ^ (- 4 : ℤ) * volume G := 
 end first_exception
 
 /-- Lemma 5.2.2 -/
+@[blueprint
+  "dense-cover"
+  (title := "dense cover")
+  (statement := /-- For each $k\ge 0$, the union of all dyadic cubes
+    in $\mathcal{C}(G,k)$ has measure at most $2^{k+1} \mu(G)$ . -/)
+  (proof := /-- The union of dyadic cubes in $\mathcal{C}(G,k)$
+    is contained the union of elements of the set $\mathcal{M}(k)$
+    of all dyadic cubes $J$ with
+    ${\mu(G \cap J)} > 2^{-k-1}{\mu(J)}$.
+    The union of elements in the set $\mathcal{M}(k)$ is contained in the union of elements in
+    the set $\mathcal{M}^*(k)$ of maximal elements in
+    $\mathcal{M}(k)$ with respect to set inclusion. Hence
+    \begin{equation}\label{cbymstar}
+    \mu (\bigcup \mathcal{C}(G,k))\le \mu (\bigcup \mathcal{M}^*(k))\le
+    \sum_{J\in \mathcal{M}^*(k)}\mu(J)
+    \end{equation}
+    Using the definition of $\mathcal{M}(k)$ and then
+    the pairwise disjointedness of elements in
+    $\mathcal{M}^*(k)$,
+    we estimate \eqref{cbymstar} by
+    \begin{equation}
+    \le
+    2^{k+1}\sum_{J\in \mathcal{M}^*(k)}\mu(J\cap G)
+    \le 2^{k+1}\mu(G).
+    \end{equation}
+    This proves the lemma. -/)
+  (latexEnv := "lemma")]
 lemma dense_cover (k : ℕ) : volume (⋃ i ∈ 𝓒 (X := X) k, (i : Set X)) ≤ 2 ^ (k + 1) * volume G := by
   classical
   let M : Finset (Grid X) :=
@@ -157,6 +216,27 @@ lemma dense_cover (k : ℕ) : volume (⋃ i ∈ 𝓒 (X := X) k, (i : Set X)) �
     _ ≤ _ := mul_le_mul_left' (measure_mono (iUnion₂_subset fun _ _ ↦ inter_subset_left)) _
 
 /-- Lemma 5.2.3 -/
+@[blueprint
+  "pairwise-disjoint"
+  (title := "pairwise disjoint")
+  (statement := /-- If $\fp, \fp' \in {\mathfrak{M}}(k,n)$ and
+    \begin{equation}\label{eintersect}
+        {E_1}(\fp)\cap {E_1}(\fp')\neq \emptyset,
+    \end{equation}
+    then $\fp=\fp'$. -/)
+  (proof := /-- Let $\fp,\fp'$ be as in the lemma. By definition of $E_1$,
+    we have
+    $E_1(\fp)\subset \scI(\fp)$ and analogously for $\fp'$, we conclude from \eqref{eintersect} that
+    $\scI(\fp)\cap \scI(\fp')\neq \emptyset$. Let without loss of generality $\scI(\fp)$ be maximal
+    in
+    $\{\scI(\fp),\scI(\fp')\}$, then $\scI(\fp')\subset \scI(\fp)$.
+    By \eqref{eintersect}, we conclude by definition of $E_1$ that $\fc(\fp)\cap \fc(\fp')\neq
+    \emptyset$. By
+    \eqref{eq-freq-dyadic} we conclude $\fc(\fp)\subset \fc(\fp')$. It follows that $\fp'\le \fp$.
+    By maximality
+    \eqref{mnkmax}
+    of $\fp'$, we have $\fp'=\fp$. This proves the lemma. -/)
+  (latexEnv := "lemma")]
 lemma pairwiseDisjoint_E1 : (𝔐 (X := X) k n).PairwiseDisjoint E₁ := fun p mp p' mp' h ↦ by
   change Disjoint _ _
   contrapose! h
@@ -172,6 +252,23 @@ lemma pairwiseDisjoint_E1 : (𝔐 (X := X) k n).PairwiseDisjoint E₁ := fun p m
 
 open scoped Classical in
 /-- Lemma 5.2.4 -/
+@[blueprint
+  "dyadic-union"
+  (title := "dyadic union")
+  (statement := /-- For each $x\in A(\lambda,k,n)$,
+    there is a dyadic cube $I$
+    that contains $x$ and is
+    a subset of
+    $A(\lambda,k,n)$. -/)
+  (proof := /-- Fix $k,n,\lambda,x$ as in the lemma such that $x\in A(\lambda,k,n)$.
+    Let $\mathcal{M}$ be the set of dyadic cubes $\scI(\fp)$ with $\fp$ in $\mathfrak{M}(k,n)$ and
+    $x\in \scI(\fp)$.
+    By definition of $A(\lambda,k,n)$, the cardinality of $\mathcal{M}$ is at least $1+\lambda
+    2^{n+1}$.
+    Let $I$ be a cube of smallest scale in $\mathcal{M}$.
+    Then $I$ is contained in all cubes of $\mathcal{M}$.
+    It follows that $I\subset A(\lambda,k,n)$. -/)
+  (latexEnv := "lemma")]
 lemma dyadic_union (hx : x ∈ setA l k n) : ∃ i : Grid X, x ∈ i ∧ (i : Set X) ⊆ setA l k n := by
   let M : Finset (𝔓 X) := { p | p ∈ 𝔐 k n ∧ x ∈ 𝓘 p }
   simp_rw [setA, mem_setOf, stackSize, indicator_apply, Pi.one_apply, Finset.sum_boole, Nat.cast_id,
@@ -302,6 +399,78 @@ lemma john_nirenberg_aux2 {L : Grid X} (mL : L ∈ Grid.maxCubes (MsetA l k n)) 
     _ ≤ _ := e529
 
 /-- Lemma 5.2.5 -/
+@[blueprint
+  "John-Nirenberg"
+  (title := "John Nirenberg")
+  (statement := /-- For all integers $k,n,\lambda\ge 0$, we have
+    \begin{equation}\label{alambdameasure}
+        \mu(A(\lambda,k,n)) \le 2^{k+1-\lambda}\mu(G)\,.
+    \end{equation} -/)
+  (proof := /-- Fix $k,n$ as in the lemma
+    and suppress notation to write
+    $A(\lambda)$ for $A(\lambda,k,n)$.
+    We prove the lemma by induction on $\lambda$.
+    For $\lambda=0$, we use that $A(\lambda)$ by definition of $\mathfrak{M}(k,n)$ is contained in
+    the union of elements in $ \mathcal{C}(G,k)$. \Cref{dense-cover} then completes the base of the
+    induction.
+    
+    Now assume that the statement of \Cref{John-Nirenberg}
+    is proven for some integer $\lambda\ge 0$.
+    The set $A(\lambda+1)$ is contained in the set $A(\lambda)$.
+    Let $\mathcal{M}$ be the set of dyadic cubes which are a subset of $A(\lambda)$. By
+    \Cref{dyadic-union}, the union of $\mathcal{M}$ is $A(\lambda)$.
+    Let $\mathcal{M}^*$ be the set of maximal dyadic cubes in $\mathcal{M}$.
+    
+    Let $x\in A(\lambda+1)$ and $L\in \mathcal{M}^*$ such that $x\in L$. Then by the dyadic property
+    \eqref{dyadicproperty}
+    \begin{equation}\label{suminout}
+        \sum_{\fp \in {\mathfrak{M}}(k,n)} \mathbf{1}_{\scI(\fp)}(x) =
+        \sum_{\fp \in {\mathfrak{M}}(k,n):\scI(\fp) \subset L} \mathbf{1}_{\scI(\fp)}(x) +
+        \sum_{\fp \in {\mathfrak{M}}(k,n):L \subsetneq \scI(\fp)} \mathbf{1}_{\scI(\fp)}(x)\,.
+    \end{equation}
+    We now show
+    \begin{equation}\label{mnkonl}
+        \sum_{\fp \in {\mathfrak{M}}(k,n):\scI(\fp) \subset L} \mathbf{1}_{\scI(\fp)}(x)\ge
+        2^{n+1}\,.
+    \end{equation}
+    The left-hand side of \eqref{suminout} is strictly greater than $(\lambda+1)2^{n+1}$.
+    If $L$ is the top cube the second sum $Q_2$ on the right-hand side of \eqref{suminout} is zero
+    and
+    \eqref{mnkonl} follows immediately. Otherwise consider the inclusion-minimal cube $\hat{L}$ with
+    $L\subsetneq\hat{L}$;
+    all tiles $\fp$ over which $Q_2$ is summed over satisfy $\hat{L}\subset\fp$, so $Q_2$ is
+    constant for all $x\in\hat{L}$.
+    By maximality of $L$, $Q_2$ is at most $\lambda 2^{n+1}$ somewhere on $\hat{L}$,
+    thus on all of $\hat{L}$ and consequently also at $x$. Rearranging the inequality yields
+    \eqref{mnkonl}.
+    
+    By \Cref{pairwise-disjoint}, we have
+    \begin{equation}
+    \sum_{\fp \in {\mathfrak{M}}(k,n):\scI(\fp) \subset L} \mu({E_1}(\fp)) \leq \mu(L)\, .
+    \end{equation}
+    Multiplying by $2^n$ and applying \eqref{ebardense}, we obtain
+    \begin{equation}\label{mnkintl}
+        \sum_{\fp \in {\mathfrak{M}}(k,n):\scI(\fp) \subset L} \mu(\scI(\fp)) \leq 2^n \mu(L)\, .
+    \end{equation}
+    We then have with \eqref{mnkonl} and \eqref{mnkintl}
+    \begin{equation}
+    2^{n+1}\mu(A(\lambda+1)\cap L) =
+     \int_{A(\lambda+1)\cap L} 2^{n+1} d\mu
+    \end{equation}
+    \begin{equation}
+    \le
+        \int \sum_{\fp \in {\mathfrak{M}}(k,n):\scI(\fp) \subset L} \mathbf{1}_{\scI(\fp)} d\mu
+    \le 2^n \mu(L)\, .
+    \end{equation}
+    Hence
+    \begin{equation}
+        2\mu(A(\lambda+1))=2\sum_{L\in \mathcal{M}^*}
+    \mu(A(\lambda+1)\cap L)\le
+    \sum_{L\in \mathcal{M}^*}\mu( L)= \mu(A(\lambda))\, .
+    \end{equation}
+    Using the induction hypothesis, this proves
+    \eqref{alambdameasure} for $\lambda+1$ and completes the proof of the lemma. -/)
+  (latexEnv := "lemma")]
 lemma john_nirenberg : volume (setA (X := X) l k n) ≤ 2 ^ (k + 1 - l : ℤ) * volume G := by
   induction l with
   | zero =>
@@ -347,6 +516,24 @@ lemma john_nirenberg : volume (setA (X := X) l k n) ≤ 2 ^ (k + 1 - l : ℤ) * 
           rw [mem_iUnion₂]; use L, mL, mem_of_mem_of_subset lM lL.1
 
 /-- Lemma 5.2.6 -/
+@[blueprint
+  "second-exception"
+  (title := "second exception")
+  (statement := /-- We have
+    \begin{equation}
+        \mu(G_2)\le 2^{-2} \mu(G)\, .
+    \end{equation} -/)
+  (proof := /-- We use \Cref{John-Nirenberg} and sum twice a geometric series
+    to obtain
+    \begin{equation}
+        \sum_{0\le k}\sum_{k\le n}
+    \mu(A(2n+6,k,n))\le \sum_{0\le k}\sum_{k\le n} 2^{k-5-2n}\mu(G)
+    \end{equation}
+    \begin{equation}
+       \le \sum_{0\le k} 2^{-k-3}\mu(G)\le 2^{-2}\mu(G)\, .
+    \end{equation}
+    This proves the lemma. -/)
+  (latexEnv := "lemma")]
 lemma second_exception : volume (G₂ (X := X)) ≤ 2 ^ (-2 : ℤ) * volume G :=
   calc
     _ ≤ ∑' (n : ℕ), volume (⋃ (k ≤ n), setA (X := X) (2 * n + 6) k n) := measure_iUnion_le _
@@ -466,6 +653,32 @@ lemma top_tiles_aux : ∑ m with m ∈ 𝔐 (X := X) k n, volume (𝓘 m : Set X
 
 open scoped Classical in
 /-- Lemma 5.2.7 -/
+@[blueprint
+  "top-tiles"
+  (title := "top tiles")
+  (statement := /-- We have
+    \begin{equation}\label{eq-musum}
+        % Note(Georges Gonthier): suggested new factor
+        \sum_{\mathfrak{m} \in \mathfrak{M}(k,n)} \mu(\scI(\mathfrak{m}))\le 2^{n+k+3}\mu(G).
+    \end{equation} -/)
+  (proof := /-- % Note(Georges Gonthier): sum should start at 0, not 1
+    We write the left-hand side of \eqref{eq-musum}
+    \begin{equation}
+        \int \sum_{\mathfrak{m} \in \mathfrak{M}(k,n)} \mathbf{1}_{\scI(\mathfrak{m})}(x) \, d\mu(x)
+        \le
+    2^{n+1} \sum_{\lambda=0}^{|\mathfrak{M}|}\mu(A(\lambda, k,n))\,.
+    \end{equation}
+    Using \Cref{John-Nirenberg}
+    and then summing a geometric series, we estimate this by
+    \begin{equation}
+        \le
+    2^{n+1}\sum_{\lambda=0}^{|\mathfrak{M}|}
+    2^{k+1-\lambda}\mu(G)
+    \le
+    2^{n+1}2^{k+2}\mu(G)\, .
+    \end{equation}
+    This proves the lemma. -/)
+  (latexEnv := "lemma")]
 lemma top_tiles : ∑ m with m ∈ 𝔐 (X := X) k n, volume (𝓘 m : Set X) ≤
     2 ^ (n + k + 3) * volume G := by
   set M := 𝔐 (X := X) k n
@@ -643,6 +856,78 @@ private lemma indicator_le : ∀ u ∈ (𝔘₁ k n j).toFinset.filter (x ∈ �
 
 open Finset in
 /-- Lemma 5.2.8 -/
+@[blueprint
+  "tree-count"
+  (title := "tree count")
+  (statement := /-- Let $k,n,j\ge 0$. We have for every $x\in X$
+    \begin{equation}
+        \sum_{\fu\in \fU_1(k,n,j)} \mathbf{1}_{\scI(\fu)}(x)
+        \le 2^{-j}
+        2^{9a} \sum_{\mathfrak{m}\in \mathfrak{M}(k,n)}
+         \mathbf{1}_{\scI(\mathfrak{m})}(x)
+    \end{equation} -/)
+  (proof := /-- Let $x\in X$. For each
+    $\fu\in \fU_1(k,n,j)$ with $x\in \scI(\fu)$, as $\fu \in \fC_1(k,n,j)$,
+    there are at least $2^{j}$ elements $\mathfrak{m}\in \mathfrak{M}(k,n)$
+    with $100\fu \lesssim \mathfrak{m}$ and in particular
+    $x\in \scI(\mathfrak{m})$. Hence
+    \begin{equation}\label{ubymsum}
+         \mathbf{1}_{\scI(\fu)}(x)
+        \le 2^{-j}\sum_{\mathfrak{m} \in \mathfrak{M}(k,n): 100\fu\lesssim \mathfrak{m}}
+        \mathbf{1}_{\scI(\mathfrak{m})}(x)\, .
+    \end{equation}
+    Conversely, for each $\mathfrak{m}\in \mathfrak{M}(k,n)$
+    with $x\in \scI(\mathfrak{m})$,
+    let $\fU(\mathfrak{m})$ be the set of
+    $\fu\in \fU_1(k,n,j)$ with $x\in \scI(\fu)$
+    and $100\fu \lesssim \mathfrak{m}$.
+    Summing \eqref{ubymsum} over $\fu$ and counting the pairs
+    $(\fu,\mathfrak{m})$ with $100\fu \lesssim \mathfrak{m}$
+    differently gives
+    \begin{equation}\label{usumbymsum}
+         \sum_{\fu\in \fU_1(k,n,j)} \mathbf{1}_{\scI(\fu)}(x)
+        \le 2^{-j}\sum_{\mathfrak{m} \in \mathfrak{M}(k,n)}
+        \sum_{\fu \in \fU(\mathfrak{m})} \mathbf{1}_{\scI(\mathfrak{m})}(x)\, .
+    \end{equation}
+    We estimate the number of elements in $\fU(\mathfrak{m})$.
+    Let $\fu \in \fU(\mathfrak{m})$.
+    Then by definition of
+    $\fU(\mathfrak{m})$
+    \begin{equation}\label{dby2}
+         d_{\fu}(\fcc(\fu),\fcc(\mathfrak{m}))\le 100\, .
+    \end{equation}
+    If $\fu'$ is a further element in $\fU(\mathfrak{m})$ with $\fu\neq \fu'$, then
+    \begin{equation}
+        \fcc(\mathfrak{m})
+        \in B_{\fu}(\fcc(\fu),100)\cap B_{\fu'}(\fcc(\fu'),100)\ .
+    \end{equation}
+    By the last display and definition of $\fU_1(k,n,j)$, none of $\scI(\fu)$, $\scI(\fu')$ is
+    strictly contained in the other. As both contain $x$, we have $\scI(\fu)=\scI(\fu')$.
+    We then have $d_{\fu}=d_{\fu'}$.
+    
+    By \eqref{eq-freq-comp-ball}, the balls
+    $B_{\fu}(\fcc(\fu),0.2)$ and
+    $B_{\fu}(\fcc(\fu'),0.2)$ are
+    contained respectively in $\fc(\fu)$
+    and $\fc(\fu')$ and thus are disjoint by \eqref{eq-dis-freq-cover}.
+    By \eqref{dby2} and the triangle inequality, both balls are contained in
+    $B_{\fu}(\fcc(\mathfrak{m}), 100.2)$.
+    
+    By \eqref{thirddb} applied nine times, there is a collection of at most
+    $2^{9a}$ balls of radius $0.2$ with respect to the metric $d_{\fu}$ which cover the ball
+    $B_{\fu}(\fcc(\mathfrak{m}),100.2)$.
+    Let $B'$ be a ball in this cover.
+    As the center of $B'$ can be in at most one of the disjoint balls
+    $B_{\fu}(\fcc(\fu),0.2)$ and
+    $B_{\fu}(\fcc(\fu'),0.2)$,
+    the ball $B'$ can contain at most
+    one of the points $\fcc(\fu)$, $\fcc(\fu')$.
+    
+    Hence the image of $\fU(\mathfrak{m})$ under $\fcc$ has at most
+    $2^{9a}$ elements; since $\fcc$ is injective on $\fU(\mathfrak{m})$,
+    the same is true of $\fU(\mathfrak{m})$.
+    Inserting this into \eqref{usumbymsum} proves the lemma. -/)
+  (latexEnv := "lemma")]
 lemma tree_count :
     stackSize (𝔘₁ k n j) x ≤ (2 : ℝ) ^ (9 * a - j : ℤ) * stackSize (𝔐 k n) x := by
   classical
@@ -665,6 +950,38 @@ lemma tree_count :
   norm_cast
 
 /-- Lemma 5.2.9 -/
+@[blueprint
+  "boundary-exception"
+  (title := "boundary exception")
+  (statement := /-- Let $\mathcal{L}(\fu)$ be as defined in \eqref{eq-L-def}. We have for each
+    $\fu\in \fU_1(k,n,l)$,
+    \begin{equation}
+    \mu(\bigcup_{I\in \mathcal{L}(\fu)} I)
+    \le D^{1-\kappa Z(n+1)}
+            \mu(\scI(\mathfrak{u})).
+    \end{equation} -/)
+  (proof := /-- Let $\fu\in \fU_1(k,n,l)$.
+    Let $I \in \mathcal{L}(\fu)$. Then we have $s(I) = \ps(\fu) - Z(n+1) - 1$ and $I \subset
+    \scI(\fu)$ and $B(c(I), 8D^{s(I)}) \not \subset \scI(\fu)$.
+    By \eqref{eq-vol-sp-cube}, the set $I$
+    is contained in $B(c(I), 4D^{s(I)})$.
+    By the triangle inequality, the set $I$
+    is contained in
+    \begin{equation}
+        X(\fu):=\{x \in \scI(\fu) \, : \, \rho(x, X \setminus \scI(\fu)) \leq 12 D^{\ps(\fu) -
+        Z(n+1)-1}\}\,.
+    \end{equation}
+     By the small boundary property \eqref{eq-small-boundary}, noting that
+     \begin{equation*}
+         12D^{\ps(\fu) - Z(n+1) - 1} = 12D^{s(I)} > D^{-S}\ ,
+     \end{equation*} we have
+       $$
+            \mu(X(\fu)) \le
+            2\cdot(12 D^{-Z(n+1)-1})^\kappa
+            \mu(\scI(\mathfrak{u})).
+        $$
+    Using $\kappa<1$ and $D \ge 12$, this proves the lemma. -/)
+  (latexEnv := "lemma")]
 lemma boundary_exception {u : 𝔓 X} :
     volume (⋃ i ∈ 𝓛 (X := X) n u, (i : Set X)) ≤ C5_2_9 X n * volume (𝓘 u : Set X) := by
   by_cases  h_𝓛_n_u_non_empty : Set.Nonempty (𝓛 (X := X) n u)
@@ -864,6 +1181,70 @@ lemma third_exception_aux :
     _ ≤ _ := by rw [mul_assoc _ _ (volume G)]; gcongr; exact top_tiles
 
 /-- Lemma 5.2.10 -/
+@[blueprint
+  "third-exception"
+  (title := "third exception")
+  (statement := /-- We have
+    \begin{equation}
+        \mu(G_3)\le 2^{-4} \mu(G)\, .
+    \end{equation} -/)
+  (proof := /-- As each $\fp\in \fL_4(k,n,j)$
+    is contained in $\cup\mathcal{L}(\fu)$ for some
+    $\fu\in \fU_1(k,n,l)$, we have
+    \begin{equation}
+    \mu(\bigcup_{\fp \in \fL_4 (k,n,j)}\scI(\fp))
+    \le \sum_{\fu\in \fU_1(k,n,j)}
+    \mu(\bigcup_{I \in \mathcal{L} (\fu)}I).
+    \end{equation}
+    Using \Cref{boundary-exception} and then \Cref{tree-count}, we estimate this further
+     by
+    \begin{equation}
+        \le \sum_{\fu\in \fU_1(k,n,j)}
+        D^{1-\kappa Z(n+1)}
+            \mu(\scI(\mathfrak{u}))
+    \end{equation}
+    \begin{equation}
+        \le 2^{100a^2+9a+1-j} \sum_{\mathfrak{m}\in \mathfrak{M}(k,n)}
+         D^{-\kappa Z(n+1)}
+        \mu(\scI(\mathfrak{m}))\,.
+    \end{equation}
+    Using \Cref{top-tiles}, we estimate this by
+      \begin{equation}
+         \le
+    2^{100a^2 + 9a + 1-j} D^{-\kappa Z(n+1)}
+         2^{n+k+3}\mu(G)\, .
+    \end{equation}
+    Now we estimate $G_3$ defined in \eqref{defineg3} by
+    \begin{equation}
+        \mu(G_3)\le \sum_{k\ge 0}\, \sum_{n \geq k}\,
+        \sum_{0\le j\le 2n+3}
+        \mu(\bigcup_{\fp \in \fL_4 (k,n,j)}
+        \scI(\fp))
+    \end{equation}
+    \begin{equation}
+        \le \sum_{k\ge 0}\, \sum_{n \geq k}\,
+        \sum_{0\le j\le 2n+3}
+        2^{100a^2 + 9a + 3 + n + k -j} D^{-\kappa Z(n+1)}\mu(G)
+    \end{equation}
+    Summing geometric series, using that $D^{\kappa Z}\ge 8$ by \eqref{defineD}, \eqref{definekappa}
+    and \eqref{defineZ}, we estimate this by
+    \begin{equation}
+        \le \sum_{k\ge 0}\, \sum_{n \geq k}\,
+        2^{100a^2 + 9a + 4 + n + k} D^{-\kappa Z(n+1)}\mu(G)
+    \end{equation}
+    \begin{equation}
+        = \sum_{k\ge 0} 2^{100a^2 + 9a + 4 + 2k} D^{-\kappa Z(k+1)} \sum_{n \geq k}\,
+        2^{n - k} D^{-\kappa Z(n-k)}\mu(G)
+    \end{equation}
+    \begin{equation}
+        \le \sum_{k\ge 0} 2^{100a^2 + 9a + 5 + 2k} D^{-\kappa Z(k+1)}\mu(G)
+    \end{equation}
+    \begin{equation}
+       \le 2^{100a^2 + 9a + 6} D^{-\kappa Z}\mu(G)
+    \end{equation}
+    Using $D = 2^{100a^2}$ and $a \ge 4$ and $\kappa Z \ge 2$ by \eqref{defineD} and
+    \eqref{definekappa} proves the lemma. -/)
+  (latexEnv := "lemma")]
 lemma third_exception : volume (G₃ (X := X)) ≤ 2 ^ (-4 : ℤ) * volume G := by
   calc
     _ ≤ ∑' n, volume (⋃ k, ⋃ (_ : k ≤ n), ⋃ j, ⋃ (_ : j ≤ 2 * n + 3),
@@ -965,6 +1346,19 @@ lemma third_exception : volume (G₃ (X := X)) ≤ 2 ^ (-4 : ℤ) * volume G := 
         linarith [seven_le_c]
 
 /-- Lemma 5.1.1 -/
+@[blueprint
+  "exceptional-set"
+  (title := "exceptional set")
+  (statement := /-- We have
+    \begin{equation}
+        \mu(G')\le 2^{-1}\mu(G)\, .
+    \end{equation} -/)
+  (proof := /-- [Proof of \Cref{exceptional-set}]
+    
+    
+    Adding up the bounds in Lemmas \ref{first-exception}, \ref{second-exception}, and
+    \ref{third-exception} proves \Cref{exceptional-set}. -/)
+  (latexEnv := "lemma")]
 lemma exceptional_set : volume (G' : Set X) ≤ 2 ^ (-1 : ℤ) * volume G :=
   calc volume G'
     _ ≤ volume G₁ + volume G₂ + volume G₃ :=

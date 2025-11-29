@@ -1,0 +1,4034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  MathJax = { 
+    tex: {
+		    inlineMath: [['$','$'], ['\\(','\\)']]
+	} }
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<meta name="generator" content="plasTeX" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>A blueprint for the formalization of Carleson’s theorem on convergence of Fourier series: Proof of discrete Carleson</title>
+<link rel="next" href="antichainboundary.html" title="Proof of the Antichain Operator Proposition" />
+<link rel="prev" href="christsection.html" title="Proof of Finitary Carleson" />
+<link rel="up" href="index.html" title="A blueprint for the formalization of Carleson’s theorem on convergence of Fourier series" />
+<link rel="stylesheet" href="styles/theme-white.css" />
+<link rel="stylesheet" href="styles/amsthm.css" />
+<link rel="stylesheet" href="styles/showmore.css" />
+<link rel="stylesheet" href="styles/blueprint.css" />
+<link rel="stylesheet" href="styles/extra_styles.css" />
+</head>
+
+<body>
+<header>
+<svg  id="toc-toggle" class="icon icon-list-numbered "><use xlink:href="symbol-defs.svg#icon-list-numbered"></use></svg>
+<h1 id="doc_title"><a href="index.html">A blueprint for the formalization of Carleson’s theorem on convergence of Fourier series</a></h1>
+</header>
+
+<div class="wrapper">
+<nav class="toc">
+<ul class="sub-toc-0">
+<li class="">
+  <a href="sect0001.html"><span class="toc_ref">1</span> <span class="toc_entry">Introduction</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0001.html#a0000000006"><span class="toc_ref">1.1</span> <span class="toc_entry">Statement of the metric space Carleson theorems</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="overviewsection.html"><span class="toc_ref">2</span> <span class="toc_entry">Proof of Metric Space Carleson, overview</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="overviewsection.html#global-auxiliary-lemmas"><span class="toc_ref">2.1</span> <span class="toc_entry">Auxiliary lemmas</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="thmfromproplinear.html"><span class="toc_ref">3</span> <span class="toc_entry">Proof of Metric Space Carleson</span></a>
+ </li>
+<li class="">
+  <a href="christsection.html"><span class="toc_ref">4</span> <span class="toc_entry">Proof of Finitary Carleson</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="christsection.html#subsecdyadic"><span class="toc_ref">4.1</span> <span class="toc_entry">Proof of Grid Existence Lemma</span></a>
+ </li>
+<li class="">
+  <a href="christsection.html#subsectiles"><span class="toc_ref">4.2</span> <span class="toc_entry">Proof of Tile Structure Lemma</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class=" active current">
+  <a href="proptopropprop.html"><span class="toc_ref">5</span> <span class="toc_entry">Proof of discrete Carleson</span></a>
+  <span class="expand-toc">▼</span>
+  <ul class="sub-toc-1 active">
+     <li class="">
+  <a href="proptopropprop.html#subsectilesorg"><span class="toc_ref">5.1</span> <span class="toc_entry">Organisation of the tiles</span></a>
+ </li>
+<li class="">
+  <a href="proptopropprop.html#subsetexcset"><span class="toc_ref">5.2</span> <span class="toc_entry">Proof of the Exceptional Sets Lemma</span></a>
+ </li>
+<li class="">
+  <a href="proptopropprop.html#subsec-lessim-aux"><span class="toc_ref">5.3</span> <span class="toc_entry">Auxiliary lemmas</span></a>
+ </li>
+<li class="">
+  <a href="proptopropprop.html#subsecforest"><span class="toc_ref">5.4</span> <span class="toc_entry">Proof of the Forest Union Lemma</span></a>
+ </li>
+<li class="">
+  <a href="proptopropprop.html#subsecantichain"><span class="toc_ref">5.5</span> <span class="toc_entry">Proof of the Forest Complement Lemma</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="antichainboundary.html"><span class="toc_ref">6</span> <span class="toc_entry">Proof of the Antichain Operator Proposition</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="antichainboundary.html#sec-TT*-T*T"><span class="toc_ref">6.1</span> <span class="toc_entry">The density arguments</span></a>
+ </li>
+<li class="">
+  <a href="antichainboundary.html#sec-tile-operator"><span class="toc_ref">6.2</span> <span class="toc_entry">Proof of the Tile Correlation Lemma</span></a>
+ </li>
+<li class="">
+  <a href="antichainboundary.html#subsec-geolem"><span class="toc_ref">6.3</span> <span class="toc_entry">Proof of the Antichain Tile Count Lemma</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="treesection.html"><span class="toc_ref">7</span> <span class="toc_entry">Proof of the Forest Operator Proposition</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="treesection.html#a0000000014"><span class="toc_ref">7.1</span> <span class="toc_entry">The pointwise tree estimate</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#a0000000015"><span class="toc_ref">7.2</span> <span class="toc_entry">An auxiliary \(L^2\) tree estimate</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#a0000000016"><span class="toc_ref">7.3</span> <span class="toc_entry">The quantitative \(L^2\) tree estimate</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#a0000000017"><span class="toc_ref">7.4</span> <span class="toc_entry">Almost orthogonality of separated trees</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#subsec-big-tiles"><span class="toc_ref">7.5</span> <span class="toc_entry">Proof of the Tiles with large separation Lemma</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#subsec-rest-tiles"><span class="toc_ref">7.6</span> <span class="toc_entry">Proof of The Remaining Tiles Lemma</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#a0000000018"><span class="toc_ref">7.7</span> <span class="toc_entry">Forests</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="liphoel.html"><span class="toc_ref">8</span> <span class="toc_entry">Proof of the Hölder cancellative condition</span></a>
+ </li>
+<li class="">
+  <a href="sec-hlm.html"><span class="toc_ref">9</span> <span class="toc_entry">Proof of Vitali covering and Hardy–Littlewood</span></a>
+ </li>
+<li class="">
+  <a href="sect0002.html"><span class="toc_ref">10</span> <span class="toc_entry">Two-sided Metric Space Carleson</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0002.html#subsec-cotlar"><span class="toc_ref">10.1</span> <span class="toc_entry">Proof of Cotlar’s Inequality</span></a>
+ </li>
+<li class="">
+  <a href="sect0002.html#subsec-CZD"><span class="toc_ref">10.2</span> <span class="toc_entry">Calderón-Zygmund Decomposition</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="sect0003.html"><span class="toc_ref">11</span> <span class="toc_entry">Proof of The Classical Carleson Theorem</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0003.html#10classical"><span class="toc_ref">11.1</span> <span class="toc_entry">The classical Carleson theorem</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10smooth"><span class="toc_ref">11.2</span> <span class="toc_entry">Smooth functions.</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10hilbert"><span class="toc_ref">11.3</span> <span class="toc_entry">The truncated Hilbert transform</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10vandercorput"><span class="toc_ref">11.4</span> <span class="toc_entry">The proof of the van der Corput Lemma</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10projection"><span class="toc_ref">11.5</span> <span class="toc_entry">Partial sums as orthogonal projections</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10difference"><span class="toc_ref">11.6</span> <span class="toc_entry">The error bound</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10carleson"><span class="toc_ref">11.7</span> <span class="toc_entry">Carleson on the real line</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li ><a href="dep_graph_document.html">Dependency graph</a></li>
+</ul>
+</nav>
+
+<div class="content">
+<div class="content-wrapper">
+
+
+<div class="main-text">
+<h1 id="proptopropprop">5 Proof of discrete Carleson</h1>
+
+<p>Let a grid structure \((\mathcal{D}, c, s)\) and a tile structure \(({\mathfrak P}, {\mathcal{I}}, {\Omega }, {\mathcal{Q}})\) for this grid structure be given. In <a href="proptopropprop.html#subsectilesorg">Section 5.1</a>, we decompose the set \({\mathfrak P}\) of tiles into subsets. Each subset will be controlled by one of three methods. The guiding principle of the decomposition is to be able to apply the forest estimate of <a href="overviewsection.html#forest-operator">Proposition 2.0.4</a> to the final subsets defined in <a href="proptopropprop.html#defc5" class="eqref">5.1.23</a>. This application is done in <a href="proptopropprop.html#subsecforest">Section 5.4</a>. The miscellaneous subsets along the construction of the forests will either be thrown into exceptional sets, which are defined and controlled in <a href="proptopropprop.html#subsetexcset">Section 5.2</a>, or will be controlled by the antichain estimate of <a href="overviewsection.html#antichain-operator">Proposition 2.0.3</a>, which is done in <a href="proptopropprop.html#subsecantichain">Section 5.5</a>. <a href="proptopropprop.html#subsec-lessim-aux">Section 5.3</a> contains some auxiliary lemmas needed for the proofs in Subsections <a href="proptopropprop.html#subsecforest">5.4</a>-<a href="proptopropprop.html#subsecantichain">5.5</a>. </p>
+<h2 id="subsectilesorg">5.1 Organisation of the tiles</h2>
+
+<p>In the following definitions, \(k, n\), and \(j\) will be nonnegative integers. Define \(\mathcal{C}(G,k)\) to be the set of \(I\in \mathcal{D}\) such that there exists a \(J\in \mathcal{D}\) with \(I\subset J\) and </p>
+<div class="equation" id="muhj1">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{muhj1} {\mu (G \cap J)} {\gt} 2^{-k-1}{\mu (J)}\,  , \end{equation}
+  </div>
+  <span class="equation_label">5.1.1</span>
+</p>
+</div>
+<p> but there does not exist a \(J\in \mathcal{D}\) with \(I\subset J\) and </p>
+<div class="equation" id="muhj2">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{muhj2} {\mu (G \cap J)} {\gt} 2^{-k}{\mu (J)}\, . \end{equation}
+  </div>
+  <span class="equation_label">5.1.2</span>
+</p>
+</div>
+<p> Let </p>
+<div class="equation" id="eq-defPk">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-defPk} {\mathfrak P}(k)=\{ {\mathfrak p}\in {\mathfrak P}\  : \  {\mathcal{I}}({\mathfrak p})\in \mathcal{C}(G,k)\}  \end{equation}
+  </div>
+  <span class="equation_label">5.1.3</span>
+</p>
+</div>
+<p> Define \( {\mathfrak {M}}(k,n)\) to be the set of \({\mathfrak p}\in {\mathfrak P}(k)\) such that </p>
+<div class="equation" id="ebardense">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{ebardense} \mu ({E_1}({\mathfrak p})) {\gt} 2^{-n} \mu ({\mathcal{I}}({\mathfrak p})) \end{equation}
+  </div>
+  <span class="equation_label">5.1.4</span>
+</p>
+</div>
+<p> and there does not exist \({\mathfrak p}'\in {\mathfrak P}(k)\) with \({\mathfrak p}'\neq {\mathfrak p}\) and \({\mathfrak p}\le {\mathfrak p}'\) such that </p>
+<div class="equation" id="mnkmax">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{mnkmax} \mu ({E_1}({\mathfrak p}')) {\gt} 2^{-n} \mu ({\mathcal{I}}({\mathfrak p}')). \end{equation}
+  </div>
+  <span class="equation_label">5.1.5</span>
+</p>
+</div>
+<p> Define for a collection \({\mathfrak P}'\subset {\mathfrak P}(k)\) </p>
+<div class="equation" id="eq-densdef">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-densdef} \operatorname{\operatorname {dens}}_k' ({\mathfrak P}'):= \sup _{{\mathfrak p}'\in {\mathfrak P}'}\sup _{\lambda \geq 2} \lambda ^{-a} \sup _{{\mathfrak p}\in {\mathfrak P}(k): \lambda {\mathfrak p}' \lesssim \lambda {\mathfrak p}} \frac{\mu ({E}_2(\lambda , {\mathfrak p}))}{\mu ({\mathcal{I}}({\mathfrak p}))}\, . \end{equation}
+  </div>
+  <span class="equation_label">5.1.6</span>
+</p>
+</div>
+<p> Sorting by density, we define </p>
+<div class="equation" id="def-cnk">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{def-cnk} {\mathfrak C}(k,n):=\{ {\mathfrak p}\in {\mathfrak P}(k) \  :  2^{4a}2^{-n}{\lt} \operatorname{\operatorname {dens}}_k'(\{ {\mathfrak p}\} ) \le 2^{4a}2^{-n+1}\} \, . \end{equation}
+  </div>
+  <span class="equation_label">5.1.7</span>
+</p>
+</div>
+<p> Following Fefferman <span class="cite">
+	[
+</span>, we define for \({\mathfrak p}\in {\mathfrak C}(k,n)\) </p>
+<div class="equation" id="defbfp">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{defbfp} \mathfrak {B}({\mathfrak p}) := \{  \mathfrak {m} \in \mathfrak {M}(k,n) \  : \  100 {\mathfrak p}\lesssim \mathfrak {m}\}  \end{equation}
+  </div>
+  <span class="equation_label">5.1.8</span>
+</p>
+</div>
+<p> and </p>
+<div class="equation" id="defcnkj">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{defcnkj} {\mathfrak C}_1(k,n,j) := \{ {\mathfrak p}\in {\mathfrak C}(k,n) \  : \  2^{j} \leq |\mathfrak {B}({\mathfrak p})| {\lt} 2^{j+1}\} \, . \end{equation}
+  </div>
+  <span class="equation_label">5.1.9</span>
+</p>
+</div>
+<p> and </p>
+<div class="equation" id="defl0nk">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{defl0nk} {\mathfrak L}_0(k,n) := \{ {\mathfrak p}\in {\mathfrak C}(k,n) \  : \  |\mathfrak {B}({\mathfrak p})| {\lt}1\} \, . \end{equation}
+  </div>
+  <span class="equation_label">5.1.10</span>
+</p>
+</div>
+<p> Together with the following removal of minimal layers, the splitting into \({\mathfrak C}_1(k,n,j)\) will lead to a separation of trees. Define recursively for \(0\le l\le Z(n+1)\) </p>
+<div class="equation" id="eq-L1-def">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-L1-def} {\mathfrak L}_1(k,n,j,l) \end{equation}
+  </div>
+  <span class="equation_label">5.1.11</span>
+</p>
+</div>
+<p> to be the set of minimal elements with respect to \(\le \) in </p>
+<div class="equation" id="a0000000132">
+<p>
+  <div class="equation_content">
+    \begin{equation}  {\mathfrak C}_1(k,n,j)\setminus \bigcup _{0\le l'{\lt}l} {\mathfrak L}_1(k,n,j,l')\,  . \end{equation}
+  </div>
+  <span class="equation_label">5.1.12</span>
+</p>
+</div>
+<p> Define </p>
+<div class="equation" id="eq-C2-def">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-C2-def} {\mathfrak C}_2(k,n,j):= {\mathfrak C}_1(k,n,j)\setminus \bigcup _{0\le l'\le Z(n+1)} {\mathfrak L}_1(k,n,j,l')\,  . \end{equation}
+  </div>
+  <span class="equation_label">5.1.13</span>
+</p>
+</div>
+<p>The remaining tile organization will be relative to prospective tree tops, which we define now. Define </p>
+<div class="equation" id="defunkj">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{defunkj} {\mathfrak U}_1(k,n,j) \end{equation}
+  </div>
+  <span class="equation_label">5.1.14</span>
+</p>
+</div>
+<p> to be the set of all \({\mathfrak u}\in {\mathfrak C}_1(k,n,j)\) such that for all \({\mathfrak p}\in {\mathfrak C}_1(k,n,j)\) with \({\mathcal{I}}({\mathfrak u})\) strictly contained in \({\mathcal{I}}({\mathfrak p})\) we have \(B_{{\mathfrak u}}({\mathcal{Q}}({\mathfrak u}), 100) \cap B_{{\mathfrak p}}({\mathcal{Q}}({\mathfrak p}),100) = \emptyset \). </p>
+<p>We first remove the pairs that are outside the immediate reach of any of the prospective tree tops. Define </p>
+<div class="equation" id="eq-L2-def">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-L2-def} {\mathfrak L}_2(k,n,j) \end{equation}
+  </div>
+  <span class="equation_label">5.1.15</span>
+</p>
+</div>
+<p> to be the set of all \({\mathfrak p}\in {\mathfrak C}_2(k,n,j)\) such that there does not exist \({\mathfrak u}\in {\mathfrak U}_1(k,n,j)\) with \({\mathcal{I}}({\mathfrak p})\neq {\mathcal{I}}({\mathfrak u})\) and \(2{\mathfrak p}\lesssim {\mathfrak u}\). Define </p>
+<div class="equation" id="eq-C3-def">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-C3-def} {\mathfrak C}_3(k,n,j):={\mathfrak C}_2(k,n,j) \setminus {\mathfrak L}_2(k,n,j)\,  . \end{equation}
+  </div>
+  <span class="equation_label">5.1.16</span>
+</p>
+</div>
+<p>We next remove the maximal layers. Define recursively for \(0 \le l \le Z(n+1)\) </p>
+<div class="equation" id="eq-L3-def">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-L3-def} {\mathfrak L}_3(k,n,j,l) \end{equation}
+  </div>
+  <span class="equation_label">5.1.17</span>
+</p>
+</div>
+<p> to be the set of all maximal elements with respect to \(\le \) in </p>
+<div class="equation" id="a0000000133">
+<p>
+  <div class="equation_content">
+    \begin{equation}  {\mathfrak C}_3(k,n,j) \setminus \bigcup _{0 \le l' {\lt} l} {\mathfrak L}_3(k,n,j,l')\, . \end{equation}
+  </div>
+  <span class="equation_label">5.1.18</span>
+</p>
+</div>
+<p> Define </p>
+<div class="equation" id="eq-C4-def">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-C4-def} {\mathfrak C}_4(k,n,j):={\mathfrak C}_3(k,n,j) \setminus \bigcup _{0 \le l \le Z(n+1)} {\mathfrak L}_3(k,n,j,l)\, . \end{equation}
+  </div>
+  <span class="equation_label">5.1.19</span>
+</p>
+</div>
+<p>Finally, we remove the boundary pairs relative to the prospective tree tops. Define </p>
+<div class="equation" id="eq-L-def">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-L-def} \mathcal{L}({\mathfrak u}) \end{equation}
+  </div>
+  <span class="equation_label">5.1.20</span>
+</p>
+</div>
+<p> to be the set of all \(I \in \mathcal{D}\) with \(I \subset {\mathcal{I}}({\mathfrak u})\) and \(s(I) = {\mathrm{s}}({\mathfrak u}) - Z(n+1) - 1\) and </p>
+<div class="equation" id="a0000000134">
+<p>
+  <div class="equation_content">
+    \begin{equation}  B(c(I), 8 D^{s(I)})\not\subset {\mathcal{I}}({\mathfrak u})\,  . \end{equation}
+  </div>
+  <span class="equation_label">5.1.21</span>
+</p>
+</div>
+<p> Define </p>
+<div class="equation" id="eq-L4-def">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-L4-def} {\mathfrak L}_4(k,n,j) \end{equation}
+  </div>
+  <span class="equation_label">5.1.22</span>
+</p>
+</div>
+<p> to be the set of all \({\mathfrak p}\in {\mathfrak C}_4(k,n,j)\) such that there exists \({\mathfrak u}\in {\mathfrak U}_1(k,n,j)\) with \({\mathcal{I}}({\mathfrak p}) \subset \bigcup \mathcal{L}({\mathfrak u})\), and define </p>
+<div class="equation" id="defc5">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{defc5} {\mathfrak C}_5(k,n,j):={\mathfrak C}_4(k,n,j) \setminus {\mathfrak L}_4(k,n,j)\,  . \end{equation}
+  </div>
+  <span class="equation_label">5.1.23</span>
+</p>
+</div>
+<p>We define three exceptional sets. The first exceptional set \(G_1\) takes into account the ratio of the measures of \(F\) and \(G\). Define \({\mathfrak P}_{F,G}\) to be the set of all \({\mathfrak p}\in {\mathfrak P}\) with </p>
+<div class="equation" id="a0000000135">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \operatorname{\operatorname {dens}}_2(\{ {\mathfrak p}\} ){\gt} 2^{2a+5}\frac{\mu (F)}{\mu (G)}\, . \end{equation}
+  </div>
+  <span class="equation_label">5.1.24</span>
+</p>
+</div>
+<p> Define </p>
+<div class="equation" id="definegone">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{definegone} G_1:=\bigcup _{{\mathfrak p}\in {\mathfrak P}_{F,G} }{\mathcal{I}}({\mathfrak p})\,  . \end{equation}
+  </div>
+  <span class="equation_label">5.1.25</span>
+</p>
+</div>
+<p> For an integer \(\lambda \ge 0\), define \(A(\lambda ,k,n)\) to be the set of all \(x\in X\) such that </p>
+<div class="equation" id="eq-Aoverlap-def">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-Aoverlap-def} \sum _{{\mathfrak p}\in \mathfrak {M}(k,n)}\mathbf{1}_{{\mathcal{I}}({\mathfrak p})}(x){\gt}\lambda 2^{n+1} \end{equation}
+  </div>
+  <span class="equation_label">5.1.26</span>
+</p>
+</div>
+<p> and define </p>
+<div class="equation" id="definegone2">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{definegone2} G_2:= \bigcup _{k\ge 0}\bigcup _{k\le n} A(2n+6,k,n)\,  . \end{equation}
+  </div>
+  <span class="equation_label">5.1.27</span>
+</p>
+</div>
+<p> Define </p>
+<div class="equation" id="defineg3">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{defineg3} G_3 := \bigcup _{k\ge 0}\,  \bigcup _{n \geq k}\,  \bigcup _{0\le j\le 2n+3} \bigcup _{{\mathfrak p}\in {\mathfrak L}_4 (k,n,j)} {\mathcal{I}}({\mathfrak p})\,  . \end{equation}
+  </div>
+  <span class="equation_label">5.1.28</span>
+</p>
+</div>
+<p> Define \(G'=G_1\cup G_2 \cup G_3\). The following bound of the measure of \(G'\) will be proven in <a href="proptopropprop.html#subsetexcset">Section 5.2</a>. </p>
+<div class="lemma_thmwrapper theorem-style-plain" id="exceptional-set">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">5.1.1</span>
+    <span class="lemma_thmtitle">exceptional set</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="proptopropprop.html#exceptional-set">#</a>
+    
+    <a class="icon proof" href="proptopropprop.html#a0000000136"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="proptopropprop.html#first-exception">Lemma 5.2.1</a></li>
+          
+          <li><a href="proptopropprop.html#second-exception">Lemma 5.2.6</a></li>
+          
+          <li><a href="proptopropprop.html#third-exception">Lemma 5.2.10</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/exceptional_set" class="lean_decl">exceptional_set</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    We have </p>
+<div class="equation" id="a0000000137">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \mu (G')\le 2^{-1}\mu (G)\,  . \end{equation}
+  </div>
+  <span class="equation_label">5.1.29</span>
+</p>
+</div>
+
+  </div>
+</div>
+<p>In <a href="proptopropprop.html#subsecforest">Section 5.4</a>, we identify each set \({\mathfrak C}_5(k,n,j)\) outside \(G'\) as forest and use Proposition <a href="overviewsection.html#forest-operator">2.0.4</a> to prove the following lemma. </p>
+<div class="lemma_thmwrapper theorem-style-plain" id="forest-union">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">5.1.2</span>
+    <span class="lemma_thmtitle">forest union</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="proptopropprop.html#forest-union">#</a>
+    
+    <a class="icon proof" href="proptopropprop.html#a0000000138"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="overviewsection.html#forest-operator">Proposition 2.0.4</a></li>
+          
+          <li><a href="proptopropprop.html#C-dens1">Lemma 5.3.12</a></li>
+          
+          <li><a href="proptopropprop.html#C6-forest">Lemma 5.4.3</a></li>
+          
+          <li><a href="proptopropprop.html#forest-geometry">Lemma 5.4.4</a></li>
+          
+          <li><a href="proptopropprop.html#forest-convex">Lemma 5.4.5</a></li>
+          
+          <li><a href="proptopropprop.html#forest-separation">Lemma 5.4.6</a></li>
+          
+          <li><a href="proptopropprop.html#forest-inner">Lemma 5.4.7</a></li>
+          
+          <li><a href="proptopropprop.html#forest-stacking">Lemma 5.4.8</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/forest_union" class="lean_decl">forest_union</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    Let </p>
+<div class="equation" id="a0000000139">
+<p>
+  <div class="equation_content">
+    \begin{equation}  {\mathfrak P}_1 =\bigcup _{k\ge 0}\bigcup _{n\ge k} \bigcup _{0\le j\le 2n+3}{\mathfrak C}_5(k,n,j) \end{equation}
+  </div>
+  <span class="equation_label">5.1.30</span>
+</p>
+</div>
+<p> For all \(f:X\to {\mathbb {C}}\) with \(|f|\le \mathbf{1}_F\) we have </p>
+<div class="equation" id="disclesssim1">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{disclesssim1} \int _{G \setminus G'} \left|\sum _{{\mathfrak p}\in {\mathfrak P}_1} T_{{\mathfrak p}} f \right|\,  \mathrm{d}\mu \le \frac{2^{441a^3}}{(q-1)^4} \mu (G)^{1 - \frac{1}{q}} \mu (F)^{\frac{1}{q}}\, . \end{equation}
+  </div>
+  <span class="equation_label">5.1.31</span>
+</p>
+</div>
+
+  </div>
+</div>
+<p>In <a href="proptopropprop.html#subsecantichain">Section 5.5</a>, we decompose the complement of the set of tiles in Lemma <a href="proptopropprop.html#forest-union">5.1.2</a> and apply the antichain estimate of <a href="overviewsection.html#antichain-operator">Proposition 2.0.3</a> to prove the following lemma. </p>
+<div class="lemma_thmwrapper theorem-style-plain" id="forest-complement">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">5.1.3</span>
+    <span class="lemma_thmtitle">forest complement</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="proptopropprop.html#forest-complement">#</a>
+    
+    <a class="icon proof" href="proptopropprop.html#a0000000140"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="overviewsection.html#antichain-operator">Proposition 2.0.3</a></li>
+          
+          <li><a href="proptopropprop.html#antichain-decomposition">Lemma 5.5.1</a></li>
+          
+          <li><a href="proptopropprop.html#L0-antichain">Lemma 5.5.2</a></li>
+          
+          <li><a href="proptopropprop.html#L2-antichain">Lemma 5.5.3</a></li>
+          
+          <li><a href="proptopropprop.html#L1-L3-antichain">Lemma 5.5.4</a></li>
+          
+          <li><a href="proptopropprop.html#C-dens1">Lemma 5.3.12</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/forest_complement" class="lean_decl">forest_complement</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    Let </p>
+<div class="equation" id="a0000000141">
+<p>
+  <div class="equation_content">
+    \begin{equation}  {\mathfrak P}_2 ={\mathfrak P}\setminus {\mathfrak P}_1\, . \end{equation}
+  </div>
+  <span class="equation_label">5.1.32</span>
+</p>
+</div>
+<p> For all \(f:X\to {\mathbb {C}}\) with \(|f|\le \mathbf{1}_F\) we have </p>
+<div class="equation" id="disclesssim2">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{disclesssim2} \int _{G \setminus G'} \left|\sum _{{\mathfrak p}\in {\mathfrak P}_2} T_{{\mathfrak p}} f\right| \,  \mathrm{d}\mu \le \frac{2^{120a^3}}{(q-1)^5} \mu (G)^{1 - \frac{1}{q}} \mu (F)^{\frac{1}{q}}\, . \end{equation}
+  </div>
+  <span class="equation_label">5.1.33</span>
+</p>
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000024">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof of <a href="overviewsection.html#discrete-Carleson">Proposition 2.0.2</a>
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>  <a href="overviewsection.html#discrete-Carleson">Proposition 2.0.2</a> follows by applying the triangle inequality to <a href="overviewsection.html#disclesssim" class="eqref">2.0.22</a> according to the splitting in <a href="proptopropprop.html#forest-union">Lemma 5.1.2</a> and <a href="proptopropprop.html#forest-complement">Lemma 5.1.3</a> and using both Lemmas as well as the bound on the set \(G'\) given by <a href="proptopropprop.html#exceptional-set">Lemma 5.1.1</a>. </p>
+
+  </div>
+</div>
+<h2 id="subsetexcset">5.2 Proof of the Exceptional Sets Lemma</h2>
+
+<p>We prove separate bounds for \(G_1\), \(G_2\), and \(G_3\) in Lemmas <a href="proptopropprop.html#first-exception">5.2.1</a>, <a href="proptopropprop.html#second-exception">5.2.6</a>, and <a href="proptopropprop.html#third-exception">5.2.10</a>. Adding up these bounds proves <a href="proptopropprop.html#exceptional-set">Lemma 5.1.1</a>. </p>
+<p>The bound for \(G_1\) follows from the Vitali covering lemma, <a href="overviewsection.html#Hardy-Littlewood">Proposition 2.0.6</a>. </p>
+<div class="lemma_thmwrapper theorem-style-plain" id="first-exception">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">5.2.1</span>
+    <span class="lemma_thmtitle">first exception</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="proptopropprop.html#first-exception">#</a>
+    
+    <a class="icon proof" href="proptopropprop.html#a0000000142"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="overviewsection.html#Hardy-Littlewood">Proposition 2.0.6</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/first_exception" class="lean_decl">first_exception</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    We have </p>
+<div class="equation" id="a0000000143">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \mu (G_1)\le 2^{-5}\mu (G)\,  . \end{equation}
+  </div>
+  <span class="equation_label">5.2.1</span>
+</p>
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000142">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Let </p>
+<div class="displaymath" id="a0000000144">
+  \[  K = 2^{2a+5}\frac{\mu (F)}{\mu (G)}\, .  \]
+</div>
+<p> For each \({\mathfrak p}\in {\mathfrak P}_{F,G}\) pick a \(r({\mathfrak p}){\gt}4D^{{\mathrm{s}}({\mathfrak p})}\) with </p>
+<div class="displaymath" id="a0000000145">
+  \[  {\mu (F\cap B({\mathrm{c}}({\mathfrak p}),r({\mathfrak p})))}\ge K{\mu (B({\mathrm{c}}({\mathfrak p}),r({\mathfrak p})))}\,  .  \]
+</div>
+<p> This ball exists by definition of \({\mathfrak P}_{F,G}\) and \(\operatorname{\operatorname {dens}}_2\). By applying <a href="overviewsection.html#Hardy-Littlewood">Proposition 2.0.6</a> to the collection of balls </p>
+<div class="displaymath" id="a0000000146">
+  \[  \mathcal{B} = \{ B({\mathrm{c}}({\mathfrak p}),r({\mathfrak p})) \  : \  {\mathfrak p}\in {\mathfrak P}_{F,G}\}   \]
+</div>
+<p> and the function \(u = \mathbf{1}_F\), we obtain </p>
+<div class="displaymath" id="a0000000147">
+  \[  \mu (\bigcup \mathcal{B}) \le 2^{2a} K^{-1} \mu (F)\, .  \]
+</div>
+<p> We conclude with <a href="overviewsection.html#eq-vol-sp-cube" class="eqref">2.0.10</a> and \(r({\mathfrak p}){\gt}4D^{{\mathrm{s}}({\mathfrak p})}\) </p>
+<div class="displaymath" id="a0000000148">
+  \[  \mu (G_1)= \mu (\bigcup _{{\mathfrak p}\in {\mathfrak P}_{F,G}} {\mathcal{I}}({\mathfrak p})) \le \mu (\bigcup \mathcal{B})\le 2^{2a} K^{-1} \mu (F) = 2^{-5}\mu (G)\, .  \]
+</div>
+
+  </div>
+</div>
+<p>We turn to the bound of \(G_2\), which relies on the Dyadic Covering <a href="proptopropprop.html#dense-cover">Lemma 5.2.2</a> and the John-Nirenberg <a href="proptopropprop.html#John-Nirenberg">Lemma 5.2.5</a> below. </p>
+<div class="lemma_thmwrapper theorem-style-plain" id="dense-cover">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">5.2.2</span>
+    <span class="lemma_thmtitle">dense cover</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="proptopropprop.html#dense-cover">#</a>
+    
+    <a class="icon proof" href="proptopropprop.html#a0000000149"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/dense_cover" class="lean_decl">dense_cover</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  
+<p>For each \(k\ge 0\), the union of all dyadic cubes in \(\mathcal{C}(G,k)\) has measure at most \(2^{k+1} \mu (G)\) . </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000149">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>The union of dyadic cubes in \(\mathcal{C}(G,k)\) is contained the union of elements of the set \(\mathcal{M}(k)\) of all dyadic cubes \(J\) with \({\mu (G \cap J)} {\gt} 2^{-k-1}{\mu (J)}\). The union of elements in the set \(\mathcal{M}(k)\) is contained in the union of elements in the set \(\mathcal{M}^*(k)\) of maximal elements in \(\mathcal{M}(k)\) with respect to set inclusion. Hence </p>
+<div class="equation" id="cbymstar">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{cbymstar} \mu (\bigcup \mathcal{C}(G,k))\le \mu (\bigcup \mathcal{M}^*(k))\le \sum _{J\in \mathcal{M}^*(k)}\mu (J) \end{equation}
+  </div>
+  <span class="equation_label">5.2.2</span>
+</p>
+</div>
+<p> Using the definition of \(\mathcal{M}(k)\) and then the pairwise disjointedness of elements in \(\mathcal{M}^*(k)\), we estimate <a href="proptopropprop.html#cbymstar" class="eqref">5.2.2</a> by </p>
+<div class="equation" id="a0000000150">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \le 2^{k+1}\sum _{J\in \mathcal{M}^*(k)}\mu (J\cap G) \le 2^{k+1}\mu (G). \end{equation}
+  </div>
+  <span class="equation_label">5.2.3</span>
+</p>
+</div>
+<p> This proves the lemma. </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="pairwise-disjoint">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">5.2.3</span>
+    <span class="lemma_thmtitle">pairwise disjoint</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="proptopropprop.html#pairwise-disjoint">#</a>
+    
+    <a class="icon proof" href="proptopropprop.html#a0000000151"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/pairwiseDisjoint_E1" class="lean_decl">pairwiseDisjoint_E1</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>   If \({\mathfrak p}, {\mathfrak p}' \in {\mathfrak {M}}(k,n)\) and </p>
+<div class="equation" id="eintersect">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{eintersect} {E_1}({\mathfrak p})\cap {E_1}({\mathfrak p}')\neq \emptyset , \end{equation}
+  </div>
+  <span class="equation_label">5.2.4</span>
+</p>
+</div>
+<p> then \({\mathfrak p}={\mathfrak p}'\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000151">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Let \({\mathfrak p},{\mathfrak p}'\) be as in the lemma. By definition of \(E_1\), we have \(E_1({\mathfrak p})\subset {\mathcal{I}}({\mathfrak p})\) and analogously for \({\mathfrak p}'\), we conclude from <a href="proptopropprop.html#eintersect" class="eqref">5.2.4</a> that \({\mathcal{I}}({\mathfrak p})\cap {\mathcal{I}}({\mathfrak p}')\neq \emptyset \). Let without loss of generality \({\mathcal{I}}({\mathfrak p})\) be maximal in \(\{ {\mathcal{I}}({\mathfrak p}),{\mathcal{I}}({\mathfrak p}')\} \), then \({\mathcal{I}}({\mathfrak p}')\subset {\mathcal{I}}({\mathfrak p})\). By <a href="proptopropprop.html#eintersect" class="eqref">5.2.4</a>, we conclude by definition of \(E_1\) that \({\Omega }({\mathfrak p})\cap {\Omega }({\mathfrak p}')\neq \emptyset \). By <a href="overviewsection.html#eq-freq-dyadic" class="eqref">2.0.14</a> we conclude \({\Omega }({\mathfrak p})\subset {\Omega }({\mathfrak p}')\). It follows that \({\mathfrak p}'\le {\mathfrak p}\). By maximality <a href="proptopropprop.html#mnkmax" class="eqref">5.1.5</a> of \({\mathfrak p}'\), we have \({\mathfrak p}'={\mathfrak p}\). This proves the lemma. </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="dyadic-union">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">5.2.4</span>
+    <span class="lemma_thmtitle">dyadic union</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="proptopropprop.html#dyadic-union">#</a>
+    
+    <a class="icon proof" href="proptopropprop.html#a0000000152"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/dyadic_union" class="lean_decl">dyadic_union</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>   For each \(x\in A(\lambda ,k,n)\), there is a dyadic cube \(I\) that contains \(x\) and is a subset of \(A(\lambda ,k,n)\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000152">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Fix \(k,n,\lambda ,x\) as in the lemma such that \(x\in A(\lambda ,k,n)\). Let \(\mathcal{M}\) be the set of dyadic cubes \({\mathcal{I}}({\mathfrak p})\) with \({\mathfrak p}\) in \(\mathfrak {M}(k,n)\) and \(x\in {\mathcal{I}}({\mathfrak p})\). By definition of \(A(\lambda ,k,n)\), the cardinality of \(\mathcal{M}\) is at least \(1+\lambda 2^{n+1}\). Let \(I\) be a cube of smallest scale in \(\mathcal{M}\). Then \(I\) is contained in all cubes of \(\mathcal{M}\). It follows that \(I\subset A(\lambda ,k,n)\). </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="John-Nirenberg">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">5.2.5</span>
+    <span class="lemma_thmtitle">John Nirenberg</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="proptopropprop.html#John-Nirenberg">#</a>
+    
+    <a class="icon proof" href="proptopropprop.html#a0000000153"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="proptopropprop.html#dense-cover">Lemma 5.2.2</a></li>
+          
+          <li><a href="proptopropprop.html#pairwise-disjoint">Lemma 5.2.3</a></li>
+          
+          <li><a href="proptopropprop.html#dyadic-union">Lemma 5.2.4</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/john_nirenberg" class="lean_decl">john_nirenberg</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    For all integers \(k,n,\lambda \ge 0\), we have </p>
+<div class="equation" id="alambdameasure">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{alambdameasure} \mu (A(\lambda ,k,n)) \le 2^{k+1-\lambda }\mu (G)\, . \end{equation}
+  </div>
+  <span class="equation_label">5.2.5</span>
+</p>
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000153">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Fix \(k,n\) as in the lemma and suppress notation to write \(A(\lambda )\) for \(A(\lambda ,k,n)\). We prove the lemma by induction on \(\lambda \). For \(\lambda =0\), we use that \(A(\lambda )\) by definition of \(\mathfrak {M}(k,n)\) is contained in the union of elements in \( \mathcal{C}(G,k)\). <a href="proptopropprop.html#dense-cover">Lemma 5.2.2</a> then completes the base of the induction. </p>
+<p>Now assume that the statement of <a href="proptopropprop.html#John-Nirenberg">Lemma 5.2.5</a> is proven for some integer \(\lambda \ge 0\). The set \(A(\lambda +1)\) is contained in the set \(A(\lambda )\). Let \(\mathcal{M}\) be the set of dyadic cubes which are a subset of \(A(\lambda )\). By <a href="proptopropprop.html#dyadic-union">Lemma 5.2.4</a>, the union of \(\mathcal{M}\) is \(A(\lambda )\). Let \(\mathcal{M}^*\) be the set of maximal dyadic cubes in \(\mathcal{M}\). </p>
+<p>Let \(x\in A(\lambda +1)\) and \(L\in \mathcal{M}^*\) such that \(x\in L\). Then by the dyadic property <a href="overviewsection.html#dyadicproperty" class="eqref">2.0.8</a> </p>
+<div class="equation" id="suminout">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{suminout} \sum _{{\mathfrak p}\in {\mathfrak {M}}(k,n)} \mathbf{1}_{{\mathcal{I}}({\mathfrak p})}(x) = \sum _{{\mathfrak p}\in {\mathfrak {M}}(k,n):{\mathcal{I}}({\mathfrak p}) \subset L} \mathbf{1}_{{\mathcal{I}}({\mathfrak p})}(x) + \sum _{{\mathfrak p}\in {\mathfrak {M}}(k,n):L \subsetneq {\mathcal{I}}({\mathfrak p})} \mathbf{1}_{{\mathcal{I}}({\mathfrak p})}(x)\, . \end{equation}
+  </div>
+  <span class="equation_label">5.2.6</span>
+</p>
+</div>
+<p> We now show </p>
+<div class="equation" id="mnkonl">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{mnkonl} \sum _{{\mathfrak p}\in {\mathfrak {M}}(k,n):{\mathcal{I}}({\mathfrak p}) \subset L} \mathbf{1}_{{\mathcal{I}}({\mathfrak p})}(x)\ge 2^{n+1}\, . \end{equation}
+  </div>
+  <span class="equation_label">5.2.7</span>
+</p>
+</div>
+<p> The left-hand side of <a href="proptopropprop.html#suminout" class="eqref">5.2.6</a> is strictly greater than \((\lambda +1)2^{n+1}\). If \(L\) is the top cube the second sum \(Q_2\) on the right-hand side of <a href="proptopropprop.html#suminout" class="eqref">5.2.6</a> is zero and <a href="proptopropprop.html#mnkonl" class="eqref">5.2.7</a> follows immediately. Otherwise consider the inclusion-minimal cube \(\hat{L}\) with \(L\subsetneq \hat{L}\); all tiles \({\mathfrak p}\) over which \(Q_2\) is summed over satisfy \(\hat{L}\subset {\mathfrak p}\), so \(Q_2\) is constant for all \(x\in \hat{L}\). By maximality of \(L\), \(Q_2\) is at most \(\lambda 2^{n+1}\) somewhere on \(\hat{L}\), thus on all of \(\hat{L}\) and consequently also at \(x\). Rearranging the inequality yields <a href="proptopropprop.html#mnkonl" class="eqref">5.2.7</a>. </p>
+<p>By <a href="proptopropprop.html#pairwise-disjoint">Lemma 5.2.3</a>, we have </p>
+<div class="equation" id="a0000000154">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \sum _{{\mathfrak p}\in {\mathfrak {M}}(k,n):{\mathcal{I}}({\mathfrak p}) \subset L} \mu ({E_1}({\mathfrak p})) \leq \mu (L)\,  . \end{equation}
+  </div>
+  <span class="equation_label">5.2.8</span>
+</p>
+</div>
+<p> Multiplying by \(2^n\) and applying <a href="proptopropprop.html#ebardense" class="eqref">5.1.4</a>, we obtain </p>
+<div class="equation" id="mnkintl">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{mnkintl} \sum _{{\mathfrak p}\in {\mathfrak {M}}(k,n):{\mathcal{I}}({\mathfrak p}) \subset L} \mu ({\mathcal{I}}({\mathfrak p})) \leq 2^n \mu (L)\,  . \end{equation}
+  </div>
+  <span class="equation_label">5.2.9</span>
+</p>
+</div>
+<p> We then have with <a href="proptopropprop.html#mnkonl" class="eqref">5.2.7</a> and <a href="proptopropprop.html#mnkintl" class="eqref">5.2.9</a> </p>
+<div class="equation" id="a0000000155">
+<p>
+  <div class="equation_content">
+    \begin{equation}  2^{n+1}\mu (A(\lambda +1)\cap L) = \int _{A(\lambda +1)\cap L} 2^{n+1} d\mu \end{equation}
+  </div>
+  <span class="equation_label">5.2.10</span>
+</p>
+</div>
+<div class="equation" id="a0000000156">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \le \int \sum _{{\mathfrak p}\in {\mathfrak {M}}(k,n):{\mathcal{I}}({\mathfrak p}) \subset L} \mathbf{1}_{{\mathcal{I}}({\mathfrak p})} d\mu \le 2^n \mu (L)\,  . \end{equation}
+  </div>
+  <span class="equation_label">5.2.11</span>
+</p>
+</div>
+<p> Hence </p>
+<div class="equation" id="a0000000157">
+<p>
+  <div class="equation_content">
+    \begin{equation}  2\mu (A(\lambda +1))=2\sum _{L\in \mathcal{M}^*} \mu (A(\lambda +1)\cap L)\le \sum _{L\in \mathcal{M}^*}\mu ( L)= \mu (A(\lambda ))\,  . \end{equation}
+  </div>
+  <span class="equation_label">5.2.12</span>
+</p>
+</div>
+<p> Using the induction hypothesis, this proves <a href="proptopropprop.html#alambdameasure" class="eqref">5.2.5</a> for \(\lambda +1\) and completes the proof of the lemma. </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="second-exception">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">5.2.6</span>
+    <span class="lemma_thmtitle">second exception</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="proptopropprop.html#second-exception">#</a>
+    
+    <a class="icon proof" href="proptopropprop.html#a0000000158"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="proptopropprop.html#John-Nirenberg">Lemma 5.2.5</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/second_exception" class="lean_decl">second_exception</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    We have </p>
+<div class="equation" id="a0000000159">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \mu (G_2)\le 2^{-2} \mu (G)\,  . \end{equation}
+  </div>
+  <span class="equation_label">5.2.13</span>
+</p>
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000158">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>We use <a href="proptopropprop.html#John-Nirenberg">Lemma 5.2.5</a> and sum twice a geometric series to obtain </p>
+<div class="equation" id="a0000000160">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \sum _{0\le k}\sum _{k\le n} \mu (A(2n+6,k,n))\le \sum _{0\le k}\sum _{k\le n} 2^{k-5-2n}\mu (G) \end{equation}
+  </div>
+  <span class="equation_label">5.2.14</span>
+</p>
+</div>
+<div class="equation" id="a0000000161">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \le \sum _{0\le k} 2^{-k-3}\mu (G)\le 2^{-2}\mu (G)\,  . \end{equation}
+  </div>
+  <span class="equation_label">5.2.15</span>
+</p>
+</div>
+<p> This proves the lemma. </p>
+
+  </div>
+</div>
+<p>We turn to the set \(G_3\). </p>
+<div class="lemma_thmwrapper theorem-style-plain" id="top-tiles">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">5.2.7</span>
+    <span class="lemma_thmtitle">top tiles</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="proptopropprop.html#top-tiles">#</a>
+    
+    <a class="icon proof" href="proptopropprop.html#a0000000162"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="proptopropprop.html#John-Nirenberg">Lemma 5.2.5</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/top_tiles" class="lean_decl">top_tiles</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    We have </p>
+<div class="equation" id="eq-musum">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{eq-musum} \sum _{\mathfrak {m} \in \mathfrak {M}(k,n)} \mu ({\mathcal{I}}(\mathfrak {m}))\le 2^{n+k+3}\mu (G). \end{equation}
+  </div>
+  <span class="equation_label">5.2.16</span>
+</p>
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000162">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>We write the left-hand side of <a href="proptopropprop.html#eq-musum" class="eqref">5.2.16</a> </p>
+<div class="equation" id="a0000000163">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \int \sum _{\mathfrak {m} \in \mathfrak {M}(k,n)} \mathbf{1}_{{\mathcal{I}}(\mathfrak {m})}(x) \,  d\mu (x) \le 2^{n+1} \sum _{\lambda =0}^{|\mathfrak {M}|}\mu (A(\lambda , k,n))\, . \end{equation}
+  </div>
+  <span class="equation_label">5.2.17</span>
+</p>
+</div>
+<p> Using <a href="proptopropprop.html#John-Nirenberg">Lemma 5.2.5</a> and then summing a geometric series, we estimate this by </p>
+<div class="equation" id="a0000000164">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \le 2^{n+1}\sum _{\lambda =0}^{|\mathfrak {M}|} 2^{k+1-\lambda }\mu (G) \le 2^{n+1}2^{k+2}\mu (G)\,  . \end{equation}
+  </div>
+  <span class="equation_label">5.2.18</span>
+</p>
+</div>
+<p> This proves the lemma. </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="tree-count">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">5.2.8</span>
+    <span class="lemma_thmtitle">tree count</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="proptopropprop.html#tree-count">#</a>
+    
+    <a class="icon proof" href="proptopropprop.html#a0000000165"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/tree_count" class="lean_decl">tree_count</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>   Let \(k,n,j\ge 0\). We have for every \(x\in X\) </p>
+<div class="equation" id="a0000000166">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \sum _{{\mathfrak u}\in {\mathfrak U}_1(k,n,j)} \mathbf{1}_{{\mathcal{I}}({\mathfrak u})}(x) \le 2^{-j} 2^{9a} \sum _{\mathfrak {m}\in \mathfrak {M}(k,n)} \mathbf{1}_{{\mathcal{I}}(\mathfrak {m})}(x) \end{equation}
+  </div>
+  <span class="equation_label">5.2.19</span>
+</p>
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000165">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Let \(x\in X\). For each \({\mathfrak u}\in {\mathfrak U}_1(k,n,j)\) with \(x\in {\mathcal{I}}({\mathfrak u})\), as \({\mathfrak u}\in {\mathfrak C}_1(k,n,j)\), there are at least \(2^{j}\) elements \(\mathfrak {m}\in \mathfrak {M}(k,n)\) with \(100{\mathfrak u}\lesssim \mathfrak {m}\) and in particular \(x\in {\mathcal{I}}(\mathfrak {m})\). Hence </p>
+<div class="equation" id="ubymsum">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{ubymsum} \mathbf{1}_{{\mathcal{I}}({\mathfrak u})}(x) \le 2^{-j}\sum _{\mathfrak {m} \in \mathfrak {M}(k,n): 100{\mathfrak u}\lesssim \mathfrak {m}} \mathbf{1}_{{\mathcal{I}}(\mathfrak {m})}(x)\,  . \end{equation}
+  </div>
+  <span class="equation_label">5.2.20</span>
+</p>
+</div>
+<p> Conversely, for each \(\mathfrak {m}\in \mathfrak {M}(k,n)\) with \(x\in {\mathcal{I}}(\mathfrak {m})\), let \({\mathfrak U}(\mathfrak {m})\) be the set of \({\mathfrak u}\in {\mathfrak U}_1(k,n,j)\) with \(x\in {\mathcal{I}}({\mathfrak u})\) and \(100{\mathfrak u}\lesssim \mathfrak {m}\). Summing <a href="proptopropprop.html#ubymsum" class="eqref">5.2.20</a> over \({\mathfrak u}\) and counting the pairs \(({\mathfrak u},\mathfrak {m})\) with \(100{\mathfrak u}\lesssim \mathfrak {m}\) differently gives </p>
+<div class="equation" id="usumbymsum">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{usumbymsum} \sum _{{\mathfrak u}\in {\mathfrak U}_1(k,n,j)} \mathbf{1}_{{\mathcal{I}}({\mathfrak u})}(x) \le 2^{-j}\sum _{\mathfrak {m} \in \mathfrak {M}(k,n)} \sum _{{\mathfrak u}\in {\mathfrak U}(\mathfrak {m})} \mathbf{1}_{{\mathcal{I}}(\mathfrak {m})}(x)\,  . \end{equation}
+  </div>
+  <span class="equation_label">5.2.21</span>
+</p>
+</div>
+<p> We estimate the number of elements in \({\mathfrak U}(\mathfrak {m})\). Let \({\mathfrak u}\in {\mathfrak U}(\mathfrak {m})\). Then by definition of \({\mathfrak U}(\mathfrak {m})\) </p>
+<div class="equation" id="dby2">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{dby2} d_{{\mathfrak u}}({\mathcal{Q}}({\mathfrak u}),{\mathcal{Q}}(\mathfrak {m}))\le 100\,  . \end{equation}
+  </div>
+  <span class="equation_label">5.2.22</span>
+</p>
+</div>
+<p> If \({\mathfrak u}'\) is a further element in \({\mathfrak U}(\mathfrak {m})\) with \({\mathfrak u}\neq {\mathfrak u}'\), then </p>
+<div class="equation" id="a0000000167">
+<p>
+  <div class="equation_content">
+    \begin{equation}  {\mathcal{Q}}(\mathfrak {m}) \in B_{{\mathfrak u}}({\mathcal{Q}}({\mathfrak u}),100)\cap B_{{\mathfrak u}'}({\mathcal{Q}}({\mathfrak u}'),100)\  . \end{equation}
+  </div>
+  <span class="equation_label">5.2.23</span>
+</p>
+</div>
+<p> By the last display and definition of \({\mathfrak U}_1(k,n,j)\), none of \({\mathcal{I}}({\mathfrak u})\), \({\mathcal{I}}({\mathfrak u}')\) is strictly contained in the other. As both contain \(x\), we have \({\mathcal{I}}({\mathfrak u})={\mathcal{I}}({\mathfrak u}')\). We then have \(d_{{\mathfrak u}}=d_{{\mathfrak u}'}\). </p>
+<p>By <a href="overviewsection.html#eq-freq-comp-ball" class="eqref">2.0.15</a>, the balls \(B_{{\mathfrak u}}({\mathcal{Q}}({\mathfrak u}),0.2)\) and \(B_{{\mathfrak u}}({\mathcal{Q}}({\mathfrak u}'),0.2)\) are contained respectively in \({\Omega }({\mathfrak u})\) and \({\Omega }({\mathfrak u}')\) and thus are disjoint by <a href="overviewsection.html#eq-dis-freq-cover" class="eqref">2.0.13</a>. By <a href="proptopropprop.html#dby2" class="eqref">5.2.22</a> and the triangle inequality, both balls are contained in \(B_{{\mathfrak u}}({\mathcal{Q}}(\mathfrak {m}), 100.2)\). </p>
+<p>By <a href="sect0001.html#thirddb" class="eqref">1.1.8</a> applied nine times, there is a collection of at most \(2^{9a}\) balls of radius \(0.2\) with respect to the metric \(d_{{\mathfrak u}}\) which cover the ball \(B_{{\mathfrak u}}({\mathcal{Q}}(\mathfrak {m}),100.2)\). Let \(B'\) be a ball in this cover. As the center of \(B'\) can be in at most one of the disjoint balls \(B_{{\mathfrak u}}({\mathcal{Q}}({\mathfrak u}),0.2)\) and \(B_{{\mathfrak u}}({\mathcal{Q}}({\mathfrak u}'),0.2)\), the ball \(B'\) can contain at most one of the points \({\mathcal{Q}}({\mathfrak u})\), \({\mathcal{Q}}({\mathfrak u}')\). </p>
+<p>Hence the image of \({\mathfrak U}(\mathfrak {m})\) under \({\mathcal{Q}}\) has at most \(2^{9a}\) elements; since \({\mathcal{Q}}\) is injective on \({\mathfrak U}(\mathfrak {m})\), the same is true of \({\mathfrak U}(\mathfrak {m})\). Inserting this into <a href="proptopropprop.html#usumbymsum" class="eqref">5.2.21</a> proves the lemma. </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="boundary-exception">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">5.2.9</span>
+    <span class="lemma_thmtitle">boundary exception</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="proptopropprop.html#boundary-exception">#</a>
+    
+    <a class="icon proof" href="proptopropprop.html#a0000000168"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/boundary_exception" class="lean_decl">boundary_exception</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  
+<p>Let \(\mathcal{L}({\mathfrak u})\) be as defined in <a href="proptopropprop.html#eq-L-def" class="eqref">5.1.20</a>. We have for each \({\mathfrak u}\in {\mathfrak U}_1(k,n,l)\), </p>
+<div class="equation" id="a0000000169">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \mu (\bigcup _{I\in \mathcal{L}({\mathfrak u})} I) \le D^{1-\kappa Z(n+1)} \mu ({\mathcal{I}}(\mathfrak {u})). \end{equation}
+  </div>
+  <span class="equation_label">5.2.24</span>
+</p>
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000168">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Let \({\mathfrak u}\in {\mathfrak U}_1(k,n,l)\). Let \(I \in \mathcal{L}({\mathfrak u})\). Then we have \(s(I) = {\mathrm{s}}({\mathfrak u}) - Z(n+1) - 1\) and \(I \subset {\mathcal{I}}({\mathfrak u})\) and \(B(c(I), 8D^{s(I)}) \not\subset {\mathcal{I}}({\mathfrak u})\). By <a href="overviewsection.html#eq-vol-sp-cube" class="eqref">2.0.10</a>, the set \(I\) is contained in \(B(c(I), 4D^{s(I)})\). By the triangle inequality, the set \(I\) is contained in </p>
+<div class="equation" id="a0000000170">
+<p>
+  <div class="equation_content">
+    \begin{equation}  X({\mathfrak u}):=\{ x \in {\mathcal{I}}({\mathfrak u}) \,  : \,  \rho (x, X \setminus {\mathcal{I}}({\mathfrak u})) \leq 12 D^{{\mathrm{s}}({\mathfrak u}) - Z(n+1)-1}\} \, . \end{equation}
+  </div>
+  <span class="equation_label">5.2.25</span>
+</p>
+</div>
+<p> By the small boundary property <a href="overviewsection.html#eq-small-boundary" class="eqref">2.0.11</a>, noting that </p>
+<div class="displaymath" id="a0000000171">
+  \begin{equation*}  12D^{{\mathrm{s}}({\mathfrak u}) - Z(n+1) - 1} = 12D^{s(I)} {\gt} D^{-S}\  , \end{equation*}
+</div>
+<p> we have </p>
+<div class="displaymath" id="a0000000172">
+  \[  \mu (X({\mathfrak u})) \le 2\cdot (12 D^{-Z(n+1)-1})^\kappa \mu ({\mathcal{I}}(\mathfrak {u})).  \]
+</div>
+<p> Using \(\kappa {\lt}1\) and \(D \ge 12\), this proves the lemma. </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="third-exception">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">5.2.10</span>
+    <span class="lemma_thmtitle">third exception</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="proptopropprop.html#third-exception">#</a>
+    
+    <a class="icon proof" href="proptopropprop.html#a0000000173"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="proptopropprop.html#tree-count">Lemma 5.2.8</a></li>
+          
+          <li><a href="proptopropprop.html#boundary-exception">Lemma 5.2.9</a></li>
+          
+          <li><a href="proptopropprop.html#top-tiles">Lemma 5.2.7</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/third_exception" class="lean_decl">third_exception</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    We have </p>
+<div class="equation" id="a0000000174">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \mu (G_3)\le 2^{-4} \mu (G)\,  . \end{equation}
+  </div>
+  <span class="equation_label">5.2.26</span>
+</p>
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000173">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>As each \({\mathfrak p}\in {\mathfrak L}_4(k,n,j)\) is contained in \(\cup \mathcal{L}({\mathfrak u})\) for some \({\mathfrak u}\in {\mathfrak U}_1(k,n,l)\), we have </p>
+<div class="equation" id="a0000000175">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \mu (\bigcup _{{\mathfrak p}\in {\mathfrak L}_4 (k,n,j)}{\mathcal{I}}({\mathfrak p})) \le \sum _{{\mathfrak u}\in {\mathfrak U}_1(k,n,j)} \mu (\bigcup _{I \in \mathcal{L} ({\mathfrak u})}I). \end{equation}
+  </div>
+  <span class="equation_label">5.2.27</span>
+</p>
+</div>
+<p> Using <a href="proptopropprop.html#boundary-exception">Lemma 5.2.9</a> and then <a href="proptopropprop.html#tree-count">Lemma 5.2.8</a>, we estimate this further by </p>
+<div class="equation" id="a0000000176">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \le \sum _{{\mathfrak u}\in {\mathfrak U}_1(k,n,j)} D^{1-\kappa Z(n+1)} \mu ({\mathcal{I}}(\mathfrak {u})) \end{equation}
+  </div>
+  <span class="equation_label">5.2.28</span>
+</p>
+</div>
+<div class="equation" id="a0000000177">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \le 2^{100a^2+9a+1-j} \sum _{\mathfrak {m}\in \mathfrak {M}(k,n)} D^{-\kappa Z(n+1)} \mu ({\mathcal{I}}(\mathfrak {m}))\, . \end{equation}
+  </div>
+  <span class="equation_label">5.2.29</span>
+</p>
+</div>
+<p> Using <a href="proptopropprop.html#top-tiles">Lemma 5.2.7</a>, we estimate this by </p>
+<div class="equation" id="a0000000178">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \le 2^{100a^2 + 9a + 1-j} D^{-\kappa Z(n+1)} 2^{n+k+3}\mu (G)\,  . \end{equation}
+  </div>
+  <span class="equation_label">5.2.30</span>
+</p>
+</div>
+<p> Now we estimate \(G_3\) defined in <a href="proptopropprop.html#defineg3" class="eqref">5.1.28</a> by </p>
+<div class="equation" id="a0000000179">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \mu (G_3)\le \sum _{k\ge 0}\,  \sum _{n \geq k}\,  \sum _{0\le j\le 2n+3} \mu (\bigcup _{{\mathfrak p}\in {\mathfrak L}_4 (k,n,j)} {\mathcal{I}}({\mathfrak p})) \end{equation}
+  </div>
+  <span class="equation_label">5.2.31</span>
+</p>
+</div>
+<div class="equation" id="a0000000180">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \le \sum _{k\ge 0}\,  \sum _{n \geq k}\,  \sum _{0\le j\le 2n+3} 2^{100a^2 + 9a + 3 + n + k -j} D^{-\kappa Z(n+1)}\mu (G) \end{equation}
+  </div>
+  <span class="equation_label">5.2.32</span>
+</p>
+</div>
+<p> Summing geometric series, using that \(D^{\kappa Z}\ge 8\) by <a href="overviewsection.html#defineD" class="eqref">2.0.1</a>, <a href="overviewsection.html#definekappa" class="eqref">2.0.2</a> and <a href="overviewsection.html#defineZ" class="eqref">2.0.3</a>, we estimate this by </p>
+<div class="equation" id="a0000000181">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \le \sum _{k\ge 0}\,  \sum _{n \geq k}\,  2^{100a^2 + 9a + 4 + n + k} D^{-\kappa Z(n+1)}\mu (G) \end{equation}
+  </div>
+  <span class="equation_label">5.2.33</span>
+</p>
+</div>
+<div class="equation" id="a0000000182">
+<p>
+  <div class="equation_content">
+    \begin{equation}  = \sum _{k\ge 0} 2^{100a^2 + 9a + 4 + 2k} D^{-\kappa Z(k+1)} \sum _{n \geq k}\,  2^{n - k} D^{-\kappa Z(n-k)}\mu (G) \end{equation}
+  </div>
+  <span class="equation_label">5.2.34</span>
+</p>
+</div>
+<div class="equation" id="a0000000183">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \le \sum _{k\ge 0} 2^{100a^2 + 9a + 5 + 2k} D^{-\kappa Z(k+1)}\mu (G) \end{equation}
+  </div>
+  <span class="equation_label">5.2.35</span>
+</p>
+</div>
+<div class="equation" id="a0000000184">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \le 2^{100a^2 + 9a + 6} D^{-\kappa Z}\mu (G) \end{equation}
+  </div>
+  <span class="equation_label">5.2.36</span>
+</p>
+</div>
+<p> Using \(D = 2^{100a^2}\) and \(a \ge 4\) and \(\kappa Z \ge 2\) by <a href="overviewsection.html#defineD" class="eqref">2.0.1</a> and <a href="overviewsection.html#definekappa" class="eqref">2.0.2</a> proves the lemma. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000136">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof of <a href="proptopropprop.html#exceptional-set">Lemma 5.1.1</a>
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>  Adding up the bounds in Lemmas <a href="proptopropprop.html#first-exception">5.2.1</a>, <a href="proptopropprop.html#second-exception">5.2.6</a>, and <a href="proptopropprop.html#third-exception">5.2.10</a> proves <a href="proptopropprop.html#exceptional-set">Lemma 5.1.1</a>. </p>
+
+  </div>
+</div>
+<h2 id="subsec-lessim-aux">5.3 Auxiliary lemmas</h2>
+<p>  Before proving <a href="proptopropprop.html#forest-union">Lemma 5.1.2</a> and <a href="proptopropprop.html#forest-complement">Lemma 5.1.3</a>, we collect some useful properties of \(\lesssim \). </p>
+<div class="lemma_thmwrapper theorem-style-plain" id="wiggle-order-1">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">5.3.1</span>
+    <span class="lemma_thmtitle">wiggle order 1</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="proptopropprop.html#wiggle-order-1">#</a>
+    
+    <a class="icon proof" href="proptopropprop.html#a0000000185"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/smul_mono" class="lean_decl">smul_mono</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>   If \(n{\mathfrak p}\lesssim m{\mathfrak p}'\) and \(n' \ge n\) and \(m \ge m'\) then \(n'{\mathfrak p}\lesssim m'{\mathfrak p}'\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000185">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>This follows immediately from the definition <a href="overviewsection.html#wiggleorder" class="eqref">2.0.24</a> of \(\lesssim \) and the two inclusions \(B_{{\mathfrak p}}({\mathcal{Q}}({\mathfrak p}), n) \subset B_{{\mathfrak p}}({\mathcal{Q}}({\mathfrak p}), n')\) and \(B_{{\mathfrak p}'}({\mathcal{Q}}({\mathfrak p}'), m') \subset B_{{\mathfrak p}'}({\mathcal{Q}}({\mathfrak p}'), m)\). </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="wiggle-order-2">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">5.3.2</span>
+    <span class="lemma_thmtitle">wiggle order 2</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="proptopropprop.html#wiggle-order-2">#</a>
+    
+    <a class="icon proof" href="proptopropprop.html#a0000000186"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="overviewsection.html#monotone-cube-metrics">Lemma 2.1.2</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/smul_C2_1_2" class="lean_decl">smul_C2_1_2</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  
+<p>Let \(n, m \ge 1\) and \(k {\gt} 0\). If \({\mathfrak p}, {\mathfrak p}' \in {\mathfrak P}\) with \({\mathcal{I}}({\mathfrak p}) \ne {\mathcal{I}}({\mathfrak p}')\) and </p>
+<div class="equation" id="eq-wiggle1">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-wiggle1} n {\mathfrak p}\lesssim k {\mathfrak p}' \end{equation}
+  </div>
+  <span class="equation_label">5.3.1</span>
+</p>
+</div>
+<p> then </p>
+<div class="equation" id="eq-wiggle2">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-wiggle2} (n + 2^{-95 a} m) {\mathfrak p}\lesssim m{\mathfrak p}'\, . \end{equation}
+  </div>
+  <span class="equation_label">5.3.2</span>
+</p>
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000186">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>The assumption <a href="proptopropprop.html#eq-wiggle1" class="eqref">5.3.1</a> together with the definition <a href="overviewsection.html#wiggleorder" class="eqref">2.0.24</a> of \(\lesssim \) implies that \({\mathcal{I}}({\mathfrak p}) \subsetneq {\mathcal{I}}({\mathfrak p}')\). Let \({\vartheta }\in B_{{\mathfrak p}'}({\mathcal{Q}}({\mathfrak p}'), m)\). Then we have by the triangle inequality </p>
+<div class="displaymath" id="a0000000187">
+  \[  d_{{\mathfrak p}}({\mathcal{Q}}({\mathfrak p}), {\vartheta }) \le d_{{\mathfrak p}}({\mathcal{Q}}({\mathfrak p}), {\mathcal{Q}}({\mathfrak p}')) + d_{{\mathfrak p}}({\mathcal{Q}}({\mathfrak p}'), {\vartheta })  \]
+</div>
+<p> The first summand is bounded by \(n\) since </p>
+<div class="displaymath" id="a0000000188">
+  \[  {\mathcal{Q}}({\mathfrak p}') \in B_{{\mathfrak p}'}({\mathcal{Q}}({\mathfrak p}'), k) \subset B_{{\mathfrak p}}({\mathcal{Q}}({\mathfrak p}), n),  \]
+</div>
+<p> using <a href="overviewsection.html#wiggleorder" class="eqref">2.0.24</a>. For the second summand we use <a href="overviewsection.html#monotone-cube-metrics">Lemma 2.1.2</a> to show that the sum is estimated by </p>
+<div class="displaymath" id="a0000000189">
+  \[  n + 2^{-95a} d_{{\mathfrak p}'}({\mathcal{Q}}({\mathfrak p}'), {\vartheta }) {\lt} n + 2^{-95a} m\, .  \]
+</div>
+<p> Thus \(B_{{\mathfrak p}'}({\mathcal{Q}}({\mathfrak p}'),m) \subset B_{{\mathfrak p}}({\mathcal{Q}}({\mathfrak p}),n + 2^{-95a}m)\). Combined with \({\mathcal{I}}({\mathfrak p}) \subset {\mathcal{I}}({\mathfrak p}')\), this yields <a href="proptopropprop.html#eq-wiggle2" class="eqref">5.3.2</a>. </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="wiggle-order-3">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">5.3.3</span>
+    <span class="lemma_thmtitle">wiggle order 3</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="proptopropprop.html#wiggle-order-3">#</a>
+    
+    <a class="icon proof" href="proptopropprop.html#a0000000190"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="proptopropprop.html#wiggle-order-1">Lemma 5.3.1</a></li>
+          
+          <li><a href="proptopropprop.html#wiggle-order-2">Lemma 5.3.2</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/wiggle_order_11_10" class="lean_decl">wiggle_order_11_10</a></li>
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/wiggle_order_100" class="lean_decl">wiggle_order_100</a></li>
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/wiggle_order_500" class="lean_decl">wiggle_order_500</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    The following implications hold for all \({\mathfrak q}, {\mathfrak q}' \in {\mathfrak P}\): </p>
+<div class="equation" id="eq-sc1">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-sc1} {\mathfrak q}\le {\mathfrak q}' \  \text{and} \  \lambda \ge 1.1 \implies \lambda {\mathfrak q}\lesssim \lambda {\mathfrak q}'\, , \end{equation}
+  </div>
+  <span class="equation_label">5.3.3</span>
+</p>
+</div>
+<div class="equation" id="eq-sc2">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-sc2} 10{\mathfrak q}\lesssim {\mathfrak q}' \  \text{and} \  {\mathcal{I}}({\mathfrak q}) \ne {\mathcal{I}}({\mathfrak q}') \implies 100 {\mathfrak q}\lesssim 100 {\mathfrak q}'\, , \end{equation}
+  </div>
+  <span class="equation_label">5.3.4</span>
+</p>
+</div>
+<div class="equation" id="eq-sc3">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-sc3} 2{\mathfrak q}\lesssim {\mathfrak q}' \  \text{and} \  {\mathcal{I}}({\mathfrak q}) \ne {\mathcal{I}}({\mathfrak q}') \implies 4 {\mathfrak q}\lesssim 500 {\mathfrak q}'\, . \end{equation}
+  </div>
+  <span class="equation_label">5.3.5</span>
+</p>
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000190">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p><a href="proptopropprop.html#eq-sc2" class="eqref">5.3.4</a> and <a href="proptopropprop.html#eq-sc3" class="eqref">5.3.5</a> are easy consequences of <a href="proptopropprop.html#wiggle-order-1">Lemma 5.3.1</a>, <a href="proptopropprop.html#wiggle-order-2">Lemma 5.3.2</a> and the fact that \(a \ge 4\). For <a href="proptopropprop.html#eq-sc1" class="eqref">5.3.3</a>, if \({\mathcal{I}}({\mathfrak q}) = {\mathcal{I}}({\mathfrak q}')\) then we get \({\mathfrak q}= {\mathfrak q}'\) by <a href="overviewsection.html#eq-dis-freq-cover" class="eqref">2.0.13</a> and <a href="overviewsection.html#straightorder" class="eqref">2.0.23</a>. If \({\mathcal{I}}({\mathfrak q}) \ne {\mathcal{I}}({\mathfrak q}')\), then from <a href="overviewsection.html#straightorder" class="eqref">2.0.23</a>, <a href="overviewsection.html#wiggleorder" class="eqref">2.0.24</a> and <a href="overviewsection.html#eq-freq-comp-ball" class="eqref">2.0.15</a> it follows that \({\mathfrak q}\lesssim 0.2{\mathfrak q}'\), and <a href="proptopropprop.html#eq-sc1" class="eqref">5.3.3</a> follows from an easy calculation using <a href="proptopropprop.html#wiggle-order-2">Lemma 5.3.2</a>. </p>
+
+  </div>
+</div>
+<p>We call a collection \(\mathfrak {A}\) of tiles convex if </p>
+<div class="equation" id="eq-convexity">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-convexity} {\mathfrak p}\le {\mathfrak p}' \le {\mathfrak p}'' \  \text{and} \  {\mathfrak p}, {\mathfrak p}'' \in \mathfrak {A} \implies {\mathfrak p}' \in \mathfrak {A}\, . \end{equation}
+  </div>
+  <span class="equation_label">5.3.6</span>
+</p>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="P-convex">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">5.3.4</span>
+    <span class="lemma_thmtitle">P convex</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="proptopropprop.html#P-convex">#</a>
+    
+    <a class="icon proof" href="proptopropprop.html#a0000000191"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/ordConnected_tilesAt" class="lean_decl">ordConnected_tilesAt</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  
+<p>For each \(k\), the collection \({\mathfrak P}(k)\) is convex. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000191">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Suppose that \({\mathfrak p}\le {\mathfrak p}' \le {\mathfrak p}''\) and \({\mathfrak p}, {\mathfrak p}'' \in {\mathfrak P}(k)\). By <a href="proptopropprop.html#eq-defPk" class="eqref">5.1.3</a> we have \({\mathcal{I}}({\mathfrak p}), {\mathcal{I}}({\mathfrak p}'') \in \mathcal{C}(G,k)\), so there exists by <a href="proptopropprop.html#muhj1" class="eqref">5.1.1</a> some \(J \in \mathcal{D}\) with </p>
+<div class="displaymath" id="a0000000192">
+  \[  {\mathcal{I}}({\mathfrak p}') \subset {\mathcal{I}}({\mathfrak p}'') \subset J  \]
+</div>
+<p> and \(\mu (G \cap J) {\gt} 2^{-k-1} \mu (J)\). Thus <a href="proptopropprop.html#muhj1" class="eqref">5.1.1</a> holds for \({\mathcal{I}}({\mathfrak p}')\). On the other hand, by <a href="proptopropprop.html#muhj2" class="eqref">5.1.2</a>, there exists no \(J \in \mathcal{D}\) with \({\mathcal{I}}({\mathfrak p}) \subset J\) and \(\mu (G \cap J) {\gt} 2^{-k} \mu (J)\). Since \({\mathcal{I}}({\mathfrak p}) \subset {\mathcal{I}}({\mathfrak p}')\), this implies that <a href="proptopropprop.html#muhj2" class="eqref">5.1.2</a> holds for \({\mathcal{I}}({\mathfrak p}')\). Hence \({\mathcal{I}}({\mathfrak p}') \in \mathcal{C}(G,k)\), and therefore by <a href="proptopropprop.html#eq-defPk" class="eqref">5.1.3</a> \({\mathfrak p}' \in {\mathfrak P}(k)\). </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="C-convex">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">5.3.5</span>
+    <span class="lemma_thmtitle">C convex</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="proptopropprop.html#C-convex">#</a>
+    
+    <a class="icon proof" href="proptopropprop.html#a0000000193"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="proptopropprop.html#P-convex">Lemma 5.3.4</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/ordConnected_C" class="lean_decl">ordConnected_C</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    For each \(k,n\), the collection \({\mathfrak C}(k,n)\) is convex. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000193">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Let \({\mathfrak p}\le {\mathfrak p}' \le {\mathfrak p}''\) with \({\mathfrak p}, {\mathfrak p}'' \in {\mathfrak C}(k,n)\). Then, in particular, \({\mathfrak p}, {\mathfrak p}'' \in {\mathfrak P}(k)\), so, by <a href="proptopropprop.html#P-convex">Lemma 5.3.4</a>, \({\mathfrak p}' \in {\mathfrak P}(k)\). Next, we show that if \({\mathfrak q}\le {\mathfrak q}' \in {\mathfrak P}(k)\) then \(\operatorname{\operatorname {dens}}'_k(\{ {\mathfrak q}\} ) \ge \operatorname{\operatorname {dens}}_k'(\{ {\mathfrak q}'\} )\). If \({\mathfrak p}\in {\mathfrak P}(k)\) and \(\lambda \ge 2\) with \(\lambda {\mathfrak q}' \lesssim \lambda {\mathfrak p}\), then it follows from \({\mathfrak q}\le {\mathfrak q}'\), <a href="proptopropprop.html#eq-sc1" class="eqref">5.3.3</a> of <a href="proptopropprop.html#wiggle-order-3">Lemma 5.3.3</a> and transitivity of \(\lesssim \) that \(\lambda {\mathfrak q}\lesssim \lambda {\mathfrak p}\). Thus the supremum in the definition <a href="proptopropprop.html#eq-densdef" class="eqref">5.1.6</a> of \(\operatorname{\operatorname {dens}}_k'(\{ {\mathfrak q}\} )\) is over a superset of the set the supremum in the definition of \(\operatorname{\operatorname {dens}}_k'(\{ {\mathfrak q}'\} )\) is taken over, which shows \(\operatorname{\operatorname {dens}}'_k(\{ {\mathfrak q}\} ) \ge \operatorname{\operatorname {dens}}_k'(\{ {\mathfrak q}'\} )\). From \({\mathfrak p}' \le {\mathfrak p}''\), \({\mathfrak p}'' \in {\mathfrak C}(k,n)\) and <a href="proptopropprop.html#def-cnk" class="eqref">5.1.7</a> it then follows that </p>
+<div class="displaymath" id="a0000000194">
+  \[  2^{4a}2^{-n} {\lt} \operatorname{\operatorname {dens}}_k'(\{ {\mathfrak p}''\} ) \le \operatorname{\operatorname {dens}}_k'(\{ {\mathfrak p}'\} )\, .  \]
+</div>
+<p> Similarly, it follows from \({\mathfrak p}\le {\mathfrak p}'\), \({\mathfrak p}\in {\mathfrak C}(k,n)\) and <a href="proptopropprop.html#def-cnk" class="eqref">5.1.7</a> that </p>
+<div class="displaymath" id="a0000000195">
+  \[  \operatorname{\operatorname {dens}}_k'(\{ {\mathfrak p}'\} ) \le \operatorname{\operatorname {dens}}_k'(\{ {\mathfrak p}\} ) \le 2^{4a}2^{-n+1}\, .  \]
+</div>
+<p> Thus \({\mathfrak p}' \in {\mathfrak C}(k,n)\). </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="C1-convex">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">5.3.6</span>
+    <span class="lemma_thmtitle">C1 convex</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="proptopropprop.html#C1-convex">#</a>
+    
+    <a class="icon proof" href="proptopropprop.html#a0000000196"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="proptopropprop.html#C-convex">Lemma 5.3.5</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/ordConnected_C1" class="lean_decl">ordConnected_C1</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    For each \(k,n,j\), the collection \({\mathfrak C}_1(k,n,j)\) is convex. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000196">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Let \({\mathfrak p}\le {\mathfrak p}'\le {\mathfrak p}''\) with \({\mathfrak p}, {\mathfrak p}'' \in {\mathfrak C}_1(k,n,j)\). By <a href="proptopropprop.html#C-convex">Lemma 5.3.5</a> and the inclusion \({\mathfrak C}_1(k,n,j) \subset {\mathfrak C}(k,n)\), which holds by definition <a href="proptopropprop.html#defcnkj" class="eqref">5.1.9</a>, we have \({\mathfrak p}' \in {\mathfrak C}(k,n)\). By <a href="proptopropprop.html#eq-sc1" class="eqref">5.3.3</a> and transitivity of \(\lesssim \) we have that \({\mathfrak q}\le {\mathfrak q}'\) and \(100 {\mathfrak q}' \lesssim \mathfrak {m}\) imply \(100 {\mathfrak q}\lesssim \mathfrak {m}\). So, by <a href="proptopropprop.html#defbfp" class="eqref">5.1.8</a>, \(\mathfrak {B}({\mathfrak p}'') \subset \mathfrak {B}({\mathfrak p}') \subset \mathfrak {B}({\mathfrak p})\). Consequently, by <a href="proptopropprop.html#defcnkj" class="eqref">5.1.9</a> </p>
+<div class="displaymath" id="a0000000197">
+  \[  2^j \le |\mathfrak {B}({\mathfrak p}'')|\le |\mathfrak {B}({\mathfrak p}')| \le |\mathfrak {B}({\mathfrak p})| {\lt} 2^{j+1}\, ,  \]
+</div>
+<p> thus \({\mathfrak p}' \in {\mathfrak C}_1(k,n,j)\). </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="C2-convex">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">5.3.7</span>
+    <span class="lemma_thmtitle">C2 convex</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="proptopropprop.html#C2-convex">#</a>
+    
+    <a class="icon proof" href="proptopropprop.html#a0000000198"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="proptopropprop.html#C1-convex">Lemma 5.3.6</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/ordConnected_C2" class="lean_decl">ordConnected_C2</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    For each \(k,n,j\), the collection \({\mathfrak C}_2(k,n,j)\) is convex. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000198">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Let \({\mathfrak p}\le {\mathfrak p}' \le {\mathfrak p}''\) with \({\mathfrak p}, {\mathfrak p}'' \in {\mathfrak C}_2(k,n,j)\). By <a href="proptopropprop.html#eq-C2-def" class="eqref">5.1.13</a>, we have </p>
+<div class="displaymath" id="a0000000199">
+  \begin{equation*}  {\mathfrak C}_2(k,n,j) \subset {\mathfrak C}_1(k,n,j)\  . \end{equation*}
+</div>
+<p> Combined with <a href="proptopropprop.html#C1-convex">Lemma 5.3.6</a>, it follows that \({\mathfrak p}' \in {\mathfrak C}_1(k,n,j)\). If \({\mathfrak p}={\mathfrak p}'\) the statement is trivially true, otherwise suppose that \({\mathfrak p}' \notin {\mathfrak C}_2(k,n,j)\). By <a href="proptopropprop.html#eq-C2-def" class="eqref">5.1.13</a>, this implies that there exists \(0 \le l' \le Z(n+1)\) with \({\mathfrak p}' \in {\mathfrak L}_1(k,n,j,l')\). By the definition <a href="proptopropprop.html#eq-L1-def" class="eqref">5.1.11</a> of \({\mathfrak L}_1(k,n,j,l')\), this implies that \({\mathfrak p}'\) is minimal with respect to \(\le \) in \({\mathfrak C}_1(k,n,j) \setminus \bigcup _{l {\lt} l'} {\mathfrak L}_1(k,n,j,l)\). Since \({\mathfrak p}\le {\mathfrak p}'\) and \({\mathfrak p}\in {\mathfrak C}_2(k,n,j)\), \({\mathfrak p}={\mathfrak p}'\), a contradiction. </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="C3-convex">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">5.3.8</span>
+    <span class="lemma_thmtitle">C3 convex</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="proptopropprop.html#C3-convex">#</a>
+    
+    <a class="icon proof" href="proptopropprop.html#a0000000200"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="proptopropprop.html#C2-convex">Lemma 5.3.7</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/ordConnected_C3" class="lean_decl">ordConnected_C3</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    For each \(k,n,j\), the collection \({\mathfrak C}_3(k,n,j)\) is convex. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000200">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Let \({\mathfrak p}\le {\mathfrak p}' \le {\mathfrak p}''\) with \({\mathfrak p}, {\mathfrak p}'' \in {\mathfrak C}_3(k,n,j)\). By <a href="proptopropprop.html#eq-C3-def" class="eqref">5.1.16</a> and <a href="proptopropprop.html#C2-convex">Lemma 5.3.7</a> it follows that \({\mathfrak p}' \in {\mathfrak C}_2(k,n,j)\). By <a href="proptopropprop.html#eq-C3-def" class="eqref">5.1.16</a> and <a href="proptopropprop.html#eq-L2-def" class="eqref">5.1.15</a>, there exists \({\mathfrak u}\in {\mathfrak U}_1(k,n,j)\) with \(2{\mathfrak p}'' \lesssim {\mathfrak u}\) and \({\mathcal{I}}({\mathfrak p}'') \subsetneq {\mathcal{I}}({\mathfrak u})\). From \({\mathfrak p}' \le {\mathfrak p}''\), <a href="proptopropprop.html#eq-sc1" class="eqref">5.3.3</a> and transitivity of \(\lesssim \) we then have \(2{\mathfrak p}' \lesssim {\mathfrak u}\) and \({\mathcal{I}}({\mathfrak p}') \subsetneq {\mathcal{I}}({\mathfrak u})\), so \({\mathfrak p}' \in {\mathfrak C}_3(k,n,j)\). </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="C4-convex">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">5.3.9</span>
+    <span class="lemma_thmtitle">C4 convex</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="proptopropprop.html#C4-convex">#</a>
+    
+    <a class="icon proof" href="proptopropprop.html#a0000000201"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="proptopropprop.html#C3-convex">Lemma 5.3.8</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/ordConnected_C4" class="lean_decl">ordConnected_C4</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    For each \(k,n,j\), the collection \({\mathfrak C}_4(k,n,j)\) is convex. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000201">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>The proof is entirely analogous to <a href="proptopropprop.html#C2-convex">Lemma 5.3.7</a>, substituting \({\mathfrak C}_4\) for \({\mathfrak C}_2\), \({\mathfrak C}_3\) for \({\mathfrak C}_1\) and \({\mathfrak p}'\le {\mathfrak p}''\) for \({\mathfrak p}\le {\mathfrak p}'\). </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="C5-convex">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">5.3.10</span>
+    <span class="lemma_thmtitle">C5 convex</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="proptopropprop.html#C5-convex">#</a>
+    
+    <a class="icon proof" href="proptopropprop.html#a0000000202"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="proptopropprop.html#C4-convex">Lemma 5.3.9</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/ordConnected_C5" class="lean_decl">ordConnected_C5</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    For each \(k,n,j\), the collection \({\mathfrak C}_5(k,n,j)\) is convex. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000202">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Let \({\mathfrak p}\le {\mathfrak p}' \le {\mathfrak p}''\) with \({\mathfrak p}, {\mathfrak p}'' \in {\mathfrak C}_5(k,n,j)\). Then \({\mathfrak p}, {\mathfrak p}'' \in {\mathfrak C}_4(k,n,j)\) by <a href="proptopropprop.html#defc5" class="eqref">5.1.23</a>, and thus by <a href="proptopropprop.html#C4-convex">Lemma 5.3.9</a> \({\mathfrak p}' \in {\mathfrak C}_4(k,n,j)\). It suffices to show that if \({\mathfrak p}' \in {\mathfrak L}_4(k,n,j)\) then \({\mathfrak p}\in {\mathfrak L}_4(k,n,j)\) by contraposition; this is true by <a href="proptopropprop.html#eq-L4-def" class="eqref">5.1.22</a> and \({\mathfrak p}\le {\mathfrak p}'\). </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="dens-compare">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">5.3.11</span>
+    <span class="lemma_thmtitle">dens compare</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="proptopropprop.html#dens-compare">#</a>
+    
+    <a class="icon proof" href="proptopropprop.html#a0000000203"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/dens1_le_dens'" class="lean_decl">dens1_le_dens'</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>   We have for every \(k\ge 0\) and \({\mathfrak P}'\subset {\mathfrak P}(k)\) </p>
+<div class="equation" id="a0000000204">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \operatorname{\operatorname {dens}}_1({\mathfrak P}')\le \operatorname{\operatorname {dens}}_k'({\mathfrak P}')\,  . \end{equation}
+  </div>
+  <span class="equation_label">5.3.7</span>
+</p>
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000203">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>It suffices to show that for all \({\mathfrak p}'\in {\mathfrak P}'\) and \(\lambda \ge 2\) and \({\mathfrak p}\in {\mathfrak P}({\mathfrak P}')\) with \(\lambda {\mathfrak p}' \lesssim \lambda {\mathfrak p}\) we have </p>
+<div class="equation" id="a0000000205">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \frac{\mu ({E}_2(\lambda , {\mathfrak p}))}{\mu ({\mathcal{I}}({\mathfrak p}))} \le \sup _{{\mathfrak p}'' \in {\mathfrak P}(k): \lambda {\mathfrak p}' \lesssim \lambda {\mathfrak p}''} \frac{\mu ({E}_2(\lambda , {\mathfrak p}''))}{\mu ({\mathcal{I}}({\mathfrak p}''))}. \end{equation}
+  </div>
+  <span class="equation_label">5.3.8</span>
+</p>
+</div>
+<p> Let such \({\mathfrak p}'\), \(\lambda \), \({\mathfrak p}\) be given. It suffices to show that \({\mathfrak p}\in {\mathfrak P}(k)\), that is, it satisfies <a href="proptopropprop.html#muhj1" class="eqref">5.1.1</a> and <a href="proptopropprop.html#muhj2" class="eqref">5.1.2</a>. </p>
+<p>We show <a href="proptopropprop.html#muhj1" class="eqref">5.1.1</a>. As \({\mathfrak p}\in {\mathfrak P}({\mathfrak P}')\), there exists \({\mathfrak p}''\in {\mathfrak P}'\) with \({\mathcal{I}}({\mathfrak p}')\subset {\mathcal{I}}({\mathfrak p}'')\). By assumption on \({\mathfrak P}'\), we have \({\mathfrak p}''\in {\mathfrak P}(k)\) and there exists \(J\in \mathcal{D}\) with \({\mathcal{I}}({\mathfrak p}'')\subset J\) and </p>
+<div class="equation" id="a0000000206">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \mu (G\cap J){\gt}2^{-k-1} \mu (J). \end{equation}
+  </div>
+  <span class="equation_label">5.3.9</span>
+</p>
+</div>
+<p> Then also \({\mathcal{I}}({\mathfrak p}')\subset J\), which proves <a href="proptopropprop.html#muhj1" class="eqref">5.1.1</a> for \({\mathfrak p}\). </p>
+<p>We show <a href="proptopropprop.html#muhj2" class="eqref">5.1.2</a>. Assume to get a contradiction that there exists \(J\in \mathcal{D}\) with \({\mathcal{I}}({\mathfrak p})\subset J\) and </p>
+<div class="equation" id="mugj">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{mugj} \mu (G\cap J){\gt}2^{-k} \mu (J). \end{equation}
+  </div>
+  <span class="equation_label">5.3.10</span>
+</p>
+</div>
+<p> As \(\lambda {\mathfrak p}'\lesssim \lambda {\mathfrak p}\), we have \({\mathcal{I}}({\mathfrak p}')\subset {\mathcal{I}}({\mathfrak p})\), and therefore \({\mathcal{I}}({\mathfrak p}')\subset J\). This contradicts \({\mathfrak p}'\in {\mathfrak P}'\subset {\mathfrak P}(k)\). This proves <a href="proptopropprop.html#muhj2" class="eqref">5.1.2</a> for \({\mathfrak p}\). </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="C-dens1">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">5.3.12</span>
+    <span class="lemma_thmtitle">C dens1</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="proptopropprop.html#C-dens1">#</a>
+    
+    <a class="icon proof" href="proptopropprop.html#a0000000207"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="proptopropprop.html#dens-compare">Lemma 5.3.11</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/dens1_le" class="lean_decl">dens1_le</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    For each set \(\mathfrak {A} \subset \mathfrak {C}(k,n)\), we have </p>
+<div class="displaymath" id="a0000000208">
+  \[  \operatorname{\operatorname {dens}}_1(\mathfrak {A}) \le 2^{4a}2^{-n+1}\, .  \]
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000207">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>We have by <a href="proptopropprop.html#dens-compare">Lemma 5.3.11</a> that \(\operatorname{\operatorname {dens}}_1(\mathfrak {A}) \le \operatorname{\operatorname {dens}}_k'(\mathfrak {A})\). Since \(\mathfrak {A} \subset {\mathfrak C}(k,n)\), it follows from monotonicity of suprema and the definition <a href="proptopropprop.html#eq-densdef" class="eqref">5.1.6</a> that \( \operatorname{\operatorname {dens}}_k'(\mathfrak {A}) \le \operatorname{\operatorname {dens}}_k'({\mathfrak C}(k,n))\, . \) By <a href="proptopropprop.html#eq-densdef" class="eqref">5.1.6</a> and <a href="proptopropprop.html#def-cnk" class="eqref">5.1.7</a>, we have </p>
+<div class="displaymath" id="a0000000209">
+  \[  \operatorname{\operatorname {dens}}_k'({\mathfrak C}(k,n)) = \sup _{{\mathfrak p}\in {\mathfrak C}(k,n)} \operatorname{\operatorname {dens}}_k'(\{ {\mathfrak p}\} ) \le 2^{4a}2^{-n+1}\, .  \]
+</div>
+
+  </div>
+</div>
+<h2 id="subsecforest">5.4 Proof of the Forest Union Lemma</h2>
+
+<p>Fix \(k,n,j\ge 0\). Define </p>
+<div class="displaymath" id="a0000000210">
+  \[  {\mathfrak C}_6(k,n,j)  \]
+</div>
+<p> to be the set of all tiles \({\mathfrak p}\in {\mathfrak C}_5(k,n,j)\) such that \({\mathcal{I}}({\mathfrak p}) \not\subset G'\). The following chain of lemmas establishes that the set \({\mathfrak C}_6(k,n,j)\) can be written as a union of a small number of \(n\)-forests. </p>
+<p>For \({\mathfrak u}\in {\mathfrak U}_1(k,n,j)\), define </p>
+<div class="equation" id="eq-T1-def">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-T1-def} \mathfrak {T}_1({\mathfrak u}):= \{ {\mathfrak p}\in {\mathfrak C}_1(k,n,j) \  : {\mathcal{I}}({\mathfrak p})\neq {\mathcal{I}}({\mathfrak u}), \  2{\mathfrak p}\lesssim {\mathfrak u}\} \, . \end{equation}
+  </div>
+  <span class="equation_label">5.4.1</span>
+</p>
+</div>
+<p> Define </p>
+<div class="equation" id="eq-U2-def">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-U2-def} {\mathfrak U}_2(k,n,j) := \{  {\mathfrak u}\in {\mathfrak U}_1(k,n,j) \,  : \,  \mathfrak {T}_1({\mathfrak u}) \cap {\mathfrak C}_6(k,n,j) \ne \emptyset \} \, . \end{equation}
+  </div>
+  <span class="equation_label">5.4.2</span>
+</p>
+</div>
+<p>Define a relation \(\sim \) on \({\mathfrak U}_2(k,n,j)\) by setting \({\mathfrak u}\sim {\mathfrak u}'\) for \({\mathfrak u},{\mathfrak u}'\in {\mathfrak U}_2(k,n,j)\) if \({\mathfrak u}={\mathfrak u}'\) or there exists \({\mathfrak p}\) in \(\mathfrak {T}_1({\mathfrak u})\) with \(10 {\mathfrak p}\lesssim {\mathfrak u}'\). </p>
+<div class="lemma_thmwrapper theorem-style-plain" id="relation-geometry">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">5.4.1</span>
+    <span class="lemma_thmtitle">relation geometry</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="proptopropprop.html#relation-geometry">#</a>
+    
+    <a class="icon proof" href="proptopropprop.html#a0000000211"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="proptopropprop.html#wiggle-order-3">Lemma 5.3.3</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/URel.eq" class="lean_decl">URel.eq</a></li>
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/URel.not_disjoint" class="lean_decl">URel.not_disjoint</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    If \({\mathfrak u}\sim {\mathfrak u}'\), then \({\mathcal{I}}(u) = {\mathcal{I}}(u')\) and </p>
+<div class="displaymath" id="a0000000212">
+  \begin{equation*}  B_{{\mathfrak u}}({\mathcal{Q}}({\mathfrak u}), 100) \cap B_{{\mathfrak u}'}({\mathcal{Q}}({\mathfrak u}’), 100) \neq \emptyset \  . \end{equation*}
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000211">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Let \({\mathfrak u}, {\mathfrak u}' \in {\mathfrak U}_2(k,n,j)\) with \({\mathfrak u}\sim {\mathfrak u}'\). If \({\mathfrak u}= {\mathfrak u}'\) then the conclusion of the Lemma clearly holds. Else, there exists \({\mathfrak p}\in {\mathfrak C}_1(k,n,j)\) such that \({\mathcal{I}}({\mathfrak p}) \ne {\mathcal{I}}({\mathfrak u})\) and \(2 {\mathfrak p}\lesssim {\mathfrak u}\) and \(10 {\mathfrak p}\lesssim {\mathfrak u}'\). Using <a href="proptopropprop.html#wiggle-order-1">Lemma 5.3.1</a> and <a href="proptopropprop.html#eq-sc2" class="eqref">5.3.4</a> of <a href="proptopropprop.html#wiggle-order-3">Lemma 5.3.3</a>, we deduce that </p>
+<div class="equation" id="eq-Fefferman-trick0">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-Fefferman-trick0} 100 {\mathfrak p}\lesssim 100 {\mathfrak u}\, , \qquad 100 {\mathfrak p}\lesssim 100{\mathfrak u}'\, . \end{equation}
+  </div>
+  <span class="equation_label">5.4.3</span>
+</p>
+</div>
+<p> Now suppose that \(B_{{\mathfrak u}}({\mathcal{Q}}({\mathfrak u}), 100) \cap B_{{\mathfrak u}'}({\mathcal{Q}}({\mathfrak u}'), 100) = \emptyset \). Then we have \(\mathfrak {B}({\mathfrak u}) \cap \mathfrak {B}({\mathfrak u}') = \emptyset \), by the definition <a href="proptopropprop.html#defbfp" class="eqref">5.1.8</a> of \(\mathfrak {B}\) and the definition <a href="overviewsection.html#wiggleorder" class="eqref">2.0.24</a> of \(\lesssim \), but also \(\mathfrak {B}({\mathfrak u}) \subset \mathfrak {B}({\mathfrak p})\) and \(\mathfrak {B}({\mathfrak u}') \subset \mathfrak {B}({\mathfrak p})\), by <a href="proptopropprop.html#defbfp" class="eqref">5.1.8</a>, <a href="overviewsection.html#wiggleorder" class="eqref">2.0.24</a> and <a href="proptopropprop.html#eq-Fefferman-trick0" class="eqref">5.4.3</a>. Hence, </p>
+<div class="displaymath" id="a0000000213">
+  \[  |\mathfrak {B}({\mathfrak p})| \geq |\mathfrak {B}({\mathfrak u})| + |\mathfrak {B}({\mathfrak u}')| \geq 2^{j} + 2^j = 2^{j+1}\, ,  \]
+</div>
+<p> which contradicts \({\mathfrak p}\in {\mathfrak C}_1(k,n,j)\). Therefore we must have </p>
+<div class="displaymath" id="a0000000214">
+  \begin{equation*}  B_{{\mathfrak u}}({\mathcal{Q}}({\mathfrak u}), 100) \cap B_{{\mathfrak u}'}({\mathcal{Q}}({\mathfrak u}’), 100) \ne \emptyset \,  . \end{equation*}
+</div>
+<p>It follows from \(2{\mathfrak p}\lesssim {\mathfrak u}\) and \(10{\mathfrak p}\lesssim {\mathfrak u}'\) that \({\mathcal{I}}({\mathfrak p}) \subset {\mathcal{I}}({\mathfrak u})\) and \({\mathcal{I}}({\mathfrak p}) \subset {\mathcal{I}}({\mathfrak u}')\). By <a href="overviewsection.html#dyadicproperty" class="eqref">2.0.8</a>, it follows that \({\mathcal{I}}({\mathfrak u})\) and \({\mathcal{I}}({\mathfrak u}')\) are nested. Combining this with the conclusion of the last paragraph and definition <a href="proptopropprop.html#defunkj" class="eqref">5.1.14</a> of \({\mathfrak U}_1(k,n,j)\), we obtain that \({\mathcal{I}}({\mathfrak u}) = {\mathcal{I}}({\mathfrak u}')\). </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="equivalence-relation">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">5.4.2</span>
+    <span class="lemma_thmtitle">equivalence relation</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="proptopropprop.html#equivalence-relation">#</a>
+    
+    <a class="icon proof" href="proptopropprop.html#a0000000215"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="proptopropprop.html#relation-geometry">Lemma 5.4.1</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/equivalenceOn_urel" class="lean_decl">equivalenceOn_urel</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    For each \(k,n,j\), the relation \(\sim \) on \({\mathfrak U}_2(k,n,j)\) is an equivalence relation. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000215">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Reflexivity holds by definition. For transitivity, suppose that </p>
+<div class="displaymath" id="a0000000216">
+  \begin{equation*}  {\mathfrak u}, {\mathfrak u}’, {\mathfrak u}” \in {\mathfrak U}_1(k,n,j) \end{equation*}
+</div>
+<p> and \({\mathfrak u}\sim {\mathfrak u}'\), \({\mathfrak u}' \sim {\mathfrak u}''\). By <a href="proptopropprop.html#relation-geometry">Lemma 5.4.1</a>, it follows that \({\mathcal{I}}({\mathfrak u}) ={\mathcal{I}}({\mathfrak u}') = {\mathcal{I}}({\mathfrak u}'')\), that there exists </p>
+<div class="displaymath" id="a0000000217">
+  \begin{equation*}  {\vartheta }\in B_{{\mathfrak u}}({\mathcal{Q}}({\mathfrak u}), 100) \cap B_{{\mathfrak u}'}({\mathcal{Q}}({\mathfrak u}’), 100) \end{equation*}
+</div>
+<p> and that there exists </p>
+<div class="displaymath" id="a0000000218">
+  \begin{equation*}  {\theta }\in B_{{\mathfrak u}'}({\mathcal{Q}}({\mathfrak u}’), 100) \cap B_{{\mathfrak u}''}({\mathcal{Q}}({\mathfrak u}”), 100)\,  . \end{equation*}
+</div>
+<p> If \({\mathfrak u}= {\mathfrak u}'\), then \({\mathfrak u}\sim {\mathfrak u}''\) holds by assumption. Else, there exists by the definition of \(\sim \) some \({\mathfrak p}\in \mathfrak {T}_1({\mathfrak u})\) with \(10{\mathfrak p}\lesssim {\mathfrak u}'\). Then we have \(2{\mathfrak p}\lesssim {\mathfrak u}\) and \({\mathfrak p}\ne {\mathfrak u}\) by definition of \(\mathfrak {T}_1({\mathfrak u})\), so \(4 {\mathfrak p}\lesssim 500 {\mathfrak u}\) by <a href="proptopropprop.html#eq-sc3" class="eqref">5.3.5</a>. For \(q \in B_{{\mathfrak u}''}({\mathcal{Q}}({\mathfrak u}''), 1)\) it follows by the triangle inequality that </p>
+<div class="displaymath" id="a0000000219">
+  \begin{align*}  d_{{\mathfrak u}}({\mathcal{Q}}({\mathfrak u}), q) & \le d_{{\mathfrak u}}({\mathcal{Q}}({\mathfrak u}), {\vartheta }) + d_{{\mathfrak u}}({\vartheta }, {\mathcal{Q}}({\mathfrak u}’))\\ & \quad + d_{{\mathfrak u}}({\mathcal{Q}}({\mathfrak u}’), {\theta }) + d_{{\mathfrak u}}({\theta }, {\mathcal{Q}}({\mathfrak u}”)) + d_{{\mathfrak u}}({\mathcal{Q}}({\mathfrak u}”), q)\, . \end{align*}
+</div>
+<p> Using <a href="overviewsection.html#defdp" class="eqref">2.0.17</a> and the fact that \({\mathcal{I}}({\mathfrak u}) = {\mathcal{I}}({\mathfrak u}') = {\mathcal{I}}({\mathfrak u}'')\) this equals </p>
+<div class="displaymath" id="a0000000220">
+  \begin{align*} & \quad d_{{\mathfrak u}}({\mathcal{Q}}({\mathfrak u}), {\vartheta }) + d_{{\mathfrak u}'}({\vartheta }, {\mathcal{Q}}({\mathfrak u}’))\\ & \quad + d_{{\mathfrak u}'}({\mathcal{Q}}({\mathfrak u}’), {\theta }) + d_{{\mathfrak u}''}({\theta }, {\mathcal{Q}}({\mathfrak u}”)) + d_{{\mathfrak u}''}({\mathcal{Q}}({\mathfrak u}”), q)\\ & {\lt} 100 + 100 + 100 + 100 + 1 {\lt} 500\, . \end{align*}
+</div>
+<p> Since \(4{\mathfrak p}\lesssim 500 {\mathfrak u}\), it follows that \(d_{{\mathfrak p}}({\mathcal{Q}}({\mathfrak p}), q) {\lt} 4 {\lt} 10\). We have shown that \(B_{{\mathfrak u}''}({\mathcal{Q}}({\mathfrak u}''), 1) \subset B_{{\mathfrak p}}({\mathcal{Q}}({\mathfrak p}), 10)\), combining this with \({\mathcal{I}}({\mathfrak u}'') = {\mathcal{I}}({\mathfrak u})\) gives \({\mathfrak u}\sim {\mathfrak u}''\). </p>
+<p>For symmetry suppose that \({\mathfrak u}\sim {\mathfrak u}'\). By Lemma <a href="proptopropprop.html#relation-geometry" class="eqref">5.4.1</a>, it follows that \({\mathcal{I}}({\mathfrak u}) = {\mathcal{I}}({\mathfrak u}')\) and that there exists \({\vartheta }\in B_{{\mathfrak u}}({\mathcal{Q}}({\mathfrak u}), 100) \cap B_{{\mathfrak u}'}({\mathcal{Q}}({\mathfrak u}'), 100)\). Again, for \({\mathfrak u}= {\mathfrak u}'\) symmetry is obvious, so suppose that \({\mathfrak u}\ne {\mathfrak u}'\). There exists \({\mathfrak p}\in \mathfrak {T}_1({\mathfrak u}')\), which then satisfies \(2{\mathfrak p}\lesssim {\mathfrak u}'\) and \({\mathcal{I}}({\mathfrak p}) \neq {\mathcal{I}}({\mathfrak u}')\). By <a href="proptopropprop.html#wiggle-order-1">Lemma 5.3.1</a> and <a href="proptopropprop.html#eq-sc3" class="eqref">5.3.5</a>, it follows that </p>
+<div class="equation" id="eq-rel1">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-rel1} 10{\mathfrak p}\lesssim 4{\mathfrak p}\lesssim 500 {\mathfrak u}'\, . \end{equation}
+  </div>
+  <span class="equation_label">5.4.4</span>
+</p>
+</div>
+<p> If \(q \in B_{{\mathfrak u}}({\mathcal{Q}}({\mathfrak u}),1)\) then we have from the triangle inequality and the fact that \({\mathcal{I}}({\mathfrak u}) = {\mathcal{I}}({\mathfrak u}')\): </p>
+<div class="displaymath" id="a0000000221">
+  \begin{align*}  d_{{\mathfrak u}'}({\mathcal{Q}}({\mathfrak u}’), q) & \le d_{{\mathfrak u}'}({\mathcal{Q}}({\mathfrak u}’), {\vartheta }) + d_{{\mathfrak u}'}({\vartheta }, {\mathcal{Q}}({\mathfrak u})) + d_{{\mathfrak u}'}({\mathcal{Q}}({\mathfrak u}), q)\\ & = d_{{\mathfrak u}'}({\mathcal{Q}}({\mathfrak u}’), {\vartheta }) + d_{{\mathfrak u}}({\vartheta }, {\mathcal{Q}}({\mathfrak u})) + d_{{\mathfrak u}}({\mathcal{Q}}({\mathfrak u}), q)\\ & {\lt} 100 + 100 + 1 {\lt} 500\, . \end{align*}
+</div>
+<p> Combining this with <a href="proptopropprop.html#eq-rel1" class="eqref">5.4.4</a> and <a href="overviewsection.html#wiggleorder" class="eqref">2.0.24</a>, we get </p>
+<div class="displaymath" id="a0000000222">
+  \begin{equation*}  B_{{\mathfrak u}}({\mathcal{Q}}({\mathfrak u}), 1) \subset B_{{\mathfrak p}}({\mathcal{Q}}({\mathfrak p}), 10)\,  . \end{equation*}
+</div>
+<p> Since \(2{\mathfrak p}\lesssim {\mathfrak u}'\), we have \({\mathcal{I}}({\mathfrak p}) \subset {\mathcal{I}}({\mathfrak u}') = {\mathcal{I}}({\mathfrak u})\). Thus, \(10{\mathfrak p}\lesssim {\mathfrak u}\) which completes the proof of \({\mathfrak u}' \sim {\mathfrak u}\). </p>
+
+  </div>
+</div>
+<p>Choose a set \({\mathfrak U}_3(k,n,j)\) of representatives for the equivalence classes of \(\sim \) in \({\mathfrak U}_2(k,n,j)\). Define for each \({\mathfrak u}\in {\mathfrak U}_3(k,n,j)\) </p>
+<div class="equation" id="definesv">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{definesv} {\mathfrak T}_2({\mathfrak u}):= \bigcup _{{\mathfrak u}\sim {\mathfrak u}'}\mathfrak {T}_1({\mathfrak u}')\cap {\mathfrak C}_6(k,n,j)\,  . \end{equation}
+  </div>
+  <span class="equation_label">5.4.5</span>
+</p>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="C6-forest">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">5.4.3</span>
+    <span class="lemma_thmtitle">C6 forest</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="proptopropprop.html#C6-forest">#</a>
+    
+    <a class="icon proof" href="proptopropprop.html#a0000000223"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="proptopropprop.html#equivalence-relation">Lemma 5.4.2</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/C6_forest" class="lean_decl">C6_forest</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    We have </p>
+<div class="equation" id="a0000000224">
+<p>
+  <div class="equation_content">
+    \begin{equation}  {\mathfrak C}_6(k,n,j)=\bigcup _{{\mathfrak u}\in {\mathfrak U}_3(k,n,j)}\mathfrak {T}_2({\mathfrak u})\,  . \end{equation}
+  </div>
+  <span class="equation_label">5.4.6</span>
+</p>
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000223">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Let \({\mathfrak p}\in {\mathfrak C}_6(k,n,j)\). By <a href="proptopropprop.html#eq-C4-def" class="eqref">5.1.19</a> and <a href="proptopropprop.html#defc5" class="eqref">5.1.23</a>, we have \({\mathfrak p}\in {\mathfrak C}_3(k,n,j)\). By <a href="proptopropprop.html#eq-L2-def" class="eqref">5.1.15</a> and <a href="proptopropprop.html#eq-C3-def" class="eqref">5.1.16</a>, there exists \({\mathfrak u}\in {\mathfrak U}_1(k,n,j)\) with \(2{\mathfrak p}\lesssim {\mathfrak u}\) and \({\mathcal{I}}({\mathfrak p}) \ne {\mathcal{I}}({\mathfrak u})\), that is, with \({\mathfrak p}\in \mathfrak {T}_1({\mathfrak u})\). Then \(\mathfrak {T}_1({\mathfrak u})\) is clearly nonempty, so \({\mathfrak u}\in {\mathfrak U}_2(k,n,j)\). By the definition of \({\mathfrak U}_3(k,n,j)\), there exists \({\mathfrak u}' \in {\mathfrak U}_3(k,n,j)\) with \({\mathfrak u}\sim {\mathfrak u}'\). By <a href="proptopropprop.html#definesv" class="eqref">5.4.5</a>, we have \({\mathfrak p}\in \mathfrak {T}_2({\mathfrak u}')\). </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="forest-geometry">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">5.4.4</span>
+    <span class="lemma_thmtitle">forest geometry</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="proptopropprop.html#forest-geometry">#</a>
+    
+    <a class="icon proof" href="proptopropprop.html#a0000000225"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="proptopropprop.html#relation-geometry">Lemma 5.4.1</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/forest_geometry" class="lean_decl">forest_geometry</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    For each \({\mathfrak u}\in {\mathfrak U}_3(k,n,j)\), the set \(\mathfrak {T}_2({\mathfrak u})\) satisfies <a href="overviewsection.html#forest1" class="eqref">2.0.32</a>. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000225">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Let \({\mathfrak p}\in \mathfrak {T}_2({\mathfrak u})\). By <a href="proptopropprop.html#definesv" class="eqref">5.4.5</a>, there exists \({\mathfrak u}' \sim {\mathfrak u}\) with \({\mathfrak p}\in \mathfrak {T}_1({\mathfrak u}')\). Then we have \(2{\mathfrak p}\lesssim {\mathfrak u}'\) and \({\mathcal{I}}({\mathfrak p}) \ne {\mathcal{I}}({\mathfrak u}')\), so by <a href="proptopropprop.html#eq-sc3" class="eqref">5.3.5</a> \(4{\mathfrak p}\lesssim 500{\mathfrak u}'\). Further, by <a href="proptopropprop.html#relation-geometry">Lemma 5.4.1</a>, we have that \({\mathcal{I}}({\mathfrak u}') = {\mathcal{I}}({\mathfrak u})\) and there exists \({\vartheta }\in B_{{\mathfrak u}'}({\mathcal{Q}}({\mathfrak u}'),100) \cap B_{{\mathfrak u}}({\mathcal{Q}}({\mathfrak u}),100)\). Let \({\theta }\in B_{{\mathfrak u}}({\mathcal{Q}}({\mathfrak u}), 1)\). Using the triangle inequality and the fact that \({\mathcal{I}}({\mathfrak u}') ={\mathcal{I}}({\mathfrak u})\), we obtain </p>
+<div class="displaymath" id="a0000000226">
+  \begin{align*}  d_{{\mathfrak u}'}({\mathcal{Q}}({\mathfrak u}’), {\theta }) & \le d_{{\mathfrak u}'}({\mathcal{Q}}({\mathfrak u}’), {\vartheta }) + d_{{\mathfrak u}'}({\mathcal{Q}}({\mathfrak u}), {\vartheta }) + d_{{\mathfrak u}'}({\mathcal{Q}}({\mathfrak u}), {\theta })\\ & = d_{{\mathfrak u}'}({\mathcal{Q}}({\mathfrak u}’), {\vartheta }) + d_{{\mathfrak u}}({\mathcal{Q}}({\mathfrak u}), {\vartheta }) + d_{{\mathfrak u}}({\mathcal{Q}}({\mathfrak u}), {\theta })\\ & {\lt} 100 + 100 + 1 {\lt} 500\, . \end{align*}
+</div>
+<p> Combining this with \(4{\mathfrak p}\lesssim 500{\mathfrak u}'\), we obtain </p>
+<div class="displaymath" id="a0000000227">
+  \[  B_{{\mathfrak u}}({\mathcal{Q}}({\mathfrak u}), 1) \subset B_{{\mathfrak u}'}({\mathcal{Q}}({\mathfrak u}'), 500) \subset B_{{\mathfrak p}}({\mathcal{Q}}({\mathfrak p}), 4)\, .  \]
+</div>
+<p> Together with \({\mathcal{I}}({\mathfrak p}) \subset {\mathcal{I}}({\mathfrak u}') = {\mathcal{I}}({\mathfrak u})\), this gives \(4{\mathfrak p}\lesssim {\mathfrak u}\), which is <a href="overviewsection.html#forest1" class="eqref">2.0.32</a>. </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="forest-convex">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">5.4.5</span>
+    <span class="lemma_thmtitle">forest convex</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="proptopropprop.html#forest-convex">#</a>
+    
+    <a class="icon proof" href="proptopropprop.html#a0000000228"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="proptopropprop.html#C5-convex">Lemma 5.3.10</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/forest_convex" class="lean_decl">forest_convex</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    For each \({\mathfrak u}\in {\mathfrak U}_3(k,n,j)\), the set \(\mathfrak {T}_2({\mathfrak u})\) satisfies the convexity condition <a href="overviewsection.html#forest2" class="eqref">2.0.33</a>. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000228">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Let \({\mathfrak p}, {\mathfrak p}'' \in \mathfrak {T}_2({\mathfrak u})\) and \({\mathfrak p}' \in {\mathfrak P}\) with \({\mathfrak p}\le {\mathfrak p}' \le {\mathfrak p}''\). By <a href="proptopropprop.html#definesv" class="eqref">5.4.5</a> we have \({\mathfrak p}, {\mathfrak p}'' \in {\mathfrak C}_6(k,n,j) \subset {\mathfrak C}_5(k,n,j)\). By <a href="proptopropprop.html#C5-convex">Lemma 5.3.10</a>, we have \({\mathfrak p}' \in {\mathfrak C}_5(k,n,j)\). Since \({\mathfrak p}\in {\mathfrak C}_6(k,n,j)\) we have \({\mathcal{I}}({\mathfrak p}) \not\subset G'\), so \({\mathcal{I}}({\mathfrak p}') \not\subset G'\) and therefore also \({\mathfrak p}' \in {\mathfrak C}_6(k,n,j)\). </p>
+<p>By <a href="proptopropprop.html#definesv" class="eqref">5.4.5</a> there exists \({\mathfrak u}' \in {\mathfrak U}_2(k,n,j)\) with \({\mathfrak p}'' \in \mathfrak {T}_1({\mathfrak u}')\) and hence \(2{\mathfrak p}'' \lesssim {\mathfrak u}'\) and \({\mathcal{I}}({\mathfrak p}'') \ne {\mathcal{I}}({\mathfrak u}')\). Together this implies \({\mathcal{I}}({\mathfrak p}'') \subsetneq {\mathcal{I}}({\mathfrak u}')\). With the inclusion \({\mathcal{I}}({\mathfrak p}') \subset {\mathcal{I}}({\mathfrak p}'')\) from \({\mathfrak p}' \le {\mathfrak p}''\), it follows that \({\mathcal{I}}({\mathfrak p}') \subsetneq {\mathcal{I}}({\mathfrak u}')\) and hence \({\mathcal{I}}({\mathfrak p}') \ne {\mathcal{I}}({\mathfrak u}')\). By <a href="proptopropprop.html#eq-sc1" class="eqref">5.3.3</a> and transitivity of \(\lesssim \) we further have \(2{\mathfrak p}' \lesssim {\mathfrak u}'\), so \({\mathfrak p}' \in \mathfrak {T}_1({\mathfrak u}')\). It follows that \({\mathfrak p}' \in \mathfrak {T}_2({\mathfrak u})\), which shows <a href="overviewsection.html#forest2" class="eqref">2.0.33</a>. </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="forest-separation">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">5.4.6</span>
+    <span class="lemma_thmtitle">forest separation</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="proptopropprop.html#forest-separation">#</a>
+    
+    <a class="icon proof" href="proptopropprop.html#a0000000229"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="overviewsection.html#monotone-cube-metrics">Lemma 2.1.2</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/forest_separation" class="lean_decl">forest_separation</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    For each \({\mathfrak u},{\mathfrak u}'\in {\mathfrak U}_3(k,n,j)\) with \({\mathfrak u}\neq {\mathfrak u}'\) and each \({\mathfrak p}\in {\mathfrak T}_2({\mathfrak u})\) with \({\mathcal{I}}({\mathfrak p})\subset {\mathcal{I}}({\mathfrak u}')\) we have </p>
+<div class="equation" id="a0000000230">
+<p>
+  <div class="equation_content">
+    \begin{equation}  d_{{\mathfrak p}}({\mathcal{Q}}({\mathfrak p}), {\mathcal{Q}}({\mathfrak u}')) {\gt} 2^{Z(n+1)}\, . \end{equation}
+  </div>
+  <span class="equation_label">5.4.7</span>
+</p>
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000229">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>By the definition <a href="proptopropprop.html#eq-C2-def" class="eqref">5.1.13</a> of \({\mathfrak C}_2(k,n,j)\), there exists a tile \({\mathfrak p}' \in {\mathfrak C}_1(k,n,j)\) with \({\mathfrak p}' \le {\mathfrak p}\) and \({\mathrm{s}}({\mathfrak p}') \le {\mathrm{s}}({\mathfrak p})- Z(n+1)\). By <a href="overviewsection.html#monotone-cube-metrics">Lemma 2.1.2</a> we have </p>
+<div class="displaymath" id="a0000000231">
+  \[  d_{{\mathfrak p}}({\mathcal{Q}}({\mathfrak p}), {\mathcal{Q}}({\mathfrak u}')) \ge 2^{95a Z(n+1)} d_{{\mathfrak p}'}({\mathcal{Q}}({\mathfrak p}), {\mathcal{Q}}({\mathfrak u}'))\, .  \]
+</div>
+<p> By <a href="proptopropprop.html#eq-sc1" class="eqref">5.3.3</a> we have \(2{\mathfrak p}' \lesssim 2{\mathfrak p}\), so by transitivity of \(\lesssim \) there exists \(\mathfrak {v} \sim {\mathfrak u}\) with \(2{\mathfrak p}' \lesssim \mathfrak {v}\) and \({\mathcal{I}}({\mathfrak p}') \ne {\mathcal{I}}(\mathfrak {v})\). Since \({\mathfrak u}, {\mathfrak u}'\) are not equivalent under \(\sim \), we have \(\mathfrak {v} \not\sim {\mathfrak u}'\), thus \(10{\mathfrak p}' \not\lesssim {\mathfrak u}'\). This implies that there exists \(q \in B_{{\mathfrak u}'}({\mathcal{Q}}({\mathfrak u}'), 1) \setminus B_{{\mathfrak p}'}({\mathcal{Q}}({\mathfrak p}'), 10)\). </p>
+<p>From \({\mathfrak p}' \le {\mathfrak p}\), \({\mathcal{I}}({\mathfrak p}') \subset {\mathcal{I}}({\mathfrak p}) \subset {\mathcal{I}}({\mathfrak u}')\) and <a href="overviewsection.html#monotone-cube-metrics">Lemma 2.1.2</a> it then follows that </p>
+<div class="displaymath" id="a0000000232">
+  \begin{align*} & \quad d_{{\mathfrak p}'}({\mathcal{Q}}({\mathfrak p}), {\mathcal{Q}}({\mathfrak u}’))\\ & \ge -d_{{\mathfrak p}'}({\mathcal{Q}}({\mathfrak p}), {\mathcal{Q}}({\mathfrak p}’)) + d_{{\mathfrak p}'}({\mathcal{Q}}({\mathfrak p}’), q) - d_{{\mathfrak p}'}(q, {\mathcal{Q}}({\mathfrak u}’))\\ & \ge -d_{{\mathfrak p}'}({\mathcal{Q}}({\mathfrak p}), {\mathcal{Q}}({\mathfrak p}’)) + d_{{\mathfrak p}'}({\mathcal{Q}}({\mathfrak p}’), q) - d_{{\mathfrak u}'}(q, {\mathcal{Q}}({\mathfrak u}’))\\ & {\gt} -1 + 10 - 1 = 8\, . \end{align*}
+</div>
+<p> The lemma follows by combining the two displays with the fact that \(95 a \ge 1\). </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="forest-inner">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">5.4.7</span>
+    <span class="lemma_thmtitle">forest inner</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="proptopropprop.html#forest-inner">#</a>
+    
+    <a class="icon proof" href="proptopropprop.html#a0000000233"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="proptopropprop.html#relation-geometry">Lemma 5.4.1</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/forest_inner" class="lean_decl">forest_inner</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    For each \({\mathfrak u}\in {\mathfrak U}_3(k,n,j)\) and each \({\mathfrak p}\in \mathfrak {T}_2({\mathfrak u})\) we have </p>
+<div class="equation" id="a0000000234">
+<p>
+  <div class="equation_content">
+    \begin{equation}  B({\mathrm{c}}({\mathfrak p}), 8 D^{{\mathrm{s}}({\mathfrak p})}) \subset {\mathcal{I}}({\mathfrak u}). \end{equation}
+  </div>
+  <span class="equation_label">5.4.8</span>
+</p>
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000233">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Let \({\mathfrak p}\in \mathfrak {T}_2({\mathfrak u})\). Then \({\mathfrak p}\in {\mathfrak C}_4(k,n,j)\), hence there exists a chain </p>
+<div class="displaymath" id="a0000000235">
+  \[  {\mathfrak p}\le {\mathfrak p}_{Z(n+1)} \le \dotsb \le {\mathfrak p}_0  \]
+</div>
+<p> of distinct tiles in \({\mathfrak C}_3(n,k,j)\). We pick such a chain and set \({\mathfrak q}= {\mathfrak p}_0\). Then we have from distinctness of the tiles in the chain that \({\mathrm{s}}({\mathfrak p}) \le {\mathrm{s}}({\mathfrak q}) - Z(n+1)\). By <a href="proptopropprop.html#eq-C3-def" class="eqref">5.1.16</a> there exists \({\mathfrak u}'' \in {\mathfrak U}_1(k,n,j)\) with \(2{\mathfrak q}\lesssim {\mathfrak u}''\) and \({\mathrm{s}}({\mathfrak q}) {\lt} {\mathrm{s}}({\mathfrak u}'')\). Then we have in particular by <a href="proptopropprop.html#wiggle-order-1">Lemma 5.3.1</a> that \(10 {\mathfrak p}\lesssim {\mathfrak u}''\). Let \({\mathfrak u}' \sim {\mathfrak u}\) be such that \({\mathfrak p}\in \mathfrak {T}_1({\mathfrak u}')\). By the definition of \(\sim \), it follows that \({\mathfrak u}' \sim {\mathfrak u}''\). By transitivity of \(\sim \), we have \({\mathfrak u}\sim {\mathfrak u}''\). By <a href="proptopropprop.html#relation-geometry">Lemma 5.4.1</a>, we have \({\mathrm{s}}({\mathfrak u}'') = {\mathrm{s}}({\mathfrak u})\), hence \({\mathrm{s}}({\mathfrak q}) {\lt} {\mathrm{s}}({\mathfrak u})\) and \({\mathrm{s}}({\mathfrak p}) \le {\mathrm{s}}({\mathfrak q}) - Z(n+1) \le {\mathrm{s}}({\mathfrak u}) - Z(n+1) - 1\). </p>
+<p>Thus, there exists some cube \(I \in \mathcal{D}\) with \(s(I) = {\mathrm{s}}({\mathfrak u}) - Z(n+1) - 1\) and \(I \subset {\mathcal{I}}({\mathfrak u})\) and \({\mathcal{I}}({\mathfrak p}) \subset I\). Since \({\mathfrak p}\in {\mathfrak C}_5(k,n,j)\), we have that \(I \notin \mathcal{L}({\mathfrak u})\), so \(B(c(I), 8D^{s(I)}) \subset {\mathcal{I}}({\mathfrak u})\). By the triangle inequality, <a href="overviewsection.html#defineD" class="eqref">2.0.1</a> and \(a \ge 4\), the same then holds for the subcube \({\mathcal{I}}({\mathfrak p}) \subset I\). </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="forest-stacking">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">5.4.8</span>
+    <span class="lemma_thmtitle">forest stacking</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="proptopropprop.html#forest-stacking">#</a>
+    
+    <a class="icon proof" href="proptopropprop.html#a0000000236"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/forest_stacking" class="lean_decl">forest_stacking</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>   It holds for \(k\le n\) that </p>
+<div class="equation" id="a0000000237">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \sum _{{\mathfrak u}\in {\mathfrak U}_3(k,n,j)} \mathbf{1}_{{\mathcal{I}}({\mathfrak u})} \le (4n+12)2^{n}\, . \end{equation}
+  </div>
+  <span class="equation_label">5.4.9</span>
+</p>
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000236">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Suppose that a point \(x\) is contained in more than \((4n + 12)2^n\) cubes \({\mathcal{I}}({\mathfrak u})\) with \({\mathfrak u}\in {\mathfrak U}_3(k,n,j)\). Since \({\mathfrak U}_3(k,n,j) \subset {\mathfrak C}_1(k,n,j)\) for each such \({\mathfrak u}\), there exists \(\mathfrak {m} \in \mathfrak {M}(k,n)\) such that \(100{\mathfrak u}\lesssim \mathfrak {m}\). We fix such an \(\mathfrak {m}({\mathfrak u}) := \mathfrak {m}\) for each \({\mathfrak u}\), and claim that the map \({\mathfrak u}\mapsto \mathfrak {m}({\mathfrak u})\) is injective. Indeed, assume for \({\mathfrak u}\neq {\mathfrak u}'\) there is \(\mathfrak {m} \in \mathfrak {M}(k,n)\) such that \(100{\mathfrak u}\lesssim \mathfrak {m}\) and \(100{\mathfrak u}' \lesssim \mathfrak {m}\). By <a href="overviewsection.html#dyadicproperty" class="eqref">2.0.8</a>, either \({\mathcal{I}}({\mathfrak u}) \subset {\mathcal{I}}({\mathfrak u}')\) or \({\mathcal{I}}({\mathfrak u}') \subset {\mathcal{I}}({\mathfrak u})\). By <a href="proptopropprop.html#defunkj" class="eqref">5.1.14</a>, \(B_{{\mathfrak u}}({\mathcal{Q}}({\mathfrak u}),100) \cap B_{{\mathfrak u}'}({\mathcal{Q}}({\mathfrak u}'), 100) = \emptyset \). This contradicts \(\Omega (\mathfrak {m})\) being contained in both sets by <a href="overviewsection.html#eq-freq-comp-ball" class="eqref">2.0.15</a>. Thus \(x\) is contained in more than \((4n + 12)2^n\) cubes \({\mathcal{I}}(\mathfrak {m})\), \(\mathfrak {m} \in \mathfrak {M}(k,n)\). Consequently, we have by <a href="proptopropprop.html#eq-Aoverlap-def" class="eqref">5.1.26</a> that \(x \in A(2n + 6, k,n) \subset G_2\). Let \({\mathcal{I}}({\mathfrak u})\) be an inclusion minimal cube among the \({\mathcal{I}}({\mathfrak u}'), {\mathfrak u}' \in {\mathfrak U}_3(k,n,j)\) with \(x \in {\mathcal{I}}({\mathfrak u})\). By the dyadic property <a href="overviewsection.html#dyadicproperty" class="eqref">2.0.8</a>, we have \({\mathcal{I}}({\mathfrak u}) \subset {\mathcal{I}}({\mathfrak u}')\) for all cubes \({\mathcal{I}}({\mathfrak u}')\) containing \(x\). Thus </p>
+<div class="displaymath" id="a0000000238">
+  \[  {\mathcal{I}}({\mathfrak u}) \subset \{ y \  : \  \sum _{{\mathfrak u}\in {\mathfrak U}_3(k,n,j)} \mathbf{1}_{{\mathcal{I}}({\mathfrak u})}(y) {\gt} 1 + (4n+12)2^{n}\}  \subset G_2\, .  \]
+</div>
+<p> Thus \(\mathfrak {T}_1({\mathfrak u}) \cap {\mathfrak C}_6(k,n,j) = \emptyset \). This contradicts \({\mathfrak u}\in {\mathfrak U}_2(k,n,j)\). </p>
+
+  </div>
+</div>
+<p> We now turn to the proof of <a href="proptopropprop.html#forest-union">Lemma 5.1.2</a>. </p>
+<div class="proof_wrapper" id="a0000000138">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof of <a href="proptopropprop.html#forest-union">Lemma 5.1.2</a>
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  
+<p>We first fix \(k,n, j\). By <a href="overviewsection.html#definetp" class="eqref">2.0.21</a> and <a href="overviewsection.html#defineep" class="eqref">2.0.20</a>, we have that \(\mathbf{1}_{{\mathcal{I}}({\mathfrak p})} T_{{\mathfrak p}}f(x) = T_{{\mathfrak p}}f(x)\) and hence \(\mathbf{1}_{G \setminus G'} T_{{\mathfrak p}}f(x)= 0\) for all \({\mathfrak p}\in {\mathfrak C}_5(k,n,j) \setminus {\mathfrak C}_6(k,n,j)\). Thus it suffices to estimate the contribution of the sets \({\mathfrak C}_6(k,n,j)\). By <a href="proptopropprop.html#forest-stacking">Lemma 5.4.8</a>, we can decompose \({\mathfrak U}_3(k,n,j)\) as a disjoint union of at most \(4n + 12\) collections \({\mathfrak U}_4(k,n,j,l)\), \(1 \le l \le 4n+12\), each satisfying </p>
+<div class="displaymath" id="a0000000239">
+  \[  \sum _{{\mathfrak u}\in {\mathfrak U}_4(k,n,j,l)} \mathbf{1}_{{\mathcal{I}}({\mathfrak u})} \le 2^n\, .  \]
+</div>
+<p> By Lemmas <a href="proptopropprop.html#forest-geometry">5.4.4</a>, <a href="proptopropprop.html#forest-convex">5.4.5</a>, <a href="proptopropprop.html#forest-separation">5.4.6</a>, <a href="proptopropprop.html#forest-inner">5.4.7</a> and <a href="proptopropprop.html#C-dens1">5.3.12</a>, the pairs </p>
+<div class="displaymath" id="a0000000240">
+  \[  ({\mathfrak U}_4(k,n,j,l), \mathfrak {T}_2|_{{\mathfrak U}_4(k,n,j,l)})  \]
+</div>
+<p> are \(n\)-forests for each \(k,n,j,l\), and by <a href="proptopropprop.html#C6-forest">Lemma 5.4.3</a>, we have </p>
+<div class="displaymath" id="a0000000241">
+  \[  {\mathfrak C}_6(k,n,j) = \bigcup _{l = 1}^{4n + 12} \bigcup _{{\mathfrak u}\in {\mathfrak U}_4(k,n,j,l)} \mathfrak {T}_2({\mathfrak u})\, .  \]
+</div>
+<p> Since \({\mathcal{I}}({\mathfrak p}) \not\subset G_1\) for all \({\mathfrak p}\in {\mathfrak C}_6(k,n,j)\), we have \({\mathfrak C}_6(k,n,j) \cap {\mathfrak P}_{F,G} = \emptyset \) and hence </p>
+<div class="displaymath" id="a0000000242">
+  \[  \operatorname{\operatorname {dens}}_2(\bigcup _{{\mathfrak u}\in {\mathfrak U}_4(k,n,j,l)} \mathfrak {T}_2({\mathfrak u})) \le 2^{2a + 5} \frac{\mu (F)}{\mu (G)}\, .  \]
+</div>
+<p> Using the triangle inequality according to the splitting by \(k,n,j\) and \(l\) in <a href="proptopropprop.html#disclesssim1" class="eqref">5.1.31</a> and applying <a href="overviewsection.html#forest-operator">Proposition 2.0.4</a> to each term, we obtain the estimate </p>
+<div class="displaymath" id="a0000000243">
+  \[  \sum _{k \ge 0}\sum _{n \ge k} (2n+3)(4n+12) 2^{440a^3}2^{-(1-\frac{1}{q})n}(2^{2a+5} \frac{\mu (F)}{\mu (G)})^{\frac{1}{q} - \frac{1}{2}} \| f\| _2 \| \mathbf{1}_{G\setminus G'}\| _2  \]
+</div>
+<p> for the left hand side of <a href="proptopropprop.html#disclesssim1" class="eqref">5.1.31</a>. Since \(|f| \le \mathbf{1}_F\), we have \(\| f\| _2 \le \mu (F)^{1/2}\), and we have \(\| \mathbf{1}_{G\setminus G'}\| _2 \le \mu (G)^{1/2}\). We get a bound </p>
+<div class="displaymath" id="a0000000244">
+  \[  2^{440a^3} \mu (F)^{\frac{1}{q}} \mu (G)^{1 -\frac{1}{q}} 2^{2a+5}\sum _{k \ge 0}\sum _{n \ge k}(2n+3)(4n+12) 2^{-(1-\frac{1}{q})n}\, .  \]
+</div>
+<p> Interchanging the order of summation, the last factor equals </p>
+<div class="displaymath" id="a0000000245">
+  \[  2^{2a+5} \sum _{n \ge 0} (2n+3)(4n+12) (n+1) 2^{-\frac{q-1}{q}n}\, .  \]
+</div>
+<p> Up to an explicit constant, the sum is bounded by \(\sum n^3 2^{-\frac{q-1}{q}n}\), which is at most some constant times \(1/(q-1)^4\) by comparing to an integral. Since \(a \ge 4\), this is overall bounded by \(2^{a^3}/(q-1)^4\), which completes the proof of the lemma. </p>
+
+  </div>
+</div>
+<h2 id="subsecantichain">5.5 Proof of the Forest Complement Lemma</h2>
+
+<p>Define \({\mathfrak P}_{G \setminus G'}\) to be the set of all \({\mathfrak p}\in {\mathfrak P}\) such that \(\mu ({\mathcal{I}}({\mathfrak p}) \cap (G \setminus G')) {\gt} 0\). </p>
+<div class="lemma_thmwrapper theorem-style-plain" id="antichain-decomposition">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">5.5.1</span>
+    <span class="lemma_thmtitle">antichain decomposition</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="proptopropprop.html#antichain-decomposition">#</a>
+    
+    <a class="icon proof" href="proptopropprop.html#a0000000246"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/antichain_decomposition" class="lean_decl">antichain_decomposition</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>   We have that </p>
+<div class="displaymath" id="eq-fp'-decomposition">
+  \begin{align}  \label{eq-fp'-decomposition} & \quad {\mathfrak P}_2 \cap {\mathfrak P}_{G \setminus G'}\\ & = \bigcup _{k \ge 0} \bigcup _{n \ge k} {\mathfrak L}_0(k,n) \cap {\mathfrak P}_{G \setminus G'} \\ & \quad \cup \bigcup _{k \ge 0} \bigcup _{n \ge k}\bigcup _{0 \le j \le 2n+3} {\mathfrak L}_2(k,n,j) \cap {\mathfrak P}_{G \setminus G'}\\ & \quad \cup \bigcup _{k \ge 0} \bigcup _{n \ge k}\bigcup _{0 \le j \le 2n+3} \bigcup _{0 \le l \le Z(n+1)} {\mathfrak L}_1(k,n,j,l) \cap {\mathfrak P}_{G \setminus G'}\\ & \quad \cup \bigcup _{k \ge 0} \bigcup _{n \ge k}\bigcup _{0 \le j \le 2n+3} \bigcup _{0 \le l \le Z(n+1)} {\mathfrak L}_3(k,n,j,l)\cap {\mathfrak P}_{G \setminus G'}\, . \end{align}
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000246">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Let \({\mathfrak p}\in {\mathfrak P}_2 \cap {\mathfrak P}_{G \setminus G'}\). Clearly, for every cube \(J = {\mathcal{I}}({\mathfrak p})\) with \({\mathfrak p}\in {\mathfrak P}_{G \setminus G'}\) there exists some \(k \ge 0\) such that <a href="proptopropprop.html#muhj1" class="eqref">5.1.1</a> holds, and for no cube \(J \in \mathcal{D}\) and no \(k {\lt} 0\) does <a href="proptopropprop.html#muhj2" class="eqref">5.1.2</a> hold. Thus \({\mathfrak p}\in {\mathfrak P}(k)\) for some \(k \ge 0\). </p>
+<p>Next, since \(E_2(\lambda , {\mathfrak p}') \subset {\mathcal{I}}({\mathfrak p}')\cap G\) for every \(\lambda \ge 2\) and every tile \({\mathfrak p}' \in {\mathfrak P}(k)\) with \(\lambda {\mathfrak p}\lesssim \lambda {\mathfrak p}'\), it follows from <a href="proptopropprop.html#muhj2" class="eqref">5.1.2</a> that \(\mu (E_2(\lambda , {\mathfrak p}')) \le 2^{-k} \mu ({\mathcal{I}}({\mathfrak p}'))\) for every such \({\mathfrak p}'\), so \(\operatorname{\operatorname {dens}}_k'(\{ {\mathfrak p}\} ) \le 2^{-k}\). Combining this with \(a \ge 0\), it follows from <a href="proptopropprop.html#def-cnk" class="eqref">5.1.7</a> that there exists \(n\ge k\) with \({\mathfrak p}\in {\mathfrak C}(k,n)\). </p>
+<p>Since \({\mathfrak p}\in {\mathfrak P}_{G \setminus G'}\), we have in particular \({\mathcal{I}}({\mathfrak p}) \not\subset A(2n + 6, k, n)\), so there exist at most \(1 + (4n + 12)2^n {\lt} 2^{2n+4}\) tiles \(\mathfrak {m} \in \mathfrak {M}(k,n)\) with \({\mathfrak p}\le \mathfrak {m}\). It follows that \({\mathfrak p}\in {\mathfrak L}_0(k,n)\) or \({\mathfrak p}\in {\mathfrak C}_1(k,n,j)\) for some \(1 \le j \le 2n + 3\). In the former case we are done, in the latter case the equality to be shown follows from the definitions of the collections \({\mathfrak C}_i\) and \({\mathfrak L}_i\). </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="L0-antichain">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">5.5.2</span>
+    <span class="lemma_thmtitle">L0 antichain</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="proptopropprop.html#L0-antichain">#</a>
+    
+    <a class="icon proof" href="proptopropprop.html#a0000000247"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="overviewsection.html#monotone-cube-metrics">Lemma 2.1.2</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/iUnion_L0'" class="lean_decl">iUnion_L0'</a></li>
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/pairwiseDisjoint_L0'" class="lean_decl">pairwiseDisjoint_L0'</a></li>
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/antichain_L0'" class="lean_decl">antichain_L0'</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    We have that </p>
+<div class="displaymath" id="a0000000248">
+  \[  {\mathfrak L}_0(k,n) = \dot{\bigcup _{0 \le l {\lt} n}} {\mathfrak L}_0(k,n,l)\, ,  \]
+</div>
+<p> where each \({\mathfrak L}_0(k,n,l)\) is an antichain. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000247">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>It suffices to show that \({\mathfrak L}_0(k,n)\) contains no chain of length \(n + 1\). Suppose that we had such a chain \({\mathfrak p}_0 \le {\mathfrak p}_1 \le \dotsb \le {\mathfrak p}_{n}\) with \({\mathfrak p}_i \ne {\mathfrak p}_{i+1}\) for \(i =0, \dotsc , n-1\). By <a href="proptopropprop.html#def-cnk" class="eqref">5.1.7</a>, we have that \(\operatorname{\operatorname {dens}}_k'(\{ {\mathfrak p}_n\} ) {\gt} 2^{-n}\). Thus, by <a href="proptopropprop.html#eq-densdef" class="eqref">5.1.6</a>, there exists \({\mathfrak p}' \in {\mathfrak P}(k)\) and \(\lambda \ge 2\) with \(\lambda {\mathfrak p}_n \le \lambda {\mathfrak p}'\) and </p>
+<div class="equation" id="eq-p'">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-p'} \frac{\mu (E_2(\lambda , {\mathfrak p}'))}{\mu ({\mathcal{I}}({\mathfrak p}'))} {\gt} \lambda ^{a} 2^{4a} 2^{-n}\, . \end{equation}
+  </div>
+  <span class="equation_label">5.5.6</span>
+</p>
+</div>
+<p> Let \(\mathfrak {O}\) be the set of all \({\mathfrak p}'' \in {\mathfrak P}(k)\) such that we have \( {\mathcal{I}}({\mathfrak p}'') = {\mathcal{I}}({\mathfrak p}')\) and \(B_{{\mathfrak p}'}({\mathcal{Q}}({\mathfrak p}'), \lambda ) \cap \Omega ({\mathfrak p}'') \neq \emptyset \). We now show that </p>
+<div class="equation" id="eq-O-bound">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-O-bound} |\mathfrak {O}| \le 2^{4a}\lambda ^a\, . \end{equation}
+  </div>
+  <span class="equation_label">5.5.7</span>
+</p>
+</div>
+<p> The balls \(B_{{\mathfrak p}'}({\mathcal{Q}}({\mathfrak p}''), 0.2)\), \({\mathfrak p}'' \in \mathfrak {O}\) are disjoint by <a href="overviewsection.html#eq-freq-comp-ball" class="eqref">2.0.15</a>, and by the triangle inequality contained in \(B_{{\mathfrak p}'}({\mathcal{Q}}({\mathfrak p}'), \lambda +1.2)\). By assumption <a href="sect0001.html#thirddb" class="eqref">1.1.8</a> on \(\Theta \), this ball can be covered with </p>
+<div class="displaymath" id="a0000000249">
+  \[  2^{a\lceil \log _2(\lambda +1.2) + \log _2(5)\rceil } \le 2^{a(\log _2(\lambda ) + 4)} = 2^{4a}\lambda ^a  \]
+</div>
+<p> many \(d_{{\mathfrak p}'}\)-balls of radius \(0.2\). Here we have used that for \(\lambda \ge 2\) </p>
+<div class="displaymath" id="a0000000250">
+  \[  \lceil \log _2(\lambda + 1.2) + \log _2(5) \rceil \le 1+ \log _2(1.6 \lambda ) + \log _2(5) = 4 + \log _2(\lambda )\, .  \]
+</div>
+<p> By the triangle inequality, each such ball contains at most one \({\mathcal{Q}}({\mathfrak p}'')\), and each \({\mathcal{Q}}({\mathfrak p}'')\) is contained in one of the balls. Thus we get <a href="proptopropprop.html#eq-O-bound" class="eqref">5.5.7</a>. </p>
+<p>By <a href="overviewsection.html#definee1" class="eqref">2.0.26</a> and <a href="overviewsection.html#definee2" class="eqref">2.0.27</a> we have \(E_2(\lambda , {\mathfrak p}') \subset \bigcup _{{\mathfrak p}'' \in \mathfrak {O}} E_1({\mathfrak p}'')\), thus </p>
+<div class="displaymath" id="a0000000251">
+  \[  2^{4a}\lambda ^a 2^{-n} {\lt} \sum _{{\mathfrak p}'' \in \mathfrak {O}} \frac{\mu (E_1({\mathfrak p}''))}{\mu ({\mathcal{I}}({\mathfrak p}''))}\, .  \]
+</div>
+<p> Hence there exists a tile \({\mathfrak p}'' \in \mathfrak {O}\) with </p>
+<div class="displaymath" id="a0000000252">
+  \begin{equation*}  \mu (E_1({\mathfrak p}”)) \ge 2^{-n} \mu ({\mathcal{I}}({\mathfrak p}’))\, . \end{equation*}
+</div>
+<p> By the definition <a href="proptopropprop.html#mnkmax" class="eqref">5.1.5</a> of \(\mathfrak {M}(k,n)\), there exists a tile \(\mathfrak {m} \in \mathfrak {M}(k,n)\) with \({\mathfrak p}' \leq \mathfrak {m}\). From <a href="proptopropprop.html#eq-p'" class="eqref">5.5.6</a>, the inclusion \(E_2(\lambda , {\mathfrak p}') \subset {\mathcal{I}}({\mathfrak p}')\) and \(a\ge 1\) we obtain </p>
+<div class="displaymath" id="a0000000253">
+  \[  2^n \geq 2^{4a} \lambda ^{a} \geq \lambda \, .  \]
+</div>
+<p> From the triangle inequality, <a href="overviewsection.html#monotone-cube-metrics">Lemma 2.1.2</a> and \(a \ge 1\), we now obtain for all \({\vartheta }\in B_{\mathfrak {m}}({\mathcal{Q}}(\mathfrak {m}), 1)\) that </p>
+<div class="displaymath" id="a0000000254">
+  \begin{align*} & \quad d_{{\mathfrak p}_0}({\mathcal{Q}}({\mathfrak p}_0), {\vartheta })\\ & \leq d_{{\mathfrak p}_0}({\mathcal{Q}}({\mathfrak p}_0), {\mathcal{Q}}({\mathfrak p}_{n})) + d_{{\mathfrak p}_0}({\mathcal{Q}}({\mathfrak p}_{n}), {\mathcal{Q}}({\mathfrak p}’)) + d_{{\mathfrak p}_0}({\mathcal{Q}}({\mathfrak p}’), {\mathcal{Q}}({\mathfrak p}”))\\ & \quad + d_{{\mathfrak p}_0}({\mathcal{Q}}({\mathfrak p}”), {\mathcal{Q}}(\mathfrak {m})) + d_{{\mathfrak p}_0}({\mathcal{Q}}(\mathfrak {m}), {\vartheta })\\ & \leq 1 + 2^{-95an} (d_{{\mathfrak p}_{n}}({\mathcal{Q}}({\mathfrak p}_n), {\mathcal{Q}}({\mathfrak p}’)) + d_{{\mathfrak p}'}({\mathcal{Q}}({\mathfrak p}’), {\mathcal{Q}}({\mathfrak p}”))\\ & \quad + d_{{\mathfrak p}''}({\mathcal{Q}}({\mathfrak p}”), {\mathcal{Q}}(\mathfrak {m})) + d_{\mathfrak {m}}({\mathcal{Q}}(\mathfrak {m}), {\vartheta }))\\ & \leq 1 + 2^{-95an}(\lambda + (\lambda + 1) + 1 + 1) \leq 100\, . \end{align*}
+</div>
+<p> Thus, by <a href="overviewsection.html#straightorder" class="eqref">2.0.23</a>, \(100{\mathfrak p}_0 \lesssim \mathfrak {m}\), a contradiction to \({\mathfrak p}_0 \notin {\mathfrak C}(k,n)\). </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="L2-antichain">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">5.5.3</span>
+    <span class="lemma_thmtitle">L2 antichain</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="proptopropprop.html#L2-antichain">#</a>
+    
+    <a class="icon proof" href="proptopropprop.html#a0000000255"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="overviewsection.html#monotone-cube-metrics">Lemma 2.1.2</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/antichain_L2" class="lean_decl">antichain_L2</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    Each of the sets \({\mathfrak L}_2(k,n,j)\) is an antichain. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000255">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Suppose that there are \({\mathfrak p}_0, {\mathfrak p}_1 \in {\mathfrak L}_2(k,n,j)\) with \({\mathfrak p}_0 \ne {\mathfrak p}_1\) and \({\mathfrak p}_0 \le {\mathfrak p}_1\). By <a href="proptopropprop.html#wiggle-order-1">Lemma 5.3.1</a> and <a href="proptopropprop.html#wiggle-order-2">Lemma 5.3.2</a>, it follows that \(2{\mathfrak p}_0 \lesssim 200{\mathfrak p}_1\). Since \({\mathfrak L}_2(k,n,j)\) is finite, there exists a maximal \(l \ge 1\) such that there exists a chain \(2{\mathfrak p}_0 \lesssim 200 {\mathfrak p}_1 \lesssim \dotsb \lesssim 200 {\mathfrak p}_l\) with all \({\mathfrak p}_i\) in \({\mathfrak C}_1(k,n,j)\) and \({\mathfrak p}_i \ne {\mathfrak p}_{i+1}\) for \(i = 0, \dotsc , l-1\). If we have \({\mathfrak p}_l \in {\mathfrak U}_1(k,n,j)\), then it follows from \(2{\mathfrak p}_0 \lesssim 200 {\mathfrak p}_l \lesssim {\mathfrak p}_l\) and <a href="proptopropprop.html#eq-L2-def" class="eqref">5.1.15</a> that \({\mathfrak p}_0 \not\in {\mathfrak L}_2(k,n,j)\), a contradiction. Thus, by the definition <a href="proptopropprop.html#defunkj" class="eqref">5.1.14</a> of \({\mathfrak U}_1(k,n,j)\), there exists \({\mathfrak p}_{l+1} \in {\mathfrak C}_1(k,n,j)\) with \({\mathcal{I}}({\mathfrak p}_l) \subsetneq {\mathcal{I}}({\mathfrak p}_{l+1}) \) and \({\vartheta }\in B_{{\mathfrak p}_l}({\mathcal{Q}}({\mathfrak p}_l), 100) \cap B_{{\mathfrak p}_{l+1}}({\mathcal{Q}}({\mathfrak p}_{l+1}), 100)\). Using the triangle inequality and <a href="overviewsection.html#monotone-cube-metrics">Lemma 2.1.2</a>, one deduces that \(200 {\mathfrak p}_l \lesssim 200{\mathfrak p}_{l+1}\). This contradicts maximality of \(l\). </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="L1-L3-antichain">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">5.5.4</span>
+    <span class="lemma_thmtitle">L1 L3 antichain</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="proptopropprop.html#L1-L3-antichain">#</a>
+    
+    <a class="icon proof" href="proptopropprop.html#a0000000256"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/antichain_L1" class="lean_decl">antichain_L1</a></li>
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/antichain_L3" class="lean_decl">antichain_L3</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>   Each of the sets \({\mathfrak L}_1(k,n,j,l)\) and \({\mathfrak L}_3(k,n,j,l)\) is an antichain. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000256">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>By its definition <a href="proptopropprop.html#eq-L1-def" class="eqref">5.1.11</a>, each set \({\mathfrak L}_1(k,n,j,l)\) is a set of minimal elements in some set of tiles with respect to \(\le \). If there were distinct \({\mathfrak p}, {\mathfrak q}\in {\mathfrak L}_1(k,n,j,l)\) with \({\mathfrak p}\le {\mathfrak q}\), then \({\mathfrak q}\) would not be minimal. Hence such \({\mathfrak p}, {\mathfrak q}\) do not exist. Similarly, by <a href="proptopropprop.html#eq-L3-def" class="eqref">5.1.17</a>, each set \({\mathfrak L}_3(k,n,j,l)\) is a set of maximal elements in some set of tiles with respect to \(\le \). If there were distinct \({\mathfrak p}, {\mathfrak q}\in {\mathfrak L}_3(k,n,j,l)\) with \({\mathfrak p}\le {\mathfrak q}\), then \({\mathfrak p}\) would not be maximal. </p>
+
+  </div>
+</div>
+<p>We now turn to the proof of <a href="proptopropprop.html#forest-complement">Lemma 5.1.3</a>. </p>
+<div class="proof_wrapper" id="a0000000140">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof of <a href="proptopropprop.html#forest-complement">Lemma 5.1.3</a>
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p> If \({\mathfrak p}\not\in {\mathfrak P}_{G \setminus G'}\), then \(\mu ({\mathcal{I}}({\mathfrak p}) \cap (G \setminus G')) = 0\). By <a href="overviewsection.html#definetp" class="eqref">2.0.21</a> and <a href="overviewsection.html#definee1" class="eqref">2.0.26</a>, it follows that \(\mathbf{1}_{G \setminus G'} T_{{\mathfrak p}}f(x) = 0\) for almost every \(x\). We thus have, almost everywhere, </p>
+<div class="displaymath" id="a0000000257">
+  \[  \mathbf{1}_{G\setminus G'} \sum _{{\mathfrak p}\in {\mathfrak P}_2} T_{{\mathfrak p}}f(x) = \mathbf{1}_{G\setminus G'} \sum _{{\mathfrak p}\in {\mathfrak P}_2 \cap {\mathfrak P}_{G \setminus G'}} T_{{\mathfrak p}}f(x)\, .  \]
+</div>
+<p> Let \({\mathfrak L}(k,n)\) denote any of the terms \({\mathfrak L}_i(k,n,j,l) \cap {\mathfrak P}_{G \setminus G'}\) on the right hand side of <a href="proptopropprop.html#eq-fp'-decomposition" class="eqref">5.5.1</a>, where the indices \(j, l\) may be void. Then \({\mathfrak L}(k,n)\) is an antichain, by Lemmas <a href="proptopropprop.html#L0-antichain">5.5.2</a>,<a href="proptopropprop.html#L2-antichain">5.5.3</a>, <a href="proptopropprop.html#L1-L3-antichain">5.5.4</a>. Further, we have </p>
+<div class="displaymath" id="a0000000258">
+  \begin{equation*}  \operatorname{\operatorname {dens}}_1({\mathfrak L}(k,n)) \le 2^{4a+1 - n} \end{equation*}
+</div>
+<p> by <a href="proptopropprop.html#C-dens1">Lemma 5.3.12</a>, and we have </p>
+<div class="displaymath" id="a0000000259">
+  \begin{equation*}  \operatorname{\operatorname {dens}}_2({\mathfrak L}(k,n)) \le 2^{2a+5} \frac{\mu (F)}{\mu (G)}, \end{equation*}
+</div>
+<p> since </p>
+<div class="displaymath" id="a0000000260">
+  \begin{equation*}  {\mathfrak L}(k,n) \cap {\mathfrak P}_{F,G} \subset {\mathfrak P}_{G \setminus G'} \cap {\mathfrak P}_{F, G} = \emptyset . \end{equation*}
+</div>
+<p>Applying now the triangle inequality according to the decomposition coming from <a href="proptopropprop.html#antichain-decomposition">Lemma 5.5.1</a>, and then applying <a href="overviewsection.html#antichain-operator">Proposition 2.0.3</a> to each term, we obtain the estimate </p>
+<div class="displaymath" id="a0000000261">
+  \begin{multline*}  \le \sum _{k \ge 0} \sum _{n \ge k} (n + (2n+4) + 2(2n+4) (1+Z(n+1))) \\ \times 2^{117a^3}(q-1)^{-1} (2^{4a+1-n})^{\frac{q-1}{8a^4}} (2^{2a+5} \frac{\mu (F)}{\mu (G)})^{\frac{1}{q} - \frac{1}{2}} \| f\| _2\| \mathbf{1}_{G\setminus G'}\| _2\, . \end{multline*}
+</div>
+<p> Because \(|f| \le \mathbf{1}_F\), we have \(\| f\| _2 \le \mu (F)^{1/2}\), and we have \(\| \mathbf{1}_{G\setminus G'}\| _2 \le \mu (G)^{1/2}\). Using this and <a href="overviewsection.html#defineZ" class="eqref">2.0.3</a>, we bound </p>
+<div class="displaymath" id="a0000000262">
+  \[  \le 2^{118a^3} (q - 1)^{-1} \mu (F)^{\frac{1}{q}} \mu (G)^{\frac{1}{q'}} \sum _{k \ge 0} \sum _{n \ge k} n^2 2^{-n\frac{q-1}{8a^4}}\, .  \]
+</div>
+<p> The last sum equals, by changing the order of summation, </p>
+<div class="displaymath" id="a0000000263">
+  \[  \sum _{n \ge 0} n^2(n+1) 2^{-n\frac{q-1}{8a^4}} \le \frac{2^{2a^3}}{(q-1)^4}\, .  \]
+</div>
+<p> This completes the proof. </p>
+
+  </div>
+</div>
+
+</div> <!--main-text -->
+</div> <!-- content-wrapper -->
+</div> <!-- content -->
+</div> <!-- wrapper -->
+
+<nav class="prev_up_next">
+  <svg  id="showmore-minus" class="icon icon-eye-minus showmore"><use xlink:href="symbol-defs.svg#icon-eye-minus"></use></svg>
+
+  <svg  id="showmore-plus" class="icon icon-eye-plus showmore"><use xlink:href="symbol-defs.svg#icon-eye-plus"></use></svg>
+
+  <a href="christsection.html" title="Proof of Finitary Carleson"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+</a>
+  <a href="index.html" title="A blueprint for the formalization of Carleson’s theorem on convergence of Fourier series"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+</a>
+  <a href="antichainboundary.html" title="Proof of the Antichain Operator Proposition"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+</a>
+</nav>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/plastex.js"></script>
+<script type="text/javascript" src="js/svgxuse.js"></script>
+<script type="text/javascript" src="js/js.cookie.min.js"></script>
+<script type="text/javascript" src="js/showmore.js"></script>
+</body>
+</html>

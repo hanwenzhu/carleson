@@ -1,3 +1,4 @@
+import Architect
 import Carleson.Discrete.Defs
 import Carleson.Discrete.SumEstimates
 import Carleson.ForestOperator.Forests
@@ -19,6 +20,22 @@ variable {k n j l : ℕ} {p p' u u' : 𝔓 X} {x : X}
 /-! Note: the lemmas 5.3.1-5.3.3 are in `TileStructure`. -/
 
 /-- Lemma 5.3.4 -/
+@[blueprint
+  "P-convex"
+  (title := "P convex")
+  (statement := /-- For each $k$, the collection $\fP(k)$ is convex. -/)
+  (proof := /-- Suppose that $\fp \le \fp' \le \fp''$ and $\fp, \fp'' \in \fP(k)$. By
+    \eqref{eq-defPk} we have $\scI(\fp), \scI(\fp'') \in \mathcal{C}(G,k)$, so there exists by
+    \eqref{muhj1} some $J \in \mathcal{D}$ with
+    $$
+        \scI(\fp') \subset \scI(\fp'') \subset J
+    $$
+    and $\mu(G \cap J) > 2^{-k-1} \mu(J)$. Thus \eqref{muhj1} holds for $\scI(\fp')$. On the other
+    hand, by \eqref{muhj2}, there exists no $J \in \mathcal{D}$ with $\scI(\fp) \subset J$ and
+    $\mu(G \cap J) > 2^{-k} \mu(J)$. Since $\scI(\fp) \subset \scI(\fp')$, this implies that
+    \eqref{muhj2} holds for $\scI(\fp')$. Hence $\scI(\fp') \in \mathcal{C}(G,k)$, and therefore by
+    \eqref{eq-defPk} $\fp' \in \fP(k)$. -/)
+  (latexEnv := "lemma")]
 lemma ordConnected_tilesAt : OrdConnected (TilesAt k : Set (𝔓 X)) := by
   rw [ordConnected_def]; intro p mp p'' mp'' p' mp'
   simp_rw [TilesAt, mem_preimage, 𝓒, mem_diff, aux𝓒, mem_setOf] at mp mp'' ⊢
@@ -29,6 +46,28 @@ lemma ordConnected_tilesAt : OrdConnected (TilesAt k : Set (𝔓 X)) := by
     exact fun J hJ ↦ mp.2 J (mp'.1.1.trans hJ)
 
 /-- Lemma 5.3.5 -/
+@[blueprint
+  "C-convex"
+  (title := "C convex")
+  (statement := /-- For each $k,n$, the collection $\fC(k,n)$ is convex. -/)
+  (proof := /-- Let $\fp \le \fp' \le \fp''$ with $\fp, \fp'' \in \fC(k,n)$. Then, in particular,
+    $\fp, \fp'' \in \fP(k)$, so, by \Cref{P-convex}, $\fp' \in \fP(k)$. Next, we show that if $\fq
+    \le \fq' \in \fP(k)$ then $\dens'_k(\{\fq\}) \ge \dens_k'(\{\fq'\})$. If $\fp \in \fP(k)$ and
+    $\lambda \ge 2$ with $\lambda \fq' \lesssim \lambda \fp$, then it follows from $\fq \le \fq'$,
+    \eqref{eq-sc1} of \Cref{wiggle-order-3} and transitivity of $\lesssim$ that $\lambda \fq
+    \lesssim \lambda \fp$. Thus the supremum in the definition \eqref{eq-densdef} of
+    $\dens_k'(\{\fq\})$ is over a superset of the set the supremum in the definition of
+    $\dens_k'(\{\fq'\})$ is taken over, which shows $\dens'_k(\{\fq\}) \ge \dens_k'(\{\fq'\})$. From
+    $\fp' \le \fp''$, $\fp'' \in \fC(k,n)$ and \eqref{def-cnk} it then follows that
+    $$
+        2^{4a}2^{-n} < \dens_k'(\{\fp''\}) \le \dens_k'(\{\fp'\})\,.
+    $$
+    Similarly, it follows from $\fp \le \fp'$, $\fp \in \fC(k,n)$ and \eqref{def-cnk} that
+    $$
+        \dens_k'(\{\fp'\}) \le \dens_k'(\{\fp\}) \le 2^{4a}2^{-n+1}\,.
+    $$
+    Thus $\fp' \in \fC(k,n)$. -/)
+  (latexEnv := "lemma")]
 lemma ordConnected_C : OrdConnected (ℭ k n : Set (𝔓 X)) := by
   rw [ordConnected_def]; intro p mp p'' mp'' p' mp'
   rw [ℭ, mem_setOf] at mp mp'' ⊢
@@ -41,6 +80,21 @@ lemma ordConnected_C : OrdConnected (ℭ k n : Set (𝔓 X)) := by
   exact ⟨mp''.2.1.trans_le (hk _ mp''.1 _ mp'.2), (hk _ z _ mp'.1).trans mp.2.2⟩
 
 /-- Lemma 5.3.6 -/
+@[blueprint
+  "C1-convex"
+  (title := "C1 convex")
+  (statement := /-- For each $k,n,j$, the collection $\fC_1(k,n,j)$ is convex. -/)
+  (proof := /-- Let $\fp\le\fp'\le\fp''$ with $\fp, \fp'' \in \fC_1(k,n,j)$. By \Cref{C-convex} and
+    the inclusion $\fC_1(k,n,j) \subset \fC(k,n)$, which holds by definition \eqref{defcnkj}, we
+    have $\fp' \in \fC(k,n)$. By \eqref{eq-sc1} and transitivity of $\lesssim$ we have that $\fq \le
+    \fq'$ and $100 \fq' \lesssim \mathfrak{m}$ imply $100 \fq \lesssim \mathfrak{m}$. So, by
+    \eqref{defbfp}, $\mathfrak{B}(\fp'') \subset \mathfrak{B}(\fp') \subset \mathfrak{B}(\fp)$.
+    Consequently, by \eqref{defcnkj}
+    $$
+        2^j \le |\mathfrak{B}(\fp'')|\le |\mathfrak{B}(\fp')| \le |\mathfrak{B}(\fp)| < 2^{j+1}\,,
+    $$
+    thus $\fp' \in \fC_1(k,n,j)$. -/)
+  (latexEnv := "lemma")]
 lemma ordConnected_C1 : OrdConnected (ℭ₁ k n j : Set (𝔓 X)) := by
   rw [ordConnected_def]; intro p mp p'' mp'' p' mp'
   have mp'₁ : p' ∈ ℭ (X := X) k n := mem_of_mem_of_subset mp'
@@ -61,6 +115,23 @@ lemma ordConnected_C1 : OrdConnected (ℭ₁ k n j : Set (𝔓 X)) := by
     exact ⟨mb.1, h100.trans mb.2⟩
 
 /-- Lemma 5.3.7 -/
+@[blueprint
+  "C2-convex"
+  (title := "C2 convex")
+  (statement := /-- For each $k,n,j$, the collection $\fC_2(k,n,j)$ is convex. -/)
+  (proof := /-- Let $\fp \le \fp' \le \fp''$ with $\fp, \fp'' \in \fC_2(k,n,j)$. By
+    \eqref{eq-C2-def}, we have
+    \begin{equation*}
+        \fC_2(k,n,j) \subset \fC_1(k,n,j)\ .
+    \end{equation*} Combined with \Cref{C1-convex}, it follows that $\fp' \in \fC_1(k,n,j)$.
+    If $\fp=\fp'$ the statement is trivially true, otherwise suppose that $\fp' \notin
+    \fC_2(k,n,j)$.
+    By \eqref{eq-C2-def}, this implies that there exists $0 \le l' \le Z(n+1)$ with $\fp' \in
+    \fL_1(k,n,j,l')$.
+    By the definition \eqref{eq-L1-def} of $\fL_1(k,n,j,l')$, this implies that $\fp'$ is minimal
+    with respect to $\le$ in $\fC_1(k,n,j) \setminus \bigcup_{l < l'} \fL_1(k,n,j,l)$.
+    Since $\fp\le\fp'$ and $\fp\in\fC_2(k,n,j)$, $\fp=\fp'$, a contradiction. -/)
+  (latexEnv := "lemma")]
 lemma ordConnected_C2 : OrdConnected (ℭ₂ k n j : Set (𝔓 X)) := by
   rw [ordConnected_def]; intro p mp p'' mp'' p' mp'
   have mp₁ := mem_of_mem_of_subset mp ℭ₂_subset_ℭ₁
@@ -77,6 +148,17 @@ lemma ordConnected_C2 : OrdConnected (ℭ₂ k n j : Set (𝔓 X)) := by
   exact absurd (p'm.2 ⟨mp.1, pnm⟩ mp'.1).symm e
 
 /-- Lemma 5.3.8 -/
+@[blueprint
+  "C3-convex"
+  (title := "C3 convex")
+  (statement := /-- For each $k,n,j$, the collection $\fC_3(k,n,j)$ is convex. -/)
+  (proof := /-- Let $\fp \le \fp' \le \fp''$ with $\fp, \fp'' \in \fC_3(k,n,j)$.
+    By \eqref{eq-C3-def} and \Cref{C2-convex} it follows that $\fp' \in \fC_2(k,n,j)$.
+    By \eqref{eq-C3-def} and \eqref{eq-L2-def}, there exists $\fu \in \fU_1(k,n,j)$ with
+    $2\fp'' \lesssim \fu$ and $\scI(\fp'') \subsetneq \scI(\fu)$. From $\fp' \le \fp''$,
+    \eqref{eq-sc1} and transitivity of $\lesssim$ we then have
+    $2\fp' \lesssim \fu$ and $\scI(\fp') \subsetneq \scI(\fu)$, so $\fp' \in \fC_3(k,n,j)$. -/)
+  (latexEnv := "lemma")]
 lemma ordConnected_C3 : OrdConnected (ℭ₃ k n j : Set (𝔓 X)) := by
   rw [ordConnected_def]; intro p mp p'' mp'' p' mp'
   have mp₁ := mem_of_mem_of_subset mp ℭ₃_subset_ℭ₂
@@ -88,6 +170,14 @@ lemma ordConnected_C3 : OrdConnected (ℭ₃ k n j : Set (𝔓 X)) := by
     (wiggle_order_11_10 mp'.2 (C5_3_3_le (X := X).trans (by norm_num))).trans su⟩
 
 /-- Lemma 5.3.9 -/
+@[blueprint
+  "C4-convex"
+  (title := "C4 convex")
+  (statement := /-- For each $k,n,j$, the collection $\fC_4(k,n,j)$ is convex. -/)
+  (proof := /-- The proof is entirely analogous to \Cref{C2-convex}, substituting $\fC_4$ for
+    $\fC_2$,
+    $\fC_3$ for $\fC_1$ and $\fp'\le\fp''$ for $\fp\le\fp'$. -/)
+  (latexEnv := "lemma")]
 lemma ordConnected_C4 : OrdConnected (ℭ₄ k n j : Set (𝔓 X)) := by
   rw [ordConnected_def]; intro p mp p'' mp'' p' mp'
   have mp''₁ := mem_of_mem_of_subset mp'' ℭ₄_subset_ℭ₃
@@ -104,6 +194,17 @@ lemma ordConnected_C4 : OrdConnected (ℭ₄ k n j : Set (𝔓 X)) := by
   exact absurd (p'm.2 ⟨mp''₁, p''nm⟩ mp'.2) e
 
 /-- Lemma 5.3.10 -/
+@[blueprint
+  "C5-convex"
+  (title := "C5 convex")
+  (statement := /-- For each $k,n,j$, the collection $\fC_5(k,n,j)$ is convex. -/)
+  (proof := /-- Let $\fp \le \fp' \le\fp''$ with $\fp, \fp'' \in \fC_5(k,n,j)$.
+    Then $\fp, \fp'' \in \fC_4(k,n,j)$ by \eqref{defc5}, and thus by \Cref{C4-convex} $\fp' \in
+    \fC_4(k,n,j)$.
+    It suffices to show that if $\fp' \in \fL_4(k,n,j)$ then $\fp \in \fL_4(k,n,j)$ by
+    contraposition;
+    this is true by \eqref{eq-L4-def} and $\fp\le\fp'$. -/)
+  (latexEnv := "lemma")]
 lemma ordConnected_C5 : OrdConnected (ℭ₅ k n j : Set (𝔓 X)) := by
   rw [ordConnected_def]; intro p mp p'' mp'' p' mp'
   have mp₁ := mem_of_mem_of_subset mp ℭ₅_subset_ℭ₄
@@ -143,6 +244,42 @@ def URel (k n j : ℕ) (u u' : 𝔓 X) : Prop :=
 nonrec lemma URel.rfl : URel k n j u u := Or.inl rfl
 
 /-- Lemma 5.4.1, part 2. -/
+@[blueprint
+  "relation-geometry"
+  (title := "relation geometry")
+  (statement := /-- If $\fu \sim \fu'$, then $\scI(u) = \scI(u')$ and
+    \begin{equation*}
+        B_{\fu}(\fcc(\fu), 100) \cap B_{\fu'}(\fcc(\fu'), 100) \neq \emptyset\ .
+    \end{equation*} -/)
+  (proof := /-- Let $\fu, \fu' \in \fU_2(k,n,j)$ with $\fu \sim \fu'$. If $\fu = \fu'$ then the
+    conclusion of the Lemma clearly holds. Else, there exists $\fp \in \fC_1(k,n,j)$ such that
+    $\scI(\fp) \ne \scI(\fu)$ and $2 \fp \lesssim \fu$ and $10 \fp \lesssim \fu'$.
+    Using \Cref{wiggle-order-1} and \eqref{eq-sc2} of \Cref{wiggle-order-3}, we deduce that
+    \begin{equation}
+        \label{eq-Fefferman-trick0}
+        100 \fp\lesssim 100 \fu\,, \qquad 100 \fp \lesssim 100\fu'\,.
+    \end{equation}
+    Now suppose that $B_{\fu}(\fcc(\fu), 100) \cap B_{\fu'}(\fcc(\fu'), 100) = \emptyset$. Then we
+    have $\mathfrak{B}(\fu) \cap \mathfrak{B}(\fu') = \emptyset$, by the definition \eqref{defbfp}
+    of $\mathfrak{B}$ and the definition \eqref{wiggleorder} of $\lesssim$, but also
+    $\mathfrak{B}(\fu) \subset \mathfrak{B}(\fp)$ and $\mathfrak{B}(\fu') \subset
+    \mathfrak{B}(\fp)$, by \eqref{defbfp}, \eqref{wiggleorder} and \eqref{eq-Fefferman-trick0}.
+    Hence,
+    $$
+        |\mathfrak{B}(\fp)| \geq |\mathfrak{B}(\fu)| + |\mathfrak{B}(\fu')| \geq 2^{j} + 2^j =
+        2^{j+1}\,,
+    $$
+    which contradicts $\fp \in \fC_1(k,n,j)$. Therefore we must have
+    \begin{equation*}
+        B_{\fu}(\fcc(\fu), 100) \cap B_{\fu'}(\fcc(\fu'), 100) \ne \emptyset\, .
+    \end{equation*}
+    
+    It follows from $2\fp \lesssim \fu$ and $10\fp \lesssim \fu'$ that $\scI(\fp) \subset \scI(\fu)$
+    and $\scI(\fp) \subset \scI(\fu')$. By \eqref{dyadicproperty}, it follows that $\scI(\fu)$ and
+    $\scI(\fu')$ are nested.
+    Combining this with the conclusion of the last paragraph and definition \eqref{defunkj} of
+    $\fU_1(k,n,j)$, we obtain that $\scI(\fu) = \scI(\fu')$. -/)
+  (latexEnv := "lemma")]
 lemma URel.not_disjoint (hu : u ∈ 𝔘₂ k n j) (hu' : u' ∈ 𝔘₂ k n j) (huu' : URel k n j u u') :
     ¬Disjoint (ball_(u) (𝒬 u) 100) (ball_(u') (𝒬 u') 100) := by
   classical
@@ -187,6 +324,42 @@ lemma URel.not_disjoint (hu : u ∈ 𝔘₂ k n j) (hu' : u' ∈ 𝔘₂ k n j) 
       exact ⟨usp, u'sp⟩
 
 /-- Lemma 5.4.1, part 1. -/
+@[blueprint
+  "relation-geometry"
+  (title := "relation geometry")
+  (statement := /-- If $\fu \sim \fu'$, then $\scI(u) = \scI(u')$ and
+    \begin{equation*}
+        B_{\fu}(\fcc(\fu), 100) \cap B_{\fu'}(\fcc(\fu'), 100) \neq \emptyset\ .
+    \end{equation*} -/)
+  (proof := /-- Let $\fu, \fu' \in \fU_2(k,n,j)$ with $\fu \sim \fu'$. If $\fu = \fu'$ then the
+    conclusion of the Lemma clearly holds. Else, there exists $\fp \in \fC_1(k,n,j)$ such that
+    $\scI(\fp) \ne \scI(\fu)$ and $2 \fp \lesssim \fu$ and $10 \fp \lesssim \fu'$.
+    Using \Cref{wiggle-order-1} and \eqref{eq-sc2} of \Cref{wiggle-order-3}, we deduce that
+    \begin{equation}
+        \label{eq-Fefferman-trick0}
+        100 \fp\lesssim 100 \fu\,, \qquad 100 \fp \lesssim 100\fu'\,.
+    \end{equation}
+    Now suppose that $B_{\fu}(\fcc(\fu), 100) \cap B_{\fu'}(\fcc(\fu'), 100) = \emptyset$. Then we
+    have $\mathfrak{B}(\fu) \cap \mathfrak{B}(\fu') = \emptyset$, by the definition \eqref{defbfp}
+    of $\mathfrak{B}$ and the definition \eqref{wiggleorder} of $\lesssim$, but also
+    $\mathfrak{B}(\fu) \subset \mathfrak{B}(\fp)$ and $\mathfrak{B}(\fu') \subset
+    \mathfrak{B}(\fp)$, by \eqref{defbfp}, \eqref{wiggleorder} and \eqref{eq-Fefferman-trick0}.
+    Hence,
+    $$
+        |\mathfrak{B}(\fp)| \geq |\mathfrak{B}(\fu)| + |\mathfrak{B}(\fu')| \geq 2^{j} + 2^j =
+        2^{j+1}\,,
+    $$
+    which contradicts $\fp \in \fC_1(k,n,j)$. Therefore we must have
+    \begin{equation*}
+        B_{\fu}(\fcc(\fu), 100) \cap B_{\fu'}(\fcc(\fu'), 100) \ne \emptyset\, .
+    \end{equation*}
+    
+    It follows from $2\fp \lesssim \fu$ and $10\fp \lesssim \fu'$ that $\scI(\fp) \subset \scI(\fu)$
+    and $\scI(\fp) \subset \scI(\fu')$. By \eqref{dyadicproperty}, it follows that $\scI(\fu)$ and
+    $\scI(\fu')$ are nested.
+    Combining this with the conclusion of the last paragraph and definition \eqref{defunkj} of
+    $\fU_1(k,n,j)$, we obtain that $\scI(\fu) = \scI(\fu')$. -/)
+  (latexEnv := "lemma")]
 lemma URel.eq (hu : u ∈ 𝔘₂ k n j) (hu' : u' ∈ 𝔘₂ k n j) (huu' : URel k n j u u') : 𝓘 u = 𝓘 u' := by
   by_cases e : u = u'; · rw [e]
   have ndj := not_disjoint hu hu' huu'
@@ -223,6 +396,71 @@ lemma urel_of_not_disjoint {x y : 𝔓 X} (my : y ∈ 𝔘₂ k n j) (xye : 𝓘
     _ < _ := by norm_num
 
 /-- Lemma 5.4.2. -/
+@[blueprint
+  "equivalence-relation"
+  (title := "equivalence relation")
+  (statement := /-- For each $k,n,j$, the relation $\sim$ on
+    $\fU_2(k,n,j)$ is an equivalence relation. -/)
+  (proof := /-- Reflexivity holds by definition.
+    For transitivity, suppose that
+    \begin{equation*}
+        \fu, \fu', \fu'' \in \fU_1(k,n,j)
+    \end{equation*}
+    and $\fu \sim \fu'$, $\fu' \sim \fu''$.
+    By \Cref{relation-geometry}, it follows that $\scI(\fu) =\scI(\fu') = \scI(\fu'')$, that there
+    exists
+    \begin{equation*}
+        \mfa \in B_{\fu}(\fcc(\fu), 100) \cap B_{\fu'}(\fcc(\fu'), 100)
+    \end{equation*}
+    and that there exists
+    \begin{equation*}
+        \mfb \in B_{\fu'}(\fcc(\fu'), 100) \cap B_{\fu''}(\fcc(\fu''), 100)\, .
+    \end{equation*}
+    If $\fu = \fu'$, then $\fu \sim \fu''$ holds by assumption. Else, there exists by the definition
+    of $\sim$ some $\fp \in \mathfrak{T}_1(\fu)$ with $10\fp\lesssim \fu'$.
+    Then we have $2\fp \lesssim \fu$ and $\fp \ne \fu$ by definition of $\mathfrak{T}_1(\fu)$, so $4
+    \fp \lesssim 500 \fu$ by \eqref{eq-sc3}. For $q \in B_{\fu''}(\fcc(\fu''), 1)$ it follows by the
+    triangle inequality that
+    \begin{align*}
+        d_{\fu}(\fcc(\fu), q) &\le d_{\fu}(\fcc(\fu), \mfa) + d_{\fu}(\mfa, \fcc(\fu'))\\
+        &\quad+ d_{\fu}(\fcc(\fu'), \mfb) + d_{\fu}(\mfb, \fcc(\fu'')) +
+        d_{\fu}(\fcc(\fu''), q)\,.
+    \end{align*}
+    Using \eqref{defdp} and the fact that $\scI(\fu) = \scI(\fu') = \scI(\fu'')$ this equals
+    \begin{align*}
+        &\quad d_{\fu}(\fcc(\fu), \mfa) + d_{\fu'}(\mfa, \fcc(\fu'))\\
+        &\quad+ d_{\fu'}(\fcc(\fu'), \mfb) + d_{\fu''}(\mfb, \fcc(\fu'')) +
+        d_{\fu''}(\fcc(\fu''), q)\\
+        &< 100 + 100 + 100 + 100 + 1 < 500\,.
+    \end{align*}
+    Since $4\fp \lesssim 500 \fu$, it follows that $d_{\fp}(\fcc(\fp), q) < 4 < 10$. We have shown
+    that $B_{\fu''}(\fcc(\fu''), 1) \subset B_{\fp}(\fcc(\fp), 10)$, combining this with
+    $\scI(\fu'') = \scI(\fu)$ gives $\fu \sim \fu''$.
+    
+    For symmetry suppose that $\fu \sim \fu'$. By Lemma \eqref{relation-geometry}, it follows that
+    $\scI(\fu) = \scI(\fu')$ and that there exists $\mfa \in B_{\fu}(\fcc(\fu), 100) \cap
+    B_{\fu'}(\fcc(\fu'), 100)$. Again, for $\fu = \fu'$ symmetry is obvious, so suppose that $\fu
+    \ne \fu'$. There exists $\fp \in \mathfrak{T}_1(\fu')$, which then satisfies $2\fp\lesssim \fu'$
+    and $\scI(\fp) \neq \scI(\fu')$. By \Cref{wiggle-order-1} and \eqref{eq-sc3}, it follows that
+    \begin{equation}
+        \label{eq-rel1}
+        10\fp \lesssim 4\fp \lesssim 500 \fu'\,.
+    \end{equation}
+    If $q \in B_{\fu}(\fcc(\fu),1)$ then we have from the triangle inequality and the fact that
+    $\scI(\fu) = \scI(\fu')$:
+    \begin{align*}
+        d_{\fu'}(\fcc(\fu'), q) &\le d_{\fu'}(\fcc(\fu'), \mfa) + d_{\fu'}(\mfa, \fcc(\fu)) +
+        d_{\fu'}(\fcc(\fu), q)\\
+        &= d_{\fu'}(\fcc(\fu'), \mfa) + d_{\fu}(\mfa, \fcc(\fu)) + d_{\fu}(\fcc(\fu), q)\\
+        &< 100 + 100 + 1 < 500\,.
+    \end{align*}
+    Combining this with \eqref{eq-rel1} and \eqref{wiggleorder}, we get
+    \begin{equation*}
+     B_{\fu}(\fcc(\fu), 1) \subset B_{\fp}(\fcc(\fp), 10)\, .
+    \end{equation*}
+    Since $2\fp \lesssim \fu'$, we have $\scI(\fp) \subset \scI(\fu') = \scI(\fu)$. Thus, $10\fp
+    \lesssim \fu$ which completes the proof of $\fu' \sim \fu$. -/)
+  (latexEnv := "lemma")]
 lemma equivalenceOn_urel : EquivalenceOn (URel (X := X) k n j) (𝔘₂ k n j) where
   refl _ _ := .rfl
   trans {x y z} mx my mz xy yz := by
@@ -273,6 +511,21 @@ def 𝔗₂ (k n j : ℕ) (u : 𝔓 X) : Set (𝔓 X) :=
 lemma 𝔗₂_subset_ℭ₆ : 𝔗₂ k n j u ⊆ ℭ₆ k n j := inter_subset_left ..
 
 /-- Lemma 5.4.3 -/
+@[blueprint
+  "C6-forest"
+  (title := "C6 forest")
+  (statement := /-- We have
+    \begin{equation}
+        \fC_6(k,n,j)=\bigcup_{\fu\in \fU_3(k,n,j)}\mathfrak{T}_2(\fu)\, .
+    \end{equation} -/)
+  (proof := /-- Let $\fp \in \fC_6(k,n,j)$.
+    By \eqref{eq-C4-def} and \eqref{defc5}, we have $\fp \in \fC_3(k,n,j)$. By \eqref{eq-L2-def} and
+    \eqref{eq-C3-def}, there exists $\fu \in \fU_1(k,n,j)$ with $2\fp \lesssim \fu$ and $\scI(\fp)
+    \ne \scI(\fu)$, that is, with $\fp \in \mathfrak{T}_1(\fu)$. Then $\mathfrak{T}_1(\fu)$ is
+    clearly nonempty, so $\fu \in \fU_2(k,n,j)$. By the definition of $\fU_3(k,n,j)$, there exists
+    $\fu' \in \fU_3(k,n,j)$ with $\fu \sim \fu'$. By \eqref{definesv}, we have $\fp \in
+    \mathfrak{T}_2(\fu')$. -/)
+  (latexEnv := "lemma")]
 lemma C6_forest : ℭ₆ (X := X) k n j = ⋃ u ∈ 𝔘₃ k n j, 𝔗₂ k n j u := by
   ext p; constructor <;> intro h
   · have hp : p ∈ ℭ₃ k n j := (ℭ₆_subset_ℭ₅ |>.trans ℭ₅_subset_ℭ₄ |>.trans ℭ₄_subset_ℭ₃) h
@@ -308,6 +561,32 @@ lemma forest_disjoint : (𝔘₃ k n j).PairwiseDisjoint (fun u ↦ 𝔗₂ (X :
   exact (equivalenceOn_urel (X := X)).reprs_inj hu hu' this
 
 /-- Lemma 5.4.4, verifying (2.0.32) -/
+@[blueprint
+  "forest-geometry"
+  (title := "forest geometry")
+  (statement := /-- For each $\fu\in \fU_3(k,n,j)$,
+    the set $\mathfrak{T}_2(\fu)$
+    satisfies \eqref{forest1}. -/)
+  (proof := /-- Let $\fp \in \mathfrak{T}_2(\fu)$. By \eqref{definesv}, there exists $\fu' \sim \fu$
+    with $\fp \in \mathfrak{T}_1(\fu')$. Then we have $2\fp \lesssim \fu'$ and $\scI(\fp) \ne
+    \scI(\fu')$, so by \eqref{eq-sc3} $4\fp \lesssim 500\fu'$.
+    Further, by \Cref{relation-geometry}, we have that $\scI(\fu') = \scI(\fu)$ and there exists
+    $\mfa \in B_{\fu'}(\fcc(\fu'),100) \cap B_{\fu}(\fcc(\fu),100)$.
+    Let $\mfb \in B_{\fu}(\fcc(\fu), 1)$.
+    Using the triangle inequality and the fact that $\scI(\fu') =\scI(\fu)$, we obtain
+    \begin{align*}
+        d_{\fu'}(\fcc(\fu'), \mfb) &\le d_{\fu'}(\fcc(\fu'), \mfa) + d_{\fu'}(\fcc(\fu), \mfa) +
+        d_{\fu'}(\fcc(\fu), \mfb)\\
+        &= d_{\fu'}(\fcc(\fu'), \mfa) + d_{\fu}(\fcc(\fu), \mfa) + d_{\fu}(\fcc(\fu), \mfb)\\
+        &< 100 + 100 + 1 < 500\,.
+    \end{align*}
+    Combining this with $4\fp \lesssim 500\fu'$, we obtain
+    $$
+        B_{\fu}(\fcc(\fu), 1) \subset B_{\fu'}(\fcc(\fu'), 500) \subset B_{\fp}(\fcc(\fp), 4)\,.
+    $$
+    Together with $\scI(\fp) \subset \scI(\fu') = \scI(\fu)$, this gives $4\fp \lesssim \fu$, which
+    is \eqref{forest1}. -/)
+  (latexEnv := "lemma")]
 lemma forest_geometry (hu : u ∈ 𝔘₃ k n j) (hp : p ∈ 𝔗₂ k n j u) : smul 4 p ≤ smul 1 u := by
   rw [𝔗₂, mem_inter_iff, mem_iUnion₂] at hp
   obtain ⟨_, u', mu', w⟩ := hp; rw [mem_iUnion] at w; obtain ⟨ru, mp'⟩ := w
@@ -333,6 +612,27 @@ lemma forest_geometry (hu : u ∈ 𝔘₃ k n j) (hp : p ∈ 𝔗₂ k n j u) : 
     _ < _ := by norm_num
 
 /-- Lemma 5.4.5, verifying (2.0.33) -/
+@[blueprint
+  "forest-convex"
+  (title := "forest convex")
+  (statement := /-- For each $\fu\in \fU_3(k,n,j)$,
+    the set $\mathfrak{T}_2(\fu)$
+    satisfies the convexity condition \eqref{forest2}. -/)
+  (proof := /-- Let $\fp, \fp'' \in \mathfrak{T}_2(\fu)$ and $\fp' \in \fP$ with $\fp \le \fp' \le
+    \fp''$. By \eqref{definesv} we have $\fp, \fp'' \in \fC_6(k,n,j) \subset \fC_5(k,n,j)$. By
+    \Cref{C5-convex}, we have $\fp' \in \fC_5(k,n,j)$. Since $\fp \in \fC_6(k,n,j)$ we have
+    $\scI(\fp) \not \subset G'$, so $\scI(\fp') \not \subset G'$ and therefore also $\fp' \in
+    \fC_6(k,n,j)$.
+    
+    By \eqref{definesv} there exists $\fu' \in \fU_2(k,n,j)$ with $\fp'' \in \mathfrak{T}_1(\fu')$
+    and hence $2\fp'' \lesssim \fu'$ and $\scI(\fp'') \ne \scI(\fu')$. Together this implies
+    $\scI(\fp'') \subsetneq \scI(\fu')$. With the inclusion $\scI(\fp') \subset \scI(\fp'')$ from
+    $\fp' \le \fp''$, it follows that $\scI(\fp') \subsetneq \scI(\fu')$ and hence $\scI(\fp') \ne
+    \scI(\fu')$.
+    By \eqref{eq-sc1} and transitivity of $\lesssim$ we further have $2\fp' \lesssim \fu'$, so $\fp'
+    \in \mathfrak{T}_1(\fu')$.
+    It follows that $\fp' \in \mathfrak{T}_2(\fu)$, which shows \eqref{forest2}. -/)
+  (latexEnv := "lemma")]
 lemma forest_convex : OrdConnected (𝔗₂ k n j u) := by
   rw [ordConnected_def]; intro p mp p'' mp'' p' mp'
   have mp'₅ : p' ∈ ℭ₅ (X := X) k n j :=
@@ -351,6 +651,37 @@ lemma forest_convex : OrdConnected (𝔗₂ k n j u) := by
 
 /-- Lemma 5.4.6, verifying (2.0.36)
 Note: swapped `u` and `u'` to match (2.0.36) -/
+@[blueprint
+  "forest-separation"
+  (title := "forest separation")
+  (statement := /-- For each $\fu,\fu'\in \fU_3(k,n,j)$ with $\fu\neq \fu'$ and each $\fp \in
+    \fT_2(\fu)$
+    with $\scI(\fp)\subset \scI(\fu')$ we have
+    \begin{equation}
+    d_{\fp}(\fcc(\fp), \fcc(\fu')) > 2^{Z(n+1)}\,.
+    \end{equation} -/)
+  (proof := /-- By the definition \eqref{eq-C2-def} of $\fC_2(k,n,j)$, there exists a tile $\fp' \in
+    \fC_1(k,n,j)$ with $\fp' \le \fp$ and $\ps(\fp') \le \ps(\fp)- Z(n+1)$.
+    By \Cref{monotone-cube-metrics} we have
+    $$
+        d_{\fp}(\fcc(\fp), \fcc(\fu')) \ge 2^{95a Z(n+1)} d_{\fp'}(\fcc(\fp), \fcc(\fu'))\,.
+    $$
+    By \eqref{eq-sc1} we have $2\fp' \lesssim 2\fp$, so by transitivity of $\lesssim$ there exists
+    $\mathfrak{v} \sim \fu$ with $2\fp' \lesssim \mathfrak{v}$ and $\scI(\fp') \ne
+    \scI(\mathfrak{v})$. Since $\fu, \fu'$ are not equivalent under $\sim$, we have $\mathfrak{v}
+    \not \sim \fu'$, thus $10\fp' \not\lesssim \fu'$. This implies that there exists $q \in
+    B_{\fu'}(\fcc(\fu'), 1) \setminus B_{\fp'}(\fcc(\fp'), 10)$.
+    
+    From $\fp' \le \fp$, $\scI(\fp') \subset \scI(\fp) \subset \scI(\fu')$ and
+    \Cref{monotone-cube-metrics} it then follows that
+    \begin{align*}
+        &\quad d_{\fp'}(\fcc(\fp), \fcc(\fu'))\\
+        &\ge -d_{\fp'}(\fcc(\fp), \fcc(\fp')) + d_{\fp'}(\fcc(\fp'), q) - d_{\fp'}(q, \fcc(\fu'))\\
+        &\ge -d_{\fp'}(\fcc(\fp), \fcc(\fp')) + d_{\fp'}(\fcc(\fp'), q) - d_{\fu'}(q, \fcc(\fu'))\\
+        &> -1 + 10 - 1 = 8\,.
+    \end{align*}
+    The lemma follows by combining the two displays with the fact that $95 a \ge 1$. -/)
+  (latexEnv := "lemma")]
 lemma forest_separation (hu : u ∈ 𝔘₃ k n j) (hu' : u' ∈ 𝔘₃ k n j) (huu' : u ≠ u')
     (hp : p ∈ 𝔗₂ k n j u') (h : 𝓘 p ≤ 𝓘 u) : 2 ^ (Z * (n + 1)) < dist_(p) (𝒬 p) (𝒬 u) := by
   simp_rw [𝔗₂, mem_inter_iff, mem_iUnion₂, mem_iUnion] at hp
@@ -411,6 +742,39 @@ lemma forest_separation (hu : u ∈ 𝔘₃ k n j) (hu' : u' ∈ 𝔘₃ k n j) 
         one_mul]
 
 /-- Lemma 5.4.7, verifying (2.0.37) -/
+@[blueprint
+  "forest-inner"
+  (title := "forest inner")
+  (statement := /-- For each $\fu\in \fU_3(k,n,j)$
+    and each $\fp \in \mathfrak{T}_2(\fu)$
+    we have
+    \begin{equation}
+        B(\pc(\fp), 8 D^{\ps(\fp)}) \subset \scI(\fu).
+    \end{equation} -/)
+  (proof := /-- Let $\fp \in \mathfrak{T}_2(\fu)$. Then $\fp \in \fC_4(k,n,j)$, hence there exists a
+    chain
+    $$
+        \fp \le \fp_{Z(n+1)} \le \dotsb \le \fp_0
+    $$
+    of distinct tiles in $\fC_3(n,k,j)$. We pick such a chain and set $\fq = \fp_0$.
+    Then we have from distinctness of the tiles in the chain that
+    $\ps(\fp) \le \ps(\fq) - Z(n+1)$.
+    By \eqref{eq-C3-def} there exists $\fu'' \in \fU_1(k,n,j)$ with $2\fq \lesssim \fu''$ and
+    $\ps(\fq) < \ps(\fu'')$.
+    Then we have in particular by \Cref{wiggle-order-1} that $10 \fp \lesssim \fu''$.
+    Let $\fu' \sim \fu$ be such that $\fp \in \mathfrak{T}_1(\fu')$.
+    By the definition of $\sim$, it follows that $\fu' \sim \fu''$.
+    By transitivity of $\sim$, we have $\fu \sim \fu''$.
+    By \Cref{relation-geometry}, we have $\ps(\fu'') = \ps(\fu)$, hence $\ps(\fq) < \ps(\fu)$ and
+    $\ps(\fp) \le \ps(\fq) - Z(n+1) \le \ps(\fu) - Z(n+1) - 1$.
+    
+    Thus, there exists some cube $I \in \mathcal{D}$ with $s(I) = \ps(\fu) - Z(n+1) - 1$ and $I
+    \subset \scI(\fu)$ and $\scI(\fp) \subset I$.
+    Since $\fp \in \fC_5(k,n,j)$, we have that $I \notin \mathcal{L}(\fu)$, so $B(c(I), 8D^{s(I)})
+    \subset \scI(\fu)$.
+    By the triangle inequality, \eqref{defineD} and $a \ge 4$, the same then holds for the subcube
+    $\scI(\fp) \subset I$. -/)
+  (latexEnv := "lemma")]
 lemma forest_inner (hu : u ∈ 𝔘₃ k n j) (hp : p ∈ 𝔗₂ k n j u) :
     ball (𝔠 p) (8 * D ^ 𝔰 p) ⊆ 𝓘 u := by
   have p₄ := (𝔗₂_subset_ℭ₆.trans ℭ₆_subset_ℭ₅ |>.trans ℭ₅_subset_ℭ₄) hp
@@ -517,6 +881,39 @@ lemma stackSize_𝔘₃_le_𝔐 (x : X) : stackSize (𝔘₃ k n j) x ≤ stackS
     simpa using mf_injOn mu.2 mu'.2 e
 
 /-- Lemma 5.4.8, used to verify that 𝔘₄ satisfies 2.0.34. -/
+@[blueprint
+  "forest-stacking"
+  (title := "forest stacking")
+  (statement := /-- It holds for $k\le n$ that
+    \begin{equation}
+        \sum_{\fu \in \fU_3(k,n,j)} \mathbf{1}_{\scI(\fu)} \le (4n+12)2^{n}\,.
+    \end{equation} -/)
+  (proof := /-- Suppose that a point $x$ is contained in more than $(4n + 12)2^n$ cubes $\scI(\fu)$
+    with $\fu \in \fU_3(k,n,j)$.
+    Since $\fU_3(k,n,j) \subset \fC_1(k,n,j)$ for each such $\fu$,
+    there exists $\mathfrak{m} \in \mathfrak{M}(k,n)$ such that $100\fu \lesssim \mathfrak{m}$.
+    We fix such an $\mathfrak{m}(\fu) := \mathfrak{m}$ for each $\fu$, and claim that the map $\fu
+    \mapsto\mathfrak{m}(\fu)$ is injective.
+    Indeed, assume for $\fu\neq \fu'$ there is $\mathfrak{m} \in \mathfrak{M}(k,n)$ such that
+    $100\fu \lesssim \mathfrak{m}$ and $100\fu' \lesssim \mathfrak{m}$. By \eqref{dyadicproperty},
+    either $\scI(\fu) \subset \scI(\fu')$ or $\scI(\fu') \subset \scI(\fu)$.
+    By \eqref{defunkj}, $B_{\fu}(\fcc(\fu),100) \cap B_{\fu'}(\fcc(\fu'), 100) = \emptyset$.
+    This contradicts $\Omega(\mathfrak{m})$ being contained in both sets by
+    \eqref{eq-freq-comp-ball}.
+    Thus $x$ is contained in more than $(4n + 12)2^n$ cubes $\scI(\mathfrak{m})$, $\mathfrak{m} \in
+    \mathfrak{M}(k,n)$.
+    Consequently, we have by \eqref{eq-Aoverlap-def} that $x \in A(2n + 6, k,n) \subset G_2$.
+    Let $\scI(\fu)$ be an inclusion minimal cube among the $\scI(\fu'), \fu' \in \fU_3(k,n,j)$ with
+    $x \in \scI(\fu)$.
+    By the dyadic property \eqref{dyadicproperty}, we have $\scI(\fu) \subset \scI(\fu')$ for all
+    cubes $\scI(\fu')$ containing $x$. Thus
+    $$
+        \scI(\fu) \subset \{y \ : \ \sum_{\fu \in \fU_3(k,n,j)} \mathbf{1}_{\scI(\fu)}(y) > 1 +
+        (4n+12)2^{n}\} \subset G_2\,.
+    $$
+    Thus $\mathfrak{T}_1(\fu) \cap \fC_6(k,n,j) = \emptyset$.
+    This contradicts $\fu \in \fU_2(k,n,j)$. -/)
+  (latexEnv := "lemma")]
 lemma forest_stacking (x : X) (hkn : k ≤ n) : stackSize (𝔘₃ (X := X) k n j) x ≤ C5_4_8 n := by
   classical
   by_contra! h
@@ -1022,6 +1419,74 @@ lemma C5_1_2_optimized_le : C5_1_2_optimized a nnq ≤ C5_1_2 a nnq := by
 /-- Lemma 5.1.2 in the blueprint: the integral of the Carleson sum over the set which can
 naturally be decomposed as a union of forests can be controlled, thanks to the estimate for
 a single forest. -/
+@[blueprint
+  "forest-union"
+  (title := "forest union")
+  (statement := /-- Let
+    \begin{equation}
+        \fP_1 =\bigcup_{k\ge 0}\bigcup_{n\ge k}
+        \bigcup_{0\le j\le 2n+3}\fC_5(k,n,j)
+    \end{equation}
+    For all $f:X\to \C$ with $|f|\le \mathbf{1}_F$ we have
+    \begin{equation}
+        \label{disclesssim1}
+        \int_{G \setminus G'} \left|\sum_{\fp \in \fP_1} T_{\fp} f \right|\, \mathrm{d}\mu \le
+        \frac{2^{441a^3}}{(q-1)^4} \mu(G)^{1 - \frac{1}{q}} \mu(F)^{\frac{1}{q}}\,.
+    \end{equation} -/)
+  (proof := /-- [Proof of \Cref{forest-union}]
+    
+    
+        We first fix $k,n, j$.
+        By \eqref{definetp} and \eqref{defineep}, we have that
+        $\mathbf{1}_{\scI(\fp)} T_{\fp}f(x) = T_{\fp}f(x)$ and hence $\mathbf{1}_{G \setminus G'}
+        T_{\fp}f(x)= 0$ for all $\fp \in \fC_5(k,n,j) \setminus \fC_6(k,n,j)$.
+        Thus it suffices to estimate the contribution of the sets $\fC_6(k,n,j)$. By
+        \Cref{forest-stacking}, we can decompose $\fU_3(k,n,j)$ as a disjoint union of at most $4n +
+        12$ collections $\fU_4(k,n,j,l)$, $1 \le l \le 4n+12$, each satisfying
+        $$
+            \sum_{\fu \in \fU_4(k,n,j,l)} \mathbf{1}_{\scI(\fu)} \le 2^n\,.
+        $$
+        By Lemmas \ref{forest-geometry}, \ref{forest-convex}, \ref{forest-separation},
+        \ref{forest-inner} and \ref{C-dens1}, the pairs
+        $$
+            (\fU_4(k,n,j,l), \mathfrak{T}_2|_{\fU_4(k,n,j,l)})
+        $$
+        are $n$-forests for each $k,n,j,l$, and by \Cref{C6-forest}, we have
+        $$
+            \fC_6(k,n,j) = \bigcup_{l = 1}^{4n + 12} \bigcup_{\fu \in \fU_4(k,n,j,l)}
+            \mathfrak{T}_2(\fu)\,.
+        $$
+        Since $\scI(\fp) \not\subset G_1$ for all $\fp \in \fC_6(k,n,j)$, we have $\fC_6(k,n,j) \cap
+        \fP_{F,G} = \emptyset$ and hence
+        $$
+            \dens_2(\bigcup_{\fu \in \fU_4(k,n,j,l)} \mathfrak{T}_2(\fu)) \le 2^{2a + 5}
+            \frac{\mu(F)}{\mu(G)}\,.
+        $$
+        Using the triangle inequality according to the splitting by $k,n,j$ and $l$ in
+        \eqref{disclesssim1} and applying \Cref{forest-operator} to each term, we obtain the
+        estimate
+        $$
+            \sum_{k \ge 0}\sum_{n \ge k} (2n+3)(4n+12) 2^{440a^3}2^{-(1-\frac{1}{q})n}(2^{2a+5}
+            \frac{\mu(F)}{\mu(G)})^{\frac{1}{q} - \frac{1}{2}} \|f\|_2 \|\mathbf{1}_{G\setminus
+            G'}\|_2
+        $$
+        for the left hand side of \eqref{disclesssim1}. Since $|f| \le \mathbf{1}_F$, we have
+        $\|f\|_2 \le \mu(F)^{1/2}$, and we have $\|\mathbf{1}_{G\setminus G'}\|_2 \le \mu(G)^{1/2}$.
+        We get a bound
+        $$
+            2^{440a^3} \mu(F)^{\frac{1}{q}} \mu(G)^{1
+            -\frac{1}{q}} 2^{2a+5}\sum_{k \ge 0}\sum_{n \ge k}(2n+3)(4n+12) 2^{-(1-\frac{1}{q})n}\,.
+        $$ % n^2 -> (n+1)^2
+        Interchanging the order of summation, the last factor equals
+        $$
+            2^{2a+5} \sum_{n \ge 0} (2n+3)(4n+12) (n+1) 2^{-\frac{q-1}{q}n}\,.
+        $$
+        Up to an explicit constant, the sum is bounded by $\sum n^3 2^{-\frac{q-1}{q}n}$, which is
+        at most
+        some constant times $1/(q-1)^4$ by comparing to an integral. Since $a \ge 4$, this is
+        overall bounded by $2^{a^3}/(q-1)^4$,
+        which completes the proof of the lemma. -/)
+  (latexEnv := "lemma")]
 lemma forest_union {f : X → ℂ} (hf : ∀ x, ‖f x‖ ≤ F.indicator 1 x) (h'f : Measurable f) :
     ∫⁻ x in G \ G', ‖carlesonSum 𝔓₁ f x‖ₑ ≤
     C5_1_2 a nnq * (volume G) ^ (1 - q⁻¹) * (volume F) ^ (q⁻¹) := by

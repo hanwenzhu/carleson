@@ -1,3 +1,4 @@
+import Architect
 import Carleson.ProofData
 
 open Set MeasureTheory Metric Function Complex Bornology
@@ -388,6 +389,51 @@ lemma _root_.C2_1_2_lt_one : C2_1_2 a < 1 :=
 variable [GridStructure X D κ S o]
 
 /-- Stronger version of Lemma 2.1.2. -/
+@[blueprint
+  "monotone-cube-metrics"
+  (title := "monotone cube metrics")
+  (statement := /-- Let $(\mathcal{D}, c, s)$ be a grid structure. Denote for cubes $I \in
+    \mathcal{D}$
+    $$
+        I^\circ := B(c(I), \frac{1}{4} D^{s(I)})\,.
+    $$
+    Let $I, J \in \mathcal{D}$ with $I \subset J$.
+    Then for all $\mfa, \mfb \in\Mf$ we have
+    $$
+        d_{I^\circ}(\mfa, \mfb) \le d_{J^\circ}(\mfa, \mfb)\,,
+    $$
+    and if $I \ne J$ then we have
+    $$
+        d_{I^\circ}(\mfa, \mfb) \le 2^{-95a} d_{J^\circ}(\mfa, \mfb)\,.
+    $$ -/)
+  (proof := /-- If $s(I) \ge s(J)$ then \eqref{dyadicproperty} and the assumption $I\subset J$ imply
+    $I = J$. Then the lemma holds by reflexivity.
+    
+    If $s(J) \ge s(I)+1$, then using the monotonicity property \eqref{monotonedb}, \eqref{defineD}
+    and \eqref{seconddb}, we get
+    \begin{equation}
+    \label{eq-dIJ-est}
+        d_{I^\circ}(\mfa, \mfb) \le d_{B(c(I), 4 D^{s(I)})}(\mfa, \mfb) \le 2^{-100a} d_{B(c(I),
+        4D^{s(J)})}(\mfa, \mfb)\,.
+    \end{equation}
+    Using \eqref{eq-vol-sp-cube}, together with the inclusion $I \subset J$, we obtain
+    $$
+        c(I) \in I \subset J \subset B(c(J), 4 D^{s(J)})
+    $$
+    and consequently by the triangle inequality
+    $$
+        B(c(I), 4 D^{s(J)}) \subset B(c(J), 8 D^{s(J)})\,.
+    $$
+    Using this together with the monotonicity property \eqref{monotonedb} and \eqref{firstdb} in
+    \eqref{eq-dIJ-est}, we obtain
+    \begin{align*}
+        d_{I^\circ}(\mfa, \mfb) &\le 2^{-100a} d_{B(c(J), 8D^{s(J)})}(\mfa, \mfb)\\
+        &\le 2^{-100a + 5a} d_{B(c(J), \frac{1}{4}D^{s(J)})}(\mfa, \mfb)\\
+        &= 2^{-95a}d_{J^\circ}(\mfa, \mfb)\,.
+    \end{align*}
+    This proves the second inequality claimed in the Lemma, from which the first follows since $a
+    \ge 4$ and hence $2^{-95a} \le 1$. -/)
+  (latexEnv := "lemma")]
 lemma dist_strictMono {I J : Grid X} (hpq : I < J) {f g : Θ X} :
     dist_{I} f g ≤ C2_1_2 a * dist_{J} f g := by
   calc
@@ -423,6 +469,51 @@ lemma dist_strictMono {I J : Grid X} (hpq : I < J) {f g : Θ X} :
     _ = _ := by congr 1; rw [C2_1_2, ← add_mul]
 
 /-- Weaker version of Lemma 2.1.2. -/
+@[blueprint
+  "monotone-cube-metrics"
+  (title := "monotone cube metrics")
+  (statement := /-- Let $(\mathcal{D}, c, s)$ be a grid structure. Denote for cubes $I \in
+    \mathcal{D}$
+    $$
+        I^\circ := B(c(I), \frac{1}{4} D^{s(I)})\,.
+    $$
+    Let $I, J \in \mathcal{D}$ with $I \subset J$.
+    Then for all $\mfa, \mfb \in\Mf$ we have
+    $$
+        d_{I^\circ}(\mfa, \mfb) \le d_{J^\circ}(\mfa, \mfb)\,,
+    $$
+    and if $I \ne J$ then we have
+    $$
+        d_{I^\circ}(\mfa, \mfb) \le 2^{-95a} d_{J^\circ}(\mfa, \mfb)\,.
+    $$ -/)
+  (proof := /-- If $s(I) \ge s(J)$ then \eqref{dyadicproperty} and the assumption $I\subset J$ imply
+    $I = J$. Then the lemma holds by reflexivity.
+    
+    If $s(J) \ge s(I)+1$, then using the monotonicity property \eqref{monotonedb}, \eqref{defineD}
+    and \eqref{seconddb}, we get
+    \begin{equation}
+    \label{eq-dIJ-est}
+        d_{I^\circ}(\mfa, \mfb) \le d_{B(c(I), 4 D^{s(I)})}(\mfa, \mfb) \le 2^{-100a} d_{B(c(I),
+        4D^{s(J)})}(\mfa, \mfb)\,.
+    \end{equation}
+    Using \eqref{eq-vol-sp-cube}, together with the inclusion $I \subset J$, we obtain
+    $$
+        c(I) \in I \subset J \subset B(c(J), 4 D^{s(J)})
+    $$
+    and consequently by the triangle inequality
+    $$
+        B(c(I), 4 D^{s(J)}) \subset B(c(J), 8 D^{s(J)})\,.
+    $$
+    Using this together with the monotonicity property \eqref{monotonedb} and \eqref{firstdb} in
+    \eqref{eq-dIJ-est}, we obtain
+    \begin{align*}
+        d_{I^\circ}(\mfa, \mfb) &\le 2^{-100a} d_{B(c(J), 8D^{s(J)})}(\mfa, \mfb)\\
+        &\le 2^{-100a + 5a} d_{B(c(J), \frac{1}{4}D^{s(J)})}(\mfa, \mfb)\\
+        &= 2^{-95a}d_{J^\circ}(\mfa, \mfb)\,.
+    \end{align*}
+    This proves the second inequality claimed in the Lemma, from which the first follows since $a
+    \ge 4$ and hence $2^{-95a} \le 1$. -/)
+  (latexEnv := "lemma")]
 lemma dist_mono {I J : Grid X} (hpq : I ≤ J) {f g : Θ X} : dist_{I} f g ≤ dist_{J} f g := by
   rcases hpq.eq_or_lt with h | h
   · subst h; rfl

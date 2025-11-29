@@ -13,6 +13,10 @@ weak.linter.mathlibStandardSet = true
 weak.linter.style.longLine = false
 
 [[require]]
+name = "LeanArchitect"
+scope = "hanwenzhu"
+
+[[require]]
 name = "mathlib"
 git = "https://github.com/leanprover-community/mathlib4.git"
 

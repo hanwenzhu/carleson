@@ -1,3 +1,4 @@
+import Architect
 import Carleson.Calculations
 import Carleson.ToMathlib.MeasureTheory.Integral.IntegrableOn
 
@@ -134,6 +135,27 @@ lemma czOperator_sub {f g : X → ℂ} (hf : BoundedFiniteSupport f) (hg : Bound
     integral_sub (czOperator_welldefined hf hr x) (czOperator_welldefined hg hr x)]
 
 /-- Lemma 10.1.1 -/
+@[blueprint
+  "geometric-series-estimate"
+  (title := "geometric series estimate")
+  (statement := /-- For all real numbers $x\ge 4$,
+    \begin{equation*}
+        \sum_{n=0}^\infty 2^{-\frac{n}{x}} \le 2^x.
+    \end{equation*} -/)
+  (proof := /-- By convexity, for all $0\le\lambda\le1$
+    \begin{equation*}
+        2^{\lambda(-\frac{1}{4})} \le \lambda 2^{-\frac{1}{4}} + (1-\lambda)2^0.
+    \end{equation*}
+    For $\lambda:=\frac{4}{x}$, we obtain
+    \begin{equation*}
+        2^{-\frac 1 x} \le 1 - (1-2^{-\frac 1 4}) \frac{4}{x}.
+    \end{equation*}
+    We conclude
+    \begin{equation*}
+        \sum_{n=0}^\infty 2^{-\frac{n}{x}} = \frac{1}{1-2^{-\frac 1 x}} \le \frac{1}{4(1-2^{-\frac 1
+        4})} x \le 2^x.
+    \end{equation*} -/)
+  (latexEnv := "lemma")]
 lemma geometric_series_estimate {x : ℝ} (hx : 2 ≤ x) :
     ∑' (n : ℕ), (2 : ℝ≥0∞) ^ (-n / x) ≤ 2 ^ x := by
   calc

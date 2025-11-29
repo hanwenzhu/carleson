@@ -1,0 +1,1887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  MathJax = { 
+    tex: {
+		    inlineMath: [['$','$'], ['\\(','\\)']]
+	} }
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<meta name="generator" content="plasTeX" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>A blueprint for the formalization of Carleson’s theorem on convergence of Fourier series: Proof of Finitary Carleson</title>
+<link rel="next" href="proptopropprop.html" title="Proof of discrete Carleson" />
+<link rel="prev" href="thmfromproplinear.html" title="Proof of Metric Space Carleson" />
+<link rel="up" href="index.html" title="A blueprint for the formalization of Carleson’s theorem on convergence of Fourier series" />
+<link rel="stylesheet" href="styles/theme-white.css" />
+<link rel="stylesheet" href="styles/amsthm.css" />
+<link rel="stylesheet" href="styles/showmore.css" />
+<link rel="stylesheet" href="styles/blueprint.css" />
+<link rel="stylesheet" href="styles/extra_styles.css" />
+</head>
+
+<body>
+<header>
+<svg  id="toc-toggle" class="icon icon-list-numbered "><use xlink:href="symbol-defs.svg#icon-list-numbered"></use></svg>
+<h1 id="doc_title"><a href="index.html">A blueprint for the formalization of Carleson’s theorem on convergence of Fourier series</a></h1>
+</header>
+
+<div class="wrapper">
+<nav class="toc">
+<ul class="sub-toc-0">
+<li class="">
+  <a href="sect0001.html"><span class="toc_ref">1</span> <span class="toc_entry">Introduction</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0001.html#a0000000006"><span class="toc_ref">1.1</span> <span class="toc_entry">Statement of the metric space Carleson theorems</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="overviewsection.html"><span class="toc_ref">2</span> <span class="toc_entry">Proof of Metric Space Carleson, overview</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="overviewsection.html#global-auxiliary-lemmas"><span class="toc_ref">2.1</span> <span class="toc_entry">Auxiliary lemmas</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="thmfromproplinear.html"><span class="toc_ref">3</span> <span class="toc_entry">Proof of Metric Space Carleson</span></a>
+ </li>
+<li class=" active current">
+  <a href="christsection.html"><span class="toc_ref">4</span> <span class="toc_entry">Proof of Finitary Carleson</span></a>
+  <span class="expand-toc">▼</span>
+  <ul class="sub-toc-1 active">
+     <li class="">
+  <a href="christsection.html#subsecdyadic"><span class="toc_ref">4.1</span> <span class="toc_entry">Proof of Grid Existence Lemma</span></a>
+ </li>
+<li class="">
+  <a href="christsection.html#subsectiles"><span class="toc_ref">4.2</span> <span class="toc_entry">Proof of Tile Structure Lemma</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="proptopropprop.html"><span class="toc_ref">5</span> <span class="toc_entry">Proof of discrete Carleson</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="proptopropprop.html#subsectilesorg"><span class="toc_ref">5.1</span> <span class="toc_entry">Organisation of the tiles</span></a>
+ </li>
+<li class="">
+  <a href="proptopropprop.html#subsetexcset"><span class="toc_ref">5.2</span> <span class="toc_entry">Proof of the Exceptional Sets Lemma</span></a>
+ </li>
+<li class="">
+  <a href="proptopropprop.html#subsec-lessim-aux"><span class="toc_ref">5.3</span> <span class="toc_entry">Auxiliary lemmas</span></a>
+ </li>
+<li class="">
+  <a href="proptopropprop.html#subsecforest"><span class="toc_ref">5.4</span> <span class="toc_entry">Proof of the Forest Union Lemma</span></a>
+ </li>
+<li class="">
+  <a href="proptopropprop.html#subsecantichain"><span class="toc_ref">5.5</span> <span class="toc_entry">Proof of the Forest Complement Lemma</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="antichainboundary.html"><span class="toc_ref">6</span> <span class="toc_entry">Proof of the Antichain Operator Proposition</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="antichainboundary.html#sec-TT*-T*T"><span class="toc_ref">6.1</span> <span class="toc_entry">The density arguments</span></a>
+ </li>
+<li class="">
+  <a href="antichainboundary.html#sec-tile-operator"><span class="toc_ref">6.2</span> <span class="toc_entry">Proof of the Tile Correlation Lemma</span></a>
+ </li>
+<li class="">
+  <a href="antichainboundary.html#subsec-geolem"><span class="toc_ref">6.3</span> <span class="toc_entry">Proof of the Antichain Tile Count Lemma</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="treesection.html"><span class="toc_ref">7</span> <span class="toc_entry">Proof of the Forest Operator Proposition</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="treesection.html#a0000000014"><span class="toc_ref">7.1</span> <span class="toc_entry">The pointwise tree estimate</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#a0000000015"><span class="toc_ref">7.2</span> <span class="toc_entry">An auxiliary \(L^2\) tree estimate</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#a0000000016"><span class="toc_ref">7.3</span> <span class="toc_entry">The quantitative \(L^2\) tree estimate</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#a0000000017"><span class="toc_ref">7.4</span> <span class="toc_entry">Almost orthogonality of separated trees</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#subsec-big-tiles"><span class="toc_ref">7.5</span> <span class="toc_entry">Proof of the Tiles with large separation Lemma</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#subsec-rest-tiles"><span class="toc_ref">7.6</span> <span class="toc_entry">Proof of The Remaining Tiles Lemma</span></a>
+ </li>
+<li class="">
+  <a href="treesection.html#a0000000018"><span class="toc_ref">7.7</span> <span class="toc_entry">Forests</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="liphoel.html"><span class="toc_ref">8</span> <span class="toc_entry">Proof of the Hölder cancellative condition</span></a>
+ </li>
+<li class="">
+  <a href="sec-hlm.html"><span class="toc_ref">9</span> <span class="toc_entry">Proof of Vitali covering and Hardy–Littlewood</span></a>
+ </li>
+<li class="">
+  <a href="sect0002.html"><span class="toc_ref">10</span> <span class="toc_entry">Two-sided Metric Space Carleson</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0002.html#subsec-cotlar"><span class="toc_ref">10.1</span> <span class="toc_entry">Proof of Cotlar’s Inequality</span></a>
+ </li>
+<li class="">
+  <a href="sect0002.html#subsec-CZD"><span class="toc_ref">10.2</span> <span class="toc_entry">Calderón-Zygmund Decomposition</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="sect0003.html"><span class="toc_ref">11</span> <span class="toc_entry">Proof of The Classical Carleson Theorem</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="sect0003.html#10classical"><span class="toc_ref">11.1</span> <span class="toc_entry">The classical Carleson theorem</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10smooth"><span class="toc_ref">11.2</span> <span class="toc_entry">Smooth functions.</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10hilbert"><span class="toc_ref">11.3</span> <span class="toc_entry">The truncated Hilbert transform</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10vandercorput"><span class="toc_ref">11.4</span> <span class="toc_entry">The proof of the van der Corput Lemma</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10projection"><span class="toc_ref">11.5</span> <span class="toc_entry">Partial sums as orthogonal projections</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10difference"><span class="toc_ref">11.6</span> <span class="toc_entry">The error bound</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#10carleson"><span class="toc_ref">11.7</span> <span class="toc_entry">Carleson on the real line</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li ><a href="dep_graph_document.html">Dependency graph</a></li>
+</ul>
+</nav>
+
+<div class="content">
+<div class="content-wrapper">
+
+
+<div class="main-text">
+<h1 id="christsection">4 Proof of Finitary Carleson</h1>
+
+<p>To prove Proposition <a href="overviewsection.html#finitary-Carleson">2.0.1</a>, we already fixed in <a href="overviewsection.html">Section 2</a> measurable functions \({\sigma _1},\sigma _2, {Q}\) and Borel sets \(F,G\). We have also defined \(S\) to be the smallest integer such that the ranges of \(\sigma _1\) and \(\sigma _2\) are contained in \([-S,S]\) and \(F\) and \(G\) are contained in the ball \(B(o, \frac14 D^S)\). </p>
+<p>The proof of the next lemma is done in <a href="christsection.html#subsecdyadic">Section 4.1</a>, following the construction of dyadic cubes in <span class="cite">
+	[
+</span>. </p>
+<div class="lemma_thmwrapper theorem-style-plain" id="grid-existence">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">4.0.1</span>
+    <span class="lemma_thmtitle">grid existence</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="christsection.html#grid-existence">#</a>
+    
+    <a class="icon proof" href="christsection.html#a0000000079"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="christsection.html#counting-balls">Lemma 4.1.1</a></li>
+          
+          <li><a href="christsection.html#boundary-measure">Lemma 4.1.9</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/grid_existence" class="lean_decl">grid_existence</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    There exists a grid structure \((\mathcal{D}, c,s)\). </p>
+
+  </div>
+</div>
+<p>The next lemma, which we prove in <a href="christsection.html#subsectiles">Section 4.2</a>, should be compared with the construction in <span class="cite">
+	[
+</span>. </p>
+<div class="lemma_thmwrapper theorem-style-plain" id="tile-structure">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">4.0.2</span>
+    <span class="lemma_thmtitle">tile structure</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="christsection.html#tile-structure">#</a>
+    
+    <a class="icon proof" href="christsection.html#a0000000080"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="overviewsection.html#ball-metric-entropy">Lemma 2.1.1</a></li>
+          
+          <li><a href="christsection.html#frequency-ball-cover">Lemma 4.2.1</a></li>
+          
+          <li><a href="christsection.html#disjoint-frequency-cubes">Lemma 4.2.2</a></li>
+          
+          <li><a href="christsection.html#frequency-cube-cover">Lemma 4.2.3</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/tile_existence" class="lean_decl">tile_existence</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    For a given grid structure \((\mathcal{D}, c,s)\), there exists a tile structure \(({\mathfrak P},{\mathcal{I}},{\Omega },{\mathcal{Q}},{\mathrm{c}},{\mathrm{s}})\). </p>
+
+  </div>
+</div>
+<p>Choose a grid structure \((\mathcal{D}, c,s)\) with <a href="christsection.html#grid-existence">Lemma 4.0.1</a> and a tile structure for this grid structure \(({\mathfrak P},{\mathcal{I}},{\Omega },{\mathcal{Q}},{\mathrm{c}},{\mathrm{s}})\) with <a href="christsection.html#tile-structure">Lemma 4.0.2</a>. Applying <a href="overviewsection.html#discrete-Carleson">Proposition 2.0.2</a>, we obtain a Borel set \(G'\) in \(X\) with \(2\mu (G')\leq \mu (G)\) such that for all Borel functions \(f:X\to {\mathbb {C}}\) with \(|f|\le \mathbf{1}_F\) we have <a href="overviewsection.html#disclesssim" class="eqref">2.0.22</a>. </p>
+<div class="lemma_thmwrapper theorem-style-plain" id="tile-sum-operator">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">4.0.3</span>
+    <span class="lemma_thmtitle">tile sum operator</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="christsection.html#tile-sum-operator">#</a>
+    
+    <a class="icon proof" href="christsection.html#a0000000081"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/tile_sum_operator" class="lean_decl">tile_sum_operator</a></li>
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/integrable_tile_sum_operator" class="lean_decl">integrable_tile_sum_operator</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>   We have for all \(x\in G\setminus G'\) </p>
+<div class="equation" id="eq-sump">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{eq-sump} \sum _{{\mathfrak p}\in {\mathfrak P}}T_{{\mathfrak p}} f(x)= \sum _{s=\sigma _1(x)}^{\sigma _2(x)} \int K_{s}(x,y) f(y) e({Q}(x)(y)-{Q}(x)(x))\,  d\mu (y). \end{equation}
+  </div>
+  <span class="equation_label">4.0.1</span>
+</p>
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000081">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Fix \(x\in G\setminus G'\). Sorting the tiles \({\mathfrak p}\) on the left-hand-side of <a href="christsection.html#eq-sump" class="eqref">4.0.1</a> by the value \({\mathrm{s}}({\mathfrak p})\in [-S,S]\), it suffices to prove for every \(-S\le s\le S\) that </p>
+<div class="equation" id="outsump">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{outsump} \sum _{{\mathfrak p}\in {\mathfrak P}: {\mathrm{s}}({\mathfrak p})=s}T_{{\mathfrak p}} f(x)=0 \end{equation}
+  </div>
+  <span class="equation_label">4.0.2</span>
+</p>
+</div>
+<p> if \(s\not\in [\sigma _1(x), \sigma _2(x)]\) and </p>
+<div class="equation" id="insump">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{insump} \sum _{{\mathfrak p}\in {\mathfrak P}: {\mathrm{s}}({\mathfrak p})=s}T_{{\mathfrak p}} f(x)= \int K_{s}(x,y) f(y) e({Q}(x)(y) - {Q}(x)(x))\,  d\mu (y). \end{equation}
+  </div>
+  <span class="equation_label">4.0.3</span>
+</p>
+</div>
+<p> if \(s\in [\sigma _1(x),\sigma _2(x)]\). If \(s\not\in [\sigma _1(x), \sigma _2(x)]\), then by definition of \(E({\mathfrak p})\) we have \(x\not\in E({\mathfrak p})\) for any \({\mathfrak p}\) with \({\mathrm{s}}({\mathfrak p})=s\) and thus \(T_{{\mathfrak p}} f(x)=0\). This proves <a href="christsection.html#outsump" class="eqref">4.0.2</a>. </p>
+<p>Now assume \(s\in [\sigma _1(x),\sigma _2(x)]\). By <a href="overviewsection.html#coverdyadic" class="eqref">2.0.7</a>, <a href="overviewsection.html#subsetmaxcube" class="eqref">2.0.9</a>, <a href="overviewsection.html#eq-vol-sp-cube" class="eqref">2.0.10</a>, the fact that \(c(I_0) = o\) and \(G\subset B(o,\frac14 D^S)\), there is at least one \(I\in \mathcal{D}\) with \(s(I)=s\) and \(x\in I\). By <a href="overviewsection.html#dyadicproperty" class="eqref">2.0.8</a>, this \(I\) is unique. By <a href="overviewsection.html#eq-dis-freq-cover" class="eqref">2.0.13</a>, there is precisely one \({\mathfrak p}\in {\mathfrak P}(I)\) such that \({Q}(x)\in {\Omega }({\mathfrak p})\). Hence there is precisely one \({\mathfrak p}\in {\mathfrak P}\) with \({\mathrm{s}}({\mathfrak p})=s\) such that \(x\in E({\mathfrak p})\). For this \({\mathfrak p}\), the value \(T_{{\mathfrak p}}(x)\) by its definition in <a href="overviewsection.html#definetp" class="eqref">2.0.21</a> equals the right-hand side of <a href="christsection.html#insump" class="eqref">4.0.3</a>. This proves the lemma. </p>
+
+  </div>
+</div>
+<p>We use this to prove <a href="overviewsection.html#finitary-Carleson">Proposition 2.0.1</a>. </p>
+<div class="proof_wrapper" id="a0000000020">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof of <a href="overviewsection.html#finitary-Carleson">Proposition 2.0.1</a>
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>  We now estimate with <a href="christsection.html#tile-sum-operator">Lemma 4.0.3</a> and <a href="overviewsection.html#discrete-Carleson">Proposition 2.0.2</a> </p>
+<div class="equation" id="a0000000082">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \int _{G \setminus G'} \left|\sum _{s={\sigma _1}(x)}^{{\sigma _2}(x)} \int K_s(x,y) f(y) e({Q}(x)(y)) \,  \mathrm{d}\mu (y)\right| \mathrm{d}\mu (x) \end{equation}
+  </div>
+  <span class="equation_label">4.0.4</span>
+</p>
+</div>
+<div class="equation" id="a0000000083">
+<p>
+  <div class="equation_content">
+    \begin{equation}  =\int _{G \setminus G'} \left|\sum _{s={\sigma _1}(x)}^{{\sigma _2}(x)} \int K_s(x,y) f(y) e({Q}(x)(y) - {Q}(x)(x))\mathrm{d}\mu (y)\right| \mathrm{d}\mu (x) \end{equation}
+  </div>
+  <span class="equation_label">4.0.5</span>
+</p>
+</div>
+<div class="equation" id="a0000000084">
+<p>
+  <div class="equation_content">
+    \begin{equation}  =\int _{G \setminus G'} \left|\sum _{{\mathfrak p}\in {\mathfrak P}}T_{{\mathfrak p}} f(x)\right| \mathrm{d}\mu (x) \le \frac{2^{442a^3}}{(q-1)^5} \mu (G)^{1 - \frac{1}{q}} \mu (F)^{\frac{1}{q}} \, . \end{equation}
+  </div>
+  <span class="equation_label">4.0.6</span>
+</p>
+</div>
+<p> This proves <a href="overviewsection.html#eq-linearized" class="eqref">2.0.6</a> for the chosen set \(G'\) and arbitrary \(f\) and thus completes the proof of Proposition <a href="overviewsection.html#finitary-Carleson">2.0.1</a>. </p>
+
+  </div>
+</div>
+<h2 id="subsecdyadic">4.1 Proof of Grid Existence Lemma</h2>
+
+<p>We begin with the construction of the centers of the dyadic cubes. </p>
+<div class="lemma_thmwrapper theorem-style-plain" id="counting-balls">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">4.1.1</span>
+    <span class="lemma_thmtitle">counting balls</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="christsection.html#counting-balls">#</a>
+    
+    <a class="icon proof" href="christsection.html#a0000000085"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/counting_balls" class="lean_decl">counting_balls</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>   Let \(-S\le k\le S\). Consider \(Y\subset X\) such that for any \(y\in Y\), we have </p>
+<div class="equation" id="ybinb">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{ybinb} y\in B(o,4D^S-D^k), \end{equation}
+  </div>
+  <span class="equation_label">4.1.1</span>
+</p>
+</div>
+<p> furthermore, for any \(y'\in Y\) with \(y\neq y'\), we have </p>
+<div class="equation" id="eq-disj-yballs">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-disj-yballs} B(y,D^k)\cap B(y',D^k)=\emptyset . \end{equation}
+  </div>
+  <span class="equation_label">4.1.2</span>
+</p>
+</div>
+<p> Then the cardinality of \(Y\) is bounded by </p>
+<div class="equation" id="boundY">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{boundY} |Y|\le 2^{3a + 200Sa^3}\,  . \end{equation}
+  </div>
+  <span class="equation_label">4.1.3</span>
+</p>
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000085">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Let \(k\) and \(Y\) be given. By applying the doubling property <a href="sect0001.html#doublingx" class="eqref">1.1.2</a> inductively, we have for each integer \(j\ge 0\) </p>
+<div class="equation" id="jballs">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{jballs} \mu (B(y,2^{j}D^k))\le 2^{aj} \mu (B(y,D^k))\,  . \end{equation}
+  </div>
+  <span class="equation_label">4.1.4</span>
+</p>
+</div>
+<p> Since \(X\) is the union of the balls \(B(y,2^{j}D^k)\) and \(\mu \) is not zero, at least one of the balls \(B(y,2^{j}D^k)\) has positive measure, thus \(B(y,D^k)\) has positive measure. </p>
+<p>Applying <a href="christsection.html#jballs" class="eqref">4.1.4</a> for \(j' = \ln _2(8D^{2S}) = 3 + 2S \cdot 100a^2\) by <a href="overviewsection.html#defineD" class="eqref">2.0.1</a>, using \(-S\le k\le S\), \(y\in B(o,4D^S)\), and the triangle inequality, we have </p>
+<div class="equation" id="a0000000086">
+<p>
+  <div class="equation_content">
+    \begin{equation}  B(o, 4D^S) \subset B(y, 8D^S) \subset B(y,2^{j'}D^k) \,  . \end{equation}
+  </div>
+  <span class="equation_label">4.1.5</span>
+</p>
+</div>
+<p> Using the disjointedness of the balls in <a href="christsection.html#eq-disj-yballs" class="eqref">4.1.2</a>, <a href="christsection.html#ybinb" class="eqref">4.1.1</a>, and the triangle inequality for \(\rho \), we obtain </p>
+<div class="equation" id="a0000000087">
+<p>
+  <div class="equation_content">
+    \begin{equation}  |Y|\mu (B(o,4D^S))\le 2^{j'a}\sum _{y\in Y}\mu (B(y,D^k)) \end{equation}
+  </div>
+  <span class="equation_label">4.1.6</span>
+</p>
+</div>
+<div class="equation" id="a0000000088">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \le 2^{j'a}\mu (\bigcup _{y\in Y}B(y,D^k)) \le 2^{j'a}\mu (o,4D^S)\,  . \end{equation}
+  </div>
+  <span class="equation_label">4.1.7</span>
+</p>
+</div>
+<p> As \(\mu (o,4D^S)\) is not zero, the lemma follows. </p>
+
+  </div>
+</div>
+<p>For each \(-S\le k\le S\), let \(Y_k\) be a set of maximal cardinality in \(X\) such that \(Y=Y_k\) satisfies the properties <a href="christsection.html#ybinb" class="eqref">4.1.1</a> and <a href="christsection.html#eq-disj-yballs" class="eqref">4.1.2</a> and such that \(o \in Y_k\). By the upper bound of <a href="christsection.html#counting-balls">Lemma 4.1.1</a>, such a set exists. </p>
+<p>For each \(-S\le k\le S\), choose an enumeration of the points in the finite set \(Y_k\) and thus a total order \({\lt}\) on \(Y_{k}\). </p>
+<div class="lemma_thmwrapper theorem-style-plain" id="cover-big-ball">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">4.1.2</span>
+    <span class="lemma_thmtitle">cover big ball</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="christsection.html#cover-big-ball">#</a>
+    
+    <a class="icon proof" href="christsection.html#a0000000089"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/cover_big_ball" class="lean_decl">cover_big_ball</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>   For each \(-S\le k\le S\), the ball \(B(o, 4D^S-D^k)\) is contained in the union of the balls \(B(y,2D^k)\) with \(y\in Y_k\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000089">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Let \(x\) be any point of \(B(o, 4D^S-D^k)\). By maximality of \(|Y_k|\), the ball \(B(x, D^k)\) intersects one of the balls \(B(y, D^k)\) with \(y\in Y_k\). By the triangle inequality, \(x\in B(y,2D^k)\). </p>
+
+  </div>
+</div>
+<p>Define the set </p>
+<div class="equation" id="a0000000090">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \mathcal{C}:= \{ (y,k): -S\le k\le S, y\in Y_k\} \,  \end{equation}
+  </div>
+  <span class="equation_label">4.1.8</span>
+</p>
+</div>
+<p> We totally order the set \(\mathcal{C}\) lexicographically by setting \((y,k){\lt}(y',k')\) if \(k{\lt} k'\) or both \(k=k'\) and \(y{\lt}y'\). In what follows, we define recursively in the sense of this order a function </p>
+<div class="equation" id="a0000000091">
+<p>
+  <div class="equation_content">
+    \begin{equation}  (I_1,I_2,I_3): \mathcal{C}\to \mathcal{P}(X)\times \mathcal{P}(X)\times \mathcal{P}(X)\,  . \end{equation}
+  </div>
+  <span class="equation_label">4.1.9</span>
+</p>
+</div>
+<p>Assume the sets \({I}_j(y',k')\) have already been defined for \(j=1,2,3\) if \(k'{\lt}k\) and if \(k=k'\) and \(y'{\lt}y\). </p>
+<p>If \(k=-S\), define for \(j\in \{ 1,2\} \) the set \({I}_j(y,k)\) to be \(B(y,jD^{-S})\). If \(-S{\lt}k\), define for \(j\in \{ 1,2\} \) and \(y\in Y_k\) the set \({I}_j(y,k)\) to be </p>
+<div class="equation" id="defineij">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{defineij} \bigcup \{ I_3(y',k-1): y'\in Y_{k-1}\cap B(y,jD^k)\} . \end{equation}
+  </div>
+  <span class="equation_label">4.1.10</span>
+</p>
+</div>
+<p> Define for \(-S\leq k\leq S\) and \(y\in Y_k\) </p>
+<div class="equation" id="definei3">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{definei3} I_3(y,k):={I_1}(y,k)\cup \left[{I_2}(y,k)\setminus \left[X_k\cup \bigcup \{ I_3(y',k):y'\in Y_{k}, y'{\lt}y\} )\right]\right] \end{equation}
+  </div>
+  <span class="equation_label">4.1.11</span>
+</p>
+</div>
+<p> with </p>
+<div class="equation" id="a0000000092">
+<p>
+  <div class="equation_content">
+    \begin{equation}  X_{k}:=\bigcup \{ I_1(y', k):y'\in Y_{k}\} . \end{equation}
+  </div>
+  <span class="equation_label">4.1.12</span>
+</p>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="basic-grid-structure">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">4.1.3</span>
+    <span class="lemma_thmtitle">basic grid structure</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="christsection.html#basic-grid-structure">#</a>
+    
+    <a class="icon proof" href="christsection.html#a0000000093"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="christsection.html#cover-big-ball">Lemma 4.1.2</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/I1_prop_1" class="lean_decl">I1_prop_1</a></li>
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/I3_prop_1" class="lean_decl">I3_prop_1</a></li>
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/I2_prop_2" class="lean_decl">I2_prop_2</a></li>
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/I3_prop_2" class="lean_decl">I3_prop_2</a></li>
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/I3_prop_3_1" class="lean_decl">I3_prop_3_1</a></li>
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/I3_prop_3_2" class="lean_decl">I3_prop_3_2</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    For each \(-S\le k\le S\) and \(1\le j\le 3\) the following holds. </p>
+<p>If \(j\neq 2\) and for some \(x\in X\) and \(y_1,y_2\in Y_k\) we have </p>
+<div class="equation" id="disji">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{disji} x\in I_j(y_1,k)\cap I_j(y_2,k), \end{equation}
+  </div>
+  <span class="equation_label">4.1.13</span>
+</p>
+</div>
+<p> then \(y_1=y_2\). </p>
+<p>If \(j\neq 1\), then </p>
+<div class="equation" id="unioni">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{unioni} B(o, 4D^S-2D^k)\subset \bigcup _{y\in Y_k} I_j(y,k)\,  . \end{equation}
+  </div>
+  <span class="equation_label">4.1.14</span>
+</p>
+</div>
+<p> We have for each \(y\in Y_k\), </p>
+<div class="equation" id="squeezedyadic">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{squeezedyadic} B(y,\frac12 D^k) \subset I_3(y,k)\subset B(y,4D^k). \end{equation}
+  </div>
+  <span class="equation_label">4.1.15</span>
+</p>
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000093">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>We prove these statements simultaneously by induction on the ordered set of pairs \((y,k)\). Let \(-S\le k\le S\). </p>
+<p>We first consider <a href="christsection.html#disji" class="eqref">4.1.13</a> for \(j=1\). If \(k=-S\), disjointedness of the sets \(I_1(y,-S)\) follows by definition of \(I_1\) and \(Y_k\). If \(k{\gt}-S\), assume \(x\) is in \(I_1(y_m,k)\) for \(m=1,2\). Then, for \(m=1,2\), there is \(z_m\in Y_{k-1}\cap B(y_m,D^k)\) with \(x\in I_3(z_m,k-1)\). Using <a href="christsection.html#disji" class="eqref">4.1.13</a> inductively for \(j=3\), we conclude \(z_1=z_2\). This implies that the balls \(B(y_1, D^k)\) and \(B(y_2, D^k)\) intersect. By construction of \(Y_k\), this implies \(y_1=y_2\). This proves <a href="christsection.html#disji" class="eqref">4.1.13</a> for \(j=1\). </p>
+<p>We next consider <a href="christsection.html#disji" class="eqref">4.1.13</a> for \(j=3\). Assume \(x\) is in \(I_3(y_m,k)\) for \(m=1,2\) and \(y_m\in Y_k\). If \(x\) is in \(X_k\), then by definition <a href="christsection.html#definei3" class="eqref">4.1.11</a>, \(x\in I_1(y_m,k)\) for \(m=1,2\). As we have already shown <a href="christsection.html#disji" class="eqref">4.1.13</a> for \(j=1\), we conclude \(y_1=y_2\). This completes the proof in case \(x\in X_k\), and we may assume \(x\) is not in \(X_k\). By definition <a href="christsection.html#definei3" class="eqref">4.1.11</a>, \(x\) is not in \(I_3(z,k)\) for any \(z\) with \(z{\lt}y_1\) or \(z{\lt}y_2\). Hence, neither \(y_1{\lt}y_2\) nor \(y_2{\lt}y_1\), and by totality of the order of \(Y_k\), we have \(y_1=y_2\). This completes the proof of <a href="christsection.html#disji" class="eqref">4.1.13</a> for \(j=3\). </p>
+<p>We show <a href="christsection.html#unioni" class="eqref">4.1.14</a> for \(j=2\). In case \(k=-S\), this follows from <a href="christsection.html#cover-big-ball">Lemma 4.1.2</a>. Assume \(k{\gt}-S\). Let \(x\) be a point of \(B(o, 4D^S-2D^k)\). By induction, there is \(y'\in Y_{k-1}\) such that \(x\in I_3(y',k-1)\). Using the inductive statement <a href="christsection.html#squeezedyadic" class="eqref">4.1.15</a>, we obtain \(x\in B(y',4D^{k-1})\). As \(D{\gt}4\), by applying the triangle inequality with the points, \(o\), \(x\), and \(y'\), we obtain that \(y'\in B(o, 4D^S-D^k)\). By <a href="christsection.html#cover-big-ball">Lemma 4.1.2</a>, \(y'\) is in \(B(y,2D^k)\) for some \(y\in Y_k\). It follows that \(x\in I_2(y,k)\). This proves <a href="christsection.html#unioni" class="eqref">4.1.14</a> for \(j=2\). </p>
+<p>We show <a href="christsection.html#unioni" class="eqref">4.1.14</a> for \(j=3\). Let \(x\in B(o, 4D^S-2D^k)\). In case \(x\in X_k\), then by definition of \(X_k\) we have \(x\in I_1(y,k)\) for some \(y\in Y_k\) and thus \(x\in I_3(y,k)\). We may thus assume \(x\not\in X_k\). As we have already seen <a href="christsection.html#unioni" class="eqref">4.1.14</a> for \(j=2\), there is \(y\in Y_k\) such that \(x\in I_2(y,k)\). We may assume this \(y\) is minimal with respect to the order in \(Y_k\). Then \(x\in I_3(y,k)\). This proves <a href="christsection.html#unioni" class="eqref">4.1.14</a> for \(j=3\). </p>
+<p>Next, we show the first inclusion in <a href="christsection.html#squeezedyadic" class="eqref">4.1.15</a>. Let \(x\in B(y,\frac12 D^k)\). As \(I_1(y,k)\subset I_3(y,k)\), it suffices to show \(x\in I_1(y,k)\). If \(k=-S\), this follows immediately from the assumption on \(x\) and the definition of \(I_1\). Assume \(k{\gt}-S\). By the inductive statement <a href="christsection.html#unioni" class="eqref">4.1.14</a> and \(D{\gt}4\), there is a \(y'\in Y_{k-1}\) such that \(x\in I_3(y',k-1)\). By the inductive statement <a href="christsection.html#squeezedyadic" class="eqref">4.1.15</a>, we conclude \(x\in B(y',4D^{k-1})\). By the triangle inequality with points \(x\), \(y\), \(y'\), and \(D\geq 8\), we have \(y'\in B(y,D^k)\). It follows by definition <a href="christsection.html#defineij" class="eqref">4.1.10</a> that \(I_3(y',k-1)\subset I_1(y,k)\), and thus \(x\in I_3(y,k)\). This proves the first inclusion in <a href="christsection.html#squeezedyadic" class="eqref">4.1.15</a>. </p>
+<p>We show the second inclusion in <a href="christsection.html#squeezedyadic" class="eqref">4.1.15</a>. Let \(x\in I_3(y,k)\). As \(I_1(y,k)\subset I_2(y,k)\) directly from the definition <a href="christsection.html#defineij" class="eqref">4.1.10</a>, it follows by definition <a href="christsection.html#definei3" class="eqref">4.1.11</a> that \(x\in I_2(y,k)\). By definition <a href="christsection.html#defineij" class="eqref">4.1.10</a>, there is \(y'\in Y_{k-1}\cap B(y,2D^k)\) with \(x\in I_3(y',k-1)\). By induction, \(x\in B(y', 4D^{k-1})\). By the triangle inequality applied to the points \(x,y',y\) and \(D{\gt}4\), we conclude \(x\in B(y,4D^k)\). This shows the second inclusion in <a href="christsection.html#squeezedyadic" class="eqref">4.1.15</a> and completes the proof of the lemma. </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="cover-by-cubes">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">4.1.4</span>
+    <span class="lemma_thmtitle">cover by cubes</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="christsection.html#cover-by-cubes">#</a>
+    
+    <a class="icon proof" href="christsection.html#a0000000094"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/cover_by_cubes" class="lean_decl">cover_by_cubes</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>   Let \(-S\le l\le k\le S\) and \(y\in Y_k\). We have </p>
+<div class="equation" id="3coverdyadic">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{3coverdyadic} I_3(y,k)\subset \bigcup _{y'\in Y_l} I_3(y',l)\,  . \end{equation}
+  </div>
+  <span class="equation_label">4.1.16</span>
+</p>
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000094">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Let \(-S\le l\le k\le S\) and \(y\in Y_k\). If \(l=k\), the inclusion <a href="christsection.html#3coverdyadic" class="eqref">4.1.16</a> is true from the definition of set union. We may then assume inductively that \(k{\gt}l\) and the statement of the lemma is true if \(k\) is replaced by \(k-1\). Let \(x\in I_3(y,k)\). By definition <a href="christsection.html#definei3" class="eqref">4.1.11</a>, \(x\in I_j(y,k)\) for some \(j\in \{ 1,2\} \). By <a href="christsection.html#defineij" class="eqref">4.1.10</a>, \(x\in I_3(w,k-1)\) for some \(w\in Y_{k-1}\). We conclude <a href="christsection.html#3coverdyadic" class="eqref">4.1.16</a> by induction. </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="dyadic-property">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">4.1.5</span>
+    <span class="lemma_thmtitle">dyadic property</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="christsection.html#dyadic-property">#</a>
+    
+    <a class="icon proof" href="christsection.html#a0000000095"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="christsection.html#basic-grid-structure">Lemma 4.1.3</a></li>
+          
+          <li><a href="christsection.html#cover-by-cubes">Lemma 4.1.4</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/dyadic_property" class="lean_decl">dyadic_property</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    Let \(-S\le l\le k\le S\) and \(y\in Y_k\) and \(y'\in Y_l\) with \(I_3(y',l)\cap I_3(y,k)\neq \emptyset \). Then </p>
+<div class="equation" id="3dyadicproperty">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{3dyadicproperty} I_3(y',l)\subset I_3(y,k). \end{equation}
+  </div>
+  <span class="equation_label">4.1.17</span>
+</p>
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000095">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Let \(l,k,y,y'\) be as in the lemma. Pick \(x\in I_3(y',l)\cap I_3(y,k)\). Assume first \(l=k\). By <a href="christsection.html#disji" class="eqref">4.1.13</a> of <a href="christsection.html#basic-grid-structure">Lemma 4.1.3</a>, we conclude \(y'=y\), and thus <a href="christsection.html#3dyadicproperty" class="eqref">4.1.17</a>. Now assume \(l{\lt}k\). By induction, we may assume that the statement of the lemma is proven for \(k-1\) in place of \(k\). </p>
+<p>By <a href="christsection.html#cover-by-cubes">Lemma 4.1.4</a>, there is a \(y''\in Y_{k-1}\) such that \(x\in I_3(y'',k-1)\). By induction, we have \(I_3(y',l)\subset I_3(y'',k-1)\). It remains to prove </p>
+<div class="equation" id="wyclaim">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{wyclaim} I_3(y'',k-1)\subset I_3(y,k). \end{equation}
+  </div>
+  <span class="equation_label">4.1.18</span>
+</p>
+</div>
+<p> We make a case distinction and assume first \(x\in X_k\). By Definition <a href="christsection.html#definei3" class="eqref">4.1.11</a>, we have \(x\in I_1(y,k)\). By Definition <a href="christsection.html#defineij" class="eqref">4.1.10</a>, there is a \(v\in Y_{k-1}\cap B(y,D^k)\) with \(x\in I_3(v,k-1)\). By <a href="christsection.html#disji" class="eqref">4.1.13</a> of <a href="christsection.html#basic-grid-structure">Lemma 4.1.3</a>, we have \(v=y''\). By Definition <a href="christsection.html#defineij" class="eqref">4.1.10</a>, we then have \(I_3(y'',k-1)\subset I_1(y,k)\). Then <a href="christsection.html#wyclaim" class="eqref">4.1.18</a> follows by Definition <a href="christsection.html#definei3" class="eqref">4.1.11</a> in the given case. </p>
+<p>Assume now the case \(x\notin X_k\). By <a href="christsection.html#definei3" class="eqref">4.1.11</a>, we have \(x\in I_2(y,k)\). Moreover, for any \(u{\lt}y\) in \(Y_k\), we have \(x\not\in I_3(u,k)\). Let \(u{\lt}y\). By transitivity of the order in \(Y_k\), we conclude \(x\not\in I_2(u,k)\). By <a href="christsection.html#defineij" class="eqref">4.1.10</a> and the disjointedness property of <a href="christsection.html#basic-grid-structure">Lemma 4.1.3</a>, we have \(I_3(y'',k-1)\cap I_2(u,k)= \emptyset \). Similarly, \(I_3(y'',k-1)\cap I_1(u,k)= \emptyset \). Hence \(I_3(y'',k-1)\cap I_3(u,k)=\emptyset \). As \(u{\lt}y\) was arbitrary, we conclude with <a href="christsection.html#definei3" class="eqref">4.1.11</a> the claim in the given case. This completes the proof of <a href="christsection.html#wyclaim" class="eqref">4.1.18</a>, and thus also <a href="christsection.html#3dyadicproperty" class="eqref">4.1.17</a>. </p>
+
+  </div>
+</div>
+<p>For \(-S\le k'\le k\le S\) and \(y'\in Y_{k'}\), \(y\in Y_k\) write \((y',k'|y,k)\) if \(I_3(y',k')\subset I_3(y,k)\) and </p>
+<div class="equation" id="bdcond">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{bdcond} \inf _{x\in X\setminus I_3(y,k)}\rho (y',x){\lt}6D^{k'}\,  . \end{equation}
+  </div>
+  <span class="equation_label">4.1.19</span>
+</p>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="transitive-boundary">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">4.1.6</span>
+    <span class="lemma_thmtitle">transitive boundary</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="christsection.html#transitive-boundary">#</a>
+    
+    <a class="icon proof" href="christsection.html#a0000000096"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="christsection.html#dyadic-property">Lemma 4.1.5</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/transitive_boundary" class="lean_decl">transitive_boundary</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    Assume \(-S\le k''{\lt} k'{\lt} k\le S\) and \(y''\in Y_{k''}\), \(y'\in Y_{k'}\), \(y\in Y_k\). Assume there is \(x\in X\) such that </p>
+<div class="equation" id="a0000000097">
+<p>
+  <div class="equation_content">
+    \begin{equation}  x\in I_3(y'',k'')\cap I_3(y',k')\cap I_3(y,k)\,  . \end{equation}
+  </div>
+  <span class="equation_label">4.1.20</span>
+</p>
+</div>
+<p> If \((y'',k''|y,k)\), the also \((y'',k''|y',k')\) and \((y',k'|y,k)\) </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000096">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>As \(x\in I_3(y'',k'')\cap I_3(y',k')\) and \(k''{\lt} k'\), we have by <a href="christsection.html#dyadic-property">Lemma 4.1.5</a> that \(I_3(y'',k'')\subset I_3(y',k')\). Similarly, \(I_3(y',k')\subset I_3(y,k)\). Pick \(x'\in X\setminus I_3(y,k)\) such that </p>
+<div class="equation" id="yppxp">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{yppxp} \rho (y'',x'){\lt} 6D^{k''}\,  , \end{equation}
+  </div>
+  <span class="equation_label">4.1.21</span>
+</p>
+</div>
+<p> which exists as \((y'',k''|y,k)\). As \(x'\in X\setminus I_3(y',k')\) as well, we conclude \((y'',k''| y',k')\). By the triangle inequality, we have </p>
+<div class="equation" id="a0000000098">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \rho (y',x')\le \rho (y',x)+\rho (x,y'')+\rho (y'',x') \end{equation}
+  </div>
+  <span class="equation_label">4.1.22</span>
+</p>
+</div>
+<p> Using the choice of \(x\) and <a href="christsection.html#squeezedyadic" class="eqref">4.1.15</a> as well as <a href="christsection.html#yppxp" class="eqref">4.1.21</a>, we estimate this by </p>
+<div class="equation" id="a0000000099">
+<p>
+  <div class="equation_content">
+    \begin{equation}  {\lt} 4D^{k'}+4D^{k''}+6D^{k''}\le 6D^{k'}\,  , \end{equation}
+  </div>
+  <span class="equation_label">4.1.23</span>
+</p>
+</div>
+<p> where we have used \(D{\gt}5\) and \(k''{\lt}k'\). We conclude \((y',k'|y,k)\). </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="small-boundary">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">4.1.7</span>
+    <span class="lemma_thmtitle">small boundary</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="christsection.html#small-boundary">#</a>
+    
+    <a class="icon proof" href="christsection.html#a0000000100"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="christsection.html#transitive-boundary">Lemma 4.1.6</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/small_boundary" class="lean_decl">small_boundary</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    Let \(K = 2^{4a+1}\). For each \(-S+K\le k\le S\) and \(y\in Y_k\) we have </p>
+<div class="equation" id="new-small-boundary">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{new-small-boundary} \sum _{z\in Y_{k-K}: (z,k-K|y,k)}\mu (I_3(z,k-K)) \le \frac12 \mu (I_3(y,k))\, . \end{equation}
+  </div>
+  <span class="equation_label">4.1.24</span>
+</p>
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000100">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Let \(K\) be as in the lemma. Let \(-S+K\le k\le S\) and \(y\in Y_k\). </p>
+<p>Pick \(k'\) so that \(k-K\le k'\le k\). For each \(y''\in Y_{k-K}\) with \((y'',k-K| y,k)\), by <a href="christsection.html#cover-by-cubes">Lemma 4.1.4</a> and <a href="christsection.html#dyadic-property">Lemma 4.1.5</a>, there is a unique \(y'\in Y_{k'}\) such that </p>
+<div class="equation" id="4.31">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{4.31} I_3(y'',k-K)\subset I_3(y',k')\subset I_3(y,k)\,  . \end{equation}
+  </div>
+  <span class="equation_label">4.1.25</span>
+</p>
+</div>
+<p> Using <a href="christsection.html#transitive-boundary">Lemma 4.1.6</a>, \((y',k'|y,k)\). </p>
+<p>We conclude using the disjointedness property of <a href="christsection.html#basic-grid-structure">Lemma 4.1.3</a> that </p>
+<div class="equation" id="scalecompare">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{scalecompare} \sum _{y'': (y'',k-K|y,k)}\mu (I_3(y'',k-K)) \le \sum _{y': (y',k'|y,k)} \mu (I_3(y',k')) \,  . \end{equation}
+  </div>
+  <span class="equation_label">4.1.26</span>
+</p>
+</div>
+<p> Adding over \(k-K{\lt}k'\le k\), and using </p>
+<div class="displaymath" id="a0000000101">
+  \[ \mu (I_3(y',k'))\le 2^{4a} \mu (B(y', \frac14 D^{k'})) \]
+</div>
+<p> from the doubling property <a href="sect0001.html#doublingx" class="eqref">1.1.2</a> and <a href="christsection.html#squeezedyadic" class="eqref">4.1.15</a> gives </p>
+<div class="equation" id="sumcompare">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{sumcompare} K\sum _{y'': (y'',k-K|y,k)} \mu (I_3(y'',k-K)) \end{equation}
+  </div>
+  <span class="equation_label">4.1.27</span>
+</p>
+</div>
+<div class="equation" id="sumcompare1">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{sumcompare1} \le 2^{4a} \sum _{k-K{\lt}k'\le k} \left[ \sum _{y': (y',k'|y,k)} \mu (B(y', \frac14 D^{k'}))\right] \end{equation}
+  </div>
+  <span class="equation_label">4.1.28</span>
+</p>
+</div>
+<p> Each ball \(B(y', \frac14 D^{k'})\) occurring in <a href="christsection.html#sumcompare1" class="eqref">4.1.28</a> is contained in \(I_3(y',k')\) by <a href="christsection.html#squeezedyadic" class="eqref">4.1.15</a> and in turn contained in \(I_3(y,k)\) by <a href="christsection.html#4.31" class="eqref">4.1.25</a>. Assume for the moment all these balls are pairwise disjoint. Then by additivity of the measure, </p>
+<div class="equation" id="a0000000102">
+<p>
+  <div class="equation_content">
+    \begin{equation}  K\sum _{y'': (y'',k-K|y,k)} \mu (I_3(y'',k-K)) \le 2^{4a} \mu (I_3(y,k))\,  \end{equation}
+  </div>
+  <span class="equation_label">4.1.29</span>
+</p>
+</div>
+<p> which by \(K=2^{4a+1}\) implies <a href="christsection.html#new-small-boundary" class="eqref">4.1.24</a>. </p>
+<p>It thus remains to prove that the balls occurring in <a href="christsection.html#sumcompare1" class="eqref">4.1.28</a> are pairwise disjoint. Let \((u,l)\) and \((u',l')\) be two parameter pairs occurring in the sum of <a href="christsection.html#sumcompare1" class="eqref">4.1.28</a> and let \( B(u, \frac14 D^l)\) and \(B({u’}, \frac14 D^{l'})\) be the corresponding balls. If \(l=l'\), then the balls are equal or disjoint by <a href="christsection.html#squeezedyadic" class="eqref">4.1.15</a> and <a href="christsection.html#disji" class="eqref">4.1.13</a> of <a href="christsection.html#basic-grid-structure">Lemma 4.1.3</a>. Assume then without loss of generality that \(l'{\lt}l\). Towards a contradiction, assume that </p>
+<div class="equation" id="bulbul">
+<p>
+  <div class="equation_content">
+    \begin{equation} \label{bulbul} B(u, \frac14 D^l)\cap B({u’}, \frac14 D^{l'})\neq \emptyset \end{equation}
+  </div>
+  <span class="equation_label">4.1.30</span>
+</p>
+</div>
+<p> As \((u',l'|y,k)\), there is a point \(x\) in \(X\setminus I_3(y,k)\) with \(\rho (x,u'){\lt}6D^{l'}\). Using \(D{\gt}25\), we conclude from the triangle inequality and <a href="christsection.html#bulbul" class="eqref">4.1.30</a> that \(x\in B(u,\frac12D^l)\). However, \(B(u,\frac12 D^l)\subset I_3(u,l)\), and \(I_3(u,l)\subset I_3(y,k)\), a contradiction to \(x\not\in I_3(y,k)\). This proves the lemma. </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="smaller-boundary">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">4.1.8</span>
+    <span class="lemma_thmtitle">smaller boundary</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="christsection.html#smaller-boundary">#</a>
+    
+    <a class="icon proof" href="christsection.html#a0000000103"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="christsection.html#small-boundary">Lemma 4.1.7</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/smaller_boundary" class="lean_decl">smaller_boundary</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    Let \(K = 2^{4a+1}\) and let \(n\ge 0\) be an integer. Then for each \(-S+nK\le k\le S\) we have </p>
+<div class="equation" id="very-new-small">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{very-new-small} \sum _{y'\in Y_{k-nK}: (y',k-nK|y,k)}\mu (I_3(y',k-nK)) \le 2^{-n} \mu (I_3(y,k))\, . \end{equation}
+  </div>
+  <span class="equation_label">4.1.31</span>
+</p>
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000103">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>We prove this by induction on \(n\). If \(n=0\), both sides of <a href="christsection.html#very-new-small" class="eqref">4.1.31</a> are equal to \(\mu (I_3(y,k))\) by <a href="christsection.html#disji" class="eqref">4.1.13</a>. If \(n=1\), this follows from <a href="christsection.html#small-boundary">Lemma 4.1.7</a>. </p>
+<p>Assume \(n{\gt}1\) and <a href="christsection.html#very-new-small" class="eqref">4.1.31</a> has been proven for \(n-1\). We write <a href="christsection.html#very-new-small" class="eqref">4.1.31</a> </p>
+<div class="equation" id="a0000000104">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \sum _{y''\in Y_{k-nK}: (y'',k-nK|y,k)}\mu (I_3(y'',k-nK)) \end{equation}
+  </div>
+  <span class="equation_label">4.1.32</span>
+</p>
+</div>
+<div class="equation" id="a0000000105">
+<p>
+  <div class="equation_content">
+    \begin{equation}  = \sum _{y'\in Y_{k-K}:(y',k-K|y,k)} \left[ \sum _{y''\in Y_{k-nK}: (y'',k-nK|y',k-K)}\mu (I_3(y'',k-nK)) \right] \end{equation}
+  </div>
+  <span class="equation_label">4.1.33</span>
+</p>
+</div>
+<p> Applying the induction hypothesis, this is bounded by </p>
+<div class="equation" id="a0000000106">
+<p>
+  <div class="equation_content">
+    \begin{equation}  = \sum _{y'\in Y_{k-K}:(y',k-K|y,k)} 2^{1-n}\mu (I_3(y',k-K)) \end{equation}
+  </div>
+  <span class="equation_label">4.1.34</span>
+</p>
+</div>
+<p> Applying <a href="christsection.html#new-small-boundary" class="eqref">4.1.24</a> gives <a href="christsection.html#very-new-small" class="eqref">4.1.31</a>, and proves the lemma. </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="boundary-measure">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">4.1.9</span>
+    <span class="lemma_thmtitle">boundary measure</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="christsection.html#boundary-measure">#</a>
+    
+    <a class="icon proof" href="christsection.html#a0000000107"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="christsection.html#smaller-boundary">Lemma 4.1.8</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/boundary_measure" class="lean_decl">boundary_measure</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    For each \(-S\le k\le S\) and \(y\in Y_k\) and \(0{\lt}t{\lt}1\) with \(tD^k\ge D^{-S}\) we have </p>
+<div class="equation" id="old-small-boundary">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{old-small-boundary} \mu (\{ x \in I_3(y,k) \  : \  \rho (x, X \setminus I_3(y,k)) \leq t D^{k}\} ) \le 2 t^\kappa \mu (I_3(y,k))\, . \end{equation}
+  </div>
+  <span class="equation_label">4.1.35</span>
+</p>
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000107">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Let \(x\in I_3(y,k)\) with \(\rho (x, X \setminus I_3(y,k)) \leq t D^{k}\). Let \(K = 2^{4a+1}\) as in <a href="christsection.html#smaller-boundary">Lemma 4.1.8</a>. Let \(n\) be the largest integer such that \(D^{nK} \le \frac{1}{t}\), so that \(tD^k \le D^{k-nK}\) and </p>
+<div class="equation" id="eq-n-size">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-n-size} D^{nK} {\gt} \frac{1}{tD^K}\, . \end{equation}
+  </div>
+  <span class="equation_label">4.1.36</span>
+</p>
+</div>
+<p> Let \(k' = k - nK\), by the assumption \(tD^k \ge D^{-S}\), we have \(k' \ge -S\). By <a href="christsection.html#3coverdyadic" class="eqref">4.1.16</a>, there exists \(y' \in Y_{k'}\) with \(x \in I_3(y',k')\). By the squeezing property <a href="christsection.html#squeezedyadic" class="eqref">4.1.15</a> and the assumption on \(x\), we have </p>
+<div class="displaymath" id="a0000000108">
+  \[  \rho (y', X \setminus I_3(y,k)) \le \rho (x,y') + \rho (x, X \setminus I_3(y,k)) \le 4 D^{k'} + t D^{k}\, .  \]
+</div>
+<p> By the assumption on \(n\) and the definition of \(k'\), this is </p>
+<div class="displaymath" id="a0000000109">
+  \[  \le 4D^{k'} + D^{k - nK} {\lt} 6D^{k'}\, .  \]
+</div>
+<p> Together with <a href="christsection.html#3dyadicproperty" class="eqref">4.1.17</a> thus \((y',k'|y,k)\). We have shown that </p>
+<div class="displaymath" id="a0000000110">
+  \[  \{ x \in I_3(y,k) \  : \  \rho (x, X \setminus I_3(y,k)) \leq t D^{k}\}   \]
+</div>
+<div class="displaymath" id="a0000000111">
+  \[  \subset \bigcup _{y'\in Y_{k-nK}: (y',k-nK|y,k)}I_3(y',k-nK)\, .  \]
+</div>
+<p> Using monotonicity and additivity of the measure and <a href="christsection.html#smaller-boundary">Lemma 4.1.8</a>, we obtain </p>
+<div class="displaymath" id="a0000000112">
+  \[  \mu (\{ x \in I_3(y,k) \  : \  \rho (x, X \setminus I_3(y,k)) \leq t D^{k}\} ) \le 2^{-n} \mu (I_3(y,k))\, .  \]
+</div>
+<p> By <a href="christsection.html#eq-n-size" class="eqref">4.1.36</a> and the definition <a href="overviewsection.html#defineD" class="eqref">2.0.1</a> of \(D\), this is bounded by </p>
+<div class="displaymath" id="a0000000113">
+  \[  2 t^{1/(100a^2 K)} \mu (I_3(y,k))\, ,  \]
+</div>
+<p> which completes the proof by the definition <a href="overviewsection.html#definekappa" class="eqref">2.0.2</a> of \(\kappa \). </p>
+
+  </div>
+</div>
+<p>Let \(\tilde{\mathcal{D}}\) be the set of all \(I_3(y,k)\) with \(k\in [-S,S]\) and \(y\in Y_k\). Define </p>
+<div class="equation" id="a0000000114">
+<p>
+  <div class="equation_content">
+    \begin{equation}  s(I_3(y,k)):=k \end{equation}
+  </div>
+  <span class="equation_label">4.1.37</span>
+</p>
+</div>
+<div class="equation" id="a0000000115">
+<p>
+  <div class="equation_content">
+    \begin{equation}  c(I_3(y,k)):=y\, . \end{equation}
+  </div>
+  <span class="equation_label">4.1.38</span>
+</p>
+</div>
+<p> We define \(\mathcal{D}\) to be the set of all \(I \in \tilde{\mathcal{D}}\) such that \(I \subset I_3(o, S)\). </p>
+<div class="proof_wrapper" id="a0000000079">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof of <a href="christsection.html#grid-existence">Lemma 4.0.1</a>
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>  We first show that \((\tilde{\mathcal{D}},c,s)\) satisfies properties <a href="overviewsection.html#coverdyadic" class="eqref">2.0.7</a>, <a href="overviewsection.html#dyadicproperty" class="eqref">2.0.8</a>, <a href="overviewsection.html#eq-vol-sp-cube" class="eqref">2.0.10</a> and <a href="overviewsection.html#eq-small-boundary" class="eqref">2.0.11</a>. Property <a href="overviewsection.html#eq-vol-sp-cube" class="eqref">2.0.10</a> follows from <a href="christsection.html#squeezedyadic" class="eqref">4.1.15</a>, while <a href="overviewsection.html#eq-small-boundary" class="eqref">2.0.11</a> follows from <a href="christsection.html#boundary-measure">Lemma 4.1.9</a>. </p>
+<p>Let \(x\in B(o, D^S)\). We show properties <a href="overviewsection.html#coverdyadic" class="eqref">2.0.7</a> and <a href="overviewsection.html#dyadicproperty" class="eqref">2.0.8</a> for \((\tilde{\mathcal{D}},c,s)\) and \(x\). </p>
+<p>We first show <a href="overviewsection.html#coverdyadic" class="eqref">2.0.7</a> for \((\tilde{\mathcal{D}},c,s)\) by contradiction. Then there is an \(I\) violating the conclusion of <a href="overviewsection.html#coverdyadic" class="eqref">2.0.7</a>. Pick such \(I=I_3(y,l)\) such that \(l\) is minimal. By assumption, we have \(-S\le k{\lt}l\); in particular \(-S{\lt}l\). By definition, \(I_3(y, l)\) is contained in \(I_1(y, l)\cup I_2(y, l)\), which is contained in the union of \(I_3(y',l-1)\) with \(y'\in Y_{l-1}\). By minimality of \(l\), each such \(I_3(y',l-1)\) is contained in the union of all \(I_3(z,k)\) with \(z\in Y_k\). This proves <a href="overviewsection.html#coverdyadic" class="eqref">2.0.7</a>. </p>
+<p>We now show <a href="overviewsection.html#dyadicproperty" class="eqref">2.0.8</a> for \((\tilde{\mathcal{D}},c,s)\). Assume to get a contradiction that there are non-disjoint \(I, J\in \tilde{\mathcal{D}}\) with \(s(I)\le s(J)\) and \(I \not\subset J\). We may assume the existence of such \(I\) and \(J\) with minimal \(s(J)-s(I)\). Let \(k=s(I)\). Assume first \(s(J)=k\). Let \(I=I_3(y_1,k)\) and \(J=I_3(y_2,k)\) with \(y_1,y_2\in Y_k\). If \(y_1=y_2\), then \(I=J\), a contradiction to \(I\not\subset J\). If \(y_1\neq y_2\), then \(I\cap J=\emptyset \) by <a href="christsection.html#disji" class="eqref">4.1.13</a>, a contradiction to the non-disjointedness of \(I,J\). Assume now \(s(J){\gt}k\). Choose \(y\in I\cap J\). By property <a href="overviewsection.html#coverdyadic" class="eqref">2.0.7</a>, there is \(K\in \tilde{\mathcal{D}}\) with \(s(K)=s(J)-1\) and \(y\in K\). By construction of \(J\), and pairwise disjointedness of all \(I_3(w,s(J)-1)\) that we have already seen, we have \(K\subset J\). By minimality of \(s(J)\), we have \(I\subset K\). This proves \(I\subset J\) and thus <a href="overviewsection.html#dyadicproperty" class="eqref">2.0.8</a>. </p>
+<p>Now note that properties <a href="overviewsection.html#dyadicproperty" class="eqref">2.0.8</a>, <a href="overviewsection.html#eq-vol-sp-cube" class="eqref">2.0.10</a> and <a href="overviewsection.html#eq-small-boundary" class="eqref">2.0.11</a> immediately carry over to \((\mathcal{D},c, s)\) by restriction. <a href="overviewsection.html#subsetmaxcube" class="eqref">2.0.9</a> is true for \((\mathcal{D}, c, s)\) by definition, and <a href="overviewsection.html#coverdyadic" class="eqref">2.0.7</a> follows from <a href="overviewsection.html#coverdyadic" class="eqref">2.0.7</a> and <a href="overviewsection.html#dyadicproperty" class="eqref">2.0.8</a> for \((\tilde{\mathcal{D}}, c, s)\). </p>
+
+  </div>
+</div>
+<h2 id="subsectiles">4.2 Proof of Tile Structure Lemma</h2>
+<p>  Choose a grid structure \((\mathcal{D}, c, s)\) with <a href="christsection.html#grid-existence">Lemma 4.0.1</a> Let \(I \in \mathcal{D}\). Suppose that </p>
+<div class="equation" id="eq-tile-Z">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-tile-Z} \mathcal{Z} \subset {Q}(X) \end{equation}
+  </div>
+  <span class="equation_label">4.2.1</span>
+</p>
+</div>
+<p> is such that for any \({\vartheta }, {\theta }\in \mathcal{Z}\) with \({\vartheta }\ne {\theta }\) we have </p>
+<div class="equation" id="eq-tile-disjoint-Z">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-tile-disjoint-Z} B_{I^\circ }({\vartheta }, 0.3) \cap B_{I^\circ }({\theta }, 0.3) \cap {Q}(X) = \emptyset \, . \end{equation}
+  </div>
+  <span class="equation_label">4.2.2</span>
+</p>
+</div>
+<p> Since \({Q}(X)\) is finite, there exists a set \(\mathcal{Z}\) satisfying both <a href="christsection.html#eq-tile-Z" class="eqref">4.2.1</a> and <a href="christsection.html#eq-tile-disjoint-Z" class="eqref">4.2.2</a> of maximal cardinality among all such sets. We pick for each \(I \in \mathcal{D}\) such a set \(\mathcal{Z}(I)\). </p>
+<div class="lemma_thmwrapper theorem-style-plain" id="frequency-ball-cover">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">4.2.1</span>
+    <span class="lemma_thmtitle">frequency ball cover</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="christsection.html#frequency-ball-cover">#</a>
+    
+    <a class="icon proof" href="christsection.html#a0000000116"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/frequency_ball_cover" class="lean_decl">frequency_ball_cover</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>   For each \(I \in \mathcal{D}\), we have </p>
+<div class="equation" id="eq-tile-cover">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-tile-cover} {Q}(X) \subset \bigcup _{z \in \mathcal{Z}(I)} B_{I^\circ }(z, 0.7)\, . \end{equation}
+  </div>
+  <span class="equation_label">4.2.3</span>
+</p>
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000116">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Let \({\theta }\in \bigcup _{{\vartheta }\in {Q}(X)} B_{I^\circ }({\vartheta }, 1)\). By maximality of \(\mathcal{Z}(I)\), there must be a point \(z \in \mathcal{Z}(I)\) such that \(B_{I^\circ }(z, 0.3) \cap B_{I^\circ }({\theta }, 0.3) \ne \emptyset \). Else, \(\mathcal{Z}(I) \cup \{ {\theta }\} \) would be a set of larger cardinality than \(\mathcal{Z}(I)\) satisfying <a href="christsection.html#eq-tile-Z" class="eqref">4.2.1</a> and <a href="christsection.html#eq-tile-disjoint-Z" class="eqref">4.2.2</a>. Fix such \(z\), and fix a point \(z_1 \in B_{I^\circ }(z, 0.3) \cap B_{I^\circ }({\theta }, 0.3)\). By the triangle inequality, we deduce that </p>
+<div class="displaymath" id="a0000000117">
+  \[  d_{I^\circ }(z,{\theta }) \le d_{I^\circ }(z,z_1) + d_{I^\circ }({\theta }, z_1) {\lt} 0.3 + 0.3 = 0.6\, ,  \]
+</div>
+<p> and hence \({\theta }\in B_{I^\circ }(z, 0.7)\). </p>
+
+  </div>
+</div>
+<p>We define </p>
+<div class="displaymath" id="a0000000118">
+  \[  {\mathfrak P}= \{ (I, z) \  : \  I \in \mathcal{D}, z \in \mathcal{Z}(I)\} \, ,  \]
+</div>
+<div class="displaymath" id="a0000000119">
+  \[ {\mathcal{I}}((I, z)) = I\qquad \text{and} \qquad {\mathcal{Q}}((I, z)) = z. \]
+</div>
+<p> We further set </p>
+<div class="displaymath" id="a0000000120">
+  \[ {\mathrm{s}}({\mathfrak p}) = s({\mathcal{I}}({\mathfrak p})),\qquad \qquad {\mathrm{c}}({\mathfrak p}) = c({\mathcal{I}}({\mathfrak p})). \]
+</div>
+<p> Then <a href="overviewsection.html#tilecenter" class="eqref">2.0.18</a>, <a href="overviewsection.html#tilescale" class="eqref">2.0.19</a> hold by definition. </p>
+<p>It remains to construct the map \(\Omega \), and verify properties <a href="overviewsection.html#eq-dis-freq-cover" class="eqref">2.0.13</a>, <a href="overviewsection.html#eq-freq-dyadic" class="eqref">2.0.14</a> and <a href="overviewsection.html#eq-freq-comp-ball" class="eqref">2.0.15</a>. We first construct an auxiliary map \(\Omega _1\). For each \(I \in \mathcal{D}\), we pick an enumeration of the finite set \(\mathcal{Z}(I)\) </p>
+<div class="displaymath" id="a0000000121">
+  \[  \mathcal{Z}(I) = \{ z_1, \dotsc , z_M\} \, .  \]
+</div>
+<p> We define \(\Omega _1:{\mathfrak P}\mapsto \mathcal{P}({\Theta }) \) as below. Set </p>
+<div class="displaymath" id="a0000000122">
+  \[  \Omega _1((I, z_1)) = B_{I^\circ }(z_1, 0.7) \setminus \bigcup _{z \in \mathcal{Z}(I)\setminus \{ z_1\} } B_{I^\circ }(z, 0.3)  \]
+</div>
+<p> and then define iteratively </p>
+<div class="equation" id="eq-def-omega1">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-def-omega1} \Omega _1((I, z_k)) = B_{I^\circ }(z_k, 0.7) \setminus \bigcup _{z \in \mathcal{Z}(I) \setminus \{ z_k\} } B_{I^\circ }(z, 0.3) \setminus \bigcup _{i=1}^{k-1} \Omega _1((I, z_i))\, . \end{equation}
+  </div>
+  <span class="equation_label">4.2.4</span>
+</p>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="disjoint-frequency-cubes">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">4.2.2</span>
+    <span class="lemma_thmtitle">disjoint frequency cubes</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="christsection.html#disjoint-frequency-cubes">#</a>
+    
+    <a class="icon proof" href="christsection.html#a0000000123"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/Construction.disjoint_frequency_cubes" class="lean_decl">Construction.disjoint_frequency_cubes</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>   For each \(I \in \mathcal{D}\), and \({\mathfrak p}_1, {\mathfrak p}_2\in {\mathfrak P}(I)\), if </p>
+<div class="displaymath" id="a0000000124">
+  \[ \Omega _1({\mathfrak p}_1)\cap \Omega _1({\mathfrak p}_2)\neq \emptyset , \]
+</div>
+<p> then \({\mathfrak p}_1={\mathfrak p}_2\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000123">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>By the definition of the map \({\mathcal{I}}\), we have </p>
+<div class="displaymath" id="a0000000125">
+  \[  {\mathfrak P}(I) = \{ (I, z) \,  : \,  z \in \mathcal{Z}(I)\} \, .  \]
+</div>
+<p> By <a href="christsection.html#eq-def-omega1" class="eqref">4.2.4</a>, the set \(\Omega _1((I, z_k))\) is disjoint from each \(\Omega _1((I, z_i))\) with \(i {\lt} k\). Thus the sets \(\Omega _1({\mathfrak p})\), \({\mathfrak p}\in {\mathfrak P}(I)\) are pairwise disjoint. </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="frequency-cube-cover">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">4.2.3</span>
+    <span class="lemma_thmtitle">frequency cube cover</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="christsection.html#frequency-cube-cover">#</a>
+    
+    <a class="icon proof" href="christsection.html#a0000000126"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/Construction.iUnion_ball_subset_iUnion_Ω₁" class="lean_decl">Construction.iUnion_ball_subset_iUnion_Ω₁</a></li>
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/Construction.ball_subset_Ω₁" class="lean_decl">Construction.ball_subset_Ω₁</a></li>
+          
+          <li><a href="https://fpvandoorn.github.io/carleson/docs/find/#doc/Construction.Ω₁_subset_ball" class="lean_decl">Construction.Ω₁_subset_ball</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>   For each \(I \in \mathcal{D}\), it holds that </p>
+<div class="equation" id="eq-omega1-cover">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-omega1-cover} \bigcup _{z \in \mathcal{Z}(I)} B_{I^\circ }(z, 0.7)\subset \bigcup _{{\mathfrak p}\in {\mathfrak P}(I)} \Omega _1({\mathfrak p})\, . \end{equation}
+  </div>
+  <span class="equation_label">4.2.5</span>
+</p>
+</div>
+<p> For every \({\mathfrak p}\in {\mathfrak P}\), it holds that </p>
+<div class="equation" id="eq-omega1-incl">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-omega1-incl} B_{{\mathfrak p}}({\mathcal{Q}}({\mathfrak p}), 0.3) \subset \Omega _1({\mathfrak p}) \subset B_{{\mathfrak p}}({\mathcal{Q}}({\mathfrak p}), 0.7)\, . \end{equation}
+  </div>
+  <span class="equation_label">4.2.6</span>
+</p>
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000126">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>For <a href="christsection.html#eq-omega1-incl" class="eqref">4.2.6</a> let \({\mathfrak p}= (I, z)\). The second inclusion in <a href="christsection.html#eq-omega1-incl" class="eqref">4.2.6</a> then follows from <a href="christsection.html#eq-def-omega1" class="eqref">4.2.4</a> and the equality \(B_{{\mathfrak p}}({\mathcal{Q}}({\mathfrak p}), 0.7) = B_{I^\circ }(z, 0.7)\), which is true by definition. For the first inclusion in <a href="christsection.html#eq-omega1-incl" class="eqref">4.2.6</a> let \({\vartheta }\in B_{{\mathfrak p}}({\mathcal{Q}}({\mathfrak p}),0.3)\). Let \(k\) be such that \(z = z_k\) in the enumeration we chose above. It follows immediately from <a href="christsection.html#eq-def-omega1" class="eqref">4.2.4</a> and <a href="christsection.html#eq-tile-disjoint-Z" class="eqref">4.2.2</a> that \({\vartheta }\notin \Omega _1((I, z_i))\) for all \(i {\lt} k\). Thus, again from <a href="christsection.html#eq-def-omega1" class="eqref">4.2.4</a>, we have \({\vartheta }\in \Omega _1((I,z_k))\). </p>
+<p>To show <a href="christsection.html#eq-omega1-cover" class="eqref">4.2.5</a> let \({\vartheta }\in \bigcup _{z \in \mathcal{Z}(I)} B_{I^\circ }(z,0.7)\). If there exists \(z \in \mathcal{Z}(I)\) with \({\vartheta }\in B_{I^\circ }(z,0.3)\), then </p>
+<div class="displaymath" id="a0000000127">
+  \[  z \in \Omega _1((I, z)) \subset \bigcup _{{\mathfrak p}\in {\mathfrak P}(I)} \Omega _1({\mathfrak p})  \]
+</div>
+<p> by the first inclusion in <a href="christsection.html#eq-omega1-incl" class="eqref">4.2.6</a>. </p>
+<p>Now suppose that there exists no \(z \in \mathcal{Z}(I)\) with \({\vartheta }\in B_{I^\circ }(z, 0.3)\). Let \(k\) be minimal such that \({\vartheta }\in B_{I^\circ }(z_k, 0.7)\). Since \(\Omega _1((I, z_i)) \subset B_{I^\circ }(z_i, 0.7)\) for each \(i\) by <a href="christsection.html#eq-def-omega1" class="eqref">4.2.4</a>, we have that \({\vartheta }\notin \Omega _1((I, z_i))\) for all \(i {\lt} k\). Hence \({\vartheta }\in \Omega _1((I, z_k))\), again by <a href="christsection.html#eq-def-omega1" class="eqref">4.2.4</a>. </p>
+
+  </div>
+</div>
+<p>Now we are ready to define the function \(\Omega \). We define for all \({\mathfrak p}\in {\mathfrak P}(I_0)\) </p>
+<div class="equation" id="eq-max-omega">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-max-omega} {\Omega }({\mathfrak p}) = \Omega _1({\mathfrak p})\, . \end{equation}
+  </div>
+  <span class="equation_label">4.2.7</span>
+</p>
+</div>
+<p> For all other cubes \(I \in \mathcal{D}\), \(I \ne I_0\), there exists, by <a href="overviewsection.html#dyadicproperty" class="eqref">2.0.8</a> and <a href="overviewsection.html#subsetmaxcube" class="eqref">2.0.9</a>, \(J \in \mathcal{D}\) with \(I \subset J\) and \(I \ne J\). On such \(I\) we define \(\Omega \) by recursion. We can pick an inclusion minimal \(J \in \mathcal{D}\) among the finitely many cubes such that \(I \subset J\) and \(I \ne J\). This \(J\) is unique: Suppose that \(J'\) is another inclusion minimal cube with \(I \subset J'\) and \(I \ne J'\). Without loss of generality, we have that \(s(J) \le s(J')\). By <a href="overviewsection.html#dyadicproperty" class="eqref">2.0.8</a>, it follows that \(J \subset J'\). Since \(J'\) is minimal with respect to inclusion, it follows that \(J = J'\). Then we define </p>
+<div class="equation" id="eq-it-omega">
+<p>
+  <div class="equation_content">
+    \begin{equation}  \label{eq-it-omega} {\Omega }({\mathfrak p}) = \bigcup _{z \in \mathcal{Z}(J) \cap \Omega _1({\mathfrak p})} \Omega ((J, z)) \cup B_{{\mathfrak p}}({\mathcal{Q}}({\mathfrak p}),0.2)\, . \end{equation}
+  </div>
+  <span class="equation_label">4.2.8</span>
+</p>
+</div>
+<p>We now verify that \(({\mathfrak P},{\mathcal{I}},{\Omega },{\mathcal{Q}},{\mathrm{c}},{\mathrm{s}})\) forms a tile structure. </p>
+<div class="proof_wrapper" id="a0000000080">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof of <a href="christsection.html#tile-structure">Lemma 4.0.2</a>
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>  First, we prove <a href="overviewsection.html#eq-freq-comp-ball" class="eqref">2.0.15</a>. If \(I =I_0\), then <a href="overviewsection.html#eq-freq-comp-ball" class="eqref">2.0.15</a> holds for all \({\mathfrak p}\in {\mathfrak P}(I)\) by <a href="christsection.html#eq-max-omega" class="eqref">4.2.7</a> and <a href="christsection.html#eq-omega1-incl" class="eqref">4.2.6</a>. Now suppose that \(I\) is not maximal in \(\mathcal{D}\) with respect to set inclusion. Then we may assume by induction that for all \(J \in \mathcal{D}\) with \(I \subset J\) and all \({\mathfrak p}' \in {\mathfrak P}(J)\), <a href="overviewsection.html#eq-freq-comp-ball" class="eqref">2.0.15</a> holds. Let \(J\) be the unique minimal cube in \(\mathcal{D}\) with \(I \subsetneq J\). </p>
+<p>Suppose that \({\vartheta }\in \Omega ({\mathfrak p})\). If \({\vartheta }\in B_{{\mathfrak p}}(\mathcal{Q}({\mathfrak p}), 0.2)\), then since </p>
+<div class="displaymath" id="a0000000128">
+  \begin{equation*}  B_{{\mathfrak p}}(\mathcal{Q}({\mathfrak p}), 0.2)\subset B_{{\mathfrak p}}(\mathcal{Q}({\mathfrak p}), 1)\,  , \end{equation*}
+</div>
+<p> we conclude that \({\vartheta }\in B_{{\mathfrak p}}(\mathcal{Q}({\mathfrak p}), 0.7)\). If not, by <a href="christsection.html#eq-it-omega" class="eqref">4.2.8</a>, there exists \(z \in \mathcal{Z}(J) \cap \Omega _1({\mathfrak p})\) with \({\vartheta }\in \Omega (J,z)\). Using the triangle inequality and <a href="christsection.html#eq-omega1-incl" class="eqref">4.2.6</a>, we obtain </p>
+<div class="displaymath" id="a0000000129">
+  \[  d_{I^\circ }({\mathcal{Q}}({\mathfrak p}),{\vartheta }) \le d_{I^\circ }({\mathcal{Q}}({\mathfrak p}), z) + d_{I^\circ }(z, {\vartheta }) \le 0.7 + d_{I^\circ }(z, {\vartheta })\, .  \]
+</div>
+<p> By <a href="overviewsection.html#monotone-cube-metrics">Lemma 2.1.2</a> and the induction hypothesis, this is estimated by </p>
+<div class="displaymath" id="a0000000130">
+  \[  \le 0.7 + 2^{-95a} d_{J^\circ }(z,{\vartheta }) \le 0.7 + 2^{-95a}\cdot 1 {\lt} 1\, .  \]
+</div>
+<p> This shows the second inclusion in <a href="overviewsection.html#eq-freq-comp-ball" class="eqref">2.0.15</a>. The first inclusion is immediate from <a href="christsection.html#eq-it-omega" class="eqref">4.2.8</a>. </p>
+<p>Next, we show <a href="overviewsection.html#eq-dis-freq-cover" class="eqref">2.0.13</a>. Let \(I \in \mathcal{D}\). </p>
+<p>If \(I = I_0\), then disjointedness of the sets \({\Omega }({\mathfrak p})\) for \({\mathfrak p}\in {\mathfrak P}(I)\) follows from the definition <a href="christsection.html#eq-max-omega" class="eqref">4.2.7</a> and <a href="christsection.html#disjoint-frequency-cubes">Lemma 4.2.2</a>. To obtain the inclusion in <a href="overviewsection.html#eq-dis-freq-cover" class="eqref">2.0.13</a> one combines the inclusions <a href="christsection.html#eq-tile-cover" class="eqref">4.2.3</a> and <a href="christsection.html#eq-omega1-cover" class="eqref">4.2.5</a> of <a href="christsection.html#frequency-cube-cover">Lemma 4.2.3</a> with <a href="christsection.html#eq-max-omega" class="eqref">4.2.7</a>. </p>
+<p>Now we turn to the case where there exists \(J \in \mathcal{D}\) with \(I \subset J\) and \(I\ne J\). In this case we use induction: It suffices to show <a href="overviewsection.html#eq-dis-freq-cover" class="eqref">2.0.13</a> under the assumption that it holds for all cubes \(J \in \mathcal{D}\) with \(I \subset J\). As shown before definition <a href="christsection.html#eq-it-omega" class="eqref">4.2.8</a>, we may choose the unique inclusion minimal such \(J\). To show disjointedness of the sets \({\Omega }({\mathfrak p}), {\mathfrak p}\in {\mathfrak P}(I)\) we pick two tiles \({\mathfrak p}, {\mathfrak p}' \in {\mathfrak P}(I)\) and \({\vartheta }\in {\Omega }({\mathfrak p}) \cap {\Omega }({\mathfrak p}')\). Then we are by <a href="christsection.html#eq-it-omega" class="eqref">4.2.8</a> in one of the following four cases. </p>
+<p>1. There exist \(z \in \mathcal{Z}(J) \cap \Omega _1({\mathfrak p})\) such that \({\vartheta }\in \Omega (J, z)\), and there exists \(z' \in \mathcal{Z}(J) \cap \Omega _1({\mathfrak p}')\) such that \({\vartheta }\in \Omega (J, z')\). By the induction hypothesis, that <a href="overviewsection.html#eq-dis-freq-cover" class="eqref">2.0.13</a> holds for \(J\), we must have \(z = z'\). By <a href="christsection.html#disjoint-frequency-cubes">Lemma 4.2.2</a>, we must then have \({\mathfrak p}= {\mathfrak p}'\). </p>
+<p>2. There exists \(z \in \mathcal{Z}(J) \cap \Omega _1({\mathfrak p})\) such that \({\vartheta }\in \Omega (J,z)\), and \({\vartheta }\in B_{{\mathfrak p}'}({\mathcal{Q}}({\mathfrak p}'), 0.2)\). Using the triangle inequality, <a href="overviewsection.html#monotone-cube-metrics">Lemma 2.1.2</a> and <a href="overviewsection.html#eq-freq-comp-ball" class="eqref">2.0.15</a>, we obtain </p>
+<div class="displaymath" id="a0000000131">
+  \[  d_{{\mathfrak p}'}({\mathcal{Q}}({\mathfrak p}'),z) \le d_{{\mathfrak p}'}({\mathcal{Q}}({\mathfrak p}'), {\vartheta }) + d_{{\mathfrak p}'}(z, {\vartheta }) \le 0.2 + 2^{-95a} \cdot 1 {\lt} 0.3\, .  \]
+</div>
+<p> Thus \(z \in \Omega _1({\mathfrak p}')\) by <a href="christsection.html#eq-omega1-incl" class="eqref">4.2.6</a>. By <a href="christsection.html#disjoint-frequency-cubes">Lemma 4.2.2</a>, it follows that \({\mathfrak p}= {\mathfrak p}'\). </p>
+<p>3. There exists \(z' \in \mathcal{Z}(J) \cap \Omega _1({\mathfrak p}')\) such that \({\vartheta }\in \Omega (J,z')\), and \({\vartheta }\in B_{{\mathfrak p}}({\mathcal{Q}}({\mathfrak p}), 0.2)\). This case is the same as case 2., after swapping \({\mathfrak p}\) and \({\mathfrak p}'\). </p>
+<p>4. We have \({\vartheta }\in B_{{\mathfrak p}}({\mathcal{Q}}({\mathfrak p}), 0.2) \cap B_{{\mathfrak p}'}({\mathcal{Q}}({\mathfrak p}'), 0.2)\). In this case it follows that \({\mathfrak p}= {\mathfrak p}'\) since the sets \(B_{{\mathfrak p}}({\mathcal{Q}}({\mathfrak p}), 0.2)\) are pairwise disjoint by the inclusion <a href="christsection.html#eq-omega1-incl" class="eqref">4.2.6</a> and <a href="christsection.html#disjoint-frequency-cubes">Lemma 4.2.2</a>. </p>
+<p>To show the inclusion in <a href="overviewsection.html#eq-dis-freq-cover" class="eqref">2.0.13</a>, let \({\vartheta }\in {Q}(X)\). By the induction hypothesis, there exists \({\mathfrak p}\in {\mathfrak P}(J)\) such that \({\vartheta }\in \Omega ({\mathfrak p})\). By definition of the set \({\mathfrak P}\), we have \({\mathfrak p}= (J, z)\) for some \(z \in \mathcal{Z}(J)\). Thus, by <a href="christsection.html#eq-tile-cover" class="eqref">4.2.3</a>, there exists \(z' \in \mathcal{Z}(I)\) with \(z \in B_{I^\circ }(z', 0.7)\). Then by Lemma <a href="christsection.html#frequency-cube-cover" class="eqref">4.2.3</a> there exists \({\mathfrak p}' \in {\mathfrak P}(I)\) with \(z \in \mathcal{Z}(J) \cap \Omega _1({\mathfrak p}')\). Consequently, by <a href="christsection.html#eq-it-omega" class="eqref">4.2.8</a>, \({\vartheta }\in {\Omega }({\mathfrak p}')\). This completes the proof of <a href="overviewsection.html#eq-dis-freq-cover" class="eqref">2.0.13</a>. </p>
+<p>Finally, we show <a href="overviewsection.html#eq-freq-dyadic" class="eqref">2.0.14</a>. Let \({\mathfrak p}, {\mathfrak q}\in {\mathfrak P}\) with \({\mathcal{I}}({\mathfrak p}) \subset {\mathcal{I}}({\mathfrak q})\) and \({\Omega }({\mathfrak p}) \cap {\Omega }({\mathfrak q}) \ne \emptyset \). If we have \({\mathrm{s}}({\mathfrak p}) \ge {\mathrm{s}}({\mathfrak q})\), then it follows from <a href="overviewsection.html#dyadicproperty" class="eqref">2.0.8</a> that \(I = J\), thus \({\mathfrak p}, {\mathfrak q}\in {\mathfrak P}(I)\). By <a href="overviewsection.html#eq-dis-freq-cover" class="eqref">2.0.13</a> we have then either \({\Omega }({\mathfrak p}) \cap {\Omega }({\mathfrak q}) = \emptyset \) or \({\Omega }({\mathfrak p}) = {\Omega }({\mathfrak q})\). By the assumption in <a href="overviewsection.html#eq-freq-dyadic" class="eqref">2.0.14</a> we have \({\Omega }({\mathfrak p}) \cap {\Omega }({\mathfrak q}) \ne \emptyset \), so we must have \({\Omega }({\mathfrak p}) = {\Omega }({\mathfrak q})\) and in particular \({\Omega }({\mathfrak q}) \subset {\Omega }({\mathfrak p})\). </p>
+<p>So it remains to show <a href="overviewsection.html#eq-freq-dyadic" class="eqref">2.0.14</a> under the additional assumption that \({\mathrm{s}}({\mathfrak q}) {\gt} {\mathrm{s}}({\mathfrak p})\). In this case, we argue by induction on \({\mathrm{s}}({\mathfrak q})-{\mathrm{s}}({\mathfrak p})\). By <a href="overviewsection.html#coverdyadic" class="eqref">2.0.7</a>, there exists a cube \(J \in \mathcal{D}\) with \(s(J) = {\mathrm{s}}({\mathfrak q}) - 1\) and \(J \cap {\mathcal{I}}({\mathfrak p}) \ne \emptyset \). We pick one such \(J\). By <a href="overviewsection.html#dyadicproperty" class="eqref">2.0.8</a>, we have \({\mathcal{I}}({\mathfrak p}) \subset J \subset {\mathcal{I}}({\mathfrak q})\). </p>
+<p>Thus, by <a href="christsection.html#eq-tile-cover" class="eqref">4.2.3</a>, there exists \(z' \in \mathcal{Z}(J)\) with \({\mathcal{Q}}({\mathfrak q}) \in B_{J^\circ }(z', 0.7)\). Then by <a href="christsection.html#frequency-cube-cover">Lemma 4.2.3</a> there exists \({\mathfrak q}' \in {\mathfrak P}(J)\) with \({\mathcal{Q}}({\mathfrak q}) \in \Omega _1({\mathfrak q}')\). By <a href="christsection.html#eq-it-omega" class="eqref">4.2.8</a>, it follows that \(\Omega ({\mathfrak q}) \subset \Omega ({\mathfrak q}')\). Note that then \({\mathcal{I}}({\mathfrak p}) \subset {\mathcal{I}}({\mathfrak q}')\) and \({\Omega }({\mathfrak p}) \cap {\Omega }({\mathfrak q}') \ne \emptyset \) and \({\mathrm{s}}({\mathfrak q}') - {\mathrm{s}}({\mathfrak p}) = {\mathrm{s}}({\mathfrak q}) - {\mathrm{s}}({\mathfrak p}) - 1\). Thus, we have by the induction hypothesis that \(\Omega ({\mathfrak q}') \subset \Omega ({\mathfrak p})\). This completes the proof. </p>
+
+  </div>
+</div>
+
+</div> <!--main-text -->
+</div> <!-- content-wrapper -->
+</div> <!-- content -->
+</div> <!-- wrapper -->
+
+<nav class="prev_up_next">
+  <svg  id="showmore-minus" class="icon icon-eye-minus showmore"><use xlink:href="symbol-defs.svg#icon-eye-minus"></use></svg>
+
+  <svg  id="showmore-plus" class="icon icon-eye-plus showmore"><use xlink:href="symbol-defs.svg#icon-eye-plus"></use></svg>
+
+  <a href="thmfromproplinear.html" title="Proof of Metric Space Carleson"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+</a>
+  <a href="index.html" title="A blueprint for the formalization of Carleson’s theorem on convergence of Fourier series"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+</a>
+  <a href="proptopropprop.html" title="Proof of discrete Carleson"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+</a>
+</nav>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/plastex.js"></script>
+<script type="text/javascript" src="js/svgxuse.js"></script>
+<script type="text/javascript" src="js/js.cookie.min.js"></script>
+<script type="text/javascript" src="js/showmore.js"></script>
+</body>
+</html>

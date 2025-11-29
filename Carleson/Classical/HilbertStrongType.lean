@@ -1,3 +1,4 @@
+import Architect
 import Carleson.Classical.DirichletKernel
 import Carleson.Classical.HilbertKernel
 import Carleson.Classical.SpectralProjectionBound
@@ -188,6 +189,30 @@ theorem AddCircle.haarAddCircle_eq_smul_volume {T : ℝ} [hT : Fact (0 < T)] :
 open AddCircle in
 /-- Lemma 11.1.10.
 -/
+@[blueprint
+  "spectral-projection-bound"
+  (title := "spectral projection bound")
+  (statement := /-- Let $f$ be a bounded $2\pi$-periodic measurable function. Then, for all $N\ge 0$
+    \begin{equation}\label{snbound}
+    \|S_Nf\|_{L^2[0, 2\pi]} \le \|f\|_{L^2[0, 2\pi]}.
+    \end{equation} -/)
+  (proof := /-- [Proof of \Cref{spectral-projection-bound}]
+    
+    
+    
+    The functions $e_n:x\mapsto e^{inx}$ form an orthonormal basis in $L^2[-\pi, \pi]$
+    (this is already in Mathlib).
+    Therefore we have
+    \begin{align*}
+        \|S_Nf\|^2_{L^2[-\pi, \pi]}
+        &= \|\sum_{n=-N}^N \langle\widehat{f}_n, e_n\rangle_{L^2[-\pi, \pi]}\|^2_{L^2[-\pi, \pi]} \\
+        &= \sum_{n=-N}^N |\widehat{f}_n| \\
+        &\le \sum_{n\in \mathbb{Z}} |\widehat{f}_n| \\
+        &= \|f\|_{L^2[-\pi, \pi]}.
+    \end{align*}
+    
+    This completes the proof of the lemma. -/)
+  (latexEnv := "lemma")]
 -- todo: add lemma that relates `eLpNorm ((Ioc a b).indicator f)` to `∫ x in a..b, _`
 lemma spectral_projection_bound {f : ℝ → ℂ} {n : ℕ} (hmf : AEMeasurable f) :
     eLpNorm ((Ioc 0 (2 * π)).indicator (partialFourierSum n f)) 2 ≤
@@ -249,6 +274,37 @@ private lemma eLpNorm_indicator_modulationOperator (g : ℝ → ℂ) (n : ℤ) (
 
 /-- Lemma 11.3.1.
 -/
+@[blueprint
+  "modulated-averaged-projection"
+  (title := "modulated averaged projection")
+  (statement := /-- We have for every bounded measurable $2\pi$-periodic function $g$
+    \begin{equation}\label{lnbound}
+        \|L_Ng\|_{L^2[0, 2\pi]}\le \|g\|_{L^2[0, 2\pi]}\,.
+    \end{equation} -/)
+  (proof := /-- We have
+        \begin{equation}\label{mnbound}
+            \|M_ng\|_{L^2[0, 2\pi]}^2=\int_{0}^{2\pi} |e^{inx}g(x)|^2\, dx
+            =\int_{0}^{2\pi} |g(x)|^2\, dx=\|g\|_{L^2[0, 2\pi]}^2\, .
+        \end{equation}
+         We have by the triangle inequality, the square root of the identity in \eqref{mnbound}, and
+         \Cref{spectral-projection-bound}
+        \begin{equation*}
+            \|L_ng\|_{L^2[0, 2\pi]}=\|\frac 1N\sum_{n=0}^{N-1}
+           M_{n+N} S_{N+n}M_{-N-n}g\|_{L^2[0, 2\pi]}
+        \end{equation*}
+        \begin{equation*}
+            \le \frac 1N\sum_{n=0}^{N-1} \|
+           M_{n+N} S_{N+n}M_{-N-n}g\|_{L^2[0, 2\pi]}
+             = \frac 1N\sum_{n=0}^{N-1} \|
+        S_{N+n}M_{-N-n}g\|_{L^2[0, 2\pi]}
+        \end{equation*}
+         \begin{equation}
+         \le \frac 1N\sum_{n=0}^{N-1} \|
+     M_{-N-n}g\|_{L^2[0, 2\pi]} = \frac 1N\sum_{n=0}^{N-1} \|
+    g\|_{L^2[0, 2\pi]} =\|g\|_{L^2[0, 2\pi]}\, .
+        \end{equation}
+    This proves \eqref{lnbound} and completes the proof of the lemma. -/)
+  (latexEnv := "lemma")]
 lemma modulated_averaged_projection {g : ℝ → ℂ} {n : ℕ} (hmg : AEMeasurable g) :
     eLpNorm ((Ioc 0 (2 * π)).indicator (approxHilbertTransform n g)) 2 ≤
     eLpNorm ((Ioc 0 (2 * π)).indicator g) 2 := by
@@ -277,8 +333,104 @@ lemma modulated_averaged_projection' {g : ℝ → ℂ} {n : ℕ} (hmg : AEMeasur
 
 /- Lemma 11.3.2 `periodic-domain-shift` is in Mathlib. -/
 
+attribute [blueprint
+  "periodic-domain-shift"
+  (title := "periodic domain shift")
+  (statement := /-- Let $f$ be a bounded $2\pi$-periodic function. We have for any
+    $0 \le x\le 2\pi$ that
+    \begin{equation}
+     \int_0^{2\pi} f(y)\, dy= \int_{-x}^{2\pi -x} f(y)\, dy
+     =\int_{-\pi}^{\pi} f(y-x)\, dy\,.
+    \end{equation} -/)
+  (proof := /-- We have by periodicity and change of variables
+        \begin{equation}\label{eqhil9}
+     \int_{-x}^{0} f(y)\, dy=\int_{-x}^{0} f(y+2\pi)\, dy= \int_{2\pi -x}^{2\pi} f(y)\, dy\, .
+    \end{equation}
+    We then have by breaking up the domain of integration
+    and using \eqref{eqhil9}
+    \begin{equation*}
+     \int_0^{2\pi} f(y)\, dy= \int_0^{2\pi -x} f(y)\, dy+
+     \int_{2\pi -x}^{2\pi} f(y)\, dy
+     \end{equation*}
+    \begin{equation}
+    = \int_0^{2\pi -x} f(y)\, dy+
+     \int_{ -x}^{0} f(y)\, dy
+     = \int_{-x}^{2\pi-x} f(y)\, dy\, .
+     \end{equation}
+    This proves the first identity of the lemma. The second identity follows by substitution of $y$
+    by $y-x$. -/)
+  (latexEnv := "lemma")]
+  Function.Periodic.intervalIntegral_add_eq
+
+attribute [blueprint
+  "periodic-domain-shift"
+  (title := "periodic domain shift")
+  (statement := /-- Let $f$ be a bounded $2\pi$-periodic function. We have for any
+    $0 \le x\le 2\pi$ that
+    \begin{equation}
+     \int_0^{2\pi} f(y)\, dy= \int_{-x}^{2\pi -x} f(y)\, dy
+     =\int_{-\pi}^{\pi} f(y-x)\, dy\,.
+    \end{equation} -/)
+  (proof := /-- We have by periodicity and change of variables
+        \begin{equation}\label{eqhil9}
+     \int_{-x}^{0} f(y)\, dy=\int_{-x}^{0} f(y+2\pi)\, dy= \int_{2\pi -x}^{2\pi} f(y)\, dy\, .
+    \end{equation}
+    We then have by breaking up the domain of integration
+    and using \eqref{eqhil9}
+    \begin{equation*}
+     \int_0^{2\pi} f(y)\, dy= \int_0^{2\pi -x} f(y)\, dy+
+     \int_{2\pi -x}^{2\pi} f(y)\, dy
+     \end{equation*}
+    \begin{equation}
+    = \int_0^{2\pi -x} f(y)\, dy+
+     \int_{ -x}^{0} f(y)\, dy
+     = \int_{-x}^{2\pi-x} f(y)\, dy\, .
+     \end{equation}
+    This proves the first identity of the lemma. The second identity follows by substitution of $y$
+    by $y-x$. -/)
+  (latexEnv := "lemma")]
+  intervalIntegral.integral_comp_sub_right
+
 /-- Lemma 11.3.3.
 -/
+@[blueprint
+  "Young-convolution"
+  (title := "Young convolution")
+  (statement := /-- Let $f$ and $g$ be two bounded non-negative measurable $2\pi$-periodic functions
+    on $\R$. Then
+    \begin{equation}\label{eqyoung}
+        \left(\int_0^{2\pi} \left(\int_0^{2\pi}
+        f(y)g(x-y)\, dy\right)^2\, dx\right)^{\frac 12}\le \|f\|_{L^2[0, 2\pi]} \|g\|_{L^1[0,
+        2\pi]}\, .
+    \end{equation} -/)
+  (proof := /-- Using Fubini and \Cref{periodic-domain-shift}, we observe
+    \begin{equation*}
+      \int_0^{2\pi}\int_0^{2\pi}f(y)^2g(x-y)\, dy
+        \, dx=\int_0^{2\pi}f(y)^2\int_0^{2\pi}g(x-y)\, dx
+        \, dy
+    \end{equation*}
+    \begin{equation}\label{eqhil4}
+    =\int_0^{2\pi}f(y)^2\int_0^{2\pi}g(x) \, dx
+         dy
+    =\|f\|_{L^2[0, 2\pi]}^2\|g\|_{L^1[0, 2\pi]}\, .
+    \end{equation}
+       Let $h$ be the nonnegative square root of $g$, then
+       $h$ is bounded and $2\pi$-periodic with $h^2=g$.
+       We estimate the square of the left-hand side of
+       \eqref{eqyoung} with Cauchy-Schwarz and then with
+       \eqref{eqhil4} by
+           \begin{equation*}
+             \int_0^{2\pi} (\int_0^{2\pi}f(y)h(x-y)h(x-y)\, dy)^2\, dx
+       \end{equation*}
+    \begin{equation*}
+        \le \int_0^{2\pi}\left(\int_0^{2\pi}f(y)^2g(x-y)\, dy\right)
+        \left(\int_0^{2\pi}g(x-y)\, dy\right)\, dx
+    \end{equation*}
+    \begin{equation*}
+        = \|f\|_{L^2[0, 2\pi]}^2\|g\|_{L^1[0, 2\pi]}^2\, .
+    \end{equation*}
+    Taking square roots, this proves the lemma. -/)
+  (latexEnv := "lemma")]
 lemma young_convolution {f g : ℝ → ℝ} (hmf : AEMeasurable f)
     (hmg : AEMeasurable g) (periodic_g : g.Periodic (2 * π)) :
     eLpNorm (fun x ↦ ∫ y in (0)..2 * π, f y * g (x - y)) 2 (volume.restrict (Ioc 0 (2 * π))) ≤
@@ -292,6 +444,41 @@ lemma young_convolution {f g : ℝ → ℝ} (hmf : AEMeasurable f)
 
 /-- Lemma 11.3.4.
 -/
+@[blueprint
+  "integrable-bump-convolution"
+  (title := "integrable bump convolution")
+  (statement := /-- Let $g,f$ be bounded measurable $2\pi$-periodic functions. Let $0<r<\pi$.
+    Assume we have for all $x$
+    \begin{equation}\label{ebump1}
+        |g(x)|\le k_r(x)\, .
+    \end{equation}
+    Let
+    \begin{equation}
+       h(x)= \int_0^{2\pi} f(y)g(x-y)\, dy \, .
+    \end{equation}
+    Then
+    \begin{equation}
+       \|h\|_{L^2[0, 2\pi]}\le 17\|f\|_{L^2[-\pi, \pi]} \, .
+    \end{equation} -/)
+  (proof := /-- From monotonicity of the integral and \eqref{ebump1},
+    \begin{equation}
+        \|g\|_{L^1[0, 2\pi]} \le \int_0^{2\pi}k_r(x)\, dx\,.
+    \end{equation}
+    Using the symmetry
+    $k_r(x)=k_r(-x)$, the assumption, and \Cref{lower-secant-bound}, the last display
+    is equal to
+    \begin{equation*}
+        = 2 \int_0^\pi \min\left(\frac 1r, 1+\frac r{|1-e^{ix}|^2}\right)\, dx
+    \end{equation*}
+    \begin{equation*}
+        \le 2\int_0^{r} \frac 1r \, dx+2\int_r^{\pi}1+\frac {64r}{x^2}\, dx
+    \end{equation*}
+    \begin{equation}
+        \le 2+2\pi + 2\left(\frac {4r}r-\frac {4r}{\pi}\right)
+        \le 17\, .
+    \end{equation}
+        Together with \Cref{Young-convolution}, this proves the lemma. -/)
+  (latexEnv := "lemma")]
 lemma integrable_bump_convolution {f g : ℝ → ℝ}
     (hf : MemLp f ∞ volume) (hg : MemLp g ∞ volume) (periodic_g : g.Periodic (2 * π))
     {r : ℝ} (hr : r ∈ Ioo 0 π) (hle : ∀ x, |g x| ≤ niceKernel r x) :
@@ -365,7 +552,135 @@ def dirichletApprox (n : ℕ) (x : ℝ) : ℂ :=
   (n : ℂ)⁻¹ * ∑ k ∈ .Ico n (2 * n), dirichletKernel k x * exp (I * k * x)
 
 /-- Lemma 11.3.5, part 1. -/
-@[fun_prop] lemma continuous_dirichletApprox {n : ℕ} : Continuous (dirichletApprox n) := by
+@[fun_prop, blueprint
+  "Dirichlet-approximation"
+  (title := "Dirichlet approximation")
+  (statement := /-- Let $0<r<1$. Let $N$ be the smallest
+    integer larger than $\frac 1r$.
+    There is a $2\pi$-periodic continuous function
+     ${L'}$ on $\R$ that satisfies for all $0\le x\le 2\pi$
+    and all $2\pi$-periodic bounded measurable functions $f$ on $\R$
+    \begin{equation}\label{lthroughlprime}
+        L_Nf(x)=\frac 1{2\pi}\int_{0}^{2\pi}f(y) {L'}(x-y)\, dy\,.
+    \end{equation}
+    Moreover, for all $-\pi \le x \le \pi$,
+    \begin{equation}\label{eqdifflhil}
+        \left|L'(x)-\mathbf{1}_{\{y:\, r<|y|<1\}} \kappa(x)\right|\le 12 k_r(x)\, .
+    \end{equation} -/)
+  (proof := /-- We have by definition and \Cref{Dirichlet-kernel}
+    \begin{equation}
+        L_Ng(x)=
+        \frac 1N\sum_{n=0}^{N-1}
+           \int_0^{2\pi} e^{-i(N+n)x} K_{N+n}(x-y) e^{i(N+n)y}g(y)
+    \, dy \, .\end{equation}
+    This is of the form \eqref{lthroughlprime} with
+    the continuous function
+    \begin{equation}
+        {L'}(x)= \frac 1N\sum_{n=0}^{N-1}
+          K_{N+n}(x) e^{-i(N+n)x}\, .
+    \end{equation}
+    With \eqref{eqksumexp} of \Cref{Dirichlet-kernel}
+    we have $|K_N(x)|\le 2N+1$ for every $x$ and thus
+    \begin{equation}\label{eqhil13}
+        |{L'}(x)|\le \frac 1N\sum_{n=0}^{N-1}
+          (2N+2n+1) \le 4N\le 2^3 r^{-1}\, .
+    \end{equation}
+    Therefore, for $|x|\in [0, r)\cup (1, \pi]$, we have
+    \begin{equation}
+        \label{eqdiffzero}
+        \left|L'(x)-\mathbf{1}_{\{y:\, r<|y|<1\}}(x)\kappa(x)\right|=|L'(x)|\leq 2^{3} r^{-1}.
+    \end{equation}
+    This proves \eqref{eqdifflhil} for $|x|\in [0, r)$ since $k_r(x)=r^{-1}$ in this case.
+    
+    For $e^{ix}\neq 1$
+    one may use the expression
+    \eqref{eqksumhil} for $K_N$
+    in \Cref{Dirichlet-kernel} to obtain
+    \begin{equation*}
+        {L'}(x)= \frac 1N\sum_{n=0}^{N-1}
+         \left(\frac{e^{i(N+n)x}}{1-e^{-ix}}
+          +\frac {e^{-i(N+n)x}}{1-e^{ix}}\right) e^{i(N+n)x}
+    \end{equation*}
+    \begin{equation*}
+        = \frac 1N\sum_{n=0}^{N-1}
+        \left(\frac{e^{i2(N+n)x}}{1-e^{-ix}}
+          +\frac {1}{1-e^{ix}}\right)
+    \end{equation*}
+    \begin{equation}\label{eqhil3}
+        = \frac{1}{1-e^{ix}} +
+         \frac 1N \frac {e^{i2Nx}}{1-e^{-ix}}
+         \sum_{n=0}^{N-1}
+        {e^{i2nx}}
+    \end{equation}
+    and thus
+    \begin{equation}
+    \label{eq-L'L''}
+      {L'}(x) -\mathbf{1}_{\{y:\, r<|y|<1\}}\kappa(x)=L''(x)+ \frac{1-\mathbf{1}_{{\{y:\,
+      r<|y|<1\}}}(x)(1-|x|)}{1-e^{ix}},
+    \end{equation}
+    where
+    $$L''(x):=\frac 1N \frac {e^{i2Nx}}{1-e^{-ix}}
+         \sum_{n=0}^{N-1}
+        {e^{i2nx}}.$$
+    For $x\in [-\pi, r]\cup [r, \pi]$, we have using \Cref{lower-secant-bound} that
+    \begin{equation*}
+       \left|\frac{1-\mathbf{1}_{{\{y:\, r<|y|<1\}}}(x)(1-|x|)}{1-e^{ix}}
+       \right|=\left|\frac{\min(|x|, 1)}{1-e^{ix}} \right|\leq \frac{2\min(|x|, 1)}{|x|}
+    \end{equation*}
+    \begin{equation}
+     \label{eq-diffzero2}
+        \leq 2\cdot 1\leq 2 k_r(x).
+    \end{equation}
+    Next, we need to estimate $L''(x)$. If the real part of
+    $e^{ix}$ is negative, we have
+    \begin{equation}
+      1\le |1-e^{-ix}|\le 2\, .
+    \end{equation}
+    and hence
+    \begin{equation}\label{eqhil12}
+        |L''(x)|\le
+         \frac 1N
+         \sum_{n=0}^{N-1}
+        1=1\le 1+\frac r{|1-e^{ix}|^2}\, .
+    \end{equation}
+    If the real part of $e^{ix}$ is positive and in particular while still $e^{ix}\neq \pm 1$, then
+    we have by telescoping
+    \begin{equation}
+     (1-e^{2ix})
+         \sum_{n=0}^{N-1}
+        {e^{i2nx}}=1-e^{i2Nx}\, .
+    \end{equation}
+    As $e^{2ix}\neq 1$, we may divide by $1-e^{2ix}$ and insert this into
+    \eqref{eqhil3} to obtain
+    \begin{equation}
+     L''(x)=
+               \frac 1N \frac {e^{i2Nx}}{1-e^{-ix}}
+         \frac{1-e^{i2Nx}}{1-e^{2ix}}\, .
+    \end{equation}
+    Hence, using the nonnegativity of the real part of $e^{ix}$
+    \begin{equation*}
+        |L''(x)|
+     \le \frac 2 N \frac {1}{|1-e^{ix}|}
+         \frac{1}{|1-e^{2ix}|}
+     \end{equation*}
+    \begin{equation}\label{eqhil11}
+        = \frac 2 N \frac {1}{|1-e^{ix}|^2}
+         \frac{1}{|1+e^{ix}|}\le
+     \frac {2r}{|1-e^{ix}|^2}\le 2 \left(1+\frac {r}{|1-e^{ix}|^2}\right)
+    \end{equation}
+    Moreover, for $|x| \in [r, \pi]$, one checks easily that
+    \begin{equation*}
+      1+\frac {r}{|1-e^{ix}|^2} \leq 5 k_r(x).
+    \end{equation*}
+    Therefore,~\eqref{eqhil12} and~\eqref{eqhil11} show that, in this range of $x$,
+    \begin{equation*}
+      |L''(x)| \le 10 k_r(x).
+    \end{equation*}
+    Together with~\eqref{eq-diffzero2}, this prove \eqref{eqdifflhil} for $|x| \in [r, \pi]$.
+    As the range $|x| \in [0,r)$ is covered by~\eqref{eqdiffzero}, this completes the proof of the
+    lemma. -/)
+  (latexEnv := "lemma")]
+lemma continuous_dirichletApprox {n : ℕ} : Continuous (dirichletApprox n) := by
   change Continuous (fun x ↦ dirichletApprox n x)
   simp only [dirichletApprox]
   fun_prop
@@ -401,6 +716,134 @@ lemma norm_dirichletApprox_le {n : ℕ} {x : ℝ} :
       · exact_mod_cast hn.ne'
 
 /-- Lemma 11.3.5, part 2. -/
+@[blueprint
+  "Dirichlet-approximation"
+  (title := "Dirichlet approximation")
+  (statement := /-- Let $0<r<1$. Let $N$ be the smallest
+    integer larger than $\frac 1r$.
+    There is a $2\pi$-periodic continuous function
+     ${L'}$ on $\R$ that satisfies for all $0\le x\le 2\pi$
+    and all $2\pi$-periodic bounded measurable functions $f$ on $\R$
+    \begin{equation}\label{lthroughlprime}
+        L_Nf(x)=\frac 1{2\pi}\int_{0}^{2\pi}f(y) {L'}(x-y)\, dy\,.
+    \end{equation}
+    Moreover, for all $-\pi \le x \le \pi$,
+    \begin{equation}\label{eqdifflhil}
+        \left|L'(x)-\mathbf{1}_{\{y:\, r<|y|<1\}} \kappa(x)\right|\le 12 k_r(x)\, .
+    \end{equation} -/)
+  (proof := /-- We have by definition and \Cref{Dirichlet-kernel}
+    \begin{equation}
+        L_Ng(x)=
+        \frac 1N\sum_{n=0}^{N-1}
+           \int_0^{2\pi} e^{-i(N+n)x} K_{N+n}(x-y) e^{i(N+n)y}g(y)
+    \, dy \, .\end{equation}
+    This is of the form \eqref{lthroughlprime} with
+    the continuous function
+    \begin{equation}
+        {L'}(x)= \frac 1N\sum_{n=0}^{N-1}
+          K_{N+n}(x) e^{-i(N+n)x}\, .
+    \end{equation}
+    With \eqref{eqksumexp} of \Cref{Dirichlet-kernel}
+    we have $|K_N(x)|\le 2N+1$ for every $x$ and thus
+    \begin{equation}\label{eqhil13}
+        |{L'}(x)|\le \frac 1N\sum_{n=0}^{N-1}
+          (2N+2n+1) \le 4N\le 2^3 r^{-1}\, .
+    \end{equation}
+    Therefore, for $|x|\in [0, r)\cup (1, \pi]$, we have
+    \begin{equation}
+        \label{eqdiffzero}
+        \left|L'(x)-\mathbf{1}_{\{y:\, r<|y|<1\}}(x)\kappa(x)\right|=|L'(x)|\leq 2^{3} r^{-1}.
+    \end{equation}
+    This proves \eqref{eqdifflhil} for $|x|\in [0, r)$ since $k_r(x)=r^{-1}$ in this case.
+    
+    For $e^{ix}\neq 1$
+    one may use the expression
+    \eqref{eqksumhil} for $K_N$
+    in \Cref{Dirichlet-kernel} to obtain
+    \begin{equation*}
+        {L'}(x)= \frac 1N\sum_{n=0}^{N-1}
+         \left(\frac{e^{i(N+n)x}}{1-e^{-ix}}
+          +\frac {e^{-i(N+n)x}}{1-e^{ix}}\right) e^{i(N+n)x}
+    \end{equation*}
+    \begin{equation*}
+        = \frac 1N\sum_{n=0}^{N-1}
+        \left(\frac{e^{i2(N+n)x}}{1-e^{-ix}}
+          +\frac {1}{1-e^{ix}}\right)
+    \end{equation*}
+    \begin{equation}\label{eqhil3}
+        = \frac{1}{1-e^{ix}} +
+         \frac 1N \frac {e^{i2Nx}}{1-e^{-ix}}
+         \sum_{n=0}^{N-1}
+        {e^{i2nx}}
+    \end{equation}
+    and thus
+    \begin{equation}
+    \label{eq-L'L''}
+      {L'}(x) -\mathbf{1}_{\{y:\, r<|y|<1\}}\kappa(x)=L''(x)+ \frac{1-\mathbf{1}_{{\{y:\,
+      r<|y|<1\}}}(x)(1-|x|)}{1-e^{ix}},
+    \end{equation}
+    where
+    $$L''(x):=\frac 1N \frac {e^{i2Nx}}{1-e^{-ix}}
+         \sum_{n=0}^{N-1}
+        {e^{i2nx}}.$$
+    For $x\in [-\pi, r]\cup [r, \pi]$, we have using \Cref{lower-secant-bound} that
+    \begin{equation*}
+       \left|\frac{1-\mathbf{1}_{{\{y:\, r<|y|<1\}}}(x)(1-|x|)}{1-e^{ix}}
+       \right|=\left|\frac{\min(|x|, 1)}{1-e^{ix}} \right|\leq \frac{2\min(|x|, 1)}{|x|}
+    \end{equation*}
+    \begin{equation}
+     \label{eq-diffzero2}
+        \leq 2\cdot 1\leq 2 k_r(x).
+    \end{equation}
+    Next, we need to estimate $L''(x)$. If the real part of
+    $e^{ix}$ is negative, we have
+    \begin{equation}
+      1\le |1-e^{-ix}|\le 2\, .
+    \end{equation}
+    and hence
+    \begin{equation}\label{eqhil12}
+        |L''(x)|\le
+         \frac 1N
+         \sum_{n=0}^{N-1}
+        1=1\le 1+\frac r{|1-e^{ix}|^2}\, .
+    \end{equation}
+    If the real part of $e^{ix}$ is positive and in particular while still $e^{ix}\neq \pm 1$, then
+    we have by telescoping
+    \begin{equation}
+     (1-e^{2ix})
+         \sum_{n=0}^{N-1}
+        {e^{i2nx}}=1-e^{i2Nx}\, .
+    \end{equation}
+    As $e^{2ix}\neq 1$, we may divide by $1-e^{2ix}$ and insert this into
+    \eqref{eqhil3} to obtain
+    \begin{equation}
+     L''(x)=
+               \frac 1N \frac {e^{i2Nx}}{1-e^{-ix}}
+         \frac{1-e^{i2Nx}}{1-e^{2ix}}\, .
+    \end{equation}
+    Hence, using the nonnegativity of the real part of $e^{ix}$
+    \begin{equation*}
+        |L''(x)|
+     \le \frac 2 N \frac {1}{|1-e^{ix}|}
+         \frac{1}{|1-e^{2ix}|}
+     \end{equation*}
+    \begin{equation}\label{eqhil11}
+        = \frac 2 N \frac {1}{|1-e^{ix}|^2}
+         \frac{1}{|1+e^{ix}|}\le
+     \frac {2r}{|1-e^{ix}|^2}\le 2 \left(1+\frac {r}{|1-e^{ix}|^2}\right)
+    \end{equation}
+    Moreover, for $|x| \in [r, \pi]$, one checks easily that
+    \begin{equation*}
+      1+\frac {r}{|1-e^{ix}|^2} \leq 5 k_r(x).
+    \end{equation*}
+    Therefore,~\eqref{eqhil12} and~\eqref{eqhil11} show that, in this range of $x$,
+    \begin{equation*}
+      |L''(x)| \le 10 k_r(x).
+    \end{equation*}
+    Together with~\eqref{eq-diffzero2}, this prove \eqref{eqdifflhil} for $|x| \in [r, \pi]$.
+    As the range $|x| \in [0,r)$ is covered by~\eqref{eqdiffzero}, this completes the proof of the
+    lemma. -/)
+  (latexEnv := "lemma")]
 lemma periodic_dirichletApprox (n : ℕ) : (dirichletApprox n).Periodic (2 * π) := by
   intro x
   simp only [dirichletApprox, ofReal_add, ofReal_mul, ofReal_ofNat, mul_eq_mul_left_iff,
@@ -415,6 +858,134 @@ lemma periodic_dirichletApprox (n : ℕ) : (dirichletApprox n).Periodic (2 * π)
 
 /-- Lemma 11.3.5, part 3.
 -/
+@[blueprint
+  "Dirichlet-approximation"
+  (title := "Dirichlet approximation")
+  (statement := /-- Let $0<r<1$. Let $N$ be the smallest
+    integer larger than $\frac 1r$.
+    There is a $2\pi$-periodic continuous function
+     ${L'}$ on $\R$ that satisfies for all $0\le x\le 2\pi$
+    and all $2\pi$-periodic bounded measurable functions $f$ on $\R$
+    \begin{equation}\label{lthroughlprime}
+        L_Nf(x)=\frac 1{2\pi}\int_{0}^{2\pi}f(y) {L'}(x-y)\, dy\,.
+    \end{equation}
+    Moreover, for all $-\pi \le x \le \pi$,
+    \begin{equation}\label{eqdifflhil}
+        \left|L'(x)-\mathbf{1}_{\{y:\, r<|y|<1\}} \kappa(x)\right|\le 12 k_r(x)\, .
+    \end{equation} -/)
+  (proof := /-- We have by definition and \Cref{Dirichlet-kernel}
+    \begin{equation}
+        L_Ng(x)=
+        \frac 1N\sum_{n=0}^{N-1}
+           \int_0^{2\pi} e^{-i(N+n)x} K_{N+n}(x-y) e^{i(N+n)y}g(y)
+    \, dy \, .\end{equation}
+    This is of the form \eqref{lthroughlprime} with
+    the continuous function
+    \begin{equation}
+        {L'}(x)= \frac 1N\sum_{n=0}^{N-1}
+          K_{N+n}(x) e^{-i(N+n)x}\, .
+    \end{equation}
+    With \eqref{eqksumexp} of \Cref{Dirichlet-kernel}
+    we have $|K_N(x)|\le 2N+1$ for every $x$ and thus
+    \begin{equation}\label{eqhil13}
+        |{L'}(x)|\le \frac 1N\sum_{n=0}^{N-1}
+          (2N+2n+1) \le 4N\le 2^3 r^{-1}\, .
+    \end{equation}
+    Therefore, for $|x|\in [0, r)\cup (1, \pi]$, we have
+    \begin{equation}
+        \label{eqdiffzero}
+        \left|L'(x)-\mathbf{1}_{\{y:\, r<|y|<1\}}(x)\kappa(x)\right|=|L'(x)|\leq 2^{3} r^{-1}.
+    \end{equation}
+    This proves \eqref{eqdifflhil} for $|x|\in [0, r)$ since $k_r(x)=r^{-1}$ in this case.
+    
+    For $e^{ix}\neq 1$
+    one may use the expression
+    \eqref{eqksumhil} for $K_N$
+    in \Cref{Dirichlet-kernel} to obtain
+    \begin{equation*}
+        {L'}(x)= \frac 1N\sum_{n=0}^{N-1}
+         \left(\frac{e^{i(N+n)x}}{1-e^{-ix}}
+          +\frac {e^{-i(N+n)x}}{1-e^{ix}}\right) e^{i(N+n)x}
+    \end{equation*}
+    \begin{equation*}
+        = \frac 1N\sum_{n=0}^{N-1}
+        \left(\frac{e^{i2(N+n)x}}{1-e^{-ix}}
+          +\frac {1}{1-e^{ix}}\right)
+    \end{equation*}
+    \begin{equation}\label{eqhil3}
+        = \frac{1}{1-e^{ix}} +
+         \frac 1N \frac {e^{i2Nx}}{1-e^{-ix}}
+         \sum_{n=0}^{N-1}
+        {e^{i2nx}}
+    \end{equation}
+    and thus
+    \begin{equation}
+    \label{eq-L'L''}
+      {L'}(x) -\mathbf{1}_{\{y:\, r<|y|<1\}}\kappa(x)=L''(x)+ \frac{1-\mathbf{1}_{{\{y:\,
+      r<|y|<1\}}}(x)(1-|x|)}{1-e^{ix}},
+    \end{equation}
+    where
+    $$L''(x):=\frac 1N \frac {e^{i2Nx}}{1-e^{-ix}}
+         \sum_{n=0}^{N-1}
+        {e^{i2nx}}.$$
+    For $x\in [-\pi, r]\cup [r, \pi]$, we have using \Cref{lower-secant-bound} that
+    \begin{equation*}
+       \left|\frac{1-\mathbf{1}_{{\{y:\, r<|y|<1\}}}(x)(1-|x|)}{1-e^{ix}}
+       \right|=\left|\frac{\min(|x|, 1)}{1-e^{ix}} \right|\leq \frac{2\min(|x|, 1)}{|x|}
+    \end{equation*}
+    \begin{equation}
+     \label{eq-diffzero2}
+        \leq 2\cdot 1\leq 2 k_r(x).
+    \end{equation}
+    Next, we need to estimate $L''(x)$. If the real part of
+    $e^{ix}$ is negative, we have
+    \begin{equation}
+      1\le |1-e^{-ix}|\le 2\, .
+    \end{equation}
+    and hence
+    \begin{equation}\label{eqhil12}
+        |L''(x)|\le
+         \frac 1N
+         \sum_{n=0}^{N-1}
+        1=1\le 1+\frac r{|1-e^{ix}|^2}\, .
+    \end{equation}
+    If the real part of $e^{ix}$ is positive and in particular while still $e^{ix}\neq \pm 1$, then
+    we have by telescoping
+    \begin{equation}
+     (1-e^{2ix})
+         \sum_{n=0}^{N-1}
+        {e^{i2nx}}=1-e^{i2Nx}\, .
+    \end{equation}
+    As $e^{2ix}\neq 1$, we may divide by $1-e^{2ix}$ and insert this into
+    \eqref{eqhil3} to obtain
+    \begin{equation}
+     L''(x)=
+               \frac 1N \frac {e^{i2Nx}}{1-e^{-ix}}
+         \frac{1-e^{i2Nx}}{1-e^{2ix}}\, .
+    \end{equation}
+    Hence, using the nonnegativity of the real part of $e^{ix}$
+    \begin{equation*}
+        |L''(x)|
+     \le \frac 2 N \frac {1}{|1-e^{ix}|}
+         \frac{1}{|1-e^{2ix}|}
+     \end{equation*}
+    \begin{equation}\label{eqhil11}
+        = \frac 2 N \frac {1}{|1-e^{ix}|^2}
+         \frac{1}{|1+e^{ix}|}\le
+     \frac {2r}{|1-e^{ix}|^2}\le 2 \left(1+\frac {r}{|1-e^{ix}|^2}\right)
+    \end{equation}
+    Moreover, for $|x| \in [r, \pi]$, one checks easily that
+    \begin{equation*}
+      1+\frac {r}{|1-e^{ix}|^2} \leq 5 k_r(x).
+    \end{equation*}
+    Therefore,~\eqref{eqhil12} and~\eqref{eqhil11} show that, in this range of $x$,
+    \begin{equation*}
+      |L''(x)| \le 10 k_r(x).
+    \end{equation*}
+    Together with~\eqref{eq-diffzero2}, this prove \eqref{eqdifflhil} for $|x| \in [r, \pi]$.
+    As the range $|x| \in [0,r)$ is covered by~\eqref{eqdiffzero}, this completes the proof of the
+    lemma. -/)
+  (latexEnv := "lemma")]
 lemma approxHilbertTransform_eq_dirichletApprox {f : ℝ → ℂ} (hf : MemLp f ∞ volume)
     {n : ℕ} {x : ℝ} :
     approxHilbertTransform n f x =
@@ -625,6 +1196,134 @@ The kernel `dirichletApprox` approximates well the kernel of the Hilbert transfo
 up to an error which is uniformly bounded in `L^1` (as it is bounded by a constant multiple
 of `niceKernel`).
 -/
+@[blueprint
+  "Dirichlet-approximation"
+  (title := "Dirichlet approximation")
+  (statement := /-- Let $0<r<1$. Let $N$ be the smallest
+    integer larger than $\frac 1r$.
+    There is a $2\pi$-periodic continuous function
+     ${L'}$ on $\R$ that satisfies for all $0\le x\le 2\pi$
+    and all $2\pi$-periodic bounded measurable functions $f$ on $\R$
+    \begin{equation}\label{lthroughlprime}
+        L_Nf(x)=\frac 1{2\pi}\int_{0}^{2\pi}f(y) {L'}(x-y)\, dy\,.
+    \end{equation}
+    Moreover, for all $-\pi \le x \le \pi$,
+    \begin{equation}\label{eqdifflhil}
+        \left|L'(x)-\mathbf{1}_{\{y:\, r<|y|<1\}} \kappa(x)\right|\le 12 k_r(x)\, .
+    \end{equation} -/)
+  (proof := /-- We have by definition and \Cref{Dirichlet-kernel}
+    \begin{equation}
+        L_Ng(x)=
+        \frac 1N\sum_{n=0}^{N-1}
+           \int_0^{2\pi} e^{-i(N+n)x} K_{N+n}(x-y) e^{i(N+n)y}g(y)
+    \, dy \, .\end{equation}
+    This is of the form \eqref{lthroughlprime} with
+    the continuous function
+    \begin{equation}
+        {L'}(x)= \frac 1N\sum_{n=0}^{N-1}
+          K_{N+n}(x) e^{-i(N+n)x}\, .
+    \end{equation}
+    With \eqref{eqksumexp} of \Cref{Dirichlet-kernel}
+    we have $|K_N(x)|\le 2N+1$ for every $x$ and thus
+    \begin{equation}\label{eqhil13}
+        |{L'}(x)|\le \frac 1N\sum_{n=0}^{N-1}
+          (2N+2n+1) \le 4N\le 2^3 r^{-1}\, .
+    \end{equation}
+    Therefore, for $|x|\in [0, r)\cup (1, \pi]$, we have
+    \begin{equation}
+        \label{eqdiffzero}
+        \left|L'(x)-\mathbf{1}_{\{y:\, r<|y|<1\}}(x)\kappa(x)\right|=|L'(x)|\leq 2^{3} r^{-1}.
+    \end{equation}
+    This proves \eqref{eqdifflhil} for $|x|\in [0, r)$ since $k_r(x)=r^{-1}$ in this case.
+    
+    For $e^{ix}\neq 1$
+    one may use the expression
+    \eqref{eqksumhil} for $K_N$
+    in \Cref{Dirichlet-kernel} to obtain
+    \begin{equation*}
+        {L'}(x)= \frac 1N\sum_{n=0}^{N-1}
+         \left(\frac{e^{i(N+n)x}}{1-e^{-ix}}
+          +\frac {e^{-i(N+n)x}}{1-e^{ix}}\right) e^{i(N+n)x}
+    \end{equation*}
+    \begin{equation*}
+        = \frac 1N\sum_{n=0}^{N-1}
+        \left(\frac{e^{i2(N+n)x}}{1-e^{-ix}}
+          +\frac {1}{1-e^{ix}}\right)
+    \end{equation*}
+    \begin{equation}\label{eqhil3}
+        = \frac{1}{1-e^{ix}} +
+         \frac 1N \frac {e^{i2Nx}}{1-e^{-ix}}
+         \sum_{n=0}^{N-1}
+        {e^{i2nx}}
+    \end{equation}
+    and thus
+    \begin{equation}
+    \label{eq-L'L''}
+      {L'}(x) -\mathbf{1}_{\{y:\, r<|y|<1\}}\kappa(x)=L''(x)+ \frac{1-\mathbf{1}_{{\{y:\,
+      r<|y|<1\}}}(x)(1-|x|)}{1-e^{ix}},
+    \end{equation}
+    where
+    $$L''(x):=\frac 1N \frac {e^{i2Nx}}{1-e^{-ix}}
+         \sum_{n=0}^{N-1}
+        {e^{i2nx}}.$$
+    For $x\in [-\pi, r]\cup [r, \pi]$, we have using \Cref{lower-secant-bound} that
+    \begin{equation*}
+       \left|\frac{1-\mathbf{1}_{{\{y:\, r<|y|<1\}}}(x)(1-|x|)}{1-e^{ix}}
+       \right|=\left|\frac{\min(|x|, 1)}{1-e^{ix}} \right|\leq \frac{2\min(|x|, 1)}{|x|}
+    \end{equation*}
+    \begin{equation}
+     \label{eq-diffzero2}
+        \leq 2\cdot 1\leq 2 k_r(x).
+    \end{equation}
+    Next, we need to estimate $L''(x)$. If the real part of
+    $e^{ix}$ is negative, we have
+    \begin{equation}
+      1\le |1-e^{-ix}|\le 2\, .
+    \end{equation}
+    and hence
+    \begin{equation}\label{eqhil12}
+        |L''(x)|\le
+         \frac 1N
+         \sum_{n=0}^{N-1}
+        1=1\le 1+\frac r{|1-e^{ix}|^2}\, .
+    \end{equation}
+    If the real part of $e^{ix}$ is positive and in particular while still $e^{ix}\neq \pm 1$, then
+    we have by telescoping
+    \begin{equation}
+     (1-e^{2ix})
+         \sum_{n=0}^{N-1}
+        {e^{i2nx}}=1-e^{i2Nx}\, .
+    \end{equation}
+    As $e^{2ix}\neq 1$, we may divide by $1-e^{2ix}$ and insert this into
+    \eqref{eqhil3} to obtain
+    \begin{equation}
+     L''(x)=
+               \frac 1N \frac {e^{i2Nx}}{1-e^{-ix}}
+         \frac{1-e^{i2Nx}}{1-e^{2ix}}\, .
+    \end{equation}
+    Hence, using the nonnegativity of the real part of $e^{ix}$
+    \begin{equation*}
+        |L''(x)|
+     \le \frac 2 N \frac {1}{|1-e^{ix}|}
+         \frac{1}{|1-e^{2ix}|}
+     \end{equation*}
+    \begin{equation}\label{eqhil11}
+        = \frac 2 N \frac {1}{|1-e^{ix}|^2}
+         \frac{1}{|1+e^{ix}|}\le
+     \frac {2r}{|1-e^{ix}|^2}\le 2 \left(1+\frac {r}{|1-e^{ix}|^2}\right)
+    \end{equation}
+    Moreover, for $|x| \in [r, \pi]$, one checks easily that
+    \begin{equation*}
+      1+\frac {r}{|1-e^{ix}|^2} \leq 5 k_r(x).
+    \end{equation*}
+    Therefore,~\eqref{eqhil12} and~\eqref{eqhil11} show that, in this range of $x$,
+    \begin{equation*}
+      |L''(x)| \le 10 k_r(x).
+    \end{equation*}
+    Together with~\eqref{eq-diffzero2}, this prove \eqref{eqdifflhil} for $|x| \in [r, \pi]$.
+    As the range $|x| \in [0,r)$ is covered by~\eqref{eqdiffzero}, this completes the proof of the
+    lemma. -/)
+  (latexEnv := "lemma")]
 lemma dist_dirichletApprox_le
     {r : ℝ} (hr : r ∈ Ioo 0 1) {n : ℕ} (hn : n = ⌈r⁻¹⌉₊) {x : ℝ} (hx : x ∈ Icc (-π) π) :
     dist (dirichletApprox n x) ({y : ℝ | |y| ∈ Ico r 1}.indicator k x) ≤ 12 * niceKernel r x := by
@@ -962,6 +1661,89 @@ This verifies the assumption on the operators T_r in two-sided metric space Carl
 Note: we might be able to simplify the proof in the blueprint by using real interpolation
 `MeasureTheory.exists_hasStrongType_real_interpolation`.
 -/
+@[blueprint
+  "Hilbert-strong-2-2"
+  (title := "Hilbert strong 2 2")
+  (statement := /-- Let $0<r$. Let $f$ be a bounded, measurable function on $\mathbb{R}$. Then
+    \begin{equation}
+        \label{eq-Hr-L2-bound}
+        \|H_rf\|_{2}\leq 2^{9} \|f\|_2,
+    \end{equation}
+    where
+    \begin{equation}
+        \label{def-H-r}
+        H_r f(x) := T_r f(x) = \int_{r\le |x-y|} \kappa(x-y) f(y) \, dy
+    \end{equation} -/)
+  (proof := /-- [Proof of \Cref{Hilbert-strong-2-2}]
+    
+    
+        We first show that if $f$ is supported in $[1, 4]$, then
+        \begin{equation}
+            \label{eq-Hr-short-support}
+            \|H_r f\|_{L^2[2, 3]} \le 2^{8} \|f\|_{L^2(\R)}\,.
+        \end{equation}
+        Let $\tilde{f}$ be the $2\pi$-periodic extension of $f$ to $\mathbb{R}$. Let $N$ be the
+        smallest
+        integer larger than $\frac 1r$. Then, \Cref{eqdifflhil} shows that the kernels of $H_r$ and
+        $2\pi L_N$ differ by at
+        most $12k_r$ on $[-\pi, \pi]$. Consider $x \in [2,3]$. When computing $H_r f(x)$ and $2\pi
+        L_N f(x)$, the kernels are
+        computed at points of the form $x-y$ with $f(y) \ne 0$, i.e., $y \in [1,4]$. As $x\in
+        [2,3]$, the difference
+        $x-y$ is bounded in absolute value by $2$, and therefore belongs to $[-\pi, \pi]$, where the
+        above bound holds.
+    
+        It follows that, for $x \in [2,3]$,
+        \begin{equation*}
+            |H_r \tilde{f}(x)|\leq 2\pi |L_N
+            \tilde{f}(x)|+12\left|\int_{0}^{2\pi}k_r(x-y)\tilde{f}(y)\, dy\right|.
+        \end{equation*}
+        Taking $L^2$ norm and using its sub-additivity, we get
+        \begin{equation*}
+           \|H_r \tilde{f}\|_{L^2[2, 3]}\leq 2\pi \|L_N \tilde{f}\|_{L^2[0, 2\pi]}\, +
+           12\left(\int_{0}^{2\pi} \left|\int_{0}^{2\pi}k_r(x-y)\tilde{f}(y)\, dy\right|^2\,
+           dx\right)^{\frac{1}{2}}.
+        \end{equation*}
+        Since $\kappa$ is supported in $[-1,1]$, we have that $H_r\tilde{f}$ agrees with $H_r f$ on
+        $[2,3]$.
+        Using \Cref{modulated-averaged-projection} and \Cref{integrable-bump-convolution}, we
+        conclude
+        \begin{equation}
+            \|H_r f\|_{L^2[2, 3]} \le 2\pi \|f\|_{L^2[0, 2\pi]} + 12 \cdot 17 \|f\|_{L^2[0,
+            2\pi]}\,,
+        \end{equation}
+        which gives \eqref{eq-Hr-short-support}.
+    
+        Suppose now that $f$ is supported in $[c, c+3]$ for some $c \in \R$. Then the function $g(x)
+        = f(x-c+1)$ is supported in $[1, 4]$.
+        By a change of variables in \eqref{def-H-r}, we have $H_r g(x ) = H_r f(x - c + 1)$. Thus,
+        by \eqref{eq-Hr-short-support}
+        \begin{equation}
+            \label{eq-Hr-short-support-2}
+            \|H_rf\|_{L^2[c+1, c+2]} = \|H_r g\|_{L^2[2,3]} \le 2^{8} \|g\|_2 = 2^8 \|f\|_2\,.
+        \end{equation}
+    
+        Let now $f$ be arbitrary.
+        Since $\kappa(x) = 0$ for $|x| > 1$, we have for all $x \in [c+1, c+2]$
+        $$
+            H_rf(x) = H_r(f \mathbf{1}_{[c, c+3]})(x)\,.
+        $$
+        Thus
+        $$
+            \int_{c+1}^{c+2} |H_r f(x)|^2 \, \mathrm{d}x = \int_{c+1}^{c+2}|H_r(f \mathbf{1}_{[c,
+            c+3]})(x)|^2 \, \mathrm{d}x\,.
+        $$
+        Applying the bound \eqref{eq-Hr-short-support-2}, this is
+        $$
+            \le 2^{16} \int_{c}^{c+3} |f(x)|^2 \, \mathrm{d}x\,.
+        $$
+        Summing over all $c \in \mathbb{Z}$, we obtain
+        $$
+            \int_{\R} |H_rf(x)|^2 \, \mathrm{d}x \le 3 \cdot 2^{16} \int_{\R} |f(x)|^2 \,
+            \mathrm{d}x\,.
+        $$
+        This completes the proof. -/)
+  (latexEnv := "lemma")]
 lemma Hilbert_strong_2_2 ⦃r : ℝ⦄ (hr : 0 < r) :
     HasBoundedStrongType (czOperator K r) 2 2 volume volume (C_Ts 4) := by
   intro g hg

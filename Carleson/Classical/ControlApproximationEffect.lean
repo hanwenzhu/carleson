@@ -1,3 +1,4 @@
+import Architect
 import Carleson.Classical.CarlesonOnTheRealLine
 
 /- This file contains most of Section 11.6 (The error bound) from the blueprint.
@@ -68,6 +69,26 @@ lemma Dirichlet_Hilbert_eq {N : ℕ} {x : ℝ} :
   simp [dirichletKernel', k, conj_ofReal, ← exp_conj, mul_comm, ← mul_assoc]
   ring
 
+@[blueprint
+  "Dirichlet-Hilbert"
+  (title := "Dirichlet kernel - Hilbert kernel relation")
+  (statement := /-- For all $N\in\Z$ and $x\in [-\pi,\pi] \setminus \{0\}$,
+    \begin{equation*}
+        \left|K_N(x) - (e^{-iNx}\kappa(x) + \overline{e^{-iNx}\kappa(x)})\right| \le \pi \,.
+    \end{equation*} -/)
+  (proof := /-- Let $N\in\Z$ and $x\in [-\pi,\pi] \setminus \{0\}$. With \Cref{Dirichlet-kernel}, we
+    obtain
+    \begin{equation*}
+        K_N(x) - (e^{-iNx}\kappa(x) + \overline{e^{-iNx}\kappa(x)})
+        = e^{-iNx} \frac{\min(|x|, 1) }{1 - e^{ix}} + e^{iNx} \frac{\min(|x|, 1) }{1 - e^{-ix}} \,.
+    \end{equation*}
+    Using \Cref{lower-secant-bound} with $\eta = \min(|x|, 1)$, we bound
+    \begin{equation*}
+        \left|K_N(x) - (e^{-iNx}\kappa(x) + \overline{e^{-iNx}\kappa(x)})\right|
+        \le \frac{\min(|x|, 1) }{|1 - e^{ix}|} + \frac{\min(|x|, 1)}{|1 - e^{-ix}|}
+        \le \frac{\pi}{2} + \frac{\pi}{2} = \pi \,.
+    \end{equation*} -/)
+  (latexEnv := "lemma")]
 lemma Dirichlet_Hilbert_diff {N : ℕ} {x : ℝ} (hx : x ∈ Set.Icc (-π) π) :
     ‖dirichletKernel' N (x) - (exp (I * (-N * x)) * k x + conj (exp (I * (-N * x)) * k x))‖ ≤ π := by
   rw [← Dirichlet_Hilbert_eq]
@@ -365,6 +386,71 @@ lemma le_CarlesonOperatorReal {g : ℝ → ℂ} (hg : IntervalIntegrable g volum
         apply le_iSup₂_of_le rpos rle1
         trivial
 
+@[blueprint
+  "partial-Fourier-sum-bound"
+  (title := "partial Fourier sum bound")
+  (statement := /-- Let $g:\R\to\C$ be a measurable $2\pi$-periodic function such that for some
+    $\delta>0$ and every $x\in\R$,
+    \begin{equation}
+        |g(x)|\le \delta \,.
+    \end{equation}
+    Then for every $x\in [0,2\pi]$ and $N>0$,
+    \begin{equation*}
+        |S_N g(x)| \le \frac{1}{2\pi} (Tg(x) + T\bar{g}(x)) + \pi\delta.
+    \end{equation*} -/)
+  (proof := /-- Let $x\in [0,2\pi]$ and $N>0$. We have with \Cref{Dirichlet-kernel}
+    \begin{equation*}
+        |S_N g(x)| = \frac{1}{2\pi} \left| \int_0^{2\pi} g(y) K_N(x-y) \, dy\right|\,.
+    \end{equation*}
+    We use $2\pi$-periodicity of $g$ and $K_N$ to shift the domain of integration to obtain
+    \begin{equation*}
+        = \frac{1}{2\pi} \left|\int_{x-\pi}^{x+\pi} g(y) K_N(x-y) \, dy\right|\,.
+    \end{equation*}
+    Using the triangle inequality, we split this as
+    \begin{equation}
+        \label{eq-diff-integrable}
+        \le \frac{1}{2\pi} \left|\int_{x-\pi}^{x+\pi} g(y) \left(K_N(x-y) - \max(|x-y|,0)
+        K_N(x-y)\right) \, dy \right|
+    \end{equation}
+    \begin{equation}
+        \label{eq-diff-singular}
+        + \frac{1}{2\pi} \left|\int_{x-\pi}^{x+\pi} g(y) \max(|x-y|,0) K_N(x-y) \, dy\right|\,.
+    \end{equation}
+    Note that all integrals are well defined, since $K_N$ is by \eqref{eqksumexp} bounded by $2N+1$.
+    Using that
+    \begin{equation}
+        \label{eq-Dirichlet-Hilbert}
+        \max(|x-y|,0) K_N(x-y) = e^{-iN(x-y)}\kappa(x-y) + \overline{e^{-iN(x-y)}\kappa(x-y)} \,,
+    \end{equation}
+    \Cref{Dirichlet-Hilbert} and \eqref{g-small}, we bound \eqref{eq-diff-integrable} by
+    \begin{equation*}
+        \frac{1}{2\pi} \int_{x-\pi}^{x+\pi} |g(y)| \left|K_N(x-y) - e^{-iN(x-y)}\kappa(x-y) +
+        \overline{e^{-iN(x-y)}\kappa(x-y)}\right|\, dy
+        \le \pi\delta \,.
+    \end{equation*}
+    By dominated convergence and since $\kappa(x-y) = 0$ for $|x-y| > 1$, \eqref{eq-diff-singular}
+    equals
+    \begin{equation*}
+        \frac{1}{2\pi} \lim_{r \to 0^+} \left| \int_{r < |x-y| < 1} g(y) \max(|x-y|,0) K_N(x-y) \,
+        dy\right|\,.
+    \end{equation*}
+    We bound the limit by a supremum and rewrite using \eqref{eq-Dirichlet-Hilbert},
+    \begin{equation*}
+        \le \frac{1}{2\pi} \sup_{r > 0} \left| \int_{r < |x-y| < 1} g(y)
+        \left(e^{-iN(x-y)}\kappa(x-y) + \overline{e^{-iN(x-y)}\kappa(x-y)}\right) \, dy\right|
+    \end{equation*}
+    Using the triangle inequality, we further bound this by
+    \begin{alignat*}{3}
+        \le&&&\frac{1}{2\pi} \sup_{r > 0} \left| \int_{r < |x-y| < 1} g(y) e^{-iNy} \kappa(x-y) \,
+        dy\right| \\
+        &+ &&\frac{1}{2\pi} \sup_{r > 0} \left| \int_{r < |x-y| < 1} \overline{g}(y) e^{-iNy}
+        \kappa(x-y) \, dy\right|\,.
+    \end{alignat*}
+    By the definition \eqref{define-T-carleson} of $T$, this is
+    \begin{equation*}
+        \le \frac{1}{2\pi} (Tg(x) + T\bar{g}(x))\,.
+    \end{equation*} -/)
+  (latexEnv := "lemma")]
 lemma partialFourierSum_bound {δ : ℝ} (hδ : 0 < δ) {g : ℝ → ℂ} (measurable_g : Measurable g)
     (periodic_g : Function.Periodic g (2 * π)) (bound_g : ∀ x, ‖g x‖ ≤ δ)
     {N : ℕ} {x : ℝ} (hx : x ∈ Set.Icc 0 (2 * π)) :
@@ -531,6 +617,52 @@ lemma C_control_approximation_effect_eq {ε : ℝ} {δ : ℝ} (ε_nonneg : 0 ≤
   all_goals linarith [pi_pos]
 
 /- This is Lemma 11.6.4 (partial Fourier sums of small) in the blueprint.-/
+@[blueprint
+  "control-approximation-effect"
+  (title := "control approximation effect")
+  (statement := /-- There is a set $E \subset \R$ with Lebesgue measure
+     $|E|\le \epsilon$ such that for all
+     \begin{equation}
+         x\in [0,2\pi)\setminus E
+     \end{equation}
+    we have
+    \begin{equation}
+     \label{eq-max-partial-sum-diff}
+     \sup_{N\ge 0} |S_Nf(x)-S_Nf_0(x)| \le \frac \epsilon 4\,.
+     \end{equation} -/)
+  (proof := /-- Define
+    \begin{equation*}
+        E := \{x \in [0, 2\pi] \ : \ \sup_{N > 0} |S_N g (x)| > C_\epsilon \delta \} \,.
+    \end{equation*}
+    Then \eqref{S-Ng-small} clearly holds, and it remains to show that $|E| \le \epsilon$.
+    With \Cref{partial-Fourier-sum-bound}, we obtain
+    \begin{equation*}
+        E \subset \{x\in [0,2\pi] \ : \ C_\epsilon \delta < \frac{1}{2\pi} (Tg(x) + T\bar{g}(x)) +
+        \pi\delta\} \subset E_1 \cup E_2,
+    \end{equation*}
+    where
+    \begin{align*}
+        E_1 :=& \{x\in [0,2\pi] \ : \ \pi(C_\epsilon - \pi) \delta < Tg(x)\} \\
+        E_2 :=& \{x\in [0,2\pi] \ : \ \pi(C_\epsilon - \pi) \delta < T\bar{g}(x)\}.
+    \end{align*}
+    By \Cref{real-Carleson-operator-measurable}, $E_1$ and $E_2$ are measurable. Thus,
+    \begin{equation*}
+        \pi(C_\epsilon - \pi) \delta |E_1| \le \int_{E_1} Tg(x) \, dx = \delta \int_{E_1}
+        T(\delta^{-1} g\mathbf{1}_{[-\pi,3\pi]})(x) \, dx \,.
+    \end{equation*}
+    Applying \Cref{real-Carleson} with $F = [-\pi, 3\pi]$ and $G = E'$, it follows that this is
+    \begin{equation*}
+        \le \delta \cdot C_{4,2} |F|^{\frac{1}{2}} |E_1|^{\frac{1}{2}} \le (4\pi)^\frac{1}{2}
+        C_{4,2} \delta \cdot |E'|^{\frac{1}{2}}\,.
+    \end{equation*}
+    Rearranging, we obtain
+    \begin{equation*}
+        |E_1| \le \left(\frac{(4\pi)^\frac{1}{2} C_{4,2}}{\pi(C_\epsilon - \pi)}\right)^2 =
+        \frac{\epsilon}{2}\,.
+    \end{equation*}
+    Analogously, we get the same estimate for $|E_2|$. This completes the proof using $|E| \le |E_1|
+    + |E_2|$. -/)
+  (latexEnv := "lemma")]
 lemma control_approximation_effect {ε : ℝ} (εpos : 0 < ε) {δ : ℝ} (hδ : 0 < δ)
     {h : ℝ → ℂ} (h_measurable : Measurable h)
     (h_periodic : h.Periodic (2 * π)) (h_bound : ∀ x, ‖h x‖ ≤ δ) :

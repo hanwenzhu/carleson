@@ -1,3 +1,4 @@
+import Architect
 import Carleson.Calculations
 import Carleson.ForestOperator.AlmostOrthogonality
 import Carleson.HolderVanDerCorput
@@ -116,6 +117,19 @@ lemma 𝓘_subset_iUnion_𝓙_𝔖₀ : (𝓘 u₁ : Set X) ⊆ ⋃ J ∈ 𝓙 (
 /-! ### Subsection 7.5.1 and Lemma 7.5.2 -/
 
 /-- Part of Lemma 7.5.1. -/
+@[blueprint
+  "dyadic-partition-1"
+  (title := "dyadic partition 1")
+  (statement := /-- We have that
+    $$
+        \scI(\fu_1) = \dot{\bigcup_{J \in \mathcal{J}'}} J\,.
+    $$ -/)
+  (proof := /-- By \Cref{dyadic-partitions}, it remains only to show that each $J \in
+    \mathcal{J}(\mathfrak{S})$ with $J \cap \scI(\fu_1) \ne \emptyset$ is in $\mathcal{J}'$. But if
+    $J \notin \mathcal{J}'$, then by \eqref{dyadicproperty} $\scI(\fu_1) \subset J$. Pick $\fp \in
+    \fT(\fu_1) \subset \mathfrak{S}$. Then $\scI(\fp) \subset J$. This contradicts the definition of
+    $\mathcal{J}(\mathfrak{S})$. -/)
+  (latexEnv := "lemma")]
 lemma union_𝓙₅ (hu₁ : u₁ ∈ t) (hu₂ : u₂ ∈ t) (hu : u₁ ≠ u₂) (h2u : 𝓘 u₁ ≤ 𝓘 u₂) :
     ⋃ J ∈ 𝓙₅ t u₁ u₂, (J : Set X) = 𝓘 u₁ := by
   apply Set.Subset.antisymm
@@ -168,6 +182,19 @@ lemma union_𝓙₅ (hu₁ : u₁ ∈ t) (hu₂ : u₂ ∈ t) (hu : u₁ ≠ u�
       contradiction
 
 /-- Part of Lemma 7.5.1. -/
+@[blueprint
+  "dyadic-partition-1"
+  (title := "dyadic partition 1")
+  (statement := /-- We have that
+    $$
+        \scI(\fu_1) = \dot{\bigcup_{J \in \mathcal{J}'}} J\,.
+    $$ -/)
+  (proof := /-- By \Cref{dyadic-partitions}, it remains only to show that each $J \in
+    \mathcal{J}(\mathfrak{S})$ with $J \cap \scI(\fu_1) \ne \emptyset$ is in $\mathcal{J}'$. But if
+    $J \notin \mathcal{J}'$, then by \eqref{dyadicproperty} $\scI(\fu_1) \subset J$. Pick $\fp \in
+    \fT(\fu_1) \subset \mathfrak{S}$. Then $\scI(\fp) \subset J$. This contradicts the definition of
+    $\mathcal{J}(\mathfrak{S})$. -/)
+  (latexEnv := "lemma")]
 lemma pairwiseDisjoint_𝓙₅ : (𝓙₅ t u₁ u₂).PairwiseDisjoint (fun I ↦ (I : Set X)) := by
   have ss : (𝓙 (t.𝔖₀ u₁ u₂) ∩ Iic (𝓘 u₁)) ⊆ 𝓙 (t.𝔖₀ u₁ u₂) := inter_subset_left
   exact PairwiseDisjoint.subset (pairwiseDisjoint_𝓙 (𝔖 := 𝔖₀ t u₁ u₂)) ss
@@ -193,6 +220,36 @@ lemma bigger_than_𝓙_is_not_in_𝓙₀ {𝔖 : Set (𝔓 X)} {A B : Grid X}
   · exact sle
 
 /-- Lemma 7.5.3 (stated somewhat differently). -/
+@[blueprint
+  "moderate-scale-change"
+  (title := "moderate scale change")
+  (statement := /-- If $J, J' \in \mathcal{J'}$ with
+    $$
+        B(J) \cap B(J') \ne \emptyset\,,
+    $$
+    then $|s(J) - s(J')| \le 1$. -/)
+  (proof := /-- [Proof of \Cref{moderate-scale-change}]
+    
+    
+            Suppose that $s(J') < s(J) - 1$. Then $s(J) > -S$. Thus, by the definition of
+            $\mathcal{J}'$ there exists no $\fp \in \mathfrak{S}$ with
+          \begin{equation}
+                \label{eq-tile-incl-1}
+                \scI(\fp) \subset B(c(J), 100D^{s(J) + 1})\,.
+            \end{equation}
+            Since $s(J') < s(J)$, there exists a cube $J'' \in \mathcal{D}$ with $J \subset J''$ and
+            $s(J'') = s(J') + 1$. By the definition of $\mathcal{J}'$, there exists a tile $\fp \in
+            \mathfrak{S}$ with
+          \begin{equation}
+                \label{tile-incl-2}
+                \scI(\fp) \subset B(c(J''), 100 D^{s(J')+2})\,.
+            \end{equation}
+            But by the triangle inequality and \eqref{defineD}, we have
+            $$
+                B(c(J''), 100 D^{s(J')+2}) \subset B(c(J), 100D^{s(J) + 1})\,,
+            $$
+            which contradicts \eqref{eq-tile-incl-1} and \eqref{tile-incl-2}. -/)
+  (latexEnv := "lemma")]
 lemma moderate_scale_change (hJ : J ∈ 𝓙₅ t u₁ u₂) (hJ' : J' ∈ 𝓙₅ t u₁ u₂)
     (hd : ¬Disjoint (ball (c J) (8 * D ^ s J)) (ball (c J') (8 * D ^ s J'))) :
     s J - 1 ≤ s J' := by
@@ -224,6 +281,98 @@ lemma moderate_scale_change (hJ : J ∈ 𝓙₅ t u₁ u₂) (hJ' : J' ∈ 𝓙�
 
 open scoped Classical in
 /-- Part of Lemma 7.5.2. -/
+@[blueprint
+  "Lipschitz-partition-unity"
+  (title := "Lipschitz partition unity")
+  (statement := /-- There exists a family of functions $\chi_J$, $J \in \mathcal{J}'$ such that
+      \begin{equation}
+          \label{eq-pao-1}
+          \mathbf{1}_{\scI(\fu_1)} = \sum_{J \in \mathcal{J}'} \chi_J\,,
+      \end{equation}
+      and for all $J \in \mathcal{J}'$ and all $y,y' \in \scI(\fu_1)$
+    \begin{equation}
+          \label{eq-pao-2}
+          0 \leq \chi_J(y) \leq \mathbf{1}_{B(J)}(y)\,,
+      \end{equation}
+    \begin{equation}
+          \label{eq-pao-3}
+          |\chi_J(y) - \chi_J(y')| \le 2^{227a^3} \frac{\rho(y,y')}{D^{s(J)}}\,.
+      \end{equation} -/)
+  (proof := /-- [Proof of \Cref{Lipschitz-partition-unity}]
+    
+    
+            For each cube $J \in \mathcal{J}$ let
+            $$
+                \tilde\chi_J(y) = \mathbf{1}_{\scI(\fu_1)}(y)\max\{0, 8 - D^{-s(J)} \rho(y,
+                c(J))\}\,,
+            $$
+            and set
+            $$
+                a(y) = \sum_{J \in \mathcal{J}'} \tilde \chi_J(y)\,.
+            $$
+            We define
+            \[
+                \chi_J(y) := \frac{\tilde \chi_J(y)}{a(y)}\,.
+            \]
+            Then, due to \eqref{forest6} and \eqref{def-BJ}, the properties \eqref{eq-pao-1} and
+            \eqref{eq-pao-2} are clearly true. Estimate \eqref{eq-pao-3} follows from
+            \eqref{eq-pao-2} if $y, y' \notin B(J)$. Thus we can assume that $y \in B(J)$. We have
+            by the triangle inequality
+            $$
+                |\chi_J(y) - \chi_J(y')| \le \frac{|\tilde \chi_J(y) - \tilde \chi_J(y')|}{a(y)} +
+                \frac{\tilde \chi_J(y')|a(y) - a(y')|}{a(y)a(y')}
+            $$
+            Since $\tilde \chi_J(z) \ge 4$ for all $z \in B(c(J),4D^{s(J)}) \supset J$ and by
+            \Cref{dyadic-partition-1}, we have that $a(z) \ge 4$ for all $z \in \scI(\fu_1)$. So we
+            can estimate the above further by
+            $$
+                \le 2^{-2}(|\tilde \chi_J(y) - \tilde \chi_J(y')| + \tilde \chi_J(y')|a(y) -
+                a(y')|)\,.
+            $$
+            If $y' \notin B(\pc(\fp), 8D^{\ps(\fp)})$ then the second summand vanishes. Else, we can
+            estimate the above, using also that $|\tilde \chi_J(y')| \le 8$, by
+            $$
+                \le 2^{-2} |\tilde \chi_J(y) - \tilde \chi_J(y')| + 2 \sum_{\substack{J' \in
+                \mathcal{J}'\\ B(J') \cap B(J) \ne \emptyset}}|\tilde \chi_{J'}(y) - \tilde
+                \chi_{J'} (y')|\,.
+            $$
+            By the triangle inequality, we have for all dyadic cubes $I$
+            $$
+                |\tilde \chi_I(y) - \tilde \chi_I(y')| \le \rho(y, y') D^{-s(I)}\,.
+            $$
+            Using this above, we obtain
+            $$
+                |\chi_J(y) - \chi_J(y')| \le \rho(y,y') \Big( \frac{1}{4} D^{-s(J)} + 2
+                \sum_{\substack{J' \in \mathcal{J}'\\ B(J') \cap B(J) \ne \emptyset}}
+                D^{-s(J')}\Big)\,.
+            $$
+            By \Cref{moderate-scale-change}, this is at most
+            $$
+                 \frac{\rho(y,y')}{D^{s(J)}} \left( \frac{1}{4} + 2D |\{J' \in \mathcal{J}' \ : \
+                 B(J') \cap B(J) \ne \emptyset\}|\right)\,.
+            $$
+            By \eqref{eq-vol-sp-cube} and \Cref{dyadic-partition-1}, the balls $B(c(J'), \frac{1}{4}
+            D^{s(J')})$ are pairwise disjoint. By the triangle inequality and
+            \Cref{moderate-scale-change}, each such ball for $J'$ in the set of the last display is
+            contained in
+            $$
+                B(c(J), 9 D^{s(J) + 1})\,.
+            $$
+            By the doubling property \eqref{doublingx}, we further have
+            $$
+                \mu(B(c(J), 9 D^{s(J) + 1})) \le 2^{200a^3 + 7a} \mu\Big(B(c(J'),
+                \frac{1}{4}D^{s(J')})\Big)
+            $$
+            for each such ball.
+            Thus
+            $$
+                |\{J' \in \mathcal{J}' \ : \ B(J') \cap B(J) \ne \emptyset\}| \le 2^{200a^3 + 7a}\,.
+            $$
+            Recalling that $D=2^{100a^2}$, we obtain
+            $$\frac{1}{4} + 2D |\{J' \in \mathcal{J}' \ : \ B(J') \cap B(J) \ne \emptyset\}|\leq
+            2^{200a^3 + 100a^2 + 7a + 2}.$$
+            Since $a\ge 4$, \eqref{eq-pao-3} follows. -/)
+  (latexEnv := "lemma")]
 lemma sum_χ (hu₁ : u₁ ∈ t) (hu₂ : u₂ ∈ t) (hu : u₁ ≠ u₂) (h2u : 𝓘 u₁ ≤ 𝓘 u₂) (x : X) :
     ∑ J ∈ 𝓙₅ t u₁ u₂, χ t u₁ u₂ J x = (𝓘 u₁ : Set X).indicator 1 x := by
   simp_rw [χ, ← Finset.sum_div, NNReal.div_self_eq_ite, indicator, Pi.one_apply]
@@ -236,6 +385,98 @@ lemma sum_χ (hu₁ : u₁ ∈ t) (hu₂ : u₂ ∈ t) (hu : u₁ ≠ u₂) (h2u
   change (4 : ℝ) * D ^ s J ≤ _; gcongr; norm_num
 
 /-- Part of Lemma 7.5.2. -/
+@[blueprint
+  "Lipschitz-partition-unity"
+  (title := "Lipschitz partition unity")
+  (statement := /-- There exists a family of functions $\chi_J$, $J \in \mathcal{J}'$ such that
+      \begin{equation}
+          \label{eq-pao-1}
+          \mathbf{1}_{\scI(\fu_1)} = \sum_{J \in \mathcal{J}'} \chi_J\,,
+      \end{equation}
+      and for all $J \in \mathcal{J}'$ and all $y,y' \in \scI(\fu_1)$
+    \begin{equation}
+          \label{eq-pao-2}
+          0 \leq \chi_J(y) \leq \mathbf{1}_{B(J)}(y)\,,
+      \end{equation}
+    \begin{equation}
+          \label{eq-pao-3}
+          |\chi_J(y) - \chi_J(y')| \le 2^{227a^3} \frac{\rho(y,y')}{D^{s(J)}}\,.
+      \end{equation} -/)
+  (proof := /-- [Proof of \Cref{Lipschitz-partition-unity}]
+    
+    
+            For each cube $J \in \mathcal{J}$ let
+            $$
+                \tilde\chi_J(y) = \mathbf{1}_{\scI(\fu_1)}(y)\max\{0, 8 - D^{-s(J)} \rho(y,
+                c(J))\}\,,
+            $$
+            and set
+            $$
+                a(y) = \sum_{J \in \mathcal{J}'} \tilde \chi_J(y)\,.
+            $$
+            We define
+            \[
+                \chi_J(y) := \frac{\tilde \chi_J(y)}{a(y)}\,.
+            \]
+            Then, due to \eqref{forest6} and \eqref{def-BJ}, the properties \eqref{eq-pao-1} and
+            \eqref{eq-pao-2} are clearly true. Estimate \eqref{eq-pao-3} follows from
+            \eqref{eq-pao-2} if $y, y' \notin B(J)$. Thus we can assume that $y \in B(J)$. We have
+            by the triangle inequality
+            $$
+                |\chi_J(y) - \chi_J(y')| \le \frac{|\tilde \chi_J(y) - \tilde \chi_J(y')|}{a(y)} +
+                \frac{\tilde \chi_J(y')|a(y) - a(y')|}{a(y)a(y')}
+            $$
+            Since $\tilde \chi_J(z) \ge 4$ for all $z \in B(c(J),4D^{s(J)}) \supset J$ and by
+            \Cref{dyadic-partition-1}, we have that $a(z) \ge 4$ for all $z \in \scI(\fu_1)$. So we
+            can estimate the above further by
+            $$
+                \le 2^{-2}(|\tilde \chi_J(y) - \tilde \chi_J(y')| + \tilde \chi_J(y')|a(y) -
+                a(y')|)\,.
+            $$
+            If $y' \notin B(\pc(\fp), 8D^{\ps(\fp)})$ then the second summand vanishes. Else, we can
+            estimate the above, using also that $|\tilde \chi_J(y')| \le 8$, by
+            $$
+                \le 2^{-2} |\tilde \chi_J(y) - \tilde \chi_J(y')| + 2 \sum_{\substack{J' \in
+                \mathcal{J}'\\ B(J') \cap B(J) \ne \emptyset}}|\tilde \chi_{J'}(y) - \tilde
+                \chi_{J'} (y')|\,.
+            $$
+            By the triangle inequality, we have for all dyadic cubes $I$
+            $$
+                |\tilde \chi_I(y) - \tilde \chi_I(y')| \le \rho(y, y') D^{-s(I)}\,.
+            $$
+            Using this above, we obtain
+            $$
+                |\chi_J(y) - \chi_J(y')| \le \rho(y,y') \Big( \frac{1}{4} D^{-s(J)} + 2
+                \sum_{\substack{J' \in \mathcal{J}'\\ B(J') \cap B(J) \ne \emptyset}}
+                D^{-s(J')}\Big)\,.
+            $$
+            By \Cref{moderate-scale-change}, this is at most
+            $$
+                 \frac{\rho(y,y')}{D^{s(J)}} \left( \frac{1}{4} + 2D |\{J' \in \mathcal{J}' \ : \
+                 B(J') \cap B(J) \ne \emptyset\}|\right)\,.
+            $$
+            By \eqref{eq-vol-sp-cube} and \Cref{dyadic-partition-1}, the balls $B(c(J'), \frac{1}{4}
+            D^{s(J')})$ are pairwise disjoint. By the triangle inequality and
+            \Cref{moderate-scale-change}, each such ball for $J'$ in the set of the last display is
+            contained in
+            $$
+                B(c(J), 9 D^{s(J) + 1})\,.
+            $$
+            By the doubling property \eqref{doublingx}, we further have
+            $$
+                \mu(B(c(J), 9 D^{s(J) + 1})) \le 2^{200a^3 + 7a} \mu\Big(B(c(J'),
+                \frac{1}{4}D^{s(J')})\Big)
+            $$
+            for each such ball.
+            Thus
+            $$
+                |\{J' \in \mathcal{J}' \ : \ B(J') \cap B(J) \ne \emptyset\}| \le 2^{200a^3 + 7a}\,.
+            $$
+            Recalling that $D=2^{100a^2}$, we obtain
+            $$\frac{1}{4} + 2D |\{J' \in \mathcal{J}' \ : \ B(J') \cap B(J) \ne \emptyset\}|\leq
+            2^{200a^3 + 100a^2 + 7a + 2}.$$
+            Since $a\ge 4$, \eqref{eq-pao-3} follows. -/)
+  (latexEnv := "lemma")]
 lemma χ_le_indicator (hJ : J ∈ 𝓙₅ t u₁ u₂) :
     χ t u₁ u₂ J x ≤ (ball (c J) (8 * D ^ s J)).indicator 1 x := by
   classical
@@ -371,6 +612,98 @@ lemma quarter_add_two_mul_D_mul_card_le (hJ : J ∈ 𝓙₅ t u₁ u₂) :
   exact_mod_cast dbl
 
 /-- Part of Lemma 7.5.2. -/
+@[blueprint
+  "Lipschitz-partition-unity"
+  (title := "Lipschitz partition unity")
+  (statement := /-- There exists a family of functions $\chi_J$, $J \in \mathcal{J}'$ such that
+      \begin{equation}
+          \label{eq-pao-1}
+          \mathbf{1}_{\scI(\fu_1)} = \sum_{J \in \mathcal{J}'} \chi_J\,,
+      \end{equation}
+      and for all $J \in \mathcal{J}'$ and all $y,y' \in \scI(\fu_1)$
+    \begin{equation}
+          \label{eq-pao-2}
+          0 \leq \chi_J(y) \leq \mathbf{1}_{B(J)}(y)\,,
+      \end{equation}
+    \begin{equation}
+          \label{eq-pao-3}
+          |\chi_J(y) - \chi_J(y')| \le 2^{227a^3} \frac{\rho(y,y')}{D^{s(J)}}\,.
+      \end{equation} -/)
+  (proof := /-- [Proof of \Cref{Lipschitz-partition-unity}]
+    
+    
+            For each cube $J \in \mathcal{J}$ let
+            $$
+                \tilde\chi_J(y) = \mathbf{1}_{\scI(\fu_1)}(y)\max\{0, 8 - D^{-s(J)} \rho(y,
+                c(J))\}\,,
+            $$
+            and set
+            $$
+                a(y) = \sum_{J \in \mathcal{J}'} \tilde \chi_J(y)\,.
+            $$
+            We define
+            \[
+                \chi_J(y) := \frac{\tilde \chi_J(y)}{a(y)}\,.
+            \]
+            Then, due to \eqref{forest6} and \eqref{def-BJ}, the properties \eqref{eq-pao-1} and
+            \eqref{eq-pao-2} are clearly true. Estimate \eqref{eq-pao-3} follows from
+            \eqref{eq-pao-2} if $y, y' \notin B(J)$. Thus we can assume that $y \in B(J)$. We have
+            by the triangle inequality
+            $$
+                |\chi_J(y) - \chi_J(y')| \le \frac{|\tilde \chi_J(y) - \tilde \chi_J(y')|}{a(y)} +
+                \frac{\tilde \chi_J(y')|a(y) - a(y')|}{a(y)a(y')}
+            $$
+            Since $\tilde \chi_J(z) \ge 4$ for all $z \in B(c(J),4D^{s(J)}) \supset J$ and by
+            \Cref{dyadic-partition-1}, we have that $a(z) \ge 4$ for all $z \in \scI(\fu_1)$. So we
+            can estimate the above further by
+            $$
+                \le 2^{-2}(|\tilde \chi_J(y) - \tilde \chi_J(y')| + \tilde \chi_J(y')|a(y) -
+                a(y')|)\,.
+            $$
+            If $y' \notin B(\pc(\fp), 8D^{\ps(\fp)})$ then the second summand vanishes. Else, we can
+            estimate the above, using also that $|\tilde \chi_J(y')| \le 8$, by
+            $$
+                \le 2^{-2} |\tilde \chi_J(y) - \tilde \chi_J(y')| + 2 \sum_{\substack{J' \in
+                \mathcal{J}'\\ B(J') \cap B(J) \ne \emptyset}}|\tilde \chi_{J'}(y) - \tilde
+                \chi_{J'} (y')|\,.
+            $$
+            By the triangle inequality, we have for all dyadic cubes $I$
+            $$
+                |\tilde \chi_I(y) - \tilde \chi_I(y')| \le \rho(y, y') D^{-s(I)}\,.
+            $$
+            Using this above, we obtain
+            $$
+                |\chi_J(y) - \chi_J(y')| \le \rho(y,y') \Big( \frac{1}{4} D^{-s(J)} + 2
+                \sum_{\substack{J' \in \mathcal{J}'\\ B(J') \cap B(J) \ne \emptyset}}
+                D^{-s(J')}\Big)\,.
+            $$
+            By \Cref{moderate-scale-change}, this is at most
+            $$
+                 \frac{\rho(y,y')}{D^{s(J)}} \left( \frac{1}{4} + 2D |\{J' \in \mathcal{J}' \ : \
+                 B(J') \cap B(J) \ne \emptyset\}|\right)\,.
+            $$
+            By \eqref{eq-vol-sp-cube} and \Cref{dyadic-partition-1}, the balls $B(c(J'), \frac{1}{4}
+            D^{s(J')})$ are pairwise disjoint. By the triangle inequality and
+            \Cref{moderate-scale-change}, each such ball for $J'$ in the set of the last display is
+            contained in
+            $$
+                B(c(J), 9 D^{s(J) + 1})\,.
+            $$
+            By the doubling property \eqref{doublingx}, we further have
+            $$
+                \mu(B(c(J), 9 D^{s(J) + 1})) \le 2^{200a^3 + 7a} \mu\Big(B(c(J'),
+                \frac{1}{4}D^{s(J')})\Big)
+            $$
+            for each such ball.
+            Thus
+            $$
+                |\{J' \in \mathcal{J}' \ : \ B(J') \cap B(J) \ne \emptyset\}| \le 2^{200a^3 + 7a}\,.
+            $$
+            Recalling that $D=2^{100a^2}$, we obtain
+            $$\frac{1}{4} + 2D |\{J' \in \mathcal{J}' \ : \ B(J') \cap B(J) \ne \emptyset\}|\leq
+            2^{200a^3 + 100a^2 + 7a + 2}.$$
+            Since $a\ge 4$, \eqref{eq-pao-3} follows. -/)
+  (latexEnv := "lemma")]
 lemma dist_χ_le (hu₁ : u₁ ∈ t) (hu₂ : u₂ ∈ t) (hu : u₁ ≠ u₂)
     (h2u : 𝓘 u₁ ≤ 𝓘 u₂) (hJ : J ∈ 𝓙₅ t u₁ u₂) (mx : x ∈ 𝓘 u₁) (mx' : x' ∈ 𝓘 u₁) :
     dist (χ t u₁ u₂ J x) (χ t u₁ u₂ J x') ≤ C7_5_2 a * dist x x' / D ^ s J := by
@@ -826,6 +1159,141 @@ lemma holder_correlation_tile_two (hu : u ∈ t) (hp : p ∈ t u) (hf : BoundedC
 end BothIn
 
 /-- Lemma 7.5.5. -/
+@[blueprint
+  "Holder-correlation-tile"
+  (title := "Holder correlation tile")
+  (statement := /-- Let $\fu \in \fU$ and $\fp \in \fT(\fu)$. Then for all $y, y' \in X$ and all
+      bounded $g$ with bounded support, we have
+      $$
+          |e(\fcc(\fu)(y)) T_{\fp}^* g(y) - e(\fcc(\fu)(y')) T_{\fp}^* g(y')|
+      $$
+    \begin{equation}
+          \label{T*Holder2}
+          \le \frac{2^{128a^3}}{\mu(B(\pc(\fp), 4D^{\ps(\fp)}))} \left(\frac{\rho(y,
+          y')}{D^{\ps(\fp)}}\right)^{1/a} \int_{E(\fp)} |g(x)| \, \mathrm{d}\mu(x)\,.
+      \end{equation} -/)
+  (proof := /-- By \eqref{definetp*}, we have
+      $$
+          |e(\fcc(\fu)(y)) T_{\fp}^* g(y) - e(\fcc(\fu)(y')) T_{\fp}^* g(y')|
+      $$
+      \begin{multline*}
+          =\bigg| \int_{E(\fp)} e(\tQ(x)(x) - \tQ(x)(y) + \fcc(\fu)(y)) \overline{K_{\ps(\fp)}(x,
+          y)} g(x) \\
+          - e(\tQ(x)(x) - \tQ(x)(y') + \fcc(\fu)(y')) \overline{K_{\ps(\fp)}(x, y')} g(x) \,
+          \mathrm{d}\mu(x)\bigg|
+      \end{multline*}
+      \begin{multline*}
+          \leq\int_{E(\fp)} |g(x)| |e(\tQ(x)(y) - \tQ(x)(y') - \fcc(\fu)(y) +
+          \fcc(\fu)(y'))\overline{K_{\ps(\fp)}(x, y)}\\
+          - \overline{K_{\ps(\fp)}(x, y')}| \, \mathrm{d}\mu(x)
+      \end{multline*}
+      \begin{multline}
+          \leq\int_{E(\fp)} |g(x)| |e(-\tQ(x)(y) + \tQ(x)(y') + \fcc(\fu)(y) - \fcc(\fu)(y')) - 1|
+          \\
+          \times |\overline{K_{\ps(\fp)}(x, y)}|\, \mathrm{d}\mu(x) \label{T*Holder1b}
+      \end{multline}
+    \begin{equation}
+          + \int_{E(\fp)} |g(x)| |\overline{K_{\ps(\fp)}(x, y)} - \overline{K_{\ps(\fp)}(x, y')} |\,
+          \mathrm{d}\mu(x)\,.\label{T*Holder1}
+      \end{equation}
+      By the oscillation estimate \eqref{osccontrol}, we have
+      $$
+          |-\tQ(x)(y) + \tQ(x)(y') + \fcc(\fu)(y) - \fcc(\fu)(y')|
+      $$
+    \begin{equation}
+          \label{eq-lem-tile-Holder-comp}
+          \le d_{B(y, 1.6\rho(y,y'))}(\tQ(x), \fcc(\fu))\,.
+      \end{equation}
+      Suppose that $y, y' \in B(\pc(\fp), 5D^{\ps(\fp)})$, so that $\rho(y,y') \le 10D^{\ps(\fp)}$.
+      Let $k \in \mathbb{Z}$ be such that $2^{ak}\rho(y,y') \le 10D^{\ps(\fp)}$ but $2^{a(k+1)}
+      \rho(y,y') > 10D^{\ps(\fp)}$.
+      In particular, $k \ge 0$. Then, using \eqref{seconddb} followed by \eqref{firstdb}, we can
+      bound \eqref{eq-lem-tile-Holder-comp} from above by
+      $$
+          2^{-k} d_{B(\pc(\fp), 16 D^{\ps(\fp)})}(\tQ(x), \fcc(\fu)) \le 2^{6a - k} d_{\fp}(\tQ(x),
+          \fcc(\fu))\,.
+      $$
+      Since $x \in E(\fp)$ we have $\tQ(x) \in \Omega(\fp) \subset B_{\fp}(\fcc(\fp), 1)$, and since
+      $\fp \in \fT(\fu)$ we have $\fcc(\fu) \in B_{\fp}(\fcc(\fp), 4)$, so this is estimated by
+      $$
+          \le 5 \cdot 2^{6a - k}\,.
+      $$
+      By definition of $k$, we have
+      $$
+          -k < 1 - \frac{1}{a} \log_2\left(\frac{10 D^{\ps(\fp)}}{\rho(y,y')}\right)\,,
+      $$
+      which gives
+    \begin{equation}
+          \label{eq-lem-Tile-holder-im1}
+           |-\tQ(x)(y) + \tQ(x)(y') + \fcc(\fu)(y) - \fcc(\fu)(y')| \le 10 \cdot 2^{6a}
+           \left(\frac{\rho(y,y')}{10 D^{\ps(\fp)}}\right)^{1/a}\,.
+      \end{equation}
+      For all $x \in \scI(\fp)$, we have by \eqref{doublingx} that
+      $$
+          \mu(B(x, D^{\ps(\fp)})) \ge 2^{-3a} \mu(B(\pc(\fp), 4D^{\ps(\fp)}))\,.
+      $$
+      Combining the above with \eqref{eq-Ks-size}, \eqref{eq-Ks-smooth} and
+      \eqref{eq-lem-Tile-holder-im1},
+      we obtain
+      $$
+          \eqref{T*Holder1b}+\eqref{T*Holder1} \le \frac{2^{3a}}{\mu(B(\pc(\fp), 4D^{\ps(\fp)}))}
+          \int_{E(\fp)}|g(x)| \, \mathrm{d}\mu(x) \times
+      $$
+      $$
+          (2^{102a^3} \cdot 10 \cdot 2^{6a} \left(\frac{\rho(y,y')}{ D^{\ps(\fp)}}\right)^{1/a} +
+          2^{127a^3} \left(\frac{\rho(y,y')}{D^{\ps(\fp)}}\right)^{1/a})
+      $$
+      Since $\rho(y,y') \le 10 D^{\ps(\fp)}$, we conclude
+      $$
+          \eqref{T*Holder1b}+\eqref{T*Holder1} \le \frac{2^{128a^3}}{\mu(B(\pc(\fp),
+          4D^{\ps(\fp)}))} \left(\frac{\rho(y,y')}{D^{\ps(\fp)}}\right)^{1/a} \int_{E(\fp)}|g(x)| \,
+          \mathrm{d}\mu(x)\,.
+      $$
+    
+      Next, if $y,y' \notin B(\pc(\fp), 5D^{\ps(\fp)})$, then $T_{\fp}^*g(y) = T_{\fp}^*g(y') = 0$,
+      by \Cref{adjoint-tile-support}. Then \eqref{T*Holder2} holds.
+    
+      Finally, if $y \in B(\pc(\fp), 5D^{\ps(\fp)})$ and $y' \notin B(\pc(\fp), 5D^{\ps(\fp)})$,
+      then
+      $$
+          |e(\fcc(\fu)(y)) T_{\fp}^* g(y) - e(\fcc(\fu)(y')) T_{\fp}^* g(y')| = |T_{\fp}^* g(y)|
+      $$
+      $$
+          \le \int_{E(\fp)} |K_{\ps(\fp)}(x,y)| |g(x)| \, \mathrm{d}\mu(x)\,.
+      $$
+      By the same argument used to prove \eqref{eq-Ks-aux}, this is bounded by
+    \begin{equation}
+          \label{eq-lem-Tile-holder-im2}
+          \le 2^{102a^3} \int_{E(\fp)} \frac{1}{\mu(B(x, D^s))} \psi(D^{-s} \rho(x,y)) |g(x)| \,
+          \mathrm{d}\mu(x)\,.
+      \end{equation}
+      It follows from the definition of $\psi$ that
+      $$
+          \psi(x) \le \max\{0, (2 - 4x)^{1/a}\}\,.
+      $$
+      Now for all $x\in E(\fp)$, it follows by the triangle inequality and \eqref{eq-vol-sp-cube}
+      that
+      \begin{multline*}
+      2 - 4D^{-\ps(\fp)}\rho(x,y)\leq 2 - 4D^{-\ps(\fp)}\rho(y, \pc(\fp)) + 4 D^{-\ps(\fp)}\rho(x,
+      \pc(\fp))\\\leq 18 - 4 D^{-\ps(\fp)} \rho(y, \pc(\fp)) \leq 4 D^{-\ps(\fp)}\rho(y,y') - 2 .
+      \end{multline*}
+      Combining the above with the previous estimate on $\psi$, we get
+      $$
+          \psi(D^{-\ps(\fp)}\rho(x,y)) \le 4 (D^{-\ps(\fp)}\rho(y,y'))^{1/a}.
+      $$
+      Further, we obtain from the doubling property \eqref{doublingx} and \eqref{eq-vol-sp-cube}
+      that
+      $$
+          \mu(B(x, D^{\ps(\fp)})) \ge 2^{-3a} \mu(B(\pc(\fp), 4D^{\ps(\fp)}))\,.
+      $$
+      Plugging this into \eqref{eq-lem-Tile-holder-im2} and using $a \ge 4$, we get
+      $$
+          |T_{\fp}^* g(y)| \le \frac{2^{103a^3}}{\mu(B(\pc(\fp), 4D^{\ps(\fp)}))}
+          \left(\frac{\rho(y,y')}{D^{\ps(\fp)}}\right)^{1/a} \int_{E(\fp)} |g(x)| \,
+          \mathrm{d}\mu(y)\,,
+      $$
+      which completes the proof of the lemma. -/)
+  (latexEnv := "lemma")]
 lemma holder_correlation_tile (hu : u ∈ t) (hp : p ∈ t u) (hf : BoundedCompactSupport f) :
     edist (exp (.I * 𝒬 u x) * adjointCarleson p f x) (exp (.I * 𝒬 u x') * adjointCarleson p f x') ≤
     C7_5_5 a / volume (ball (𝔠 p) (4 * D ^ 𝔰 p)) *
@@ -962,6 +1430,59 @@ lemma limited_scale_impact_second_estimate (hp : p ∈ t u₂ \ 𝔖₀ t u₁ u
       exact notIn𝔖₀.2 tile
 
 /-- Lemma 7.5.6. -/
+@[blueprint
+  "limited-scale-impact"
+  (title := "limited scale impact")
+  (statement := /-- Let $\fp \in \fT(\fu_2) \setminus \mathfrak{S}$, $J \in \mathcal{J}'$ and
+    suppose that
+    $$
+       B(\scI(\fp)) \cap B^\circ(J) \ne \emptyset\,.
+    $$
+    Then
+    $$
+        s(J) \le \ps(\fp) \le s(J) +3\,.
+    $$ -/)
+  (proof := /-- For the first estimate, assume that $\ps(\fp) < s(J)$, then in particular $\ps(\fp)
+    \le \ps(\fu_1)$. Since $\fp \notin \mathfrak{S}$, we have by \Cref{overlap-implies-distance}
+    that $\scI(\fp) \cap \scI(\fu_1) = \emptyset$.
+    Since $B\Big(c(J), \frac{1}{4} D^{s(J)}\Big) \subset \scI(J) \subset \scI(\fu_1)$, this implies
+    $$
+        \rho(c(J), \pc(\fp)) \ge \frac{1}{4}D^{s(J)}\,.
+    $$
+    On the other hand
+    $$
+        \rho(c(J), \pc(\fp)) \le \frac{1}{8} D^{s(J)} + 8 D^{\ps(\fp)}\,,
+    $$
+    by our assumption. Thus $D^{\ps(\fp)} \ge 64^{-1} D^{s(J)}$, which contradicts \eqref{defineD}
+    and $a \ge 4$.
+    
+    For the second estimate, assume that $\ps(\fp) > s(J) + 3$. Since $J \in \mathcal{J}'$, we have
+    $J \subsetneq \scI(\fu_1)$. Thus there exists $J' \in \mathcal{D}$ with $J \subset J'$ and
+    $s(J') = s(J) + 1$, by \eqref{coverdyadic} and \eqref{dyadicproperty}. By definition of
+    $\mathcal{J}'$, there exists some $\fp' \in \mathfrak{S}$ such that $\scI(\fp') \subset B(c(J'),
+    100 D^{s(J) + 2})$. On the other hand, since $B(\scI(\fp)) \cap B^\circ(J) \ne \emptyset$, by
+    the triangle inequality it holds that
+    $$
+        B(c(J'), 100 D^{s(J) + 3}) \subset B(\pc(\fp), 10 D^{\ps(\fp)})\,.
+    $$
+    Using the definition of $\mathfrak{S}$, we have
+    $$
+        2^{Zn/2} \le d_{\fp'}(\fcc(\fu_1), \fcc(\fu_2)) \le d_{B(c(J'), 100 D^{s(J) +
+        2})}(\fcc(\fu_1), \fcc(\fu_2))\,.
+    $$
+    By \eqref{seconddb}, this is
+    $$
+        \le 2^{-100a} d_{B(c(J'), 100 D^{s(J) + 3})}(\fcc(\fu_1), \fcc(\fu_2))
+    $$
+    $$
+        \le 2^{-100a} d_{B(\pc(\fp), 10 D^{\ps(\fp)})}(\fcc(\fu_1), \fcc(\fu_2))\,,
+    $$
+    and by \eqref{firstdb} and the definition of $\mathfrak{S}$
+    $$
+        \le 2^{-94a} d_{\fp}(\fcc(\fu_1), \fcc(\fu_2)) \le 2^{-94a} 2^{Zn/2}\,.
+    $$
+    This is a contradiction, the second estimate follows. -/)
+  (latexEnv := "lemma")]
 lemma limited_scale_impact (hu₁ : u₁ ∈ t) (hu₂ : u₂ ∈ t) (hu : u₁ ≠ u₂)
     (h2u : 𝓘 u₁ ≤ 𝓘 u₂) (hp : p ∈ t u₂ \ 𝔖₀ t u₁ u₂) (hJ : J ∈ 𝓙₅ t u₁ u₂)
     (h : ¬ Disjoint (ball (𝔠 p) (8 * D ^ 𝔰 p)) (ball (c J) (8⁻¹ * D ^ s J))) :
@@ -1067,6 +1588,56 @@ Has value `2 ^ (104 * a ^ 3)` in the blueprint. -/
 irreducible_def C7_5_7 (a : ℕ) : ℝ≥0 := 2 ^ ((𝕔 + 4) * a ^ 3)
 
 /-- Lemma 7.5.7. -/
+@[blueprint
+  "local-tree-control"
+  (title := "local tree control")
+  (statement := /-- For all $J \in \mathcal{J}'$ and all bounded $g$ with bounded support
+    $$
+        \sup_{B^\circ{}(J)} |T_{\mathfrak{T}(\mathfrak{u}_2)\setminus\mathfrak{S}}^* g| \le
+        2^{104a^3} \inf_J M_{\mathcal{B},1}|g|
+    $$ -/)
+  (proof := /-- By the triangle inequality and since $T_{\fp}^* g = \mathbf{1}_{B(\pc(\fp),
+      5D^{\ps(\fp)})} T_{\fp}^* g$, we have
+      $$
+          \sup_{B^\circ{}(J)} |T_{\fT(\fu_2) \setminus\mathfrak{S}}^* g|
+          \leq \sup_{B^\circ{}(J)} \sum_{\substack{\fp \in \fT(\fu_2) \setminus \mathfrak{S}\\
+          B(\scI(\fp)) \cap B^\circ(J) \ne \emptyset}} |T_{\fp}^*g|\,.
+      $$
+      By \Cref{limited-scale-impact}, this is at most
+    \begin{equation}
+          \label{eq-sep-tree-aux-3}
+          \sum_{s = s(J)}^{s(J) + 3} \sum_{\substack{\fp \in \fP, \ps(\fp) = s\\ B(\scI(\fp)) \cap
+          B^\circ(J) \ne \emptyset}} \sup_{B^\circ{}(J)} |T_{\fp}^* g|\,.
+      \end{equation}
+      If $x \in E(\fp)$ and $B(\scI(\fp)) \cap B^\circ(J) \ne \emptyset$, then
+      $$
+          B(c(J), 16D^{\ps(\fp)}) \subset B(x, 32 D^{\ps(\fp)})\,,
+      $$
+      by \eqref{eq-vol-sp-cube} and the triangle inequality. Using the doubling property
+      \eqref{doublingx}, it follows that
+      $$
+          \mu(B(x, D^{\ps(\fp)})) \ge 2^{-5a} \mu(B(c(J), 16D^{\ps(\fp)}))\,.
+      $$
+      Using \eqref{definetp*}, \eqref{eq-Ks-size} and that $a \ge 4$, we bound
+      \eqref{eq-sep-tree-aux-3} by
+      $$
+          2^{103a^3}\sum_{s = s(J)}^{s(J) + 3} \sum_{\substack{\fp \in \fP, \ps(\fp) =
+          s\\B(\scI(\fp)) \cap B^\circ(J) \ne \emptyset}} \frac{1}{\mu(B(c(J), 16 D^s)}
+          \int_{E(\fp)} |g| \, \mathrm{d}\mu\,.
+      $$
+      For each $I \in \mathcal{D}$, the sets $E(\fp)$ for $\fp \in \fP$ with $\scI(\fp) = I$ are
+      pairwise disjoint by \eqref{defineep} and \eqref{eq-dis-freq-cover}.
+      Further, if $B(\scI(\fp)) \cap B^\circ(J) \ne \emptyset$ and $\ps(\fp) \ge s(J)$, then $E(\fp)
+      \subset B(c(J), 16 D^{\ps(\fp)})$. Thus the last display is bounded by
+      $$
+          2^{103a^3}\sum_{s = s(J)}^{s(J) + 3} \frac{1}{\mu(B(c(J), 16 D^s))} \int_{B(c(J), 16 D^s)}
+          |g| \, \mathrm{d}\mu\,.
+      $$
+      $$
+          \le \inf_{x' \in J} 2^{103a^3 +2} M_{\mathcal{B}, 1} |g|\,.
+      $$
+      The lemma follows since $a \ge 4$. -/)
+  (latexEnv := "lemma")]
 lemma local_tree_control (hu₁ : u₁ ∈ t) (hu₂ : u₂ ∈ t) (hu : u₁ ≠ u₂)
     (h2u : 𝓘 u₁ ≤ 𝓘 u₂) (hJ : J ∈ 𝓙₅ t u₁ u₂) (hf : BoundedCompactSupport f) :
     ⨆ x ∈ ball (c J) (8⁻¹ * D ^ s J), ‖adjointCarlesonSum (t u₂ \ 𝔖₀ t u₁ u₂) f x‖ₑ ≤
@@ -1139,6 +1710,18 @@ lemma local_tree_control (hu₁ : u₁ ∈ t) (hu₂ : u₂ ∈ t) (hu : u₁ �
       nlinarith [four_le_a X]
 
 /-- Lemma 7.5.8. -/
+@[blueprint
+  "scales-impacting-interval"
+  (title := "scales impacting interval")
+  (statement := /-- Let $\fC = \fT(\fu_1)$ or $\fC = \fT(\fu_2) \cap \mathfrak{S}$. Then for each $J
+    \in \mathcal{J}'$ and $\fp \in \fC$ with $B(\scI(\fp)) \cap B'(J) \neq \emptyset$, we have
+    $\ps(\fp) \ge s(J)$. -/)
+  (proof := /-- By \Cref{overlap-implies-distance}, we have that in both cases, $\fC \subset
+    \mathfrak{S}$. If $\fp \in \fC$ with $B(\scI(\fp)) \cap B'(J) \neq \emptyset$ and $\ps(\fp) <
+    s(J)$, then $\scI(\fp) \subset B(c(J), 100 D^{s(J) + 1})$. Since $\fp \in \mathfrak{S}$, it
+    follows from the definition of $\mathcal{J}'$ that $s(J) = -S$, which contradicts $\ps(\fp) <
+    s(J)$. -/)
+  (latexEnv := "lemma")]
 lemma scales_impacting_interval (hu₁ : u₁ ∈ t) (hu₂ : u₂ ∈ t) (hu : u₁ ≠ u₂)
     (h2u : 𝓘 u₁ ≤ 𝓘 u₂) (hJ : J ∈ 𝓙₅ t u₁ u₂) (hp : p ∈ t u₁ ∪ (t u₂ ∩ 𝔖₀ t u₁ u₂))
     (h : ¬Disjoint (ball (𝔠 p) (8 * D ^ 𝔰 p)) (ball (c J) (16 * D ^ s J))) : s J ≤ 𝔰 p := by
@@ -1360,6 +1943,64 @@ lemma global_tree_control1_edist_part2
     _ = _ := by congr; rw [C7_5_9d, C7_5_5]; norm_cast
 
 /-- Equation (7.5.18) of Lemma 7.5.9 for `ℭ = t u₁`. -/
+@[blueprint
+  "global-tree-control-1"
+  (title := "global tree control 1")
+  (statement := /-- Let $\fC_1 = \fT(\fu_1)$ and $\fC_2 = \fT(\fu_2) \cap \mathfrak{S}$. Then for $i
+    = 1,2$ and each $J \in \mathcal{J}'$ and all bounded $g$ with bounded support, we have
+    \begin{align}
+        \label{TreeUB}
+        \sup_{B'(J)} |T_{\fC_i}^*g| \leq \inf_{B^\circ{}(J)} |T^*_{\fC_i} g| + 2^{128a^3+4a+3}
+        \inf_{J} M_{\mathcal{B}, 1} |g|
+    \end{align}
+    and for all $y,y' \in B'(J)$
+    $$
+        |e(\fcc(\fu_i)(y)) T_{\fC_i}^* g(y) - e(\fcc(\fu_i)(y')) T_{\fC_i}^* g(y')|
+    $$
+    \begin{equation}
+        \label{TreeHolder}
+         \le 2^{128a^3+4a+1} \left(\frac{\rho(y,y')}{D^{s(J)}}\right)^{1/a} \inf_J M_{\mathcal{B},1}
+         |g|\,.
+    \end{equation} -/)
+  (proof := /-- Note that \eqref{TreeUB} follows from \eqref{TreeHolder}, since for $y'\in
+    B^\circ{}(J)$, by the triangle inequality,
+    $$\left(\frac{\rho(y,y')}{D^{s(J)}}\right)^{1/a}\le \Big(16 + \frac{1}8\Big)^{1/a}\le 2^2.$$
+    
+    By the triangle inequality, \Cref{adjoint-tile-support} and \Cref{Holder-correlation-tile}, we
+    have for all $y, y' \in B'(J)$
+    \begin{equation}
+        \label{eq-C-Lip}
+        |e(\fcc(\fu_i)(y)) T_{\fC_i}^* g(y) - e(\fcc(\fu_i)(y')) T_{\fC_i}^* g(y')|
+    \end{equation}
+    $$
+        \le \sum_{\substack{\fp \in \fC_i\\ B(\scI(\fp)) \cap B'(J) \neq \emptyset}}
+        |e(\fcc(\fu_i)(y)) T_{\fp}^* g(y) - e(\fcc(\fu_i)(y')) T_{\fp}^* g(y')|
+    $$
+    $$
+        \le 2^{128a^3}\rho(y,y')^{1/a} \sum_{\substack{\fp \in \fC_i\\ B(\scI(\fp)) \cap B'(J) \neq
+        \emptyset}} \frac{D^{- \ps(\fp)/a}}{\mu(B(\pc(\fp), 4D^{\ps(\fp)}))} \int_{E(\fp)} |g| \,
+        \mathrm{d}\mu\,.
+    $$
+    By \Cref{scales-impacting-interval}, we have $\ps(\fp) \ge s(J)$ for all $\fp$ occurring in the
+    sum. Further, for each $s \ge s(J)$, the sets $E(\fp)$ for $\fp \in \fP$ with $\ps(\fp) = s$ are
+    pairwise disjoint by \eqref{defineep} and \eqref{eq-dis-freq-cover}, and contained in $B(c(J),
+    32D^{s})$ by \eqref{eq-vol-sp-cube} and the triangle inequality. Using also the doubling
+    estimate \eqref{doublingx}, we obtain that the expression in the last display can be estimated
+    by
+    $$
+        2^{128a^3}\rho(y,y')^{1/a} \sum_{S \ge s \ge s(J)} D^{-s/a} \frac{2^{4a}}{\mu(B(c(J),
+        32D^{s}))} \int_{B(c(J), 32D^{s})} |g| \, \mathrm{d}\mu
+    $$
+    $$
+        \le 2^{128a^3+4a} \left(\frac{\rho(y,y')}{D^{s(J)}}\right)^{1/a} \sum_{S \ge s \ge s(J)}
+        D^{(s(J) - s)/a} \inf_J M_{\mathcal{B},1} |g|\,.
+    $$
+    Since $D^{-1/a}\le\frac12$, we have
+    $$
+        \sum_{S \ge s \ge s(J)} D^{(s(J) - s)/a} \le 2.
+    $$
+    Estimate \eqref{TreeHolder}, and therefore the lemma, follow. -/)
+  (latexEnv := "lemma")]
 lemma global_tree_control1_edist_left (hu₁ : u₁ ∈ t) (hu₂ : u₂ ∈ t) (hu : u₁ ≠ u₂)
     (h2u : 𝓘 u₁ ≤ 𝓘 u₂) (hJ : J ∈ 𝓙₅ t u₁ u₂) (hf : BoundedCompactSupport f)
     (hx : x ∈ ball (c J) (16 * D ^ s J)) (hx' : x' ∈ ball (c J) (16 * D ^ s J)) :
@@ -1370,6 +2011,64 @@ lemma global_tree_control1_edist_left (hu₁ : u₁ ∈ t) (hu₂ : u₂ ∈ t) 
     (fun _ mp dp ↦ scales_impacting_interval hu₁ hu₂ hu h2u hJ (mem_union_left _ mp) dp) hx hx'
 
 /-- Equation (7.5.18) of Lemma 7.5.9 for `ℭ = t u₂ ∩ 𝔖₀ t u₁ u₂`. -/
+@[blueprint
+  "global-tree-control-1"
+  (title := "global tree control 1")
+  (statement := /-- Let $\fC_1 = \fT(\fu_1)$ and $\fC_2 = \fT(\fu_2) \cap \mathfrak{S}$. Then for $i
+    = 1,2$ and each $J \in \mathcal{J}'$ and all bounded $g$ with bounded support, we have
+    \begin{align}
+        \label{TreeUB}
+        \sup_{B'(J)} |T_{\fC_i}^*g| \leq \inf_{B^\circ{}(J)} |T^*_{\fC_i} g| + 2^{128a^3+4a+3}
+        \inf_{J} M_{\mathcal{B}, 1} |g|
+    \end{align}
+    and for all $y,y' \in B'(J)$
+    $$
+        |e(\fcc(\fu_i)(y)) T_{\fC_i}^* g(y) - e(\fcc(\fu_i)(y')) T_{\fC_i}^* g(y')|
+    $$
+    \begin{equation}
+        \label{TreeHolder}
+         \le 2^{128a^3+4a+1} \left(\frac{\rho(y,y')}{D^{s(J)}}\right)^{1/a} \inf_J M_{\mathcal{B},1}
+         |g|\,.
+    \end{equation} -/)
+  (proof := /-- Note that \eqref{TreeUB} follows from \eqref{TreeHolder}, since for $y'\in
+    B^\circ{}(J)$, by the triangle inequality,
+    $$\left(\frac{\rho(y,y')}{D^{s(J)}}\right)^{1/a}\le \Big(16 + \frac{1}8\Big)^{1/a}\le 2^2.$$
+    
+    By the triangle inequality, \Cref{adjoint-tile-support} and \Cref{Holder-correlation-tile}, we
+    have for all $y, y' \in B'(J)$
+    \begin{equation}
+        \label{eq-C-Lip}
+        |e(\fcc(\fu_i)(y)) T_{\fC_i}^* g(y) - e(\fcc(\fu_i)(y')) T_{\fC_i}^* g(y')|
+    \end{equation}
+    $$
+        \le \sum_{\substack{\fp \in \fC_i\\ B(\scI(\fp)) \cap B'(J) \neq \emptyset}}
+        |e(\fcc(\fu_i)(y)) T_{\fp}^* g(y) - e(\fcc(\fu_i)(y')) T_{\fp}^* g(y')|
+    $$
+    $$
+        \le 2^{128a^3}\rho(y,y')^{1/a} \sum_{\substack{\fp \in \fC_i\\ B(\scI(\fp)) \cap B'(J) \neq
+        \emptyset}} \frac{D^{- \ps(\fp)/a}}{\mu(B(\pc(\fp), 4D^{\ps(\fp)}))} \int_{E(\fp)} |g| \,
+        \mathrm{d}\mu\,.
+    $$
+    By \Cref{scales-impacting-interval}, we have $\ps(\fp) \ge s(J)$ for all $\fp$ occurring in the
+    sum. Further, for each $s \ge s(J)$, the sets $E(\fp)$ for $\fp \in \fP$ with $\ps(\fp) = s$ are
+    pairwise disjoint by \eqref{defineep} and \eqref{eq-dis-freq-cover}, and contained in $B(c(J),
+    32D^{s})$ by \eqref{eq-vol-sp-cube} and the triangle inequality. Using also the doubling
+    estimate \eqref{doublingx}, we obtain that the expression in the last display can be estimated
+    by
+    $$
+        2^{128a^3}\rho(y,y')^{1/a} \sum_{S \ge s \ge s(J)} D^{-s/a} \frac{2^{4a}}{\mu(B(c(J),
+        32D^{s}))} \int_{B(c(J), 32D^{s})} |g| \, \mathrm{d}\mu
+    $$
+    $$
+        \le 2^{128a^3+4a} \left(\frac{\rho(y,y')}{D^{s(J)}}\right)^{1/a} \sum_{S \ge s \ge s(J)}
+        D^{(s(J) - s)/a} \inf_J M_{\mathcal{B},1} |g|\,.
+    $$
+    Since $D^{-1/a}\le\frac12$, we have
+    $$
+        \sum_{S \ge s \ge s(J)} D^{(s(J) - s)/a} \le 2.
+    $$
+    Estimate \eqref{TreeHolder}, and therefore the lemma, follow. -/)
+  (latexEnv := "lemma")]
 lemma global_tree_control1_edist_right (hu₁ : u₁ ∈ t) (hu₂ : u₂ ∈ t) (hu : u₁ ≠ u₂)
     (h2u : 𝓘 u₁ ≤ 𝓘 u₂) (hJ : J ∈ 𝓙₅ t u₁ u₂) (hf : BoundedCompactSupport f)
     (hx : x ∈ ball (c J) (16 * D ^ s J)) (hx' : x' ∈ ball (c J) (16 * D ^ s J)) :
@@ -1392,6 +2091,64 @@ lemma C7_5_9d_le_C7_5_9s : C7_5_9d a ≤ C7_5_9s a := by
   exact mul_le_mul_left' (pow_le_pow_right' one_le_two (add_le_add_left NeZero.one_le _)) _
 
 /-- Equation (7.5.17) of Lemma 7.5.9. -/
+@[blueprint
+  "global-tree-control-1"
+  (title := "global tree control 1")
+  (statement := /-- Let $\fC_1 = \fT(\fu_1)$ and $\fC_2 = \fT(\fu_2) \cap \mathfrak{S}$. Then for $i
+    = 1,2$ and each $J \in \mathcal{J}'$ and all bounded $g$ with bounded support, we have
+    \begin{align}
+        \label{TreeUB}
+        \sup_{B'(J)} |T_{\fC_i}^*g| \leq \inf_{B^\circ{}(J)} |T^*_{\fC_i} g| + 2^{128a^3+4a+3}
+        \inf_{J} M_{\mathcal{B}, 1} |g|
+    \end{align}
+    and for all $y,y' \in B'(J)$
+    $$
+        |e(\fcc(\fu_i)(y)) T_{\fC_i}^* g(y) - e(\fcc(\fu_i)(y')) T_{\fC_i}^* g(y')|
+    $$
+    \begin{equation}
+        \label{TreeHolder}
+         \le 2^{128a^3+4a+1} \left(\frac{\rho(y,y')}{D^{s(J)}}\right)^{1/a} \inf_J M_{\mathcal{B},1}
+         |g|\,.
+    \end{equation} -/)
+  (proof := /-- Note that \eqref{TreeUB} follows from \eqref{TreeHolder}, since for $y'\in
+    B^\circ{}(J)$, by the triangle inequality,
+    $$\left(\frac{\rho(y,y')}{D^{s(J)}}\right)^{1/a}\le \Big(16 + \frac{1}8\Big)^{1/a}\le 2^2.$$
+    
+    By the triangle inequality, \Cref{adjoint-tile-support} and \Cref{Holder-correlation-tile}, we
+    have for all $y, y' \in B'(J)$
+    \begin{equation}
+        \label{eq-C-Lip}
+        |e(\fcc(\fu_i)(y)) T_{\fC_i}^* g(y) - e(\fcc(\fu_i)(y')) T_{\fC_i}^* g(y')|
+    \end{equation}
+    $$
+        \le \sum_{\substack{\fp \in \fC_i\\ B(\scI(\fp)) \cap B'(J) \neq \emptyset}}
+        |e(\fcc(\fu_i)(y)) T_{\fp}^* g(y) - e(\fcc(\fu_i)(y')) T_{\fp}^* g(y')|
+    $$
+    $$
+        \le 2^{128a^3}\rho(y,y')^{1/a} \sum_{\substack{\fp \in \fC_i\\ B(\scI(\fp)) \cap B'(J) \neq
+        \emptyset}} \frac{D^{- \ps(\fp)/a}}{\mu(B(\pc(\fp), 4D^{\ps(\fp)}))} \int_{E(\fp)} |g| \,
+        \mathrm{d}\mu\,.
+    $$
+    By \Cref{scales-impacting-interval}, we have $\ps(\fp) \ge s(J)$ for all $\fp$ occurring in the
+    sum. Further, for each $s \ge s(J)$, the sets $E(\fp)$ for $\fp \in \fP$ with $\ps(\fp) = s$ are
+    pairwise disjoint by \eqref{defineep} and \eqref{eq-dis-freq-cover}, and contained in $B(c(J),
+    32D^{s})$ by \eqref{eq-vol-sp-cube} and the triangle inequality. Using also the doubling
+    estimate \eqref{doublingx}, we obtain that the expression in the last display can be estimated
+    by
+    $$
+        2^{128a^3}\rho(y,y')^{1/a} \sum_{S \ge s \ge s(J)} D^{-s/a} \frac{2^{4a}}{\mu(B(c(J),
+        32D^{s}))} \int_{B(c(J), 32D^{s})} |g| \, \mathrm{d}\mu
+    $$
+    $$
+        \le 2^{128a^3+4a} \left(\frac{\rho(y,y')}{D^{s(J)}}\right)^{1/a} \sum_{S \ge s \ge s(J)}
+        D^{(s(J) - s)/a} \inf_J M_{\mathcal{B},1} |g|\,.
+    $$
+    Since $D^{-1/a}\le\frac12$, we have
+    $$
+        \sum_{S \ge s \ge s(J)} D^{(s(J) - s)/a} \le 2.
+    $$
+    Estimate \eqref{TreeHolder}, and therefore the lemma, follow. -/)
+  (latexEnv := "lemma")]
 lemma global_tree_control1_supbound (hu₁ : u₁ ∈ t) (hu₂ : u₂ ∈ t) (hu : u₁ ≠ u₂)
     (h2u : 𝓘 u₁ ≤ 𝓘 u₂) (ℭ : Set (𝔓 X)) (hℭ : ℭ = t u₁ ∨ ℭ = t u₂ ∩ 𝔖₀ t u₁ u₂)
     (hJ : J ∈ 𝓙₅ t u₁ u₂) (hf : BoundedCompactSupport f) :
@@ -1476,6 +2233,30 @@ lemma one_le_C7_5_10 (ha : 4 ≤ a) : 1 ≤ C7_5_10 a :=
   one_le_C7_5_9s.trans (C7_5_9s_le_C7_5_10 ha)
 
 /-- Lemma 7.5.10 -/
+@[blueprint
+  "global-tree-control-2"
+  (title := "global tree control 2")
+  (statement := /-- We have for all $J \in \mathcal{J}'$ and all bounded $g$ with bounded support
+    $$
+        \sup_{B'(J)} |T^*_{\fT(\fu_2) \cap \mathfrak{S}} g| \le \inf_{B^\circ{}(J)}
+        |T^*_{\fT(\fu_2)} g| + 2^{129a^3} \inf_{J} M_{\mathcal{B},1}|g|\,.
+    $$ -/)
+  (proof := /-- By \Cref{global-tree-control-1}
+    $$
+        \sup_{B'(J)} |T^*_{\fT(\fu_2) \cap \mathfrak{S}} g| \le \inf_{B^\circ{}(J)} |T_{\fT(\fu_2)
+        \cap \mathfrak{S}}^* g| + 2^{128a^3+4a+3} \inf_{J} M_{\mathcal{B}, 1} |g|
+    $$
+    $$
+        \le \inf_{B^\circ{}(J)} |T_{\fT(\fu_2)}^* g| + \sup_{B^\circ{}(J)} |T_{\fT(\fu_2) \setminus
+        \mathfrak{S}}^* g| + 2^{128a^3+4a+3} \inf_{J} M_{\mathcal{B}, 1} |g|\,,
+    $$
+    and by \Cref{local-tree-control}
+    $$
+        \le \inf_{B^\circ{}(J)} |T_{\fT(\fu_2)}^* g| + (2^{104a^3} + 2^{128a^3+4a+3}) \inf_{J}
+        M_{\mathcal{B}, 1} |g|\,.
+    $$
+    This completes the proof. -/)
+  (latexEnv := "lemma")]
 lemma global_tree_control2 (hu₁ : u₁ ∈ t) (hu₂ : u₂ ∈ t) (hu : u₁ ≠ u₂)
     (h2u : 𝓘 u₁ ≤ 𝓘 u₂) (hJ : J ∈ 𝓙₅ t u₁ u₂) (hf : BoundedCompactSupport f) :
     ⨆ x ∈ ball (c J) (16 * D ^ s J), ‖adjointCarlesonSum (t u₂ ∩ 𝔖₀ t u₁ u₂) f x‖ₑ ≤
@@ -1762,6 +2543,75 @@ lemma le_C7_5_4 (ha : 4 ≤ a) :
     linarith [sixteen_times_le_cube ha]
 
 /-- Lemma 7.5.4. -/
+@[blueprint
+  "Holder-correlation-tree"
+  (title := "Holder correlation tree")
+  (statement := /-- We have for all $J \in \mathcal{J}'$ that
+    \begin{equation}
+          \label{hHolder}
+          \|h_J\|_{C^{\tau}(B(c(J), 16D^{s(J)}))} \le 2^{485a^3} \prod_{j = 1,2} (\inf_{B(c(J),
+          \frac{1}{8}D^{s(J)})} |T_{\fT(\fu_j)}^* g_j| + \inf_J M_{\mathcal{B}, 1} |g_j|)\,.
+      \end{equation} -/)
+  (proof := /-- [Proof of \Cref{Holder-correlation-tree}]
+    
+    
+            Let $P$ be the product on the right hand side of \eqref{hHolder}, and $h_J$ be as
+            defined in \eqref{def-hj}.
+            By \eqref{eq-pao-2} and \Cref{adjoint-tile-support}, the function $h_J$ is supported in
+            $B'(J) \cap \scI(\fu_1)$.
+            By \eqref{eq-pao-2}, \Cref{global-tree-control-1} and \Cref{global-tree-control-2}, we
+            have for all $y \in B'(J)$:
+            $$
+                |h_J(y)| \le 2^{257a^3+4a+3} P\,.
+            $$
+            We have by the triangle inequality
+            \begin{align}
+                &|h_J(y) - h_J(y')|\nonumber\\
+                \label{eq-h-Lip-1}
+                &\le |\chi_J(y) - \chi_J(y')| |T_{\fT(\fu_1)}^* g_1(y)| |T_{\fT(\fu_2) \cap
+                \mathfrak{S}}^* g_2(y)|\\
+                \label{eq-h-Lip-2}
+                & + |\chi_J(y')| |e(\fcc(\fu_1)(y)) T_{\fT(\fu_1)}^* g_1(y) - e(\fcc(\fu_1)(y'))
+                T_{\fT(\fu_1)}^* g_1(y')| |T_{\fT(\fu_2) \cap \mathfrak{S}}^* g_2(y)|\\
+                \label{eq-h-Lip-3}
+                & + |\chi_J(y')| |T_{\fT(\fu_1)}^* g_1(y')| |e(\fcc(\fu_2)(y)) T_{\fT(\fu_2) \cap
+                \mathfrak{S}}^* g_2(y) - e(\fcc(\fu_2)(y')) T_{\fT(\fu_2) \cap \mathfrak{S}}^*
+                g_2(y')|\,.
+            \end{align}
+    
+            As $h_J$ is supported in $\scI(\fu_1)$, we can assume without loss of generality that
+            $y' \in \scI(\fu_1)$.
+            If $y \notin \scI(\fu_1)$, then \eqref{eq-h-Lip-1} vanishes. If $y \in \scI(\fu_1)$ then
+            we have by \eqref{eq-pao-3}, \Cref{global-tree-control-1} and
+            \Cref{global-tree-control-2}
+            % C7_5_2       C7_5_9s           C7_5_10
+            % 2^{226a^3} * 2^{151a^3+4a+3} * 2^{151a^3+4a+4}
+            % 2^{528a^3+8a+7}
+            $$
+                \eqref{eq-h-Lip-1} \le 2^{484a^3+4a+3} \frac{\rho(y,y')}{D^{s(J)}} P\,,
+            $$
+            where $P$ denotes the product on the right hand side of \eqref{hHolder}.
+    
+            By \eqref{eq-pao-2}, \Cref{global-tree-control-1} and \Cref{global-tree-control-2}, we
+            have
+            % C7_5_9d           C7_5_10
+            % 2^{151a^3+4a+1} * 2^{151a^3+4a+4}
+            % 2^{302a^3+8a+5}
+            $$
+                \eqref{eq-h-Lip-2} \le 2^{257a^3+4a+1}
+                \left(\frac{\rho(y,y')}{D^{s(J)}}\right)^{1/a} P\,.
+            $$
+    
+            By \eqref{eq-pao-2}, and twice \Cref{global-tree-control-1}, we have
+            % C7_5_9s           C7_5_9d
+            % 2^{151a^3+4a+3} * 2^{151a^3+4a+1}
+            % 2^{302a^3+8a+4}
+            $$
+                \eqref{eq-h-Lip-3} \le 2^{256a^3+8a+5}
+                \left(\frac{\rho(y,y')}{D^{s(J)}}\right)^{1/a} P\,.
+            $$
+            Using that $\rho(y,y') \le 32D^{s(J)}$ and $a \ge 4$, the lemma follows. -/)
+  (latexEnv := "lemma")]
 lemma holder_correlation_tree (hu₁ : u₁ ∈ t) (hu₂ : u₂ ∈ t) (hu : u₁ ≠ u₂) (h2u : 𝓘 u₁ ≤ 𝓘 u₂)
     (hJ : J ∈ 𝓙₅ t u₁ u₂) (hf₁ : BoundedCompactSupport f₁) (hf₂ : BoundedCompactSupport f₂) :
     iHolENorm (holderFunction t u₁ u₂ f₁ f₂ J) (c J) (16 * D ^ s J) τ ≤
@@ -1845,6 +2695,33 @@ lemma C7_5_11_binomial_bound (a4 : 4 ≤ a) :
           _ = (𝕔 / 4) * a ^ 3 + 7 := by ring
 
 /-- Lemma 7.5.11 -/
+@[blueprint
+  "lower-oscillation-bound"
+  (title := "lower oscillation bound")
+  (statement := /-- For all $J \in \mathcal{J}'$, we have that
+    $$
+        d_{B(J)}(\fcc(\fu_1), \fcc(\fu_2)) \ge 2^{-201a^3} 2^{Zn/2}\,.
+    $$ -/)
+  (proof := /-- Since $\emptyset \ne \fT(\fu_1) \subset \mathfrak{S}$ by
+    \Cref{overlap-implies-distance}, there exists at least one tile $\fp \in \mathcal{S}$ with
+    $\scI(\fp) \subsetneq \scI(\fu_1)$. Thus $\scI(\fu_1) \notin \mathcal{J}'$, so $J \subsetneq
+    \scI(\fu_1)$. Thus there exists a cube $J' \in \mathcal{D}$ with $J \subset J'$ and $s(J') =
+    s(J) + 1$, by \eqref{coverdyadic} and \eqref{dyadicproperty}. By definition of $\mathcal{J'}$
+    and the triangle inequality, there exists $\fp \in \mathfrak{S}$ such that
+    $$
+        \scI(\fp) \subset B(c(J'), 100 D^{s(J') + 1}) \subset B(c(J), 128 D^{s(J)+2})\,.
+    $$
+    Thus, by definition of $\mathfrak{S}$:
+    \begin{align*}
+        2^{Zn/2} \le d_{\fp}(\fcc(\fu_1), \fcc(\fu_2)) \le d_{B(c(J), 128 D^{s(J)+2})}(\fcc(\fu_1),
+        \fcc(\fu_2))\,.
+    \end{align*}
+    By the doubling property \eqref{firstdb}, this is
+    $$
+        \le 2^{200a^3 + 4a} d_{B(J)}(\fcc(\fu_1), \fcc(\fu_2))\,,
+    $$
+    which gives the lemma using $a \ge 4$. -/)
+  (latexEnv := "lemma")]
 lemma lower_oscillation_bound (hu₁ : u₁ ∈ t) (hu₂ : u₂ ∈ t) (hu : u₁ ≠ u₂)
     (h2u : 𝓘 u₁ ≤ 𝓘 u₂) (hJ : J ∈ 𝓙₅ t u₁ u₂) :
     C7_5_11 a n ≤ dist_{c J, 8 * D ^ s J} (𝒬 u₁) (𝒬 u₂) := by
@@ -1990,6 +2867,73 @@ lemma le_C7_4_5 (a4 : 4 ≤ a) :
   · linarith [sixteen_times_le_cube a4]
 
 /-- Lemma 7.4.5 -/
+@[blueprint
+  "correlation-distant-tree-parts"
+  (title := "correlation distant tree parts")
+  (statement := /-- We have for all $\fu_1 \ne \fu_2 \in \fU$ with $\scI(\fu_1) \subset \scI(\fu_2)$
+      and all bounded $g_1, g_2$ with bounded support
+    \begin{equation}
+          \label{eq-lhs-big-sep-tree}
+          \left| \int_X \sum_{\fp_1 \in \fT(\fu_1)} \sum_{\fp_2 \in \fT(\fu_2) \cap \mathfrak{S}}
+          T^*_{\fp_1}g_1 \overline{T^*_{\fp_2}g_2 }\,\mathrm{d}\mu \right|
+      \end{equation}
+    \begin{equation}
+          \label{eq-rhs-big-sep-tree}
+          \le 2^{511a^3} 2^{-Zn/(4a^2 + 2a^3)} \prod_{j =1}^2 \| S_{2, \fu_j}
+          g_j\|_{L^2(\scI(\fu_1))}\,.
+      \end{equation} -/)
+  (proof := /-- [Proof of \Cref{correlation-distant-tree-parts}]
+    
+    
+        We have
+        $$
+            \eqref{eq-lhs-big-sep-tree} = \left| \int_{X} T_{\fT(\fu_1)}^* g_1
+            \overline{T_{\fT(\fu_2) \cap \mathfrak{S}}^* g_2 }\right|\,.
+        $$
+        By \Cref{adjoint-tile-support}, the right hand side is supported in $\scI(\fu_1)$. Using
+        \eqref{eq-pao-1} of \Cref{Lipschitz-partition-unity} and the definition \eqref{def-hj} of
+        $h_J$, we thus have
+        $$
+            \le \sum_{J \in \mathcal{J}'} \left|\int_{X} e(\fcc(\fu_2)(y) - \fcc(\fu_1)(y)) h_J(y)
+            \, \mathrm{d}\mu(y) \right|\,.
+        $$
+        Using \Cref{Holder-van-der-Corput} with the ball $B(J)$, we bound this by
+        $$
+            \le 2^{7a} \sum_{J \in \mathcal{J}'} \mu(B(J)) \|h_J\|_{C^{\tau}(B'(J))} (1 +
+            d_{B(J)}(\fcc(\fu_2), \fcc(\fu_1)))^{-1/(2a^2+a^3)}\,.
+        $$
+        Using \Cref{Holder-correlation-tree}, \Cref{lower-oscillation-bound} and $a \ge 4$, we bound
+        the above by
+        \begin{multline}
+            \label{eq-big-sep-1}
+            \le 2^{485a^3+7a+3a^3+3a} 2^{-Zn/(4a^2 + 2a^3)} \sum_{J \in \mathcal{J}'} \mu(B(J)) \\
+            \times \prod_{j=1}^2 (\inf_{B^\circ{}(J)} |T_{\fT(\fu_j)}^* g_j| + \inf_J
+            M_{\mathcal{B},1} g_j)\,.
+        \end{multline}
+        By the doubling property \eqref{doublingx}
+        $$
+            \mu(B(J)) \le 2^{6a} \mu(B^\circ{}(J))\,,
+        $$
+        thus
+        $$
+            \mu(B(J)) \prod_{j=1}^2 (\inf_{B^\circ{}(J)} |T_{\fT(\fu_j)}^* g_j| + \inf_J
+            M_{\mathcal{B},1} g_j)
+        $$
+        $$
+            \le 2^{6a} \int_{B^\circ{}(J)} \prod_{j=1}^2 ( |T_{\fT(\fu_j)}^* g_j|(x) +
+            M_{\mathcal{B},1} g_j(x)) \, \mathrm{d}\mu(x)
+        $$
+        $$
+            \le 2^{6a} \int_J \prod_{j=1}^2 ( |T_{\fT(\fu_j)}^* g_j|(x) + M_{\mathcal{B},1} g_j(x))
+            \, \mathrm{d}\mu(x)\,.
+        $$
+        Summing over $J \in \mathcal{J}'$, we obtain
+        $$
+            \eqref{eq-big-sep-1} \le 2^{499a^3} 2^{-Zn/(4a^2 + 2a^3)} \int_X \prod_{j=1}^2 (
+            |T_{\fT(\fu_j)}^* g_j|(x) + M_{\mathcal{B},1} g_j(x)) \, \mathrm{d}\mu(x)\,.
+        $$
+        Applying the Cauchy-Schwarz inequality, \Cref{correlation-distant-tree-parts} follows. -/)
+  (latexEnv := "lemma")]
 lemma correlation_distant_tree_parts (hu₁ : u₁ ∈ t) (hu₂ : u₂ ∈ t) (hu : u₁ ≠ u₂)
     (h2u : 𝓘 u₁ ≤ 𝓘 u₂) (hf₁ : BoundedCompactSupport f₁) (hf₂ : BoundedCompactSupport f₂) :
     ‖∫ x, adjointCarlesonSum (t u₁) f₁ x * conj (adjointCarlesonSum (t u₂ ∩ 𝔖₀ t u₁ u₂) f₂ x)‖ₑ ≤

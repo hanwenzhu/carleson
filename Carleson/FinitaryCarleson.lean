@@ -1,3 +1,4 @@
+import Architect
 import Carleson.Discrete.MainTheorem
 import Carleson.TileExistence
 
@@ -9,6 +10,41 @@ open scoped ShortVariables
 variable {X : Type*} {a : ℕ} {q : ℝ} {K : X → X → ℂ} {σ₁ σ₂ : X → ℤ} {F G : Set X}
   [MetricSpace X] [ProofData a q K σ₁ σ₂ F G]
 
+@[blueprint
+  "tile-sum-operator"
+  (title := "tile sum operator")
+  (statement := /-- We have for all $x\in G\setminus G'$
+    \begin{equation}\label{eq-sump}
+        \sum_{\fp\in \fP}T_{\fp} f(x)= \sum_{s=\sigma_1(x)}^{\sigma_2(x)}
+        \int K_{s}(x,y) f(y) e(\tQ(x)(y)-\tQ(x)(x))\, d\mu(y).
+    \end{equation} -/)
+  (proof := /-- Fix $x\in G\setminus G'$.
+    Sorting the tiles $\fp$ on the left-hand-side of \eqref{eq-sump} by the value $\ps(\fp)\in
+    [-S,S]$,
+    it suffices to prove for every $-S\le s\le S$ that
+    \begin{equation}\label{outsump}
+        \sum_{\fp\in \fP: \ps(\fp)=s}T_{\fp} f(x)=0
+    \end{equation}
+    if $s\not\in [\sigma_1(x), \sigma_2(x)]$ and
+    \begin{equation}\label{insump}
+        \sum_{\fp\in \fP: \ps(\fp)=s}T_{\fp} f(x)=
+        \int K_{s}(x,y) f(y) e(\tQ(x)(y) - \tQ(x)(x))\, d\mu(y).
+    \end{equation}
+    if $s\in [\sigma_1(x),\sigma_2(x)]$.
+    If $s\not\in [\sigma_1(x), \sigma_2(x)]$, then by definition of $E(\fp)$ we have
+    $x\not\in E(\fp)$ for any $\fp$ with $\ps(\fp)=s$ and thus $T_{\fp} f(x)=0$. This proves
+    \eqref{outsump}.
+    
+    Now assume $s\in [\sigma_1(x),\sigma_2(x)]$.
+    By \eqref{coverdyadic}, \eqref{subsetmaxcube}, \eqref{eq-vol-sp-cube}, the fact that $c(I_0) =
+    o$ and $G\subset B(o,\frac 14 D^S)$, there is at least
+    one $I\in \mathcal{D}$ with $s(I)=s$ and $x\in I$.
+    By \eqref{dyadicproperty}, this $I$ is unique. By \eqref{eq-dis-freq-cover}, there is precisely
+    one $\fp\in \fP(I)$ such that
+    $\tQ(x)\in \fc(\fp)$. Hence there is precisely one $\fp\in \fP$ with $\ps(\fp)=s$ such that
+    $x\in E(\fp)$. For this $\fp$, the value $T_{\fp}(x)$ by its definition in \eqref{definetp}
+    equals the right-hand side of \eqref{insump}. This proves the lemma. -/)
+  (latexEnv := "lemma")]
 theorem integrable_tile_sum_operator
     {f : X → ℂ} (hf : Measurable f) (h2f : ∀ x, ‖f x‖ ≤ F.indicator 1 x) {x : X} {s : ℤ} :
     Integrable fun y ↦ Ks s x y * f y * exp (I * (Q x y - Q x x)) := by
@@ -63,6 +99,41 @@ lemma exists_Grid {x : X} (hx : x ∈ G) {s : ℤ} (hs : s ∈ (Icc (σ₁ x) (�
   simpa only [mem_iUnion, exists_prop] using Grid_subset_biUnion s s_mem x_mem_topCube
 
 /-- Lemma 4.0.3 -/
+@[blueprint
+  "tile-sum-operator"
+  (title := "tile sum operator")
+  (statement := /-- We have for all $x\in G\setminus G'$
+    \begin{equation}\label{eq-sump}
+        \sum_{\fp\in \fP}T_{\fp} f(x)= \sum_{s=\sigma_1(x)}^{\sigma_2(x)}
+        \int K_{s}(x,y) f(y) e(\tQ(x)(y)-\tQ(x)(x))\, d\mu(y).
+    \end{equation} -/)
+  (proof := /-- Fix $x\in G\setminus G'$.
+    Sorting the tiles $\fp$ on the left-hand-side of \eqref{eq-sump} by the value $\ps(\fp)\in
+    [-S,S]$,
+    it suffices to prove for every $-S\le s\le S$ that
+    \begin{equation}\label{outsump}
+        \sum_{\fp\in \fP: \ps(\fp)=s}T_{\fp} f(x)=0
+    \end{equation}
+    if $s\not\in [\sigma_1(x), \sigma_2(x)]$ and
+    \begin{equation}\label{insump}
+        \sum_{\fp\in \fP: \ps(\fp)=s}T_{\fp} f(x)=
+        \int K_{s}(x,y) f(y) e(\tQ(x)(y) - \tQ(x)(x))\, d\mu(y).
+    \end{equation}
+    if $s\in [\sigma_1(x),\sigma_2(x)]$.
+    If $s\not\in [\sigma_1(x), \sigma_2(x)]$, then by definition of $E(\fp)$ we have
+    $x\not\in E(\fp)$ for any $\fp$ with $\ps(\fp)=s$ and thus $T_{\fp} f(x)=0$. This proves
+    \eqref{outsump}.
+    
+    Now assume $s\in [\sigma_1(x),\sigma_2(x)]$.
+    By \eqref{coverdyadic}, \eqref{subsetmaxcube}, \eqref{eq-vol-sp-cube}, the fact that $c(I_0) =
+    o$ and $G\subset B(o,\frac 14 D^S)$, there is at least
+    one $I\in \mathcal{D}$ with $s(I)=s$ and $x\in I$.
+    By \eqref{dyadicproperty}, this $I$ is unique. By \eqref{eq-dis-freq-cover}, there is precisely
+    one $\fp\in \fP(I)$ such that
+    $\tQ(x)\in \fc(\fp)$. Hence there is precisely one $\fp\in \fP$ with $\ps(\fp)=s$ such that
+    $x\in E(\fp)$. For this $\fp$, the value $T_{\fp}(x)$ by its definition in \eqref{definetp}
+    equals the right-hand side of \eqref{insump}. This proves the lemma. -/)
+  (latexEnv := "lemma")]
 theorem tile_sum_operator {G' : Set X} {f : X → ℂ} {x : X} (hx : x ∈ G \ G') :
     ∑ (p : 𝔓 X), carlesonOn p f x =
     ∑ s ∈ Icc (σ₁ x) (σ₂ x), ∫ y, Ks s x y * f y * exp (I * (Q x y - Q x x)) := by
@@ -103,6 +174,41 @@ lemma C2_0_1_pos [TileStructure Q D κ S o] : C2_0_1 a nnq > 0 := C2_0_2_pos
 
 variable (X) in
 /-- Proposition 2.0.1 -/
+@[blueprint
+  "finitary-Carleson"
+  (title := "finitary Carleson")
+  (statement := /-- Let ${\sigma_1},\sigma_2\colon X\to \mathbb{Z}$ be measurable functions with
+    finite range and ${\sigma_1}\leq \sigma_2$.  Let $F,G$ be bounded Borel sets in $X$. Then there
+    is a Borel set $G'$ in $X$ with $2\mu(G')\leq \mu(G)$ such that
+    for all Borel functions $f:X\to \C$ with $|f|\le \mathbf{1}_F$.
+    \begin{equation*}
+        \int_{G \setminus G'} \left|\sum_{s={\sigma_1}(x)}^{{\sigma_2}(x)} \int K_s(x,y) f(y)
+        e(\tQ(x)(y)) \, \mathrm{d}\mu(y) \right| \mathrm{d}\mu(x)
+    \end{equation*}
+    \begin{equation}
+        \label{eq-linearized}
+        \le \frac{2^{442a^3}}{(q-1)^5} \mu(G)^{1-\frac{1}{q}} \mu(F)^{\frac 1 q}\,.
+    \end{equation} -/)
+  (proof := /-- [Proof of \Cref{finitary-Carleson}]
+    
+    
+    We now estimate with \Cref{tile-sum-operator} and \Cref{discrete-Carleson}
+    \begin{equation}
+     \int_{G \setminus G'} \left|\sum_{s={\sigma_1}(x)}^{{\sigma_2}(x)} \int K_s(x,y) f(y)
+     e(\tQ(x)(y)) \, \mathrm{d}\mu(y)\right| \mathrm{d}\mu(x)
+    \end{equation}
+    \begin{equation}
+     =\int_{G \setminus G'} \left|\sum_{s={\sigma_1}(x)}^{{\sigma_2}(x)} \int K_s(x,y) f(y)
+     e(\tQ(x)(y) - \tQ(x)(x))\mathrm{d}\mu(y)\right| \mathrm{d}\mu(x)
+    \end{equation}
+    \begin{equation}
+     =\int_{G \setminus G'} \left|\sum_{\fp\in \fP}T_{\fp} f(x)\right| \mathrm{d}\mu(x)
+     \le \frac{2^{442a^3}}{(q-1)^5} \mu(G)^{1 - \frac{1}{q}} \mu(F)^{\frac{1}{q}} \,.
+    \end{equation}
+    This proves \eqref{eq-linearized} for the chosen set $G'$ and arbitrary $f$ and thus completes
+    the proof of Proposition
+    \ref{finitary-Carleson}. -/)
+  (latexEnv := "proposition")]
 theorem finitary_carleson : ∃ G', MeasurableSet G' ∧ 2 * volume G' ≤ volume G ∧
     ∀ f : X → ℂ, Measurable f → (∀ x, ‖f x‖ ≤ F.indicator 1 x) →
     ∫⁻ x in G \ G', ‖∑ s ∈ Icc (σ₁ x) (σ₂ x), ∫ y, Ks s x y * f y * exp (I * Q x y)‖ₑ ≤

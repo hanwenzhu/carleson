@@ -1,3 +1,4 @@
+import Architect
 import Carleson.Calculations
 import Carleson.Operators
 import Carleson.ToMathlib.HardyLittlewood
@@ -73,6 +74,23 @@ noncomputable section
 open Complex MeasureTheory Set
 
 /-- Lemma 6.1.1. -/
+@[blueprint
+  "tile-disjointness"
+  (title := "tile disjointness")
+  (statement := /-- Let $\fp,\fp'\in \mathfrak{A}$.
+    If there exists an $x\in X$ with $x\in E(\fp)\cap E(\fp')$,
+    then $\fp= \fp'$. -/)
+  (proof := /-- Let $\fp,\fp'$ and $x$ be given.
+    Assume without loss of generality that $\ps(\fp)\le \ps(\fp')$.
+    As we have $x\in E(\fp)\subset \scI(\fp)$ and $x\in E(\fp')\subset \scI(\fp')$ by Definition
+    \eqref{defineep}, we conclude
+    for $i=1,2$ that
+    $\tQ(x)\in\fc(\fp)$ and $\tQ(x)\in\fc(\fp')$. By \eqref{eq-freq-dyadic} we have
+    $\fc(\fp')\subset \fc(\fp)$. By Definition
+    \eqref{straightorder}, we conclude $\fp\le \fp'$. As $\mathfrak{A}$ is an antichain, we conclude
+    $\fp=\fp'$.
+    This proves the lemma. -/)
+  (latexEnv := "lemma")]
 lemma tile_disjointness {𝔄 : Set (𝔓 X)} (h𝔄 : IsAntichain (· ≤ ·) (𝔄 : Set (𝔓 X)))
      {p p' : 𝔓 X} (hp : p ∈ 𝔄) (hp' : p' ∈ 𝔄) (hE : ¬Disjoint (E p) (E p')) : p = p' := by
   wlog h𝔰 : 𝔰 p ≤ 𝔰 p'
@@ -146,6 +164,62 @@ lemma norm_Ks_le' {x y : X} {𝔄 : Set (𝔓 X)} (p : 𝔄) (hxE : x ∈ E ↑p
   simp [As]
 
 /-- Lemma 6.1.2. -/
+@[blueprint
+  "maximal-bound-antichain"
+  (title := "maximal bound antichain")
+  (statement := /-- Let $x\in X$.
+    Then
+    \begin{equation}\label{hlmbound}
+    | \sum_{\fp \in \mathfrak{A}}T_{\fp} f(x)|\le 2^{102 a^3} M_{\mathcal{B}} f (x) \, .
+    \end{equation} -/)
+  (proof := /-- Fix $x\in X$. By \Cref{tile-disjointness}, there is at most one $\fp \in
+    \mathfrak{A}$
+    such that
+     $T_{\fp} f(x)$ is not zero.
+     If there is no such $\fp$, the estimate \eqref{hlmbound} follows.
+    
+     Assume there is such a $\fp$.
+     By definition of $T_{\fp}$ we have $x\in E(\fp)\subset \scI(\fp)$ and by the squeezing property
+     \eqref{eq-vol-sp-cube}
+    \begin{equation}\label{eqtttt0}
+        \rho(x, \pc(\fp))\le 4D^{\ps(\fp)}\, .
+    \end{equation}
+    
+    Let $y\in X$ with $K_{\ps(\fp)}(x,y)\neq 0$. By Definition \eqref{defks} of $K_{\ps(\fp)}$
+    we have
+    \begin{equation}\label{supp-Ks1}
+       \frac{1}{4} D^{\ps(\fp)-1}
+       \leq \rho(x,y) \leq \frac{1}{2} D^{\ps(\fp)}\, .
+    \end{equation}
+    The triangle inequality with \eqref{eqtttt0} and \eqref{supp-Ks1} implies
+    \begin{equation}
+        \rho(\pc(\fp),y) < 8D^{\ps(\fp)}\, .
+    \end{equation}
+    Using the kernel bound \eqref{eqkernel-size} and the lower bound in \eqref{supp-Ks}
+    we obtain
+    \begin{equation}
+    |K_{\ps(\fp)}(x,y)|\le \frac{2^{a^3}}{\mu(B(x,\frac 14 D^{{\ps(\fp)}-1}))}\, .
+    \end{equation}
+    Using $D=2^{100a^2}$
+    and the doubling property \eqref{doublingx} $5 +100a^2$ times estimates
+    the last display by
+    \begin{equation}
+    \le \frac{2^{5a+101a^3}}{\mu(B(x, 8D^{\ps(\fp)}))}\,
+    \end{equation}
+    which, thanks to the closeness of the points $x$ and $\pc(\fp)$ shown in \eqref{eqtttt0}, is in
+    turn bounded by
+    \begin{equation}
+    \le \frac{2^{6a+101a^3}}{\mu(B(\pc(\fp), 8D^{\ps(\fp)}))}\, .
+    \end{equation}
+     Using that {$|e(\mfa)|$} is bounded by $1$
+    for every $\mfa\in \Mf$, we estimate with the triangle inequality and the above information
+     \begin{equation}
+      | T_{\fp} f(x)|
+        \le \frac{2^{6a+101 a^3}}{\mu(B(\pc(\fp), 8D^{\ps(\fp)}))} \int _{\mu(B(\pc(\fp),
+        8D^{\ps(\fp)}))} |f(y)|\, dy
+      \end{equation}
+    This together with $a\ge 4$ proves the Lemma. -/)
+  (latexEnv := "lemma")]
 lemma maximal_bound_antichain {𝔄 : Set (𝔓 X)} (h𝔄 : IsAntichain (· ≤ ·) 𝔄)
     {f : X → ℂ} (hfm : Measurable f) (x : X) :
     ‖carlesonSum 𝔄 f x‖ₑ ≤ (C6_1_2 a) * MB volume 𝔄 𝔠 (fun 𝔭 ↦ 8*D ^ 𝔰 𝔭) f x := by
@@ -418,6 +492,67 @@ end Lemma6_1_3
 
 open Lemma6_1_3 in
 /-- Lemma 6.1.3 (inequality 6.1.11). -/
+@[blueprint
+  "dens2-antichain"
+  (title := "dens2 antichain")
+  (statement := /-- We have that
+    \begin{equation}\label{eqttt9}
+      \left|\int \overline{g(x)} \sum_{\fp \in \mathfrak{A}} T_{\fp} f(x)\, d\mu(x)\right|\le
+      2^{103a^3}({q}-1)^{-1} \dens_2(\mathfrak{A})^{\frac 1{\tilde{q}}-\frac 12} \|f\|_2\|g\|_2\, .
+    \end{equation} -/)
+  (proof := /-- We have $f=\mathbf{1}_Ff$. Using H\"older's inequality, we obtain for
+    each $x\in B'$ and each $B'\in \mathcal{B}$ using $1<\tilde{q}\le 2$
+    \begin{equation}
+        \frac 1{\mu(B')}\int_{B'} |f(y)|\, d\mu(y)
+    \end{equation}
+    \begin{equation}
+        \le
+        \left(\frac 1{\mu(B')}\int_{B'} |f(y)|^{\frac {2{\tilde{q}}}{3\tilde{q}-2}}\,
+        d\mu(y)\right)^{\frac 32-\frac 1{\tilde{q}}}
+        \left(\frac 1{\mu(B')}\int_{B'} \mathbf{1}_F(y)\, d\mu(y)\right)^{\frac 1{\tilde{q}}-\frac
+        12}
+    \end{equation}
+    \begin{equation}
+        \le \left(M_{\mathcal{B}} (|f|^{\frac {2{\tilde{q}}}{3{\tilde{q}}-2}})(x)\right)^{\frac
+        32-\frac 1{\tilde{q}}}
+    \dens_2(\mathfrak{A})^{\frac 1{\tilde{q}}-\frac 12}\, .
+    \end{equation}
+    Taking the maximum over all $B'$ containing $x$, we obtain
+    \begin{equation} \label{eqttt1}
+        M_{\mathcal{B}}|f|\le
+        M_{\mathcal{B},\frac {2{\tilde{q}}}{3{\tilde{q}}-2} } |f|
+        \dens_2(\mathfrak{A})^{\frac 1{\tilde{q}}-\frac 12}\, .
+    \end{equation}
+    We have with \Cref{Hardy-Littlewood}
+    \begin{equation}
+    \left\|M_{\mathcal{B}, \frac {2{\tilde{q}}}{3{\tilde{q}}-2}} f\right\|_2\le
+    2^{2a}(3\tilde{q}-2)(2\tilde{q}-2)^{-1}\|f\|_2\, .
+    \end{equation}
+    Using $1<\tilde{q}\le 2$ estimates the last display by
+    \begin{equation}\label{eqttt2}
+     2^{2a+2} (\tilde{q}-1)^{-1} \|f\|_2\, .
+    \end{equation}
+    We obtain with Cauchy-Schwarz
+    and then \Cref{maximal-bound-antichain}
+     \begin{equation}
+         |\int \overline{g(x)} \sum_{\fp \in \mathfrak{A}} T_{\fp} f(x)\, d\mu(x)|
+    \end{equation}
+     \begin{equation}
+         \le \|g\|_2 \Big\| \sum_{\fp \in \mathfrak{A}} T_{\fp} f \Big\|_2
+    \end{equation}
+     \begin{equation}
+         \le 2^{102a^3}\|g\|_2 \| M_{\mathcal{B}}f \|_2
+    \end{equation}
+    With \eqref{eqttt1} and
+    \eqref{eqttt2} we can estimate the last display by
+    \begin{equation}
+        \le 2^{102a^3+2a+2}(\tilde{q}-1)^{-1} \|g\|_2 \|f\|_2\dens_2(\mathfrak{A})^{\frac
+        1{\tilde{q}}-\frac 12}
+    \end{equation}
+    Using $a\ge 4$ and
+    $(\tilde q - 1)^{-1} = (q+1)/(q-1) \le 3(q-1)^{-1}$
+    proves the lemma. -/)
+  (latexEnv := "lemma")]
 lemma dens2_antichain {𝔄 : Set (𝔓 X)} (h𝔄 : IsAntichain (· ≤ ·) 𝔄)
     {f : X → ℂ} (hfF : ∀ x, ‖f x‖ ≤ F.indicator 1 x) (hf : Measurable f)
     {g : X → ℂ} (hgG : ∀ x, ‖g x‖ ≤ G.indicator 1 x) (hg : Measurable g) :

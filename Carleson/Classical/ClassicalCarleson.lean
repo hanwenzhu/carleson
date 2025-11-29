@@ -1,3 +1,4 @@
+import Architect
 import Carleson.Classical.Approximation
 import Carleson.Classical.ControlApproximationEffect
 
@@ -10,6 +11,34 @@ noncomputable section
 local notation "S_" => partialFourierSum
 
 /- Theorem 1.1 (Classical Carleson) -/
+@[blueprint
+  "exceptional-set-carleson"
+  (title := "classical Carleson with exceptional sets")
+  (statement := /-- Let $f$ be a $2\pi$-periodic complex-valued continuous function on $\mathbb{R}$.
+    For all $\epsilon>0$, there exists a Borel set $E\subset [0,2\pi]$ with Lebesgue measure $|E|\le
+    \epsilon$ and a positive integer $N_0$ such that for all $x\in [0,2\pi]\setminus E$ and all
+    integers $N>N_0$, we have
+    \begin{equation}\label{aeconv}
+    |f(x)-S_N f(x)|\le \epsilon.
+    \end{equation} -/)
+  (proof := /-- Let $N_0$ be as in \Cref{convergence-for-smooth}.
+    For every
+    \begin{equation}
+    x\in [0, 2\pi) \setminus E\, ,
+    \end{equation}
+    and every $N>N_0$ we have by the triangle inequality
+    \begin{equation*}
+        |f(x)-S_Nf(x)|
+        \end{equation*}
+        \begin{equation}\label{epsilonthird}
+        \le |f(x)-f_0(x)|+ |f_0(x)-S_Nf_0(x)|+|S_Nf_0(x)-S_N f(x)|\, .
+    \end{equation}
+    Using \Cref{smooth-approximation,convergence-for-smooth,control-approximation-effect}, we
+    estimate \eqref{epsilonthird} by
+    \begin{equation}
+        \le \epsilon' +\frac \epsilon 4 +\frac \epsilon 4\le \epsilon\, .
+    \end{equation}
+    This shows \eqref{aeconv} for the given $E$ and $N_0$. -/)]
 theorem exceptional_set_carleson {f : ℝ → ℂ}
     (cont_f : Continuous f) (periodic_f : f.Periodic (2 * π))
     {ε : ℝ} (εpos : 0 < ε) :
@@ -196,6 +225,29 @@ end
 
 /- **Carleson's theorem** asserting a.e. point-wise convergence of the partial Fourier sums for
 periodic continuous functions. -/
+@[blueprint
+  "classical-carleson"
+  (title := "classical Carleson")
+  (statement := /-- Let $f$ be a $2\pi$-periodic complex-valued continuous function on $\mathbb{R}$.
+    Then for almost all $x \in \mathbb{R}$ we have
+    \begin{equation}\label{eq:fourier-limit}
+      \lim_{N\to\infty}S_N f(x) = f(x),
+    \end{equation}
+    where $S_N f$ is the $N$-th partial Fourier sum of $f$ defined in \eqref{eq:trig-series}
+    with coefficients \eqref{eq:fourier-coefficients}. -/)
+  (proof := /-- [Proof of \Cref{classical-carleson}]
+    
+    
+    %Note that mere continuity implies uniform continuity in the setting of this theorem.
+    By applying \Cref{exceptional-set-carleson} with a sequence of $\epsilon_n:= 2^{-n}\delta$ for
+    $n\ge 1$ and taking the union
+    of corresponding exceptional sets $E_n$, we see that outside a set of measure $\delta$, the
+    partial Fourier
+    sums converge pointwise for $N\to \infty$. Applying this with a sequence of $\delta$ shrinking
+    to zero and
+    taking the intersection of the corresponding exceptional sets, which has measure zero, we see
+    that the Fourier
+    series converges outside a set of measure zero. -/)]
 theorem classical_carleson {f : ℝ → ℂ} (cont_f : Continuous f) (periodic_f : f.Periodic (2 * π)) :
     ∀ᵐ x, Filter.Tendsto (S_ · f x) Filter.atTop (nhds (f x)) := by
   -- Reduce to a.e. convergence on [0,2π]
